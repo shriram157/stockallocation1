@@ -1,0 +1,555 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" controllerName="suggestOrder.controller.StockAllocation">
+	<Page showHeader="true" title="{i18n>STOCK_ALLOCATION}" showFooter="true" showNavButton="true" navButtonPress="_onPageNavButtonPress"
+		class="sapUiSizeCompact">
+		<content>
+			<Title text="{oViewLocalDataModel>/BusinessPartnerName}" titleStyle="H2" width="50%" textAlign="Left" visible="true" wrapping="false"
+				class="sapUiTinyMargin">
+				<!--<layoutData>-->
+				<!--	<l:GridData span="XL2 L1 M3 S4"/>-->
+				<!--</layoutData>-->
+			</Title>
+			<Title text="{oViewLocalDataModel>/series}" titleStyle="H2" width="99%" textAlign="End" visible="true" wrapping="true"
+				class="sapUiTinyMargin" level="H2">
+				<!--<layoutData>-->
+				<!--	<l:GridData span="XL2 L1 M3 S4"/>-->
+				<!--</layoutData>-->
+			</Title>
+			<Title text="{oViewLocalDataModel>/etaFrom}" titleStyle="H6" width="99%" textAlign="End" visible="true" wrapping="false"
+				class="sapUiTinyMargin"></Title>
+			<!--<IconTabBar expandable="false" expanded="true" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true"-->
+			<!--	selectedKey="Ok" class="sapUiNoContentPadding">-->
+			<!--	<items>-->
+			<!--		<IconTabFilter icon="" iconColor="Default" text="Allocation" count="" design="Vertical" showAll="false" textDirection="Inherit"-->
+			<!--			enabled="true" visible="true" iconDensityAware="false">-->
+			<!--<content>-->
+			<!--<Table width="auto" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="true" growingThreshold="20"-->
+			<!--	growingScrollToLoad="true" class="sapUiResponsiveMargin">-->
+			<Table items="{path:'stockDataModel>/', sorter : { path : 'suffix_desc' }}" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
+				showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+			  alternateRowColors="true">
+				<infoToolbar/>
+				<headerToolbar>
+					<OverflowToolbar width="auto" height="55px" design="Transparent" visible="true" enabled="true">
+						<content>
+							<ToggleButton pressed="false" text="{i18n>SHOW_SUGGEST_MODELS}" iconFirst="true" width="146.95001220703125px"
+								enabled="{oViewLocalDataModel>/setEnableFalseSuggest}" visible="true" press="onClickShowAllModels" id="showAllModelsBtn"/>
+							<ToggleButton pressed="false" text="{i18n>SHOW_PERCENTAGES}" iconFirst="true" width="170px"
+								enabled="{oViewLocalDataModel>/setEnableFalsePercentages}" visible="true" press="onClickShowPercentages" id="showPercentagesBtn"/>
+							<ToolbarSpacer width="290px"/>
+							<Button text="{i18n>RESET_TO_SUGGESTED}" type="Reject" iconFirst="true" width="164.86666870117188px"
+								enabled="{oViewLocalDataModel>/setEnableFalseReset}" visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="resetToSuggestedClick"/>
+							<ToolbarSpacer/>
+							<Button text="{i18n>SAVE_REQUEST}" type="Accept" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/enableForDealer}"
+								visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="_onButtonPressSave"/>
+						</content>
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="90px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>MODEL}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="55px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>SUFFIX}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="185px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>COLOUR_TRIM}" width="auto" maxLines="1" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer>
+							<Text text="{i18n>TOTALS}" width="auto" maxLines="1" wrapping="false" textAlign="End" textDirection="Inherit" visible="true"/>
+						</footer>
+					</Column>
+					<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>CURRENT}" width="50px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer>
+							<Text text="{initialStockTotalModel>/0/currentTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+						</footer>
+					</Column>
+					<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>CURRENT_DS}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer>
+							<Text text="{initialStockTotalModel>/0/currentDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+						</footer>
+					</Column>
+					<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>SUGGESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer>
+							<Text text="{initialStockTotalModel>/0/suggestedTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+						</footer>
+					</Column>
+					<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>SUGGESTED_DS}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer>
+							<Text text="{initialStockTotalModel>/0/suggestedDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+								textDirection="Inherit" visible="true"/>
+						</footer>
+					</Column>
+					<Column width="125px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>REQUEST_VOLUME}" width="83.95000457763672px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+						</header>
+						<footer>
+							<Text text="{initialStockTotalModel>/0/requestedVolumeTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+								textDirection="Inherit" visible="true"/>
+						</footer>
+					</Column>
+					<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>DIFFERENCE}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<!--  <footer>-->
+						<!--	<Text text="{initialStockTotalModel>/0/differenceTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"-->
+						<!--		textDirection="Inherit" visible="true"/>-->
+						<!--</footer>	-->
+						<footer/>
+					</Column>
+					<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+						mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>REQUESTED_DS}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer/>
+					</Column>
+					<Column width="65px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+						visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>ALLOCATED}" width="69px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer>
+							<Text text="{initialStockTotalModel>/0/allocatedTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+						</footer>
+					</Column>
+					<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+						visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>ALLOCATED_DS}" width="73px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer>
+							<Text text="{initialStockTotalModel>/0/allocatedDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+								textDirection="Inherit" visible="true"/>
+						</footer>
+					</Column>
+					<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+						visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>PENDING_ALLOCATION}" width="73px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer>
+							<Text text="{initialStockTotalModel>/0/pendingAllocationTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+								textDirection="Inherit" visible="true"/>
+						</footer>
+					</Column>
+					<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+						visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
+						<header>
+							<Text text="{i18n>UNFILLED_ALLOCATION}" width="63px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+						</header>
+						<footer>
+							<Text text="{initialStockTotalModel>/0/unfilledAllocationTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+								textDirection="Inherit" visible="true"/>
+						</footer>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem  visible="{stockDataModel>visibleProperty}">
+						<cells>
+							<Text text="{stockDataModel>model}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{stockDataModel>suffix_desc}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{stockDataModel>colour_Trim}" width="auto" maxLines="2" wrapping="true" textAlign="Right" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{stockDataModel>current}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{stockDataModel>current_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{stockDataModel>suggested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{stockDataModel>suggested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="auto" step="1" largerStep="2"
+								valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}" textAlign="Center"
+								validationMode="LiveChange" change="whenUserChangesRequestedData"/>
+							<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{stockDataModel>requested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{stockDataModel>allocated}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{stockDataModel>allocated_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{stockDataModel>pendingAllocation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+							<Text text="{stockDataModel>unfilled_Allocation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								visible="true"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!--</content>-->
+			<!--</IconTabFilter>-->
+			<!--<IconTabFilter icon="" iconColor="Default" text="Rundown" count="" design="Vertical" showAll="false" textDirection="Inherit" enabled="true"-->
+			<!--	visible="true" iconDensityAware="false">-->
+			<!--	<content>-->
+			<!--		<Table width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"-->
+			<!--			class="sapUiResponsiveMargin">-->
+			<!--			<infoToolbar>-->
+			<!--				<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">-->
+			<!--					<content>-->
+			<!--						<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</content>-->
+			<!--				</Toolbar>-->
+			<!--			</infoToolbar>-->
+			<!--			<headerToolbar>-->
+			<!--				<OverflowToolbar width="auto" height="44px" design="Auto" visible="true" enabled="true">-->
+			<!--					<content>-->
+			<!--						<Link text="Show Rundown Summary (ALL Series)" textAlign="Begin" width="249.9937286376953px" target="_blank" wrapping="false" enabled="true"-->
+			<!--							visible="true" emphasized="false" subtle="false" press="_onLinkPress"/>-->
+			<!--						<ToolbarSpacer width="400px"/>-->
+			<!--					</content>-->
+			<!--				</OverflowToolbar>-->
+			<!--			</headerToolbar>-->
+			<!--			<columns>-->
+			<!--				<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header/>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="SEP 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="OCT 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="NOV 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="DEC 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="JAN 2019" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="FEB 2019" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="MAR 2019" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--			</columns>-->
+			<!--			<items>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<Text text="Suggested" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<Text text="Allocated" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="Error"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="Success"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<Text text="Wholesales (+ Sold Orders)" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<Text text="Sales Actual / pace" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<Text text="Sales Actual / Target" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<ObjectIdentifier title="TOTAL STOCK" text="" titleActive="false" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<ObjectIdentifier title="DAYS OF SUPPLY" text="" titleActive="false" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--			</items>-->
+			<!--		</Table>-->
+			<!--	</content>-->
+			<!--</IconTabFilter>-->
+			<!--<IconTabFilter icon="" iconColor="Default" text="Sales Plan" count="" design="Vertical" showAll="false" textDirection="Inherit"-->
+			<!--	enabled="true" visible="true" iconDensityAware="false">-->
+			<!--	<content>-->
+			<!--		<Table width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"-->
+			<!--			class="sapUiResponsiveMargin">-->
+			<!--			<infoToolbar>-->
+			<!--				<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">-->
+			<!--					<content>-->
+			<!--						<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</content>-->
+			<!--				</Toolbar>-->
+			<!--			</infoToolbar>-->
+			<!--			<headerToolbar>-->
+			<!--				<OverflowToolbar width="1216px" height="44.275001525878906px" design="Transparent" visible="true" enabled="true">-->
+			<!--					<content>-->
+			<!--						<Link text="Show Sales Plan Summary (ALL Series)" textAlign="Begin" width="345.9937438964844px" target="_blank" wrapping="false"-->
+			<!--							enabled="true" visible="true" emphasized="false" subtle="false" press="_onLinkPress1"/>-->
+			<!--						<ToolbarSpacer/>-->
+			<!--						<Title text="2018 CY" titleStyle="H2" width="85.4375px" textAlign="Begin" visible="true" wrapping="false"/>-->
+			<!--					</content>-->
+			<!--				</OverflowToolbar>-->
+			<!--			</headerToolbar>-->
+			<!--			<columns>-->
+			<!--				<Column width="150px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="JAN 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="FEB 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="MAR 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="APR 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="MAY 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="JUN 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="JUL 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="AUG 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="SEP 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="OCT 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="NOV 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="DEC 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--				<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">-->
+			<!--					<header>-->
+			<!--						<Text text="TOTAL" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+			<!--					</header>-->
+			<!--					<footer/>-->
+			<!--				</Column>-->
+			<!--			</columns>-->
+			<!--			<items>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<ObjectIdentifier title="ADRO Sales Plan" text="" titleActive="false" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<ObjectIdentifier title="Sales Actual / Pace" text="" titleActive="false" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="Error"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="Success"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="Success"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="false" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--				<ColumnListItem type="Inactive">-->
+			<!--					<cells>-->
+			<!--						<ObjectIdentifier title="Trend Plan" text="" titleActive="false" visible="true"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--						<ObjectNumber number="999" unit="" emphasized="true" state="None"/>-->
+			<!--					</cells>-->
+			<!--				</ColumnListItem>-->
+			<!--			</items>-->
+			<!--		</Table>-->
+			<!--	</content>-->
+			<!--</IconTabFilter>-->
+			<!--</items>-->
+			<!--	<content/>-->
+			<!--</IconTabBar>-->
+		</content>
+		<footer>
+			<!--<OverflowToolbar width="1280px" height="47.8194465637207px" design="Auto" enabled="true" visible="true">-->
+			<!--	<content>-->
+			<!--		<ToolbarSpacer width=""/>-->
+			<!--		<Button text="View Sales Details" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"-->
+			<!--			press="_onButtonPress2"/>-->
+			<!--	</content>-->
+			<!--</OverflowToolbar>-->
+		</footer>
+		<headerContent>
+			<!--<Button text="EXIT" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"-->
+			<!--	press="_onButtonPress3"/>-->
+		</headerContent>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

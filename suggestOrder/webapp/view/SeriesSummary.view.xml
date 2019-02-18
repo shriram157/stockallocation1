@@ -1,0 +1,296 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="suggestOrder.controller.SeriesSummary" xmlns="sap.m"
+	xmlns:layout1="sap.ui.commons.layout">
+	<Page showHeader="true" title="Series Summary - 2018 CAMRY" showFooter="false" showNavButton="true" enableScrolling="false"
+		navButtonPress="_onPageNavButtonPress">
+		<content>
+			<layout1:AbsoluteLayout horizontalScrolling="Hidden" verticalScrolling="Auto">
+				<layout1:positions>
+					<layout1:PositionContainer left="3px" top="10.000003814697266px">
+						<layout1:control>
+							<Table width="1217.3499755859375px" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20"
+								growingScrollToLoad="true" class="sapUiResponsiveMargin">
+								<infoToolbar/>
+								<headerToolbar>
+									<OverflowToolbar width="1215.9749755859375px" height="55px" design="Transparent" visible="true" enabled="true">
+										<content>
+											<ToggleButton pressed="false" text="Show Percentages" iconFirst="true" width="151.34722900390625px" enabled="true" visible="true"/>
+											<ToolbarSpacer/>
+										</content>
+									</OverflowToolbar>
+								</headerToolbar>
+								<columns>
+									<Column width="100px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Model" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="40px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Suffix" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="190px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Colour / Trim" width="90px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer>
+											<Text text="TOTALS" width="176px" maxLines="1" wrapping="false" textAlign="End" textDirection="Inherit" visible="true"/>
+										</footer>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Current" width="50px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer>
+											<Text text="999" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</footer>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Current DS" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer>
+											<Text text="999" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</footer>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Suggest" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Suggest DS" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="125px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Requested Volume" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer>
+											<Text text="999" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</footer>
+									</Column>
+									<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Difference" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Requested DS" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="65px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Final Order" width="69px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer>
+											<Text text="999" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</footer>
+									</Column>
+									<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Final Order DS" width="73px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+										mergeDuplicates="false">
+										<header>
+											<Text text="Unfilled Allocation" width="63px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer>
+											<Text text="999" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</footer>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem type="Active">
+										<cells>
+											<Text text="XXXXXX - XX" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XX" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXX" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<StepInput value="99" min="0" max="100" step="1" largerStep="2" displayValuePrecision="0" width="117px" valueState="None" editable="true"
+												enabled="true" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Active">
+										<cells>
+											<Text text="XXXXXX - XX" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XX" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXX" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<StepInput value="99" min="0" max="100" step="1" largerStep="2" displayValuePrecision="0" width="117px" valueState="None" editable="true"
+												enabled="true" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Active">
+										<cells>
+											<Text text="XXXXXX - XX" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XX" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXX" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<StepInput value="99" min="0" max="100" step="1" largerStep="2" displayValuePrecision="0" width="117px" valueState="None" editable="true"
+												enabled="true" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Active">
+										<cells>
+											<Text text="XXXXXX - XX" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XX" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXX" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<StepInput value="99" min="0" max="100" step="1" largerStep="2" displayValuePrecision="0" width="117px" valueState="None" editable="true"
+												enabled="true" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Active">
+										<cells>
+											<Text text="XXXXXX - XX" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XX" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXX" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<StepInput value="99" min="0" max="100" step="1" largerStep="2" displayValuePrecision="0" width="117px" valueState="None" editable="true"
+												enabled="true" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Active">
+										<cells>
+											<Text text="XXXXXX - XX" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XX" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXX" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<StepInput value="99" min="0" max="100" step="1" largerStep="2" displayValuePrecision="0" width="117px" valueState="None" editable="true"
+												enabled="true" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Active">
+										<cells>
+											<Text text="XXXXXX - XX" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XX" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXX" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<StepInput value="99" min="0" max="100" step="1" largerStep="2" displayValuePrecision="0" width="117px" valueState="None" editable="true"
+												enabled="true" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Active">
+										<cells>
+											<Text text="XXXXXX - XX" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XX" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="XXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXX" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<StepInput value="99" min="0" max="100" step="1" largerStep="2" displayValuePrecision="0" width="117px" valueState="None" editable="true"
+												enabled="true" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="99" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</layout1:control>
+					</layout1:PositionContainer>
+				</layout1:positions>
+			</layout1:AbsoluteLayout>
+		</content>
+		<footer>
+			<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+				<content>
+					<ToolbarSpacer width=""/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+		<headerContent>
+			<Button text="Print" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+		</headerContent>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

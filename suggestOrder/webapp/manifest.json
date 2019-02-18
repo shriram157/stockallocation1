@@ -1,0 +1,267 @@
+{
+	"_version": "1.8.0",
+	"sap.app": {
+		"_version": "1.3.0",
+		"id": "suggestOrder",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.2.2"
+		},
+		"dataSources": {
+				"ZCDS_SUGGEST_ORD_CDS": {
+				"uri": "/node/ZCDS_SUGGEST_ORD_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_SUGGEST_ORD_CDS/metadata.xml"
+				}
+			},
+			"ZCDS_SUGGEST_ORD_SUM_CDS": {
+				"uri": "/node/ZCDS_SUGGEST_ORD_SUM_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_SUGGEST_ORD_SUM_CDS/metadata.xml"
+				}
+			},
+			"ZCDS_SUGGEST_ORD_COUNT_CDS": {
+				"uri": "/node/ZCDS_SUGGEST_ORD_COUNT_CDS/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZCDS_SUGGEST_ORD_COUNT_CDS/metadata.xml"
+				}
+			},
+						"ZSD_SUGGEST_ORDER_UPDATE_SRV": {
+				"uri": "/node/ZSD_SUGGEST_ORDER_UPDATE_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZSD_SUGGEST_ORDER_UPDATE_SRV/metadata.xml"
+				}
+			}
+  
+			
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"ach": "ach",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.32.0"
+		}
+	},
+	"sap.ui": {
+		"_version": "1.3.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"_version": "1.3.0",
+		"rootView": {
+			"viewName": "generated.app.view.SalesPlanSummary",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.50.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+				"ZCDS_SUGGEST_ORD_CDS": {
+				"uri": "/node/ZCDS_SUGGEST_ORD_CDS/",
+				"type": "sap.ui.model.odata.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"serviceUrlParams": {
+						"sap-client": "200"
+					},
+					"json": true,
+					"useBatch": false
+				},
+				"dataSource": "ZCDS_SUGGEST_ORD_CDS",
+				"preload": false
+			},
+			"ZCDS_SUGGEST_ORD_SUM_CDS": {
+				"uri": "/node/ZCDS_SUGGEST_ORD_SUM_CDS/",
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"serviceUrlParams": {
+            			"sap-client": "200"
+        			},
+					"json": true,
+					"useBatch": false
+				},
+				"dataSource": "ZCDS_SUGGEST_ORD_SUM_CDS",
+					"preload": false
+			},
+		    "ZCDS_SUGGEST_ORD_COUNT_CDS": {
+				"uri": "/node/ZCDS_SUGGEST_ORD_COUNT_CDS/",
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"serviceUrlParams": {
+            			"sap-client": "200"
+        			},
+					"json": true,
+					"useBatch": false
+				},
+				"dataSource": "ZCDS_SUGGEST_ORD_COUNT_CDS",
+					"preload": false
+			},
+					    "ZSD_SUGGEST_ORDER_UPDATE_SRV": {
+				"uri": "/node/ZSD_SUGGEST_ORDER_UPDATE_SRV/",
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"serviceUrlParams": {
+            			"sap-client": "200"
+        			},
+					"json": true,
+					"useBatch": true
+				},
+				"dataSource": "ZSD_SUGGEST_ORDER_UPDATE_SRV",
+					"preload": false
+			}
+		},
+		"resources": {
+			"css": []
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "suggestOrder.view",
+				"controlId": "App",
+				"clearTarget": false,
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"ProductionRequestSummary"
+					]
+				}
+			},
+			"targets": {
+				"ProductionRequestSummary": {
+					"controlAggregation": "pages",
+					"viewName": "ProductionRequestSummary",
+					"viewId": "ProductionRequestSummary",
+					"viewLevel": 1,
+					"transition": "slide"
+				},
+				"StockAllocation": {
+					"controlAggregation": "pages",
+					"viewName": "StockAllocation",
+					"viewId": "StockAllocation",
+					"viewLevel": 1,
+					"transition": "slide"
+				},
+				"RundownSummary": {
+					"controlAggregation": "pages",
+					"viewName": "RundownSummary",
+					"viewId": "RundownSummary",
+					"viewLevel": 1,
+					"transition": "show"
+				},
+				"SalesDetails": {
+					"controlAggregation": "pages",
+					"viewName": "SalesDetails",
+					"viewId": "SalesDetails",
+					"viewLevel": 1,
+					"transition": "show"
+				},
+				"SeriesSummary": {
+					"controlAggregation": "pages",
+					"viewName": "SeriesSummary",
+					"viewId": "SeriesSummary",
+					"viewLevel": 1,
+					"transition": "slide"
+				},
+				"SalesPlanSummary": {
+					"controlAggregation": "pages",
+					"viewName": "SalesPlanSummary",
+					"viewId": "SalesPlanSummary",
+					"viewLevel": 1,
+					"transition": "show"
+				}
+			},
+			"routes": [{
+				"pattern": "ProductionRequestSummary/:context:",
+				"name": "ProductionRequestSummary",
+				"target": [
+					"ProductionRequestSummary"
+				]
+			}, {
+				"pattern": "",
+				"name": "default",
+				"target": [
+					"ProductionRequestSummary"
+				]
+			}, {
+				"pattern": "StockAllocation/:context:",
+				"name": "StockAllocation",
+				"target": [
+					"StockAllocation"
+				]
+			}, {
+				"pattern": "RundownSummary/:context:",
+				"name": "RundownSummary",
+				"target": [
+					"RundownSummary"
+				]
+			}, {
+				"pattern": "SalesDetails/:context:",
+				"name": "SalesDetails",
+				"target": [
+					"SalesDetails"
+				]
+			}, {
+				"pattern": "SeriesSummary/:context:",
+				"name": "SeriesSummary",
+				"target": [
+					"SeriesSummary"
+				]
+			}, {
+				"pattern": "SalesPlanSummary/:context:",
+				"name": "SalesPlanSummary",
+				"target": [
+					"SalesPlanSummary"
+				]
+			}]
+		}
+	}
+}

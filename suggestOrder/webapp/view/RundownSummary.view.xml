@@ -1,0 +1,299 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="suggestOrder.controller.RundownSummary" xmlns="sap.m"
+	xmlns:layout="sap.ui.layout" xmlns:layout1="sap.ui.commons.layout">
+	<Page showHeader="true" title="Rundown Summary" showFooter="false" showNavButton="true" enableScrolling="false"
+		navButtonPress="_onPageNavButtonPress">
+		<content>
+			<layout1:AbsoluteLayout horizontalScrolling="Hidden" verticalScrolling="Auto">
+				<layout1:positions>
+					<layout1:PositionContainer left="0px" top="7px">
+						<layout1:control>
+							<Table width="1213.6375732421875px" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20"
+								growingScrollToLoad="true" class="sapUiResponsiveMargin">
+								<infoToolbar>
+									<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+										<content>
+											<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</content>
+									</Toolbar>
+								</infoToolbar>
+								<headerToolbar/>
+								<columns>
+									<Column width="170px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="true">
+										<header/>
+										<footer/>
+									</Column>
+									<Column width="125px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header/>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="SEP 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="OCT 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="NOV 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="DEC 2018" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="JAN 2019" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="FEB 2019" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="MAR 2019" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<Title text="4X4 TUNDRA" titleStyle="H3" width="149.27500915527344px" textAlign="Begin" visible="true" wrapping="false"/>
+											<Text text="Suggested" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<Text text="Allocated" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="Error"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="Success"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<Text text="Wholesales (+Sold Orders)" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<Text text="Sales Actual / Pace" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<Text text="Sales Actual / Target" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<ObjectIdentifier title="TOTAL STOCK" text="" titleActive="false" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<ObjectIdentifier title="DAYS OF SUPPLY" text="" titleActive="false" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<Title text="AVALON" titleStyle="H3" width="149.27500915527344px" textAlign="Begin" visible="true" wrapping="false"/>
+											<Text text="Suggested" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<Text text="Allocated" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="Error"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="Success"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<Text text="Wholesales (+Sold Orders)" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<Text text="Sales Actual / Pace" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<Text text="Sales Actual / Target" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<ObjectIdentifier title="TOTAL STOCK" text="" titleActive="false" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<ObjectIdentifier title="DAYS OF SUPPLY" text="" titleActive="false" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</layout1:control>
+					</layout1:PositionContainer>
+				</layout1:positions>
+			</layout1:AbsoluteLayout>
+		</content>
+		<footer>
+			<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+				<content>
+					<ToolbarSpacer width=""/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+		<headerContent>
+			<Button text="Print" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+		</headerContent>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

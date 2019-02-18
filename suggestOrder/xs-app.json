@@ -1,0 +1,37 @@
+{
+  "welcomeFile": "/suggestOrder/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout"
+  },
+  "routes": [
+    {
+      "source": "^/suggestOrder/(.*)$",
+      "target": "$1",
+      "localDir": "webapp"
+    
+}, {
+			"source": "/node(.*)",
+			"destination": "suggestOrder-node-backend",
+			"csrfProtection": false,
+			"authenticationType": "xsuaa"
+		},
+
+		{
+			"source": "/userDetails(.*)",
+			"destination": "suggestOrder-node-backend",
+			"csrfProtection": false,
+			"authenticationType": "xsuaa"
+	
+		} 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  ]
+}

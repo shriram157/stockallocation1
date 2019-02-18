@@ -1,0 +1,284 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" controllerName="suggestOrder.controller.SalesDetails" xmlns="sap.m"
+	xmlns:layout="sap.ui.layout" xmlns:layout1="sap.ui.commons.layout">
+	<Page showHeader="true" title="Sales Details - 2018 CAMRY" showFooter="false" showNavButton="true" enableScrolling="false"
+		navButtonPress="_onPageNavButtonPress">
+		<content>
+			<layout1:AbsoluteLayout horizontalScrolling="Hidden" verticalScrolling="Auto">
+				<layout1:positions>
+					<layout1:PositionContainer left="0px" top="0px">
+						<layout1:control>
+							<Table width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"
+								class="sapUiResponsiveMargin">
+								<infoToolbar>
+									<Toolbar width="100%" height="auto" design="Auto" visible="false" enabled="true">
+										<content>
+											<Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</content>
+									</Toolbar>
+								</infoToolbar>
+								<headerToolbar>
+									<OverflowToolbar width="1216px" height="55px" design="Transparent" visible="true" enabled="true">
+										<content>
+											<ToggleButton pressed="false" text="Show Percentages" iconFirst="true" width="170px" enabled="true" visible="true"/>
+											<ToolbarSpacer width="305px"/>
+											<ToolbarSpacer/>
+										</content>
+									</OverflowToolbar>
+								</headerToolbar>
+								<columns>
+									<Column width="90px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Model" width="57.0333366394043px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="35px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Suffix" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="185px" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Colour / Trim" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="45px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Current" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="45px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Current DS" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Past 90 Total Dealer (+ Sold Orders)" width="auto" maxLines="5" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="54px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Past 90 My DMA Dealer" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="54px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Past 90 My DMA Other Dealers" width="auto" maxLines="4" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="54px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Past 90 My DMA Total" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Past 90 My Major Market" width="auto" maxLines="4" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="55px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Past 90 My Zone" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Future 90 My Dealer" width="auto" maxLines="4" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="55px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Future 90 My DMA Total" width="auto" maxLines="4" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Future 90 My Major Market" width="auto" maxLines="4" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Suggest" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="50px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Suggest DS" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<ObjectIdentifier title="" text="B11HKT - L" titleActive="false" visible="true"/>
+											<ObjectIdentifier title="" text="AA" titleActive="false" visible="true"/>
+											<Text text="Graphite Metallic / Black Fabric" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<ObjectIdentifier title="" text="B11HLT - LE" titleActive="false" visible="true"/>
+											<ObjectIdentifier title="" text="AA" titleActive="false" visible="true"/>
+											<Text text="Blue Crush Metallic / Tan Leather" width="207px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+												visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<ObjectIdentifier title="" text="B11HLT - LE" titleActive="false" visible="true"/>
+											<ObjectIdentifier title="" text="BQ" titleActive="false" visible="true"/>
+											<Text text="Celestical Silver Metallic / Red Sport Leather" width="207px" maxLines="2" wrapping="true" textAlign="Begin"
+												textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Inactive">
+										<cells>
+											<ObjectIdentifier title="" text="B11HLT - LE" titleActive="false" visible="true"/>
+											<ObjectIdentifier title="" text="BR" titleActive="false" visible="true"/>
+											<Text text="Celestical Silver Metallic / Grey and Red Leather" width="207px" maxLines="2" wrapping="true" textAlign="Begin"
+												textDirection="Inherit" visible="true"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="false" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+											<ObjectNumber number="999" unit="" emphasized="true" state="None"/>
+										</cells>
+									</ColumnListItem>
+									<ColumnListItem type="Active">
+										<cells>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+											<layout:HorizontalLayout>
+												<layout:content/>
+											</layout:HorizontalLayout>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</layout1:control>
+					</layout1:PositionContainer>
+				</layout1:positions>
+			</layout1:AbsoluteLayout>
+		</content>
+		<footer>
+			<OverflowToolbar width="100%" height="auto" design="Auto" enabled="true" visible="true">
+				<content>
+					<ToolbarSpacer width=""/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+		<headerContent>
+			<Button text="Print" type="Default" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+		</headerContent>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>
