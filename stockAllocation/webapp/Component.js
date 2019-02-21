@@ -34,7 +34,7 @@ sap.ui.define([
 
 			var mConfig = this.getMetadata().getManifestEntry("/sap.app/dataSources/ZCDS_SUGGEST_ORD_CDS");
 				if (sLocation_conf == 0) {
-				mConfig.uri = "/Suggest_Order" + mConfig.uri;  //ecpSales_node_secured
+				mConfig.uri = "/Suggest_Order" + mConfig.uri;  //
 			} else  {
 					mConfig.uri = mConfig.uri;
 			}

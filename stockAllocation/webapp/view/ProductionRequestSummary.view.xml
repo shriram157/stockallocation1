@@ -19,6 +19,13 @@
 							<Text class="clCustomFont" text="{i18n>STOCK_ALLOC_SUMMARY}"/>
 						</contentMiddle>						
 						<contentRight>
+										<!--<Button text="EXIT" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonPress"/>-->
+				<!--		<Link-->
+				<!--text="Logout"-->
+				<!--target="_blank"-->
+				<!--href="https://infostream.qa.toyota.ca/tci/myportal/dealers/toyota/home/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8zi_Q0snT08LAz8DZwtDAwCLTyN3d1CTI0MTIz0w_Wj9KPwKPE3hCowwAEcDfQLsrMDAXFxomk!/dz/d5/L3dDb1ZJQSEhL3dPb0JKTnNBLzRFS2lqaFVNV0hFIS9mVmp6QWIybW9LUHROZHU3cGtuVmJzQzVIQXNja3JWSU5wbVFrUmpja2p1VTRaVnZnLzMxMDgvbG8!/" />-->
+							
+							
 							<!--<Button text="{i18n>Logout}"/>-->
 						</contentRight>
 					</Bar>
@@ -140,7 +147,8 @@
 					<IconTabFilter id="iconTabFilterRequested" icon="sap-icon://process" iconColor="Critical" text="{i18n>REQUESTED}" count="{countViewModel>/requestedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="{detailView>/showRequestedTab}" iconDensityAware="false">
 						<content>
 						 
-								<Table items="{path:'requestedDataModel>/'}"
+								<Table items="{path:'requestedDataModel>/', sorter : { path : 'series' }}" 
+								
 							
 							   noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
 								<infoToolbar/>
@@ -222,8 +230,8 @@
 					</IconTabFilter>
 					<IconTabFilter id="iconTabFilterAllocated" icon="sap-icon://status-completed" iconColor="Positive" text="{i18n>ALLOCATED}" count="{countViewModel>/allocatedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="{detailView>/showAllocatedTab}" iconDensityAware="false">
 						<content>
-								<Table items="{path:'allocatedDataModel>/'}"
-							
+							<Table items="{path:'allocatedDataModel>/', sorter : { path : 'series' }}" 
+										
 							     noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" 
 							     growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
 								<infoToolbar/>
@@ -342,7 +350,7 @@
 		</content>
 		<footer/>
 		<headerContent>
-			<Button text="EXIT" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonPress"/>
+
 		</headerContent>
 		<subHeader/>
 		<customHeader/>

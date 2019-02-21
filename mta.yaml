@@ -8,9 +8,9 @@ modules:
     type: nodejs
     path: suggestOrder_Node
     parameters:
-      host: QAS-suggestOrder_Node
+      host: DEV-suggestOrder_Node
       register-service-url: true
-      service-name: QAS-suggestOrder_Node
+      service-name: DEV-suggestOrder_Node
       service-url: '${default-url}'
       disk-quota: 512M
       memory: 256M
@@ -18,7 +18,7 @@ modules:
       - name: SUGGEST_ORDER_APIM_CUPS
       - name: uaa_suggestOrder
       - name: cflogging_suggestOrder 
-      - name: dest_QAS_suggestOrder
+      - name: dest_DEV_suggestOrder
     provides:
       - name: suggestOrder_Node_api
         public: false
@@ -26,13 +26,13 @@ modules:
           url: '${default-url}'
     description: This node module provides the data to the UI using CUPS
    
-  - name: suggestOrder
+  - name: stockAllocation
     type: html5
-    path: suggestOrder
+    path: stockAllocation
     parameters:
-      host: QAS-suggestOrder
+      host: DEV-stockAllocation
       register-service-url: true
-      service-name: QAS-suggestOrder
+      service-name: DEV-stockAllocation
       service-url: '${default-url}'
       disk-quota: 512M
       memory: 256M
@@ -40,7 +40,7 @@ modules:
       builder: grunt
     requires:
     - name: uaa_suggestOrder
-    - name: dest_QAS_suggestOrder
+    - name: dest_DEV_suggestOrder
     - name: cflogging_suggestOrder 
     - name: suggestOrder_Node_api
       group: destinations
@@ -49,7 +49,7 @@ modules:
           url: '~{url}'
           forwardAuthToken: true 
     provides:
-    - name: suggestOrder
+    - name: stockAllocation
 
 resources:
  - name: uaa_suggestOrder
@@ -59,7 +59,7 @@ resources:
       service: xsuaa
    type: org.cloudfoundry.managed-service
 
- - name: dest_QAS_suggestOrder
+ - name: dest_DEV_suggestOrder
    parameters:
       service-plan: lite
       service: destination

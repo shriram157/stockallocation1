@@ -5,6 +5,7 @@
 		"id": "suggestOrder",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
+ 
 		"applicationVersion": {
 			"version": "1.2.2"
 		},
@@ -158,9 +159,15 @@
 					"preload": false
 			}
 		},
-		"resources": {
-			"css": []
-		},
+     "resources": {
+            "js": [{
+                "uri": "lib/moment-with-locales.js"
+            }],
+
+            "css": [{
+                "uri": "css/style.css"
+            }]
+        },
 		"routing": {
 			"config": {
 				"routerClass": "sap.m.routing.Router",

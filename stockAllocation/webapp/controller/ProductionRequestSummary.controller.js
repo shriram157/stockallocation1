@@ -803,7 +803,8 @@
 							var windowStartDay = windowStartDate.substr(6, 2);
 							var windowhour = item.zzend_date.substr(8, 2);
 							var windowMinute = item.zzend_date.substr(10, 2);
-
+                            var newTempDate = windowStartYear + "/" + windowStartMonth + "/" + windowStartDay + " " + windowhour + ":" + windowMinute;
+                            
 							var dateForBanner = windowStartMonth + "/" + windowStartDay + "/" + windowStartYear;
 							var timeForBanner = windowhour + ":" + windowMinute;
 
@@ -817,6 +818,7 @@
 							oModel.setProperty("/timeForBanner", timeForBanner);
 							oModel.setProperty("/startDateofWindow", windowEndDateFormatted);
 							oModel.setProperty("/endDateofTheWindow", dateForBanner);
+							oModel.setProperty("/dateForValidation", newTempDate);
 
 						});
 
@@ -839,15 +841,26 @@
 						//  when the current date is between window open date and window close date then enable the suggested and Requested and disable the allocated. 
 						var startDateofTheWindow = oModel.getProperty("/startDateofWindow");
 						var endDateofTheWindow = oModel.getProperty("/endDateofTheWindow");
+						 
 						var windowStartDateP = Date.parse(startDateofTheWindow);
-						var windowEndDateP = Date.parse(endDateofTheWindow);
-						var currentDate = new Date();
+		
+						
+						var windowEndDateWithTime = oModel.getProperty("/dateForValidation");
+										var windowEndDateP = Date.parse(windowEndDateWithTime);
+										
+						var torontoTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+						var		currentDate = new Date(torontoTime);				
+										
+						// var currentDate = new Date();
 
 						var dd = currentDate.getDate();
 						var mm = currentDate.getMonth() + 1; //January is 0!
 						var yyyy = currentDate.getFullYear();
+						var hours = currentDate.getHours();
+						var mins = currentDate.getMinutes();
+						var seconds = currentDate.getSeconds();
 
-						currentDate = mm + '/' + dd + '/' + yyyy;
+						currentDate = mm + '/' + dd + '/' + yyyy + " " + hours + ":" + mins ;
 
 						var parsedtodayDate = Date.parse(currentDate);
 
@@ -862,6 +875,7 @@
 						if ((parsedtodayDate >= windowEndDateP)) {
 
 							oModel.setProperty("/editOrderPrefix", false);
+									oModel.setProperty("/outOfWindowDate", true);
 							//	oModelDetailview.setProperty("/editAllowed", true);
 
 							// 					var oModel = this.getView().getModel("detailView");
@@ -929,9 +943,29 @@
 
 				}
 				var oAllocatedModel = this.getView().getModel("allocatedDataModel");
-				if (oAllocatedModel) {
-					var allocatedModelLength = oAllocatedModel.getData().length;
+
+								if (oAllocatedModel) {
+						var allocatedModelData = oAllocatedModel.getData();
+// loop and count the suggested model where qty is greater than 0. 					
+							var allocatedModelLength = oAllocatedModel.getData().length;
+									for (var i = 0; i < allocatedModelData.length; i++) {
+
+					if (allocatedModelData[i].allocatedVolume <= 0) {
+					 allocatedModelLength = allocatedModelLength - 1;
+					}
+
 				}
+ 
+				}
+				
+				
+				
+				
+				
+				
+				// if (oAllocatedModel) {
+				// 	var allocatedModelLength = oAllocatedModel.getData().length;
+				// }
 
 				var oCountModel = this.getView().getModel("countViewModel");
 				if (oCountModel) {
