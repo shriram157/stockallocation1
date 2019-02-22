@@ -15,6 +15,7 @@
 				//	if ( this.comingFromInit == false){
 				this.reqcomplete();
 				//		} else {
+				//set the Count because SAP cannot handle this. 
 
 				//		}
 
@@ -456,22 +457,22 @@
 
 						});
 
-						// BpDealer.push({
-						// 	"BusinessPartnerKey": "2400042120",
-						// 	"BusinessPartner": "2400042120", //.substring(5, BpLength),
-						// 	"BusinessPartnerName": "For local testing only", //item.OrganizationBPName1 //item.BusinessPartnerFullName
-						// 	"Division": "10",
-						// 	"BusinessPartnerType": "10",
-						// 	"searchTermReceivedDealerName": "42120"
-						// });
-						// 						BpDealer.push({
-						// 	"BusinessPartnerKey": "2400053170",
-						// 	"BusinessPartner": "2400053170", //.substring(5, BpLength),
-						// 	"BusinessPartnerName": "For local testing only", //item.OrganizationBPName1 //item.BusinessPartnerFullName
-						// 	"Division": "10",
-						// 	"BusinessPartnerType": "10",
-						// 	"searchTermReceivedDealerName": "53170"
-						// });
+						BpDealer.push({
+							"BusinessPartnerKey": "2400042120",
+							"BusinessPartner": "2400042120", //.substring(5, BpLength),
+							"BusinessPartnerName": "For local testing only", //item.OrganizationBPName1 //item.BusinessPartnerFullName
+							"Division": "10",
+							"BusinessPartnerType": "10",
+							"searchTermReceivedDealerName": "42120"
+						});
+												BpDealer.push({
+							"BusinessPartnerKey": "2400042193",
+							"BusinessPartner": "2400042193", //.substring(5, BpLength),
+							"BusinessPartnerName": "For local testing only", //item.OrganizationBPName1 //item.BusinessPartnerFullName
+							"Division": "10",
+							"BusinessPartnerType": "10",
+							"searchTermReceivedDealerName": "42193"
+						});
 						// 						BpDealer.push({
 						// 	"BusinessPartnerKey": "2400042120",
 						// 	"BusinessPartner": "2400042120", //.substring(5, BpLength),
@@ -548,6 +549,8 @@
 					},
 
 					success: function (oData) {
+
+						//first get count model and then call the 
 						var oViewSuggestData = [];
 						var oViewRequestedData = [];
 						var oViewAllocatedData = [];
@@ -572,47 +575,48 @@
 								dealerCode: item.zzdealer_code,
 								visibleProperty: true,
 								zzseries: item.zzseries,
-								zzallocation_ind: item.zzallocation_ind
+								zzallocation_ind: item.zzallocation_ind,
+								zzdel_review: item.zzdel_review
 
 							});
 							// requested Data	
 							// calculate the suggestedVolPercentRequested
-                          
-							 if (+item.total_request_qty && +item.total_suggest_qty){
-							var suggestedVolPercentRequested = ((+item.total_request_qty / +item.total_suggest_qty) * 100);
-							suggestedVolPercentRequested = parseFloat(suggestedVolPercentRequested).toFixed(2);
-							suggestedVolPercentRequested = suggestedVolPercentRequested + "%";
-								} else if (+item.total_request_qty <= 0 && +item.total_suggest_qty > 0 ){
-									suggestedVolPercentRequested = 0;
-								} else if (+item.total_request_qty > 0 && +item.total_suggest_qty <= 0 ){
-										suggestedVolPercentRequested = "N/A";
-								} else if ( +item.total_request_qty == 0 && +item.total_suggest_qty == 0 )    {
-													suggestedVolPercentRequested = 0;
-								}                                                       
-                          // suggest MIX requested totals. 
-									if (item.total_request_rec &&  item.total_suggest_rec){
-							var suggestedMixRequested = ((item.total_request_rec / item.total_suggest_rec) * 100);
-							suggestedMixRequested = parseFloat(suggestedMixRequested).toFixed(2);
-							suggestedMixRequested = suggestedMixRequested + "%";
-								} else if (item.total_request_rec  <= 0 && item.total_suggest_rec > 0 ){
-									 	suggestedMixRequested = 0;
-								} else if (item.total_request_rec > 0 && item.total_suggest_rec <= 0){
-									   suggestedMixRequested = "N/A";
-								} else if (item.total_request_rec == 0 && item.total_suggest_rec == 0 ){
-									suggestedMixRequested = 0;
-								}
-                           // percent request volume allocated. 
-								if (+item.total_allocated_qty && +item.total_request_qty){
-							var percentRequestVolAllocated = ((+item.total_allocated_qty / +item.total_request_qty) * 100);
-							percentRequestVolAllocated = parseFloat(percentRequestVolAllocated).toFixed(2);
-							percentRequestVolAllocated = percentRequestVolAllocated + "%";
-									} else if (+item.total_allocated_qty <=0 && +item.total_request_qty > 0 ) {
-										percentRequestVolAllocated = 0;
-									} else if (+item.total_allocated_qty > 0 && +item.total_request_qty <= 0 ) {
-											percentRequestVolAllocated = "N/A";
-									} else if (+item.total_allocated_qty == 0 && +item.total_request_qty == 0 ) {
-												percentRequestVolAllocated = 0;
-									}
+
+							if (+item.total_request_qty && +item.total_suggest_qty) {
+								var suggestedVolPercentRequested = ((+item.total_request_qty / +item.total_suggest_qty) * 100);
+								suggestedVolPercentRequested = parseFloat(suggestedVolPercentRequested).toFixed(2);
+								suggestedVolPercentRequested = suggestedVolPercentRequested + "%";
+							} else if (+item.total_request_qty <= 0 && +item.total_suggest_qty > 0) {
+								suggestedVolPercentRequested = 0;
+							} else if (+item.total_request_qty > 0 && +item.total_suggest_qty <= 0) {
+								suggestedVolPercentRequested = "N/A";
+							} else if (+item.total_request_qty == 0 && +item.total_suggest_qty == 0) {
+								suggestedVolPercentRequested = 0;
+							}
+							// suggest MIX requested totals. 
+							if (item.total_request_rec && item.total_suggest_rec) {
+								var suggestedMixRequested = ((item.total_request_rec / item.total_suggest_rec) * 100);
+								suggestedMixRequested = parseFloat(suggestedMixRequested).toFixed(2);
+								suggestedMixRequested = suggestedMixRequested + "%";
+							} else if (item.total_request_rec <= 0 && item.total_suggest_rec > 0) {
+								suggestedMixRequested = 0;
+							} else if (item.total_request_rec > 0 && item.total_suggest_rec <= 0) {
+								suggestedMixRequested = "N/A";
+							} else if (item.total_request_rec == 0 && item.total_suggest_rec == 0) {
+								suggestedMixRequested = 0;
+							}
+							// percent request volume allocated. 
+							if (+item.total_allocated_qty && +item.total_request_qty) {
+								var percentRequestVolAllocated = ((+item.total_allocated_qty / +item.total_request_qty) * 100);
+								percentRequestVolAllocated = parseFloat(percentRequestVolAllocated).toFixed(2);
+								percentRequestVolAllocated = percentRequestVolAllocated + "%";
+							} else if (+item.total_allocated_qty <= 0 && +item.total_request_qty > 0) {
+								percentRequestVolAllocated = 0;
+							} else if (+item.total_allocated_qty > 0 && +item.total_request_qty <= 0) {
+								percentRequestVolAllocated = "N/A";
+							} else if (+item.total_allocated_qty == 0 && +item.total_request_qty == 0) {
+								percentRequestVolAllocated = 0;
+							}
 
 							// calculate the suggestedMixRequested
 							//   	var suggestedMixRequested = ((+item.total_request_qty/+item.total_suggest_qty) *100 );
@@ -633,7 +637,8 @@
 								suggestedVolPercentRequested: suggestedVolPercentRequested, //item.tot_suggest_perc,
 								suggestedMixRequested: suggestedMixRequested, //item.tot_suggest_mix_requested,
 								dealerCode: item.zzdealer_code,
-								dealerReviewCount: item.dealer_review_count
+								dealerReviewCount: item.dealer_review_count,
+								zzdel_review: item.zzdel_review
 
 							});
 
@@ -653,7 +658,8 @@
 								percentRequestVolAllocated: percentRequestVolAllocated, //item.perc_request_volum_allocated,
 								pendingAllocation: item.pending_allocation,
 								unfilledAllocation: item.unfilled_allocation,
-								dealerCode: item.zzdealer_code
+								dealerCode: item.zzdealer_code,
+								zzdel_review: item.zzdel_review
 
 							});
 
@@ -663,7 +669,6 @@
 						oSuggestModel.setData(oViewSuggestData);
 						this.getView().setModel(oSuggestModel, "suggestedDataModel");
 
-					
 						var oSuggestedModelData = this.getView().getModel("suggestedDataModel").getData();
 						if (oSuggestedModelData.length > 0) {
 							var allocationInidcator = oSuggestedModelData["0"].zzallocation_ind;
@@ -695,6 +700,11 @@
 							}
 
 							if (allocationInidcator == "A") {
+								
+							var oModel = this.getView().getModel("detailView");
+								oModel.setProperty("/showSuggestionTab", false);
+								oModel.setProperty("/showAllocatedTab", true);
+								oModel.setProperty("/showRequestedTab", true);
 
 								// var oModel = this.getView().getModel("detailView");
 								// oModel.setProperty("/showAllocatedTab", false);
@@ -702,31 +712,28 @@
 								// oModel.setProperty("/showSuggestionTab", true);
 
 							}
-							
-									   if (allocationInidcator == "") {
-			   	// not a valid record,  the allocation indicator is received as blank,  not a valid record.
-			   					var showSAPDataHasIssue = this._oResourceBundle.getText("ALLOCATION_INDICATOR_BLANK");
 
-				sap.m.MessageToast.show(showSAPDataHasIssue, {
-					duration: 3000, // default
-					width: "15em", // default
-					my: "center middle",  
-					at: "center middle",  
-					of: window, // default
-					offset: "0 0", // default
-					collision: "fit fit", // default
-					onClose: null, // default
-					autoClose: false, // default
-					animationTimingFunction: "ease", // default
-					animationDuration: 1000, // default
-					closeOnBrowserNavigation: false // default
-				});
-			   	  this._showColor("Red", '#cc1919');
-			   	
-			   	
-			   	
-			   }
-	
+							if (allocationInidcator == "") {
+								// not a valid record,  the allocation indicator is received as blank,  not a valid record.
+								var showSAPDataHasIssue = this._oResourceBundle.getText("ALLOCATION_INDICATOR_BLANK");
+
+								sap.m.MessageToast.show(showSAPDataHasIssue, {
+									duration: 3000, // default
+									width: "15em", // default
+									my: "center middle",
+									at: "center middle",
+									of: window, // default
+									offset: "0 0", // default
+									collision: "fit fit", // default
+									onClose: null, // default
+									autoClose: false, // default
+									animationTimingFunction: "ease", // default
+									animationDuration: 1000, // default
+									closeOnBrowserNavigation: false // default
+								});
+								this._showColor("Red", '#cc1919');
+
+							}
 
 						}
 
@@ -742,8 +749,8 @@
 						oAllocatedModel.setData(oViewAllocatedData);
 						this.getView().setModel(oAllocatedModel, "allocatedDataModel");
 
-						//set the Count because SAP cannot handle this. 
-						this._updateTheCount();
+						// //set the Count because SAP cannot handle this. 
+						// this._updateTheCount();
 
 						// date to the ui. 
 						// var oModel = this.getView().getModel("detailView");
@@ -754,6 +761,9 @@
 						// var tempDueDate = 'Due on ' + sDateForBanner + ' at ' + sDateForTime + '(EST)';
 						// oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 
 
+						var oModelCalled = this.getView().getModel('suggestedDataModel');
+						oModelCalled.attachRequestCompleted(this._callTheCountService());
+
 					}.bind(this),
 					error: function (response) {
 						sap.ui.core.BusyIndicator.hide();
@@ -761,8 +771,10 @@
 
 				});
 
-				//  make a call to count model.   this.sSelectedDealer
+			}, // end of req complete
 
+			//  make a call to count model.   this.sSelectedDealer
+			_callTheCountService: function (oEvent) {
 				var oGetModelCount = this.getView().getModel("ZCDS_SUGGEST_ORD_COUNT_CDS");
 
 				oGetModelCount.read("/ZCDS_SUGGEST_ORD_COUNT", {
@@ -803,8 +815,8 @@
 							var windowStartDay = windowStartDate.substr(6, 2);
 							var windowhour = item.zzend_date.substr(8, 2);
 							var windowMinute = item.zzend_date.substr(10, 2);
-                            var newTempDate = windowStartYear + "/" + windowStartMonth + "/" + windowStartDay + " " + windowhour + ":" + windowMinute;
-                            
+							var newTempDate = windowStartYear + "/" + windowStartMonth + "/" + windowStartDay + " " + windowhour + ":" + windowMinute;
+
 							var dateForBanner = windowStartMonth + "/" + windowStartDay + "/" + windowStartYear;
 							var timeForBanner = windowhour + ":" + windowMinute;
 
@@ -841,16 +853,21 @@
 						//  when the current date is between window open date and window close date then enable the suggested and Requested and disable the allocated. 
 						var startDateofTheWindow = oModel.getProperty("/startDateofWindow");
 						var endDateofTheWindow = oModel.getProperty("/endDateofTheWindow");
-						 
+
 						var windowStartDateP = Date.parse(startDateofTheWindow);
-		
-						
+
 						var windowEndDateWithTime = oModel.getProperty("/dateForValidation");
-										var windowEndDateP = Date.parse(windowEndDateWithTime);
-										
-						var torontoTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
-						var		currentDate = new Date(torontoTime);				
-										
+						var windowEndDateP = Date.parse(windowEndDateWithTime);
+
+						// var torontoTime = new Date().toLocaleString("en-US", {
+						// 	timeZone: "America/New_York"
+						// });
+						var torontoTime = new Date();
+						var torontoTimeZone  = moment.tz(torontoTime , "America/New_York");
+						  
+						 var currentDate = new Date(torontoTimeZone); 
+						// var currentDate = new Date(torontoTime);
+
 						// var currentDate = new Date();
 
 						var dd = currentDate.getDate();
@@ -860,13 +877,14 @@
 						var mins = currentDate.getMinutes();
 						var seconds = currentDate.getSeconds();
 
-						currentDate = mm + '/' + dd + '/' + yyyy + " " + hours + ":" + mins ;
+						currentDate = mm + '/' + dd + '/' + yyyy + " " + hours + ":" + mins;
 
 						var parsedtodayDate = Date.parse(currentDate);
 
 						if ((parsedtodayDate <= windowEndDateP && parsedtodayDate >= windowStartDateP)) {
 							// in this period we have to show suggestion and Requested.  Turn off the Allocated. 
 							oModel.setProperty("/showAllocatedTab", false);
+							 
 
 						}
 						oModel.setProperty("/parsedtodayDate", parsedtodayDate);
@@ -875,7 +893,7 @@
 						if ((parsedtodayDate >= windowEndDateP)) {
 
 							oModel.setProperty("/editOrderPrefix", false);
-									oModel.setProperty("/outOfWindowDate", true);
+							oModel.setProperty("/outOfWindowDate", true);
 							//	oModelDetailview.setProperty("/editAllowed", true);
 
 							// 					var oModel = this.getView().getModel("detailView");
@@ -885,7 +903,8 @@
 
 						}
 
-						//set the Count because SAP cannot handle this. 
+						//  new change -  within the window date,  lets show only records where the dealer has reviewed. 						
+
 						this._updateTheCount();
 
 					}.bind(this),
@@ -894,7 +913,7 @@
 					}
 				});
 
-			}, // end of req complete
+			},
 
 			_updateTheCount: function (oEvent) {
 
@@ -907,62 +926,124 @@
 					oModel.setProperty("/showAllocatedTab", false);
 
 				}
+				
+					if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "S") {
+
+					oModel.setProperty("/showSuggestionTab", false);
+
+				}
+							
+				
+
+				// get the data from requestedDataModel  suggestedDataModel allocatedDataModel  allocationInidcator
+				var allocationIndicator = oModel.getProperty("/allocationInidcator");
+				if (oModelData.parsedtodayDate <= oModelData.windowEndDateP && allocationIndicator == "S") {
+					// remove teh records from teh suggested model where dealer review flag == Y
+					var validWindowSuggested = true;
+					// remove teh records from the requested model where dealer review flag != Y
+				} else {
+					var validWindowSuggested = false;
+				}
+				//set the Count because SAP cannot handle this. 			
 
 				var oCountModel = this.getView().getModel("countViewModel");
 				var oSuggestedModel = this.getView().getModel("suggestedDataModel");
-			
-			
+
 				if (oSuggestedModel) {
-						var suggestedModelData = oSuggestedModel.getData();
-// loop and count the suggested model where qty is greater than 0. 					
-							var suggestedModelLength = oSuggestedModel.getData().length;
-									for (var i = 0; i < suggestedModelData.length; i++) {
+					var suggestedModelData = oSuggestedModel.getData();
+					// loop and count the suggested model where qty is greater than 0. 					
+					var suggestedModelLength = oSuggestedModel.getData().length;
+					
+					
+					
+// 					for (var i = elements.length - 1; i >= 0; i--) {
+//   if (elements[i] == remove) {
+//     elements.splice(i, 1);
+//   }
+// }
+					
+					for (var i = suggestedModelData.length - 1; i >= 0; i--) {	
+						if (suggestedModelData[i].zzdel_review == "Y" && validWindowSuggested == true) {
+
+                          if (suggestedModelData[i].suggestedVolume <= 0) {
+                          	suggestedModelLength = suggestedModelLength - 1;
+                          	var volumeZeroRecord = true;
+                          } else {
+                          		var volumeZeroRecord = false;
+                          }
+                             
+							suggestedModelData.splice(i, 1);
+							if (volumeZeroRecord == false) {
+							suggestedModelLength = suggestedModelLength - 1;
+							}
+ 
+						}
+					}
+						for (var i = 0; i < suggestedModelData.length; i++) {
 
 					if (suggestedModelData[i].suggestedVolume <= 0) {
 					 suggestedModelLength = suggestedModelLength - 1;
 					}
-
-				}
+						}
  
+	 
+
+					// }
+					oSuggestedModel.updateBindings(true);
+					
+					// check if suggested model has any anydata then only publish the tab suggestedTAb otherwise turn it off. 
+					   if (validWindowSuggested == true) {
+					   		var suggestedModelLengthTemp = oSuggestedModel.getData().length;
+					   		   if (suggestedModelLengthTemp <= 0) {
+					   		   			oModel.setProperty("/showSuggestionTab", false);
+					   		   }
+					   }
+					
+                  
 				}
 				var oRequestedModel = this.getView().getModel("requestedDataModel");
 				if (oRequestedModel) {
 					var requestedModelData = oRequestedModel.getData(); //.length;
-						var requestedModelLengthTemp = oRequestedModel.getData().length;
-						var requestedModelLength = 0;
-					
-					
-	    		for (var i = 0; i < requestedModelLengthTemp; i++) {
+					var requestedModelLengthTemp = oRequestedModel.getData().length;
+					var requestedModelLength = requestedModelLengthTemp;
 
-					if (requestedModelData[i].dealerReviewCount == "Y") {
-					  requestedModelLength = requestedModelLength + 1;
+		
+		            	for (var i = requestedModelLengthTemp - 1; i >= 0; i--) {	
+
+					// for (var i = 0; i < requestedModelLengthTemp; i++) {
+
+                       	if (requestedModelData[i].zzdel_review != "Y" && validWindowSuggested == true) {
+							requestedModelData.splice(i, 1);
+							 requestedModelLength = requestedModelLength - 1;
+							//  continue;
+                       	}
+
+						// if (requestedModelData[i].dealerReviewCount == "Y") {
+						// 	requestedModelLength = requestedModelLength + 1;
+						// }
+
 					}
-
-				}
-					
-
+					 if (requestedModelLength < 0) {
+					 	requestedModelLength = 0;
+					 }
+            	oRequestedModel.updateBindings(true);
 				}
 				var oAllocatedModel = this.getView().getModel("allocatedDataModel");
 
-								if (oAllocatedModel) {
-						var allocatedModelData = oAllocatedModel.getData();
-// loop and count the suggested model where qty is greater than 0. 					
-							var allocatedModelLength = oAllocatedModel.getData().length;
-									for (var i = 0; i < allocatedModelData.length; i++) {
+				if (oAllocatedModel) {
+					var allocatedModelData = oAllocatedModel.getData();
+					// loop and count the suggested model where qty is greater than 0. 					
+					var allocatedModelLength = oAllocatedModel.getData().length;
+					for (var i = 0; i < allocatedModelData.length; i++) {
 
-					if (allocatedModelData[i].allocatedVolume <= 0) {
-					 allocatedModelLength = allocatedModelLength - 1;
+						if (allocatedModelData[i].allocatedVolume <= 0) {
+							allocatedModelLength = allocatedModelLength - 1;
+						}
+
 					}
 
 				}
- 
-				}
-				
-				
-				
-				
-				
-				
+
 				// if (oAllocatedModel) {
 				// 	var allocatedModelLength = oAllocatedModel.getData().length;
 				// }
@@ -977,20 +1058,17 @@
 				}
 
 			},
-			
-			
-		_showColor:	function (Flag, color) {
-      var oContentDOM = $('#content'); //Pass div Content ID
-      var oParent = $('#content').parent(); //Get Parent
-      //Find for MessageToast class
-      var oMessageToastDOM = $('#content').parent().find('.sapMMessageToast');
-      oMessageToastDOM.css('background', color); //Apply css
-   
-    },
+
+			_showColor: function (Flag, color) {
+				var oContentDOM = $('#content'); //Pass div Content ID
+				var oParent = $('#content').parent(); //Get Parent
+				//Find for MessageToast class
+				var oMessageToastDOM = $('#content').parent().find('.sapMMessageToast');
+				oMessageToastDOM.css('background', color); //Apply css
+
+			},
 
 			_navigateToHandleRouteMatched: function (oEvent) {
-
-
 
 				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 				this.oRouter.getTarget("ProductionRequestSummary").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));

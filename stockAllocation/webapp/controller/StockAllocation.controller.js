@@ -24,9 +24,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var modelSereiesHead = selectedSeries.series; //selectedSeries.Zzmoyr + " - " + selectedSeries.zzseries_desc_en;
 			this.orderPrefix = selectedSeries.orderPrefix;
 			var enableForDealer, setEnableFalseReset, viewInSuggestedTab;
+			
+			if (selectedSeries.whichTabClicked == "requestedTab") {
+					viewInSuggestedTab = false;
+			}
 			if (selectedSeries.sLoggedinUserType == "DealerUser") {
+				this.sLoggedinUserIsDealer = true;
 				enableForDealer = true;
 			} else {
+					this.sLoggedinUserIsDealer = false;
 				enableForDealer = false;
 			}
 
@@ -352,7 +358,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						oViewLocalModel.setProperty("/viewInSuggestedTab", false);
 
 						if (this.outSideWindowDate == false) {
+							 if (this.sLoggedinUserIsDealer == false) {
 							oViewLocalModel.setProperty("/enableForDealer", true);
+							 }
 							oViewLocalModel.setProperty("/setEnableFalseReset", true);
 						}
 
