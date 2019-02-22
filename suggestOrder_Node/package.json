@@ -7,10 +7,8 @@
     "boom": "^2.10.1",
     "request": "^2.88.0",
 	"passport": "^0.3.2",
-    "cf-nodejs-logging-support": "^3.0.13" 	},
-	"description": "Node module for suggest Order processing",
-	"devDependencies": {
-		"@sap/hdbext": "4.3.4",
+    "cf-nodejs-logging-support": "^3.0.13",
+    		"@sap/hdbext": "4.3.4",
 		"@sap/textbundle": "2.1.0",
 		"@sap/logging": "^3.3.1",
 		"@sap/jobs-client": "1.1.1",
@@ -20,7 +18,10 @@
 		"gulp-replace": "0.5.4",
 		"jasmine-reporters": "2.1.1",
 		"gulp-jasmine": "2.4.1",
-		"gulp-istanbul": "1.1.1"
+		"gulp-istanbul": "1.1.1" },
+	"description": "Node module for suggest Order processing",
+	"devDependencies": {
+
 	},
 	"files": [],
 	"main": "server.js",
