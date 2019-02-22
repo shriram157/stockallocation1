@@ -8,7 +8,7 @@
     "request": "^2.88.0",
 	"passport": "^0.3.2",
     "cf-nodejs-logging-support": "^3.0.13",
-    		"@sap/hdbext": "4.3.4",
+    
 		"@sap/textbundle": "2.1.0",
 		"@sap/logging": "^3.3.1",
 		"@sap/jobs-client": "1.1.1",

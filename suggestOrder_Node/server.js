@@ -31,7 +31,7 @@ global.__base = __dirname + '/';
 //Initialize Express App for XSA UAA and HDBEXT Middleware
 var passport = require('passport');
 // var xssec = require('@sap/xssec');
-var xsHDBConn = require('@sap/hdbext');
+// var xsHDBConn = require('@sap/hdbext');
  
 //logging
 var logging = require('@sap/logging');
