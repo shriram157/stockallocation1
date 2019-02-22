@@ -863,29 +863,29 @@
 						// 	timeZone: "America/New_York"
 						// });
 						var torontoTime = new Date();
-						var torontoTimeZone  = moment.tz(torontoTime , "America/New_York");
+						var extractTimeZone = moment(torontoTime);
+						var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY hh:mm');
+						// var torontoTimeZone  = moment.tz(torontoTime , "America/New_York");
 						  
-						 var currentDate = new Date(torontoTimeZone); 
+					//	 var currentDate = new Date(torontoTimeZone); 
 						// var currentDate = new Date(torontoTime);
 
 						// var currentDate = new Date();
 
-						var dd = currentDate.getDate();
-						var mm = currentDate.getMonth() + 1; //January is 0!
-						var yyyy = currentDate.getFullYear();
-						var hours = currentDate.getHours();
-						var mins = currentDate.getMinutes();
-						var seconds = currentDate.getSeconds();
+						// var dd = currentDate.getDate();
+						// var mm = currentDate.getMonth() + 1; //January is 0!
+						// var yyyy = currentDate.getFullYear();
+						// var hours = currentDate.getHours();
+						// var mins = currentDate.getMinutes();
+						// var seconds = currentDate.getSeconds();
 
-						currentDate = mm + '/' + dd + '/' + yyyy + " " + hours + ":" + mins;
+					//	currentDate = mm + '/' + dd + '/' + yyyy + " " + hours + ":" + mins;
 
 						var parsedtodayDate = Date.parse(currentDate);
 
 						if ((parsedtodayDate <= windowEndDateP && parsedtodayDate >= windowStartDateP)) {
 							// in this period we have to show suggestion and Requested.  Turn off the Allocated. 
 							oModel.setProperty("/showAllocatedTab", false);
-							 
-
 						}
 						oModel.setProperty("/parsedtodayDate", parsedtodayDate);
 						oModel.setProperty("/windowEndDateP", windowEndDateP);

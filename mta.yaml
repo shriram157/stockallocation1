@@ -8,9 +8,9 @@ modules:
     type: nodejs
     path: suggestOrder_Node
     parameters:
-      host: DEV-suggestOrder_Node
+      host: QAS-suggestOrder_Node
       register-service-url: true
-      service-name: DEV-suggestOrder_Node
+      service-name: QAS-suggestOrder_Node
       service-url: '${default-url}'
       disk-quota: 512M
       memory: 256M
@@ -18,7 +18,7 @@ modules:
       - name: SUGGEST_ORDER_APIM_CUPS
       - name: uaa_suggestOrder
       - name: cflogging_suggestOrder 
-      - name: dest_DEV_suggestOrder
+      - name: dest_QAS_suggestOrder
     provides:
       - name: suggestOrder_Node_api
         public: false
@@ -30,9 +30,9 @@ modules:
     type: html5
     path: stockAllocation
     parameters:
-      host: DEV-stockAllocation
+      host: QAS-stockAllocation
       register-service-url: true
-      service-name: DEV-stockAllocation
+      service-name: QAS-stockAllocation
       service-url: '${default-url}'
       disk-quota: 512M
       memory: 256M
@@ -40,7 +40,7 @@ modules:
       builder: grunt
     requires:
     - name: uaa_suggestOrder
-    - name: dest_DEV_suggestOrder
+    - name: dest_QAS_suggestOrder
     - name: cflogging_suggestOrder 
     - name: suggestOrder_Node_api
       group: destinations
@@ -59,7 +59,7 @@ resources:
       service: xsuaa
    type: org.cloudfoundry.managed-service
 
- - name: dest_DEV_suggestOrder
+ - name: dest_QAS_suggestOrder
    parameters:
       service-plan: lite
       service: destination
