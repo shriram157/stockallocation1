@@ -18,7 +18,6 @@ modules:
       - name: SUGGEST_ORDER_APIM_CUPS
       - name: uaa_suggestOrder
       - name: cflogging_suggestOrder 
-      - name: dest_QAS_suggestOrder
     provides:
       - name: suggestOrder_Node_api
         public: false
@@ -40,7 +39,6 @@ modules:
       builder: grunt
     requires:
     - name: uaa_suggestOrder
-    - name: dest_QAS_suggestOrder
     - name: cflogging_suggestOrder 
     - name: suggestOrder_Node_api
       group: destinations
@@ -59,11 +57,6 @@ resources:
       service: xsuaa
    type: org.cloudfoundry.managed-service
 
- - name: dest_QAS_suggestOrder
-   parameters:
-      service-plan: lite
-      service: destination
-   type: org.cloudfoundry.managed-service
 
  - name: SUGGEST_ORDER_APIM_CUPS
    type: org.cloudfoundry.existing-service
