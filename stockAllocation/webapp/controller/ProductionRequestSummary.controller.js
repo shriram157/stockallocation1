@@ -864,7 +864,7 @@
 						// });
 						var torontoTime = new Date();
 						var extractTimeZone = moment(torontoTime);
-						var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY hh:mm');
+						var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
 						// var torontoTimeZone  = moment.tz(torontoTime , "America/New_York");
 						  
 					//	 var currentDate = new Date(torontoTimeZone); 
