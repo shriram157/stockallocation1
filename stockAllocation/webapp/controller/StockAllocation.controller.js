@@ -540,6 +540,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						onClose: function (oAction) {
 							if (oAction === sap.m.MessageBox.Action.OK) {
                               this.resultsLossofData = false;
+                              	sap.ui.core.BusyIndicator.show();
 								that.oRouter.navTo(sRouteName);
 								//	that._navBack();
 							}
@@ -547,6 +548,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
 				);
 			} else {
+					sap.ui.core.BusyIndicator.show();
 				this.oRouter.navTo(sRouteName);
 
 			}

@@ -13,7 +13,7 @@
 
 				// add some conditions when do you want to call this 
 				//	if ( this.comingFromInit == false){
-					sap.ui.core.BusyIndicator.show();
+				
 				this.reqcomplete();
 				//		} else {
 				//set the Count because SAP cannot handle this. 
@@ -792,7 +792,7 @@
 						var oModel = this.getView().getModel("detailView");
 
 						//	this.getView().setModel(new sap.ui.model.json.JSONModel(oData.results), "countViewModel");
-						sap.ui.core.BusyIndicator.hide();
+						// sap.ui.core.BusyIndicator.hide();
 						$.each(oData.results, function (i, item) {
 							if (item.totalUnfilledcount == 0) {
 								item.totalUnfilledcount = "0";
@@ -826,7 +826,12 @@
 							var windowEndMonth = windowEndDate.substr(4, 2);
 							var windowEndDay = windowEndDate.substr(6, 2);
 
-							var windowEndDateFormatted = windowEndMonth + "/" + windowEndDay + "/" + windowEndYear;
+
+						var windowStarthour = item.zzstart_date.substr(8, 2);
+						var windowStartMinute = item.zzstart_date.substr(10, 2);							
+							
+
+							var windowEndDateFormatted = windowEndMonth + "/" + windowEndDay + "/" + windowEndYear + " " + windowStarthour + ":" + windowStartMinute;
 							oModel.setProperty("/dateForBanner", dateForBanner);
 							oModel.setProperty("/timeForBanner", timeForBanner);
 							oModel.setProperty("/startDateofWindow", windowEndDateFormatted);
