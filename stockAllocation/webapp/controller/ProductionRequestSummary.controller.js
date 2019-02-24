@@ -13,6 +13,7 @@
 
 				// add some conditions when do you want to call this 
 				//	if ( this.comingFromInit == false){
+					sap.ui.core.BusyIndicator.show();
 				this.reqcomplete();
 				//		} else {
 				//set the Count because SAP cannot handle this. 
@@ -1034,13 +1035,13 @@
 					var allocatedModelData = oAllocatedModel.getData();
 					// loop and count the suggested model where qty is greater than 0. 					
 					var allocatedModelLength = oAllocatedModel.getData().length;
-					for (var i = 0; i < allocatedModelData.length; i++) {
+					// for (var i = 0; i < allocatedModelData.length; i++) {
 
-						if (allocatedModelData[i].allocatedVolume <= 0) {
-							allocatedModelLength = allocatedModelLength - 1;
-						}
+					// 	if (allocatedModelData[i].allocatedVolume <= 0) {
+					// 		allocatedModelLength = allocatedModelLength - 1;
+					// 	}
 
-					}
+					// }// TODO: 
 
 				}
 
@@ -1056,7 +1057,7 @@
 
 					oCountModel.updateBindings(true);
 				}
-
+					sap.ui.core.BusyIndicator.hide();
 			},
 
 			_showColor: function (Flag, color) {

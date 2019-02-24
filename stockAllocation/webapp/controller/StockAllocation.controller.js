@@ -276,7 +276,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						requestedVolumeTotal = requestedVolumeTotal + +item.zzrequest_qty;
 						allocatedTotal = allocatedTotal + +item.zzallocated_qty;
-						allocatedDSTotal = allocatedDSTotal + +item.allocated_ds; //ZPIPELINE_ETA_INVENT_SUMMARY_SRV //Pending with oDAta
+						allocatedDSTotal = allocatedDSTotal + +item.allocated_ds; 
 						pendingAllocationTotal = pendingAllocationTotal + +item.pending_allocation;
 						unfilledAllocationTotal = unfilledAllocationTotal + +item.unfilled__allocation;
 
@@ -754,7 +754,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 					if (that.totalRecordsUpdated == that.responseReceived) {
 						// all is done lets navigate back to the main screen. 
-						sap.ui.core.BusyIndicator.hide();
+						// sap.ui.core.BusyIndicator.hide();
+							//sap.ui.core.BusyIndicator.show();
 						that._navigateToMainScreen();
 
 					}
@@ -1123,9 +1124,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							suggested_Ds: aDataCopy[i].suggested_Ds,
 							requested_Volume: requestedQty,
 							difference: aDataCopy[i].difference,
-							requested_Ds: aDataCopy[i].requested_Ds, // Missing from oData
+							requested_Ds: aDataCopy[i].requested_Ds, 
 							allocated: aDataCopy[i].allocated,
-							allocated_Ds: aDataCopy[i].allocated_Ds, //Missing from oData
+							allocated_Ds: aDataCopy[i].allocated_Ds, 
 							pendingAllocation: aDataCopy[i].pendingAllocation,
 							visibleProperty: true,
 							unfilled_Allocation: aDataCopy[i].unfilled_Allocation,
