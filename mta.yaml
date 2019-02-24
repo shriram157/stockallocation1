@@ -1,14 +1,14 @@
-
 ID: suggestOrder
 _schema-version: '2.1'
 description: Application MTA Project for Claims System Processing
 version: 0.0.1
+
 modules:
   - name: suggestOrder_Node
     type: nodejs
     path: suggestOrder_Node
     parameters:
-      host: QAS-suggestOrder_Node
+      host: tci-dev-stockallocation-node
       register-service-url: true
       service-name: QAS-suggestOrder_Node
       service-url: '${default-url}'
@@ -29,7 +29,7 @@ modules:
     type: html5
     path: stockAllocation
     parameters:
-      host: QAS-stockAllocation
+      host: tci-dev-stockallocation
       register-service-url: true
       service-name: QAS-stockAllocation
       service-url: '${default-url}'
