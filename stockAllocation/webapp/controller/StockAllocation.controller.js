@@ -24,15 +24,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var modelSereiesHead = selectedSeries.series; //selectedSeries.Zzmoyr + " - " + selectedSeries.zzseries_desc_en;
 			this.orderPrefix = selectedSeries.orderPrefix;
 			var enableForDealer, setEnableFalseReset, viewInSuggestedTab;
-			
+
 			if (selectedSeries.whichTabClicked == "requestedTab") {
-					viewInSuggestedTab = false;
+				viewInSuggestedTab = false;
 			}
 			if (selectedSeries.sLoggedinUserType == "DealerUser") {
 				this.sLoggedinUserIsDealer = true;
 				enableForDealer = true;
 			} else {
-					this.sLoggedinUserIsDealer = false;
+				this.sLoggedinUserIsDealer = false;
 				enableForDealer = false;
 			}
 
@@ -44,7 +44,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			} else {
 				this.outSideWindowDate = false;
+				if (this.sLoggedinUserIsDealer == true){
 				setEnableFalseReset = true;
+				} else {
+					setEnableFalseReset = false;	
+				}
 			}
 
 			if ((selectedSeries.parsedtodayDate >= selectedSeries.windowEndDateP) && (selectedSeries.allocationIndicator == "A")) {
@@ -61,7 +65,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			// if it is allocated and greater than window due date,  then turn off the 
 
-		//	enableForDealer = true; // TODO: to be removed on a later date before qa guna
+			//	enableForDealer = true; // TODO: to be removed on a later date before qa guna
 
 			this._oViewLocalData = new sap.ui.model.json.JSONModel({
 				busy: false,
@@ -276,7 +280,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						requestedVolumeTotal = requestedVolumeTotal + +item.zzrequest_qty;
 						allocatedTotal = allocatedTotal + +item.zzallocated_qty;
-						allocatedDSTotal = allocatedDSTotal + +item.allocated_ds; 
+						allocatedDSTotal = allocatedDSTotal + +item.allocated_ds;
 						pendingAllocationTotal = pendingAllocationTotal + +item.pending_allocation;
 						unfilledAllocationTotal = unfilledAllocationTotal + +item.unfilled__allocation;
 
@@ -358,10 +362,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						oViewLocalModel.setProperty("/viewInSuggestedTab", false);
 
 						if (this.outSideWindowDate == false) {
-							 if (this.sLoggedinUserIsDealer == false) {
-							oViewLocalModel.setProperty("/enableForDealer", true);
-							 }
-							oViewLocalModel.setProperty("/setEnableFalseReset", true);
+							if (this.sLoggedinUserIsDealer == true) {
+								oViewLocalModel.setProperty("/enableForDealer", true);
+								oViewLocalModel.setProperty("/setEnableFalseReset", true);
+							} else {
+								oViewLocalModel.setProperty("/enableForDealer", false);
+								oViewLocalModel.setProperty("/setEnableFalseReset", false);
+							}
+
 						}
 
 						// } else {
@@ -539,8 +547,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						// styleClass: oComponent.getContentDensityClass(),
 						onClose: function (oAction) {
 							if (oAction === sap.m.MessageBox.Action.OK) {
-                              this.resultsLossofData = false;
-                              	sap.ui.core.BusyIndicator.show();
+								this.resultsLossofData = false;
+								sap.ui.core.BusyIndicator.show();
 								that.oRouter.navTo(sRouteName);
 								//	that._navBack();
 							}
@@ -548,7 +556,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
 				);
 			} else {
-					sap.ui.core.BusyIndicator.show();
+				sap.ui.core.BusyIndicator.show();
 				this.oRouter.navTo(sRouteName);
 
 			}
@@ -604,7 +612,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							var tempRequestedTotal = 0;
 							//	if (currentValue != oldValue) {
 							// trigger the flag to show a loss of data. 
-						//	that.resultsLossofData = true;
+							//	that.resultsLossofData = true;
 
 							var oStockModelData = that.getView().getModel("stockDataModel").getData();
 							for (var i = 0; i < oStockModelData.length; i++) {
@@ -713,7 +721,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oStockData = new sap.ui.model.json.JSONModel();
 			oStockData.setData(oStockAllocationData);
 			this.getView().setModel(oStockData, "stockDataModel");
-			
+
 			var oModelStockDataModel = this.getView().getModel("stockDataModel");
 			oModelStockDataModel.updateBindings(true);
 
@@ -721,7 +729,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			// };
 
 		},
-
 
 		_postTheDataToSAP: function (oSuggestUpdateModel, sendTheDataToSAP) {
 			var requestedVolume = sendTheDataToSAP.requested_Volume.toString();
@@ -757,7 +764,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					if (that.totalRecordsUpdated == that.responseReceived) {
 						// all is done lets navigate back to the main screen. 
 						// sap.ui.core.BusyIndicator.hide();
-							//sap.ui.core.BusyIndicator.show();
+						//sap.ui.core.BusyIndicator.show();
 						that._navigateToMainScreen();
 
 					}
@@ -1126,9 +1133,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							suggested_Ds: aDataCopy[i].suggested_Ds,
 							requested_Volume: requestedQty,
 							difference: aDataCopy[i].difference,
-							requested_Ds: aDataCopy[i].requested_Ds, 
+							requested_Ds: aDataCopy[i].requested_Ds,
 							allocated: aDataCopy[i].allocated,
-							allocated_Ds: aDataCopy[i].allocated_Ds, 
+							allocated_Ds: aDataCopy[i].allocated_Ds,
 							pendingAllocation: aDataCopy[i].pendingAllocation,
 							visibleProperty: true,
 							unfilled_Allocation: aDataCopy[i].unfilled_Allocation,
