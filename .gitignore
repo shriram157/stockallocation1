@@ -1,3 +1,7 @@
+project.json
+/.mta/
+/*.mtar
+
 fioriHtmlRunner.html
 .*/fioriHtmlRunner.html
 visual_ext_index.html
@@ -12,6 +16,3 @@ changes_preview.js
 AppVariant_index.html
 APIExternalProducer.js
 .*/APIExternalProducer.js
-/node_modules/
-/.testresults/
-/*.che/modules/

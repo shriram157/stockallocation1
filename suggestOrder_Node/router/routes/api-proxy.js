@@ -1,20 +1,18 @@
-/*eslint no-console: 0, no-unused-vars: 0, no-shadow: 0, new-cap: 0*/
-/*eslint-env node, es6 */
-'use strict';
+/*eslint new-cap: 0, no-console: 0, no-shadow: 0, no-unused-vars: 0*/
+/*eslint-env es6, node*/
+
+"use strict";
+
 var express = require('express');
 var request = require('request');
 var xsenv = require("@sap/xsenv");
-var passport = require('passport');
-var JWTStrategy = require('@sap/xssec').JWTStrategy;
-
-var async = require('async');
 
 var app = express();
 
 // Use the session middleware
 
 // vehicle Locator Node Module. 
-module.exports = function () {
+module.exports = function (appContext) {
 	var app = express.Router();
 
 	// SAP Calls Start from here

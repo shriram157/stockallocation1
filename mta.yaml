@@ -1,73 +1,68 @@
 ID: suggestOrder
 _schema-version: '2.1'
-description: Application MTA Project for Claims System Processing
+description: Stock allocation consolidated app
 version: 0.0.1
 
 modules:
-  - name: suggestOrder_Node
-    type: nodejs
-    path: suggestOrder_Node
-    parameters:
+ - name: suggestOrder_Node
+   type: nodejs
+   path: suggestOrder_Node
+   parameters:
       host: tci-dev-stockallocation-node
-      register-service-url: true
-      service-name: QAS-suggestOrder_Node
-      service-url: '${default-url}'
       disk-quota: 512M
       memory: 256M
-    requires:
-      - name: SUGGEST_ORDER_APIM_CUPS
-      - name: uaa_suggestOrder
-      - name: cflogging_suggestOrder 
-    provides:
-      - name: suggestOrder_Node_api
-        public: false
-        properties:
-          url: '${default-url}'
-    description: This node module provides the data to the UI using CUPS
-   
-  - name: stockAllocation
-    type: html5
-    path: stockAllocation
-    parameters:
-      host: tci-dev-stockallocation
-      register-service-url: true
-      service-name: QAS-stockAllocation
-      service-url: '${default-url}'
-      disk-quota: 512M
-      memory: 256M
-    build-parameters:
-      builder: grunt
-    requires:
+   properties:
+      XS_APP_LOG_LEVEL: info
+      XS_LOG_USER: true
+      XS_LOG_REFERER: true
+      XS_LOG_CONNECTION_DATA: true
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
+   provides:
+    - name: suggestOrder_Node_api
+      properties:
+         url: ${default-url}
+   requires:
+    - name: cflogging_suggestOrder
     - name: uaa_suggestOrder
+    - name: SUGGEST_ORDER_APIM_CUPS
+
+ - name: stockAllocation
+   type: html5
+   path: stockAllocation
+   parameters:
+      host: tci-dev-stockallocation
+      disk-quota: 512M
+      memory: 256M
+   properties:
+      XS_APP_LOG_LEVEL: info
+   build-parameters:
+      builder: grunt
+   requires:
     - name: cflogging_suggestOrder 
+    - name: uaa_suggestOrder
     - name: suggestOrder_Node_api
       group: destinations
       properties:
-          name: suggestOrder-node-backend
-          url: '~{url}'
-          forwardAuthToken: true 
-    provides:
-    - name: stockAllocation
+         name: suggestOrder-node-backend
+         forwardAuthToken: true
+         timeout: 60000
+         url: '~{url}'
 
 resources:
+ - name: cflogging_suggestOrder
+   parameters:
+      service: application-logs
+      service-plan: lite
+   type: org.cloudfoundry.managed-service
+
  - name: uaa_suggestOrder
    parameters:
       path: ./xs-security.json
-      service-plan: application
       service: xsuaa
+      service-plan: application
    type: org.cloudfoundry.managed-service
-
 
  - name: SUGGEST_ORDER_APIM_CUPS
+   parameters:
+     service-name: SUGGEST_ORDER_APIM_CUPS   
    type: org.cloudfoundry.existing-service
-   parameters:
-     service-name: SUGGEST_ORDER_APIM_CUPS
-   properties:
-      odata-call-service-name: '${service-name}'
-      
- - name: cflogging_suggestOrder
-   parameters:
-      service-plan: lite
-      service: application-logs
-   type: org.cloudfoundry.managed-service
-   
