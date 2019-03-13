@@ -44,25 +44,25 @@ modules:
       group: destinations
       properties:
          name: suggestOrder-node-backend
+         url: ~{url}
          forwardAuthToken: true
          timeout: 60000
-         url: '~{url}'
 
 resources:
  - name: cflogging_suggestOrder
+   type: org.cloudfoundry.managed-service
    parameters:
       service: application-logs
       service-plan: lite
-   type: org.cloudfoundry.managed-service
 
  - name: uaa_suggestOrder
+   type: org.cloudfoundry.managed-service
    parameters:
-      path: ./xs-security.json
       service: xsuaa
       service-plan: application
-   type: org.cloudfoundry.managed-service
+      path: ./xs-security.json
 
  - name: SUGGEST_ORDER_APIM_CUPS
+   type: org.cloudfoundry.existing-service
    parameters:
      service-name: SUGGEST_ORDER_APIM_CUPS   
-   type: org.cloudfoundry.existing-service
