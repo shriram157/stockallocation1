@@ -670,13 +670,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var oSuggestUpdateModel = that.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
 
-			that._oToken = oSuggestUpdateModel.getHeaders()['x-csrf-token'];
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-Token': that._oToken
-				}
-			});
-
 			//  now check where ever there is a change in quantity,  send a flag to SAP,  the data is changed. 
 
 			var oStockSapData = that.getView().getModel("stockDataModel");
@@ -756,6 +749,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var that = this;
 			that.responseReceived = 0;
+			oSuggestUpdateModel.refreshSecurityToken();
 			oSuggestUpdateModel.create("/TSuggestOrdSet", (oData), {
 				success: $.proxy(function (data, response) {
 
