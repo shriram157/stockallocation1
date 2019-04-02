@@ -14,10 +14,12 @@ module.exports = function (appContext) {
 	var routerLogger = appContext.createLogContext().getLogger("/Application/Route/UserDetails");
 	var routerTracer = appContext.createLogContext().getTracer(__filename);
 
+	// Get UPS name from env var UPS_NAME
+	var apimServiceName = process.env.UPS_NAME;
 	var options = {};
 	options = Object.assign(options, xsenv.getServices({
 		api: {
-			name: "SUGGEST_ORDER_APIM_CUPS"
+			name: apimServiceName
 		}
 	}));
 
