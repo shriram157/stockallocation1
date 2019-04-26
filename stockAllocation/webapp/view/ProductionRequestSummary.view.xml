@@ -98,7 +98,7 @@
 										
 										    	<ToolbarSpacer/>
 										    	
-											<Button  id="showAllSeriesBtn" text="{i18n>SHOW_SUGGEST_SERIES}" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="onClickShowAllSeries"/>
+											<Button  id="showAllSeriesBtn" text="{i18n>SHOW_ALL_SERIES}" type="Accept" iconFirst="true" width="auto" enabled="{detailView>/noZeroRecordFound}" visible="true" iconDensityAware="false" press="onClickShowAllSeries"/>
 											
 											
 										</content>
@@ -316,7 +316,7 @@
 										</header>
 										<footer/>
 									</Column>
-									<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+									<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
 										<header>
 											<Text text="{i18n>UNFILLED_ALLOCATION}"  width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 										</header>
@@ -334,8 +334,8 @@
 											<Text text="{allocatedDataModel>suggestedMixRequested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 											<Text text="{allocatedDataModel>allocatedVolume}"  width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 											<Text text="{allocatedDataModel>percentRequestVolAllocated}"  width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-										    <Text text="{allocatedDataModel>pendingAllocation}"  width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>	
-											<Text text="{allocatedDataModel>unfilledAllocation}"  width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										    <Text text="{allocatedDataModel>pendingAllocation}"  width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>	
+											<Text text="{allocatedDataModel>unfilledAllocation}"  width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 										</cells>
 									</ColumnListItem>
 

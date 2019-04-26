@@ -13,7 +13,7 @@
 
 				// add some conditions when do you want to call this 
 				//	if ( this.comingFromInit == false){
-				
+
 				this.reqcomplete();
 				//		} else {
 				//set the Count because SAP cannot handle this. 
@@ -153,8 +153,7 @@
 				var aDataBP = oModelBP.getData();
 
 				// - call this so we get the new DAta everytime the BP Data has been changed. 
-				this.reqcomplete(); // TODO: Lets call this again. 
-
+				this.reqcomplete();
 			},
 
 			// All my custom modules - End	-//////////////////////////////////////////////////////////////////////////////////////////////	
@@ -328,15 +327,13 @@
 			},
 			_onButtonPress: function () {
 				window.close();
-				// window.top.close();
-				//	this.close(); // TODO: To be revisited. 
 
 			},
 			onInit: function () {
 
 				// initialize  local models and data calls
 
-				var oViewModel = new sap.ui.model.json.JSONModel({
+				this._oViewModel = new sap.ui.model.json.JSONModel({
 					busy: false,
 					delay: 0,
 					visibleForDealer: true,
@@ -346,7 +343,7 @@
 
 				});
 
-				this.getView().setModel(oViewModel, "detailView");
+				this.getView().setModel(this._oViewModel, "detailView");
 
 				// the business partner oData calls should happen onit.
 				var sLocation = window.location.host;
@@ -358,9 +355,9 @@
 				} else {
 					this.sPrefix = "";
 					this.attributeUrl = "/userDetails/attributes";
-					//this.attributeUrl = "/userDetails/attributesforlocaltesting";		// TODO: security not yet implemented
+
 					this.currentScopeUrl = "/userDetails/currentScopesForUser";
-					//	this.currentScopeUrl = "/userDetails/currentScopesForUserLocaltesting";// TODO: security not yet implemented
+
 				}
 
 				// lets set the function call to get the lanugauge from url 
@@ -380,7 +377,18 @@
 						// var userScopes = oData;
 						// userScopes.forEach(function (data) {
 
-						var userType = oData.loggedUserType[0];
+						//////////////////////////////////////////////////////////////////////////////////////////////////////
+						// Local Testing Hardcodings
+						var sLocation = window.location.host;
+						var sLocation_conf = sLocation.search("webide");
+						if (sLocation_conf == 0) {
+							// if a local user from weide 
+							userType = "DealerUser"; // -- Guna // TODO: While testing locally for Dealer	 
+						} else {
+							var userType = oData.loggedUserType[0];
+							//////////////////////////////////////////////////////////////////						
+						}
+
 						switch (userType) {
 						case "DealerUser":
 
@@ -412,6 +420,7 @@
 							// raise a message, because this should not be allowed. 
 
 						}
+
 						that._callTheDealerFetchService();
 					}
 
@@ -434,27 +443,48 @@
 						var BpDealer = [];
 						var userAttributes = [];
 						var oModelDetailView = this.getView().getModel("detailView");
+
 						$.each(oData.attributes, function (i, item) {
 							var BpLength = item.BusinessPartner.length;
 
 							if (i == 0) {
-								oModelDetailView.setProperty("/BusinessPartnerKey", item.BusinessPartnerKey);
-								oModelDetailView.setProperty("/Dealer_No", item.BusinessPartner);
-								var tempDealerText = item.BusinessPartner + " - " + item.BusinessPartnerName;
-								// oModelDetailView.setProperty("/Dealer_Name", item.BusinessPartnerName);
+								// if local testing lets just use 42120duser							
+								//////////////////////////////////////////////////////////////////////////////////////////////////////
+								// Local Testing Hardcodings
+								var sLocation = window.location.host;
+								var sLocation_conf = sLocation.search("webide");
+								if (sLocation_conf == 0) {
+									// if a local user from weide 
+									// -- Guna // TODO: While testing locally for Dealer	 
+									oModelDetailView.setProperty("/BusinessPartnerKey", "2400042120");
+									oModelDetailView.setProperty("/Dealer_No", "2400042120");
+									var tempDealerText = "2400042120" + " - " + "For local testing only";
+									// oModelDetailView.setProperty("/Dealer_Name", item.BusinessPartnerName);
 
-								oModelDetailView.setProperty("/Dealer_Name", tempDealerText);
+									oModelDetailView.setProperty("/Dealer_Name", tempDealerText);
+
+								} else {
+
+									//////////////////////////////////////////////////////////////////						
+
+									oModelDetailView.setProperty("/BusinessPartnerKey", item.BusinessPartnerKey);
+									oModelDetailView.setProperty("/Dealer_No", item.BusinessPartner);
+									var tempDealerText = item.BusinessPartner + " - " + item.BusinessPartnerName;
+									// oModelDetailView.setProperty("/Dealer_Name", item.BusinessPartnerName);
+
+									oModelDetailView.setProperty("/Dealer_Name", tempDealerText);
+								}
+
+								BpDealer.push({
+
+									"BusinessPartnerKey": item.BusinessPartnerKey,
+									"BusinessPartner": item.BusinessPartner, //.substring(5, BpLength),
+									"BusinessPartnerName": item.BusinessPartnerName, //item.OrganizationBPName1 //item.BusinessPartnerFullName
+									"Division": item.Division,
+									"BusinessPartnerType": item.BusinessPartnerType,
+									"searchTermReceivedDealerName": item.SearchTerm2
+								});
 							}
-
-							BpDealer.push({
-
-								"BusinessPartnerKey": item.BusinessPartnerKey,
-								"BusinessPartner": item.BusinessPartner, //.substring(5, BpLength),
-								"BusinessPartnerName": item.BusinessPartnerName, //item.OrganizationBPName1 //item.BusinessPartnerFullName
-								"Division": item.Division,
-								"BusinessPartnerType": item.BusinessPartnerType,
-								"searchTermReceivedDealerName": item.SearchTerm2
-							});
 
 						});
 
@@ -489,19 +519,21 @@
 						//that.getView().setModel(new sap.ui.model.json.JSONModel(BpDealer), "BpDealerModel");
 						// read the saml attachments the same way 
 						var dealerCode = "";
-						$.each(oData.samlAttributes, function (i, item) {
-							if (item.DealerCode) {
-								dealerCode = item.DealerCode["0"];
-							}
-
-							userAttributes.push({
-								"UserType": item.UserType["0"],
-								"DealerCode": dealerCode,
-								"Language": item.Language["0"]
-
-							});
-
+						if (oData.samlAttributes.DealerCode) {
+							dealerCode = oData.samlAttributes.DealerCode["0"];
+						}
+						userAttributes.push({
+							"UserType": oData.samlAttributes.UserType["0"],
+							"DealerCode": dealerCode,
+							"Language": oData.samlAttributes.Language["0"]
 						});
+
+						// $.each(oData.samlAttributes, function (i, item) {
+						// 	if (item.DealerCode) {
+						// 		dealerCode = item.DealerCode["0"];
+						// 	}
+
+						// });
 
 						that.getView().setModel(new sap.ui.model.json.JSONModel(userAttributes), "userAttributesModel");
 						// set the bp for further calls. 
@@ -521,7 +553,7 @@
 					}
 				});
 				this.comingFromInit = true;
-				this._navigateToHandleRouteMatched(); // TODO: To be revisited. 
+				this._navigateToHandleRouteMatched();
 			},
 
 			reqcomplete: function () {
@@ -671,6 +703,47 @@
 						this.getView().setModel(oSuggestModel, "suggestedDataModel");
 
 						var oSuggestedModelData = this.getView().getModel("suggestedDataModel").getData();
+						// by default lets show only suggested data. 
+
+						var showSuggestSeriesText = this._oResourceBundle.getText("SHOW_SUGGEST_SERIES"),
+							showAllSeriesText = this._oResourceBundle.getText("SHOW_ALL_SERIES");
+
+						var currentText = this.getView().byId("showAllSeriesBtn").getText();
+						var atleastOneRecordwithZeroExist = false;
+						if (currentText == showAllSeriesText) {
+
+							for (var i = 0; i < oSuggestedModelData.length; i++) {
+
+								//	visibleProperty
+
+								if (oSuggestedModelData[i].suggestedVolume <= 0) {
+									oSuggestedModelData[i].visibleProperty = false;
+									atleastOneRecordwithZeroExist = true;
+								}
+
+							}
+						} else {
+
+							for (var i = 0; i < oSuggestedModelData.length; i++) {
+
+								//	visibleProperty
+
+								if (oSuggestedModelData[i].suggestedVolume <= 0) {
+									oSuggestedModelData[i].visibleProperty = true;
+								}
+
+							}
+						}
+
+						if (atleastOneRecordwithZeroExist == true) {
+							//disable the button
+							this._oViewModel.setProperty("/noZeroRecordFound", true);
+
+						} else {
+							//enable the button
+							this._oViewModel.setProperty("/noZeroRecordFound", false);
+						}
+
 						if (oSuggestedModelData.length > 0) {
 							var allocationInidcator = oSuggestedModelData["0"].zzallocation_ind;
 							oModel.setProperty("/allocationInidcator", allocationInidcator);
@@ -701,8 +774,8 @@
 							}
 
 							if (allocationInidcator == "A") {
-								
-							var oModel = this.getView().getModel("detailView");
+
+								var oModel = this.getView().getModel("detailView");
 								oModel.setProperty("/showSuggestionTab", false);
 								oModel.setProperty("/showAllocatedTab", true);
 								oModel.setProperty("/showRequestedTab", true);
@@ -826,12 +899,11 @@
 							var windowEndMonth = windowEndDate.substr(4, 2);
 							var windowEndDay = windowEndDate.substr(6, 2);
 
+							var windowStarthour = item.zzstart_date.substr(8, 2);
+							var windowStartMinute = item.zzstart_date.substr(10, 2);
 
-						var windowStarthour = item.zzstart_date.substr(8, 2);
-						var windowStartMinute = item.zzstart_date.substr(10, 2);							
-							
-
-							var windowEndDateFormatted = windowEndMonth + "/" + windowEndDay + "/" + windowEndYear + " " + windowStarthour + ":" + windowStartMinute;
+							var windowEndDateFormatted = windowEndMonth + "/" + windowEndDay + "/" + windowEndYear + " " + windowStarthour + ":" +
+								windowStartMinute;
 							oModel.setProperty("/dateForBanner", dateForBanner);
 							oModel.setProperty("/timeForBanner", timeForBanner);
 							oModel.setProperty("/startDateofWindow", windowEndDateFormatted);
@@ -851,8 +923,15 @@
 						var sDateForBanner = oModel.getProperty("/dateForBanner");
 						var sDateForTime = oModel.getProperty("/timeForBanner");
 
+						// Due on in french. 
+						if (this.sCurrentLocale == "FR") {
+							var WordDueOn = 'Due sur ';
+						} else {
+							var WordDueOn = 'Due on ';
+						}
+
 						if (sDateForBanner) {
-							var tempDueDate = 'Due on ' + sDateForBanner + ' at ' + sDateForTime + '(EST)';
+							var tempDueDate = WordDueOn + sDateForBanner + ' at ' + sDateForTime + "(EST)";
 							oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 
 						}
 
@@ -872,8 +951,8 @@
 						var extractTimeZone = moment(torontoTime);
 						var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
 						// var torontoTimeZone  = moment.tz(torontoTime , "America/New_York");
-						  
-					//	 var currentDate = new Date(torontoTimeZone); 
+
+						//	 var currentDate = new Date(torontoTimeZone); 
 						// var currentDate = new Date(torontoTime);
 
 						// var currentDate = new Date();
@@ -885,7 +964,7 @@
 						// var mins = currentDate.getMinutes();
 						// var seconds = currentDate.getSeconds();
 
-					//	currentDate = mm + '/' + dd + '/' + yyyy + " " + hours + ":" + mins;
+						//	currentDate = mm + '/' + dd + '/' + yyyy + " " + hours + ":" + mins;
 
 						var parsedtodayDate = Date.parse(currentDate);
 
@@ -932,14 +1011,12 @@
 					oModel.setProperty("/showAllocatedTab", false);
 
 				}
-				
-					if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "S") {
+
+				if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "S") {
 
 					oModel.setProperty("/showSuggestionTab", false);
 
 				}
-							
-				
 
 				// get the data from requestedDataModel  suggestedDataModel allocatedDataModel  allocationInidcator
 				var allocationIndicator = oModel.getProperty("/allocationInidcator");
@@ -959,53 +1036,48 @@
 					var suggestedModelData = oSuggestedModel.getData();
 					// loop and count the suggested model where qty is greater than 0. 					
 					var suggestedModelLength = oSuggestedModel.getData().length;
-					
-					
-					
-// 					for (var i = elements.length - 1; i >= 0; i--) {
-//   if (elements[i] == remove) {
-//     elements.splice(i, 1);
-//   }
-// }
-					
-					for (var i = suggestedModelData.length - 1; i >= 0; i--) {	
+
+					// 					for (var i = elements.length - 1; i >= 0; i--) {
+					//   if (elements[i] == remove) {
+					//     elements.splice(i, 1);
+					//   }
+					// }
+
+					for (var i = suggestedModelData.length - 1; i >= 0; i--) {
 						if (suggestedModelData[i].zzdel_review == "Y" && validWindowSuggested == true) {
 
-                          if (suggestedModelData[i].suggestedVolume <= 0) {
-                          	suggestedModelLength = suggestedModelLength - 1;
-                          	var volumeZeroRecord = true;
-                          } else {
-                          		var volumeZeroRecord = false;
-                          }
-                             
+							if (suggestedModelData[i].suggestedVolume <= 0) {
+								suggestedModelLength = suggestedModelLength - 1;
+								var volumeZeroRecord = true;
+							} else {
+								var volumeZeroRecord = false;
+							}
+
 							suggestedModelData.splice(i, 1);
 							if (volumeZeroRecord == false) {
-							suggestedModelLength = suggestedModelLength - 1;
+								suggestedModelLength = suggestedModelLength - 1;
 							}
- 
-						}
-					}
-						for (var i = 0; i < suggestedModelData.length; i++) {
 
-					if (suggestedModelData[i].suggestedVolume <= 0) {
-					 suggestedModelLength = suggestedModelLength - 1;
-					}
 						}
- 
-	 
+					}
+					for (var i = 0; i < suggestedModelData.length; i++) {
+
+						if (suggestedModelData[i].suggestedVolume <= 0) {
+							suggestedModelLength = suggestedModelLength - 1;
+						}
+					}
 
 					// }
 					oSuggestedModel.updateBindings(true);
-					
+
 					// check if suggested model has any anydata then only publish the tab suggestedTAb otherwise turn it off. 
-					   if (validWindowSuggested == true) {
-					   		var suggestedModelLengthTemp = oSuggestedModel.getData().length;
-					   		   if (suggestedModelLengthTemp <= 0) {
-					   		   			oModel.setProperty("/showSuggestionTab", false);
-					   		   }
-					   }
-					
-                  
+					if (validWindowSuggested == true) {
+						var suggestedModelLengthTemp = oSuggestedModel.getData().length;
+						if (suggestedModelLengthTemp <= 0) {
+							oModel.setProperty("/showSuggestionTab", false);
+						}
+					}
+
 				}
 				var oRequestedModel = this.getView().getModel("requestedDataModel");
 				if (oRequestedModel) {
@@ -1013,26 +1085,25 @@
 					var requestedModelLengthTemp = oRequestedModel.getData().length;
 					var requestedModelLength = requestedModelLengthTemp;
 
-		
-		            	for (var i = requestedModelLengthTemp - 1; i >= 0; i--) {	
+					for (var i = requestedModelLengthTemp - 1; i >= 0; i--) {
 
-					// for (var i = 0; i < requestedModelLengthTemp; i++) {
+						// for (var i = 0; i < requestedModelLengthTemp; i++) {
 
-                       	if (requestedModelData[i].zzdel_review != "Y" && validWindowSuggested == true) {
+						if (requestedModelData[i].zzdel_review != "Y" && validWindowSuggested == true) {
 							requestedModelData.splice(i, 1);
-							 requestedModelLength = requestedModelLength - 1;
+							requestedModelLength = requestedModelLength - 1;
 							//  continue;
-                       	}
+						}
 
 						// if (requestedModelData[i].dealerReviewCount == "Y") {
 						// 	requestedModelLength = requestedModelLength + 1;
 						// }
 
 					}
-					 if (requestedModelLength < 0) {
-					 	requestedModelLength = 0;
-					 }
-            	oRequestedModel.updateBindings(true);
+					if (requestedModelLength < 0) {
+						requestedModelLength = 0;
+					}
+					oRequestedModel.updateBindings(true);
 				}
 				var oAllocatedModel = this.getView().getModel("allocatedDataModel");
 
@@ -1062,7 +1133,7 @@
 
 					oCountModel.updateBindings(true);
 				}
-					sap.ui.core.BusyIndicator.hide();
+				sap.ui.core.BusyIndicator.hide();
 			},
 
 			_showColor: function (Flag, color) {
@@ -1105,9 +1176,6 @@
 					});
 					this.getView().setModel(i18nModel, "i18n");
 					this.sCurrentLocale = 'FR';
-					// set the right image for logo	 - french		
-					/*				var currentImageSource = this.getView().byId("idLexusLogo");
-									currentImageSource.setProperty("src", "images/Lexus_FR.png");*/
 
 				} else {
 					var i18nModel = new sap.ui.model.resource.ResourceModel({
@@ -1117,9 +1185,6 @@
 					});
 					this.getView().setModel(i18nModel, "i18n");
 					this.sCurrentLocale = 'EN';
-					// set the right image for logo			
-					/*				var currentImageSource = this.getView().byId("idLexusLogo");
-									currentImageSource.setProperty("src", "images/Lexus_EN.png");*/
 
 				}
 
