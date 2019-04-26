@@ -749,16 +749,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			
 			
 			
-					var showSuggestPercentagesText = this._oResourceBundle.getText("SHOW_PERCENTAGES"),
-				showAllPercentagesText = this._oResourceBundle.getText("SHOW_ALL_VALUES");
+			// 		var showSuggestPercentagesText = this._oResourceBundle.getText("SHOW_PERCENTAGES"),
+			// 	showAllPercentagesText = this._oResourceBundle.getText("SHOW_ALL_VALUES");
 			
-			var currentText = this.getView().byId("showPercentagesBtn").getText();
+			// var currentText = this.getView().byId("showPercentagesBtn").getText();
 			
-			if (currentText == showAllPercentagesText ) {
-				// get the percent calculation done again. 
-					this._showPercentagesAgain(includeZero);
+			// if (currentText == showAllPercentagesText ) {
+			// 	// get the percent calculation done again. 
+			// 		this._showPercentagesAgain(includeZero);
 				
-			}
+			// }
 				
 			
 			
