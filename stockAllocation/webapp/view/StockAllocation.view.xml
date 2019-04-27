@@ -11,6 +11,28 @@
 
 	<Page showHeader="true" title="{i18n>STOCK_ALLOCATION}" showFooter="true" showNavButton="true" navButtonPress="_onPageNavButtonPress"
 		class="sapUiSizeCompact">
+		
+		
+			<customHeader>
+					<Bar class="sapUiSmallPaddingBeginEnd clCustomHeaderBg">
+						<!--<contentLeft>-->
+						
+						<!--	<Image id="idLexusLogo" src="Images/toyota_logo_colour.png" width="100px"/>-->
+						<!--	<Text text="|" class="sapUiTinyMarginBeginEnd"/>-->
+						<!--	<Text class="clCustomFont" text="{i18n>PageTitle}"/>-->
+						<!--</contentLeft>-->
+						<contentRight>
+						 
+									<Button   class="VLbtn2" text="{i18n>Back}" type="Transparent" press="_onPageNavButtonPress" width="auto"/>
+						<!--<Link text="{i18n>Back}" class="clCustomFont sapUiSmallMargin" press="handlebacksearch"/>-->
+						</contentRight>
+					</Bar>
+				</customHeader>
+		
+		
+		
+		
+		
 		<content>
 			<Title text="{oViewLocalDataModel>/BusinessPartnerName}" titleStyle="H2" width="50%" textAlign="Left" visible="true" wrapping="false"
 				class="sapUiTinyMargin">
