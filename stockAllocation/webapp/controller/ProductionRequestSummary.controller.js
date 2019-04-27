@@ -383,14 +383,14 @@
 						var sLocation_conf = sLocation.search("webide");
 						if (sLocation_conf == 0) {
 							// if a local user from weide 
-							userType = "DealerUser"; // -- Guna // TODO: While testing locally for Dealer	 
+							userType = "Dealer_User"; // -- Guna // TODO: While testing locally for Dealer	 
 						} else {
 							var userType = oData.loggedUserType[0];
 							//////////////////////////////////////////////////////////////////						
 						}
 
 						switch (userType) {
-						case "DealerUser":
+						case "Dealer_User":
 
 							that.sLoggedinUserType = "DealerUser";
 							oModelDetailview.setProperty("/editOrderPrefix", true);
@@ -409,7 +409,7 @@
 
 							break;
 						case "Zone_User":
-							that.sLoggedinUserType = "Zone_User";
+							that.sLoggedinUserType = "TCI_Zone_User";
 							oModelDetailview.setProperty("/editOrderPrefix", false);
 							oModelDetailview.setProperty("/loggedInUserType", "Zone_User");
 							oModelDetailview.setProperty("/editAllowed", true);
