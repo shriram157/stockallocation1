@@ -888,8 +888,10 @@
 							var windowStartDay = windowStartDate.substr(6, 2);
 							var windowhour = item.zzend_date.substr(8, 2);
 							var windowMinute = item.zzend_date.substr(10, 2);
-							var newTempDate = windowStartYear + "/" + windowStartMonth + "/" + windowStartDay + " " + windowhour + ":" + windowMinute;
+							// var newTempDate = windowStartYear + "/" + windowStartMonth + "/" + windowStartDay + " " + windowhour + ":" + windowMinute;
 
+                            var newTempDate = windowStartMonth + "/" + windowStartDay + "/" + windowStartYear + " " + windowhour + ":" + windowMinute;
+ 
 							var dateForBanner = windowStartMonth + "/" + windowStartDay + "/" + windowStartYear;
 							var timeForBanner = windowhour + ":" + windowMinute;
 
@@ -948,7 +950,9 @@
 						// });
 						var torontoTime = new Date();
 						var extractTimeZone = moment(torontoTime);
-						var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
+						 //var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
+						  var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY HH:mm'); //24 hour format
+						
 						// var torontoTimeZone  = moment.tz(torontoTime , "America/New_York");
 
 						//	 var currentDate = new Date(torontoTimeZone); 
