@@ -216,6 +216,7 @@
 				selectedData.parsedtodayDate = oModelDetailViewData.parsedtodayDate;
 				selectedData.windowEndDateP = oModelDetailViewData.windowEndDateP;
 				selectedData.allocationIndicator = oModelDetailViewData.allocationInidcator;
+			    selectedData.zzmoyr = selectedData.series.slice(0, 4);
 
 				sap.ui.getCore().setModel(new sap.ui.model.json.JSONModel(selectedData), 'selectedSeries');
 
@@ -1013,6 +1014,12 @@
 
 					oModel.setProperty("/showAllocatedTab", false);
 
+				} else {
+					if ((oModelData.parsedtodayDate <= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {	
+								oModel.setProperty("/showAllocatedTab", true);
+										oModel.setProperty("/showSuggestionTab", false);
+										oModel.setProperty("/showRequestedTab", false);
+					}			
 				}
 
 				if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "S") {

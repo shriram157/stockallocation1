@@ -86,7 +86,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			// make a call to SAP and fetch the data for the 4th screen
 			this.dealerCode = selectedSeries.dealerCode;
 			this.series = selectedSeries.zzseries;
+			this.yearModel =  selectedSeries.zzmoyr;
 			var Language = selectedSeries.Language;
+			
 
 			this._setTheLanguage(Language); // set the language
 			//	var oGetModel = this.getView().getModel("ZCDS_SUGGEST_ORD_CDS");
@@ -920,7 +922,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		 this.oModel.read("/zcds_suggest_ord", {
 				urlParameters: {
 
-					"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'"
+					"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" + "and zzmoyr eq '" + 	this.yearModel + "'"
 				},
 
 				success: function (oData) {
