@@ -273,18 +273,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var showRecordSaved = this._oResourceBundle.getText("RECORD_SAVED_INSAP");
 
 			sap.m.MessageToast.show(showRecordSaved, {
-				duration: 3000, // default
-				width: "15em", // default
+				duration: 3000,  
+				width: "15em",  
 				my: "center middle",
 				at: "center middle",
-				of: window, // default
-				offset: "0 0", // default
-				collision: "fit fit", // default
-				onClose: null, // default
-				autoClose: true, // default
-				animationTimingFunction: "ease", // default
-				animationDuration: 1000, // default
-				closeOnBrowserNavigation: false // default
+				of: window, 
+				offset: "0 0",  
+				collision: "fit fit",  
+				onClose: null, 
+				autoClose: true,  
+				animationTimingFunction: "ease",  
+				animationDuration: 1000,  
+				closeOnBrowserNavigation: false  
 			});
 
 		 
@@ -419,7 +419,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 
 			//selected language. 
-			// if (window.location.search == "?language=fr") {
+ 
 			if (sSelectedLocale == "fr") {
 				var i18nModel = new sap.ui.model.resource.ResourceModel({
 					bundleUrl: "i18n/i18n.properties",
@@ -428,9 +428,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				});
 				this.getView().setModel(i18nModel, "i18n");
 				this.sCurrentLocale = 'FR';
-				// set the right image for logo	 - french		
-				/*				var currentImageSource = this.getView().byId("idLexusLogo");
-								currentImageSource.setProperty("src", "images/Lexus_FR.png");*/
+				 
 
 			} else {
 				var i18nModel = new sap.ui.model.resource.ResourceModel({
@@ -440,10 +438,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				});
 				this.getView().setModel(i18nModel, "i18n");
 				this.sCurrentLocale = 'EN';
-				// set the right image for logo			
-				/*				var currentImageSource = this.getView().byId("idLexusLogo");
-								currentImageSource.setProperty("src", "images/Lexus_EN.png");*/
-
+			 
 			}
 
 			var oModeli18n = this.getView().getModel("i18n");
@@ -670,14 +665,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				
 			 }
 
-
-
-
-
-
-			
-				
-				
 			// oInitalTotalStock.updateBindings(true);
 			var oSuggestModel = new sap.ui.model.json.JSONModel();
 			oSuggestModel.setData(oModelData);

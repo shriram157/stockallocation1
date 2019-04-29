@@ -52,7 +52,6 @@
 
 				// on every route matched lets set the count. 
 
-				// this._countModels();// TODO: to be commented.
 
 			},
 			//  All my custom Modules - Begin///////////////////////////////////////////////////////////////////////////////////////
@@ -474,7 +473,7 @@
 
 									oModelDetailView.setProperty("/Dealer_Name", tempDealerText);
 								}
-
+								}
 								BpDealer.push({
 
 									"BusinessPartnerKey": item.BusinessPartnerKey,
@@ -484,7 +483,7 @@
 									"BusinessPartnerType": item.BusinessPartnerType,
 									"searchTermReceivedDealerName": item.SearchTerm2
 								});
-							}
+						
 
 						});
 
