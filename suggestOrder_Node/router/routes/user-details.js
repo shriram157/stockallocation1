@@ -243,8 +243,7 @@ module.exports = function (appContext) {
 		if (manageSuggestOrderRequests && viewSuggestOrderRequests) {
 			role = "Dealer_User";
 		} else if (!manageSuggestOrderRequests && viewSuggestOrderRequests) {
-			role = userAttributes.Zone ? "TCI_Zone_User" : "TCI_User";
-			role = "TCI_User";
+			role = userAttributes.Zone ? "Zone_User" : "TCI_User";
 		}
 		tracer.debug("role: %s", role);
 

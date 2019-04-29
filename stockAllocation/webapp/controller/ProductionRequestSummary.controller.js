@@ -203,7 +203,7 @@
 				}
 				var oModelDetailViewData = this.getView().getModel('detailView').getData();
 
-				if (this.sLoggedinUserType == "DealerUser") {
+				if (this.sLoggedinUserType == "Dealer_User") {
 					selectedData.Business_Partner_name = this.sSelectedDealerText;
 				} else {
 					selectedData.Business_Partner_name = bPasCustomerWantsToSee + "-" + this.sSelectedDealerText;
@@ -392,9 +392,9 @@
 						switch (userType) {
 						case "Dealer_User":
 
-							that.sLoggedinUserType = "DealerUser";
+							that.sLoggedinUserType = "Dealer_User";
 							oModelDetailview.setProperty("/editOrderPrefix", true);
-							oModelDetailview.setProperty("/loggedInUserType", "DealerUser");
+							oModelDetailview.setProperty("/loggedInUserType", "Dealer_User");
 							oModelDetailview.setProperty("/editAllowed", false);
 							oModelDetailview.setProperty("/visibleForInternalUser", false);
 
@@ -409,7 +409,7 @@
 
 							break;
 						case "Zone_User":
-							that.sLoggedinUserType = "TCI_Zone_User";
+							that.sLoggedinUserType = "Zone_User";
 							oModelDetailview.setProperty("/editOrderPrefix", false);
 							oModelDetailview.setProperty("/loggedInUserType", "Zone_User");
 							oModelDetailview.setProperty("/editAllowed", true);

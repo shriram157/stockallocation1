@@ -26,7 +26,6 @@
 		"description": "restrict based on Zone",
 		"valueType": "s"
 	}],
-
 	"role-templates": [{
 		"name": "Dealer_User",
 		"description": "Dealer User",
@@ -40,11 +39,30 @@
 			"UserType"
 		]
 	}, {
+		"name": "TCI_User",
+		"description": "This is Internal TCI User",
+		"scope-references": [
+			"$XSAPPNAME.View_Suggest_Order_Requests"
+		],
+		"attribute-references": [
+			"Language",
+			"UserType"
+		]
+	}, {
+		"name": "Internal_TCI_User",
+		"description": "This is Internal TCI User",
+		"scope-references": [
+			"$XSAPPNAME.View_Suggest_Order_Requests"
+		],
+		"attribute-references": [
+			"Language",
+			"UserType"
+		]
+	}, {
 		"name": "Zone_User",
 		"description": "This is a TCI Zone User",
 		"scope-references": [
 			"$XSAPPNAME.View_Suggest_Order_Requests"
-
 		],
 		"attribute-references": [
 			"DealerCode",
@@ -52,17 +70,5 @@
 			"UserType",
 			"Zone"
 		]
-	}, {
-		"name": "Internal_TCI_User",
-		"description": "This is Internal TCI User",
-		"scope-references": [
-			"$XSAPPNAME.View_Suggest_Order_Requests"
-
-		],
-		"attribute-references": [
-			"Language",
-			"UserType"
-		]
-
 	}]
 }

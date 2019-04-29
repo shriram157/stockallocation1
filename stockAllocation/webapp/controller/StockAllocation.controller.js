@@ -24,7 +24,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			if (selectedSeries.whichTabClicked == "requestedTab") {
 				viewInSuggestedTab = false;
 			}
-			if (selectedSeries.sLoggedinUserType == "DealerUser") {
+			if (selectedSeries.sLoggedinUserType == "Dealer_User") {
 				this.sLoggedinUserIsDealer = true;
 				enableForDealer = true;
 			} else {
