@@ -730,6 +730,7 @@
 
 								if (oSuggestedModelData[i].suggestedVolume <= 0) {
 									oSuggestedModelData[i].visibleProperty = true;
+									atleastOneRecordwithZeroExist = true;
 								}
 
 							}
@@ -927,15 +928,29 @@
 
 						// Due on in french. 
 						if (this.sCurrentLocale == "FR") {
-							var WordDueOn = 'Due sur ';
+							// var WordDueOn = 'Due sur ';
+							var tempDueDate = "Dû le" + sDateForBanner + ' à  ' + sDateForTime + "(HNE)";
+							oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 	
+							
+							
+							
 						} else {
-							var WordDueOn = 'Due on ';
-						}
-
-						if (sDateForBanner) {
-							var tempDueDate = WordDueOn + sDateForBanner + ' at ' + sDateForTime + "(EST)";
+							// var WordDueOn = 'Due on ';
+							
+							var tempDueDate = 'Due on ' + sDateForBanner + " at " + sDateForTime + "(EST)";
 							oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 
+							
+							
+							
 						}
+						
+						
+						// Dû le 29/04/2019 à 14h30 (HNE)
+
+						// if (sDateForBanner) {
+						// 	var tempDueDate = WordDueOn + sDateForBanner + ' at ' + sDateForTime + "(EST)";
+						// 	oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 
+						// }
 
 						//  when the current date is between window open date and window close date then enable the suggested and Requested and disable the allocated. 
 						var startDateofTheWindow = oModel.getProperty("/startDateofWindow");
@@ -1015,11 +1030,11 @@
 					oModel.setProperty("/showAllocatedTab", false);
 
 				} else {
-					if ((oModelData.parsedtodayDate <= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {	
-								oModel.setProperty("/showAllocatedTab", true);
-										oModel.setProperty("/showSuggestionTab", false);
-										oModel.setProperty("/showRequestedTab", false);
-					}			
+					// if ((oModelData.parsedtodayDate <= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {	
+					// 			oModel.setProperty("/showAllocatedTab", true);
+					// 					oModel.setProperty("/showSuggestionTab", false);
+					// 					oModel.setProperty("/showRequestedTab", false);
+					// }			
 				}
 
 				if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "S") {

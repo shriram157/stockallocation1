@@ -11,12 +11,12 @@
 						<contentLeft>
 							<Image id="idLexusLogo" src="images/Lexus_EN.png" width="100px"/>
 							<Text text="|" class="sapUiTinyMarginBeginEnd"/>
-							<!--<Text class="clCustomFont" text="{i18n>STOCK_ALLOC_SUMMARY}"/>-->
+							<Text class="clCustomFont" text="{i18n>STOCK_ALLOC_SUMMARY}"/>
 						</contentLeft>
 						<contentMiddle>
 						
 					
-							<Text class="clCustomFont" text="{i18n>STOCK_ALLOC_SUMMARY}"/>
+							<!--<Text class="clCustomFont" text="{i18n>STOCK_ALLOC_SUMMARY}"/>-->
 						</contentMiddle>						
 						<contentRight>
 										<!--<Button text="EXIT" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonPress"/>-->

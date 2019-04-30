@@ -75,9 +75,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				enableForDealer: enableForDealer,
 				viewInSuggestedTab: viewInSuggestedTab,
 				setEnableFalseReset: setEnableFalseReset,
-				etaFrom: "ETA :01 Feb 2019 To 28 Feb 2019"
-
-			 
+				etaFrom: "ETA :01 Feb 2019 To 28 Feb 2019",
+				seriesSuggestedVolume : selectedSeries.suggestedVolume,
+				fromWhichTabClickIamIn : selectedSeries.whichTabClicked
+ 
 
 			});
 
@@ -988,10 +989,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							var mktgDescriptionBasedOnLang = item.mktg_desc_en;
 							var suffixDescription = item.suffix_desc_en;
 							var interiorTrimDesc = item.int_trim_desc_en;
+							var modelCodeWithDescription = item.zzmodel + " - " + item.model_desc_en;
 						} else {
 							var mktgDescriptionBasedOnLang = item.mktg_desc_fr;
 							var suffixDescription = item.suffix_desc_fr;
 							var interiorTrimDesc = item.int_trim_desc_fr;
+							var modelCodeWithDescription = item.zzmodel + " - " + item.model_desc_fr;
 						}
 
 						uiForcolorTrim = item.zzextcol + "-" + mktgDescriptionBasedOnLang + "/" + item.zzintcol + "-" + interiorTrimDesc;
@@ -1006,7 +1009,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						oStockAllocationData.push({
 
-							model: item.zzmodel,
+							model:item.zzmodel,
+							modelCodeDescription: modelCodeWithDescription,
 							suffix: item.zzsuffix, //,
 							suffix_desc: suffixToUi,
 							colour_Trim: uiForcolorTrim,
@@ -1039,7 +1043,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						oStockAlocationBkup.push({
 
-							model: item.zzmodel,
+							model:item.zzmodel,
+							modelCodeDescription: modelCodeWithDescription,
 							suffix: item.zzsuffix, //,
 							suffix_desc: suffixToUi,
 							colour_Trim: uiForcolorTrim,
@@ -1069,7 +1074,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						oStockBeforeReset.push({
 
-							model: item.zzmodel,
+							model:item.zzmodel,
+							modelCodeDescription: modelCodeWithDescription,
 							suffix: item.zzsuffix,
 							colour_Trim: uiForcolorTrim,
 							suggested: item.zzsuggest_qty,
@@ -1168,10 +1174,38 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oStockData.setData(oStockAllocationData);
 					this.getView().setModel(oStockData, "stockDataModel");
 // By default lets show the suggested only and by clicking on show all models then we expland the screen. 
-			var showSuggestModelsText = this._oResourceBundle.getText("SHOW_SUGGEST_MODELS"),
-				showAllModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS");
-                   var currentText = this.getView().byId("showAllModelsBtn").getText();
+
+
+
+
+
+         var suggestedTabClick = this._oViewLocalData.getProperty("/fromWhichTabClickIamIn");   //"suggestedTab"
+         var suggestedVolumeonSeries   = this._oViewLocalData.getProperty("/seriesSuggestedVolume");    // "0"
+    	var showSuggestModelsText = this._oResourceBundle.getText("SHOW_SUGGEST_MODELS"),
+		showAllModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS");
+              var currentText = this.getView().byId("showAllModelsBtn").getText();
                    var oModelData2 = this.getView().getModel("stockDataModel").getData(); 
+
+
+
+            if (suggestedVolumeonSeries == "0") {
+            // by default we want to expand the records with zero qty. 
+                if (currentText == showAllModelsText){
+                	// set the text to show suggested models and expand the view. 
+                         this.getView().byId("showAllModelsBtn").setProperty("text", showSuggestModelsText);
+                         	for (var i = 0; i < oModelData2.length; i++) {
+							if (oModelData2[i].suggested <= 0) {
+								oModelData2[i].visibleProperty = true;
+								
+							}
+					}
+            	
+                }
+            	
+            } else {
+
+
+              
                     if (currentText == showAllModelsText){
 					for (var i = 0; i < oModelData2.length; i++) {
 							if (oModelData2[i].suggested <= 0) {
@@ -1188,6 +1222,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
                     	
                     }
+                    
+            }     
+                    
+                    
+                    
+                    
+                    
 					var oModelData = this.getView().getModel("stockDataModel");
 					oModelData.updateBindings(true);
 
