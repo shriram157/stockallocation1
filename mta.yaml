@@ -8,7 +8,6 @@ modules:
    type: nodejs
    path: suggestOrder_Node
    parameters:
-      host: tci-dev-stockallocation-node
       disk-quota: 512M
       memory: 256M
    properties:
@@ -31,13 +30,13 @@ modules:
    type: html5
    path: stockAllocation
    parameters:
-      host: tci-dev-stockallocation
       disk-quota: 512M
       memory: 256M
    properties:
       XS_APP_LOG_LEVEL: info
    build-parameters:
       builder: grunt
+      build-result: dist
    requires:
     - name: cflogging_suggestOrder 
     - name: uaa_suggestOrder
