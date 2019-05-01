@@ -602,9 +602,9 @@
 							}
 							
 							if 	(that.sCurrentLocale == 'FR') {
-								seriesDescription =  item.zzmoyr + "-" + item.zzseries_desc_fr;
+								seriesDescription =   item.zzseries_desc_fr;
 							} else {
-								seriesDescription =  item.zzmoyr + "-" + item.zzseries_desc_en;
+								seriesDescription =   item.zzseries_desc_en;
 							}
 
 							// Suggested Data
