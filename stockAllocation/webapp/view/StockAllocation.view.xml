@@ -15,12 +15,18 @@
 		
 			<customHeader>
 					<Bar class="sapUiSmallPaddingBeginEnd clCustomHeaderBg">
-						<!--<contentLeft>-->
+					
+					
+						<contentLeft>
+							<Image id="idLexusLogo" src="images/Lexus_EN.png" width="100px"/>
+							<Text text="|" class="sapUiTinyMarginBeginEnd"/>
+							<Text class="clCustomFont" text="{i18n>STOCK_ALLOC_SUMMARY}"/>
+						</contentLeft>
 						
-						<!--	<Image id="idLexusLogo" src="Images/toyota_logo_colour.png" width="100px"/>-->
-						<!--	<Text text="|" class="sapUiTinyMarginBeginEnd"/>-->
-						<!--	<Text class="clCustomFont" text="{i18n>PageTitle}"/>-->
-						<!--</contentLeft>-->
+						
+						
+						
+
 						<contentRight>
 						 
 									<Button   class="VLbtn2" text="{i18n>Back}" type="Transparent" press="_onPageNavButtonPress" width="auto"/>
@@ -65,7 +71,7 @@
 						<content>
 							<ToggleButton pressed="false" text="{i18n>SHOW_ALL_MODELS}" iconFirst="true" width="230px"
 								enabled="{oViewLocalDataModel>/setEnableFalseSuggest}" visible="true" press="onClickShowAllModels" id="showAllModelsBtn"/>
-							<ToggleButton pressed="false" text="{i18n>SHOW_PERCENTAGES}" iconFirst="true" width="170px"
+							<ToggleButton pressed="false" text="{i18n>SHOW_PERCENTAGES}" iconFirst="true" width="220px"
 								enabled="{oViewLocalDataModel>/setEnableFalsePercentages}" visible="true" press="onClickShowPercentages" id="showPercentagesBtn"/>
 							<ToolbarSpacer width="310px"/>
 							<Button text="{i18n>RESET_TO_SUGGESTED}" type="Reject" iconFirst="true" width="auto"
@@ -211,10 +217,10 @@
 								textDirection="Inherit" visible="true"/>
 						</footer>
 					</Column>
-					<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+					<Column width="76px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
 						visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
 						<header>
-							<Text text="{i18n>UNFILLED_ALLOCATION}" width="63px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{i18n>UNFILLED_ALLOCATION}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 						</header>
 						<footer>
 							<Text text="{initialStockTotalModel>/0/unfilledAllocationTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
@@ -252,7 +258,7 @@
 								visible="true"/>
 							<Text text="{stockDataModel>pendingAllocation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 								visible="true"/>
-							<Text text="{stockDataModel>unfilled_Allocation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+							<Text text="{stockDataModel>unfilled_Allocation}" width="auto" maxLines="2" wrapping="false" textAlign="Begin" textDirection="Inherit"
 								visible="true"/>
 						</cells>
 					</ColumnListItem>

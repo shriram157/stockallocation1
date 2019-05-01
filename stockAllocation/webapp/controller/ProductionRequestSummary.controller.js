@@ -571,6 +571,8 @@
 
 					this.sSelectedDealer = oDataFromModel.BusinessPartnerKey;
 				}
+				
+		    
 
 				var oGetModel = this.getView().getModel("ZCDS_SUGGEST_ORD_SUM_CDS");
 				oGetModel.read("/ZCDS_SUGGEST_ORD_SUM", {
@@ -591,17 +593,25 @@
 						var order_Number = "";
 						var orderNumber;
 						var countForSuggested, countForRequested;
-
+						var seriesDescription;
+						var that = this;
 						//                var timeForBanner  ;	
 						$.each(oData.results, function (i, item) {
 							if ((item.zzdlr_ref_no == "") || (item.zzdlr_ref_no == undefined)) {
 								order_Number = "XXXXXX";
 							}
+							
+							if 	(that.sCurrentLocale == 'FR') {
+								seriesDescription =  item.zzmoyr + "-" + item.zzseries_desc_fr;
+							} else {
+								seriesDescription =  item.zzmoyr + "-" + item.zzseries_desc_en;
+							}
 
 							// Suggested Data
 							oViewSuggestData.push({
 
-								series: item.zzmoyr + "-" + item.zzseries_desc_en,
+								// series: item.zzmoyr + "-" + item.zzseries_desc_en,
+								series: item.zzmoyr + "-" + seriesDescription,      //item.zzseries_desc_en,
 								orderPrefix: item.zzprefix,
 								orderNumber: order_Number, //zzsug_seq_no,
 								suggestedVolume: item.total_suggest_qty, //zzsuggest_qty,
@@ -661,7 +671,8 @@
 
 							oViewRequestedData.push({
 
-								series: item.zzmoyr + "-" + item.zzseries_desc_en,
+								// series: item.zzmoyr + "-" + item.zzseries_desc_en,
+										series: item.zzmoyr + "-" + seriesDescription,   
 								orderPrefix: item.zzprefix, //order_Number,
 								zzseries: item.zzseries,
 								orderNumber: order_Number, // item.zzdlr_ref_no, //zzsug_seq_no,
@@ -679,7 +690,8 @@
 							orderNumber = item.zzprefix + " - " + order_Number;
 
 							oViewAllocatedData.push({
-								series: item.zzmoyr + "-" + item.zzseries_desc_en,
+								// series: item.zzmoyr + "-" + item.zzseries_desc_en,
+										series: item.zzmoyr + "-" + seriesDescription,   
 								zzseries: item.zzseries,
 								orderPrefix: item.zzprefix,
 								orderNumber: orderNumber, //item.zzdlr_ref_no,

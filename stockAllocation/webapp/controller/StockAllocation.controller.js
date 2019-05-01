@@ -93,6 +93,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			this._setTheLanguage(Language); // set the language
 			//	var oGetModel = this.getView().getModel("ZCDS_SUGGEST_ORD_CDS");
+			
+			// Also the logo for the second screen. 
+				this._setTheLogo();
 
 			this.oModel = this.getOwnerComponent().getModel("ZCDS_SUGGEST_ORD_CDS");
 
@@ -917,6 +920,36 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			return oItemSet;
 		},
+		
+		
+		_setTheLogo: function (oEvent) {
+
+				// if (userDetails[0].UserType == 'Dealer') {
+
+				var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
+				if (isDivisionSent) {
+					this.sDivision = window.location.search.match(/Division=([^&]*)/i)[1];
+
+					// if (this.sDivision == aDataBP[0].Division) {
+
+					// 	this.getView().byId("messageStripError").setProperty("visible", false);
+
+					if (this.sDivision == '10') // set the toyoto logo
+					{
+						var currentImageSource = this.getView().byId("idLexusLogo");
+						currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+
+					} else { // set the lexus logo
+						var currentImageSource = this.getView().byId("idLexusLogo");
+						currentImageSource.setProperty("src", "images/i_lexus_black_full.png");
+
+						// }
+					}
+				}
+
+			},
+		
+		
 		
 		_loadTheData: function(oEvent) {
 			
