@@ -383,7 +383,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var sLocation_conf = sLocation.search("webide");
 					if (sLocation_conf == 0) {
 						// if a local user from weide 
-						userType = "Dealer_User"; // -- Guna // TODO: While testing locally for Dealer	 
+						userType = "Dealer_User";  
 					} else {
 						var userType = oData.loggedUserType[0];
 						//////////////////////////////////////////////////////////////////						
@@ -1140,6 +1140,38 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				if (requestedModelLength < 0) {
 					requestedModelLength = 0;
 				}
+		// if the window is out of date, remove the records with suggested, requested = 0.		
+					var oModelDetail = this.getView().getModel("detailView");
+					var isOutofWindow = false;
+				     isOutofWindow = oModelDetail.getProperty("/outOfWindowDate");
+				   
+				   
+				   if (isOutofWindow == true){
+				   				for (var i = requestedModelLengthTemp - 1; i >= 0; i--) {
+
+					// for (var i = 0; i < requestedModelLengthTemp; i++) {
+
+					if (requestedModelData[i].suggestedVolume <= "0" && requestedModelData[i].requestedVolume <= "0") {
+						requestedModelData.splice(i, 1);
+						requestedModelLength = requestedModelLength - 1;
+						//  continue;
+					}
+
+					// if (requestedModelData[i].dealerReviewCount == "Y") {
+
+
+				}
+				   	
+				   	
+				   }
+				   
+				   
+								if (requestedModelLength < 0) {
+					requestedModelLength = 0;
+				}
+				
+				
+				
 				oRequestedModel.updateBindings(true);
 			}
 			var oAllocatedModel = this.getView().getModel("allocatedDataModel");
