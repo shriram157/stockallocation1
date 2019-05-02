@@ -37,6 +37,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				enableForDealer = false;
 				this.outSideWindowDate = true;
 				setEnableFalseReset = false;
+			    this.removeSuggestedRequestedZeroQty = true;
 
 			} else {
 				this.outSideWindowDate = false;
@@ -1208,6 +1209,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						for (var i = 0; i < oModelData2.length; i++) {
 							if (oModelData2[i].suggested <= 0 && oModelData2[i].requested_Volume <= 0) {
 								oModelData2[i].visibleProperty = false;
+								 oModelData2[i].splice(i, 1);  // lets remove the record from UI, no use for it
 							}
 						}
 
