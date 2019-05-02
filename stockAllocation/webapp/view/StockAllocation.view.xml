@@ -60,7 +60,7 @@
 			<!--<Table width="auto" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="true" growingThreshold="20"-->
 			<!--	growingScrollToLoad="true" class="sapUiResponsiveMargin">-->
 			<Table items="{path:'stockDataModel>/', sorter : { path : 'model' }}" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
-				showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+				showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
 			  alternateRowColors="true">
 				<infoToolbar/>
 				<headerToolbar>

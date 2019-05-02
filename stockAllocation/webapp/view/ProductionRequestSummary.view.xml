@@ -105,7 +105,7 @@
 									</OverflowToolbar>
 								</headerToolbar>
 								<columns>
-									<Column width="130px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+									<Column width="160px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
 										<header>
 											<Text text="{i18n>SERIES}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 										</header>
@@ -133,7 +133,7 @@
 								<items>
 									<ColumnListItem  type="Navigation" visible="{suggestedDataModel>visibleProperty}" >    
 										<cells>
-											<Text text="{suggestedDataModel>series}" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="{suggestedDataModel>visibleProperty}"/>
+											<Text text="{suggestedDataModel>series}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="{suggestedDataModel>visibleProperty}"/>
 											<Input value="{suggestedDataModel>orderPrefix}" type="Text" showValueHelp="false" enabled="true" editable="{detailView>/editOrderPrefix}" visible="{suggestedDataModel>visibleProperty}" width="80px" valueHelpOnly="false" maxLength="5"/>
 											<Text text="{suggestedDataModel>orderNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="{suggestedDataModel>visibleProperty}"/>
 											<Text text="{suggestedDataModel>suggestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="{suggestedDataModel>visibleProperty}"/>
@@ -233,7 +233,7 @@
 							<Table items="{path:'allocatedDataModel>/', sorter : { path : 'series' }}" 
 										
 							     noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" 
-							     growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
+							     growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
 								<infoToolbar/>
 								<headerToolbar>
 									<OverflowToolbar width="auto" height="55px" design="Solid" visible="true" enabled="true">
