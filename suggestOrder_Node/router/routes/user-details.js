@@ -10,6 +10,11 @@ module.exports = function (appContext) {
 
 	var router = express.Router();
 
+	var mockUserData = false;
+	if (process.env.MOCK_USER_DATA === "true" || process.env.MOCK_USER_DATA === "TRUE") {
+		mockUserData = true;
+	}
+
 	// Get UPS name from env var UPS_NAME
 	var apimServiceName = process.env.UPS_NAME;
 	var options = {};
@@ -40,12 +45,12 @@ module.exports = function (appContext) {
 		tracer.debug("User attributes from JWT: %s", JSON.stringify(userAttributes));
 
 		// If there is no user type, it is most probably a call from Neo, in which case we can fake the data as TCI user
-		if (!userAttributes.UserType) {
-			tracer.debug("JWT likely refers to a development user from Neo, switch to mock user attributes: %s", JSON.stringify(userAttributes));
+		if (mockUserData && !userAttributes.UserType) {
 			userAttributes = {
 				Language: ["English"],
 				UserType: ["National"]
 			};
+			tracer.debug("JWT likely refers to a development user from Neo, switch to mock user attributes: %s", JSON.stringify(userAttributes));
 		}
 
 		var resBody = {
@@ -215,7 +220,7 @@ module.exports = function (appContext) {
 		tracer.debug("User attributes from JWT: %s", JSON.stringify(userAttributes));
 
 		// If there is no user type, it is most probably a call from Neo, in which case we can fake the data as TCI user
-		if (!userAttributes.UserType) {
+		if (mockUserData && !userAttributes.UserType) {
 			tracer.debug("JWT likely refers to a development user from Neo, switch to mock user type.");
 			return res.type("application/json").status(200).send(JSON.stringify({
 				loggedUserType: ["TCI_User"]

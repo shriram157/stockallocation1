@@ -6,6 +6,8 @@ modules:
  - name: suggestOrder_Node
    parameters:
       host: tci-dev-stockallocation-node
+   properties:
+      MOCK_USER_DATA: true
  - name: stockAllocation
    parameters:
       host: tci-dev-stockallocation
