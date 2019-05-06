@@ -8,18 +8,34 @@
 		"source": "^/stockallocation/index.html$",
 		"target": "index.html",
 		"localDir": "webapp",
-		"cacheControl": "no-cache, no-store, must-revalidate"
+		"cacheControl": "no-cache, no-store, must-revalidate",
+		"scope": [
+			"$XSAPPNAME.Manage_Suggest_Order_Requests",
+			"$XSAPPNAME.View_Suggest_Order_Requests"
+		]
 	}, {
 		"source": "^/stockallocation/(.*)$",
 		"target": "$1",
-		"localDir": "webapp"
+		"localDir": "webapp",
+		"scope": [
+			"$XSAPPNAME.Manage_Suggest_Order_Requests",
+			"$XSAPPNAME.View_Suggest_Order_Requests"
+		]
 	}, {
 		"source": "/node(.*)",
 		"destination": "suggestOrder-node-backend",
-		"csrfProtection": false
+		"csrfProtection": false,
+		"scope": [
+			"$XSAPPNAME.Manage_Suggest_Order_Requests",
+			"$XSAPPNAME.View_Suggest_Order_Requests"
+		]
 	}, {
 		"source": "/userDetails(.*)",
 		"destination": "suggestOrder-node-backend",
-		"csrfProtection": false
+		"csrfProtection": false,
+		"scope": [
+			"$XSAPPNAME.Manage_Suggest_Order_Requests",
+			"$XSAPPNAME.View_Suggest_Order_Requests"
+		]
 	}]
 }

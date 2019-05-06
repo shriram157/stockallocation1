@@ -3,11 +3,11 @@
 	"tenant-mode": "dedicated",
 	"description": "Security profile of called application",
 	"scopes": [{
-		"name": "$XSAPPNAME.View_Suggest_Order_Requests",
-		"description": "View Requests Suggest Order"
-	}, {
 		"name": "$XSAPPNAME.Manage_Suggest_Order_Requests",
 		"description": "Manage Suggest Order Requests"
+	}, {
+		"name": "$XSAPPNAME.View_Suggest_Order_Requests",
+		"description": "View Requests Suggest Order"
 	}],
 	"attributes": [{
 		"name": "DealerCode",
@@ -30,8 +30,8 @@
 		"name": "Dealer_User",
 		"description": "Dealer User",
 		"scope-references": [
-			"$XSAPPNAME.View_Suggest_Order_Requests",
-			"$XSAPPNAME.Manage_Suggest_Order_Requests"
+			"$XSAPPNAME.Manage_Suggest_Order_Requests",
+			"$XSAPPNAME.View_Suggest_Order_Requests"
 		],
 		"attribute-references": [
 			"DealerCode",
