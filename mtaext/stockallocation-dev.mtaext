@@ -7,7 +7,8 @@ modules:
    parameters:
       host: tci-dev-stockallocation-node
    properties:
-      MOCK_USER_DATA: true
+      MOCK_USER_MODE: true
+      MOCK_USER_ORIGIN: d36z7bqhz1-GSR-Neo-to-CF
  - name: stockAllocation
    parameters:
       host: tci-dev-stockallocation
