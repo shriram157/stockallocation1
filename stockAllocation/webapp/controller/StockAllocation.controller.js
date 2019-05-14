@@ -2,10 +2,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"./utilities",
 	"sap/ui/core/routing/History",
-	'sap/m/MessageToast',
-], function(BaseController, MessageBox, Utilities, History, MessageToast) {
-	"use strict";
+	"sap/m/MessageToast",
+	  "sap/ui/core/BusyIndicator",
+	  	"sap/ui/model/Sorter",
+	  		"sap/ui/model/Filter",
 
+], function(BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter ) {
+	"use strict";
+	var _timeout;
 	return BaseController.extend("suggestOrder.controller.StockAllocation", {
 		handleRouteMatched: function(oEvent) {
 			var sAppId = "App5bb4c41429720e1dcc397810";
@@ -237,10 +241,29 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			);
 
 		},
+		
+	
+		
 		_onButtonPressSave: function(oEvent) {
+			
+					 this.onOpenDialog();
+			
 			var that = this;
 
-			sap.ui.core.BusyIndicator.show();
+  //var oButton = this.getView().byId("saveReqId");
+  //  oButton.setBusy(true);
+  //  oButton.setBusyIndicatorDelay(0); 
+
+
+ //var oBusyDialog = new sap.m.BusyDialog(); 
+ //      oBusyDialog.open();
+
+
+
+
+
+
+			 sap.ui.core.BusyIndicator.show(0);
 			// jsut send the data to SAP Plain vanilla. 
 
 			this.SaveButtonClicked = true;
@@ -263,27 +286,66 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 
 		},
+		
+			onOpenDialog: function (oEvent) {
+			// instantiate dialog
+			if (!this._dialog) {
+				
+				// this._sortDialog = sap.ui.xmlfragment("vehicleSortDialog", "vehicleLocator.fragment.vehicleSortDialog", this);
+				// this._dialog = sap.ui.xmlfragment("sap.m.sample.BusyDialog.BusyDialog", this);
+				this._dialog = sap.ui.xmlfragment("BusyDialog", "suggestOrder.fragment.BusyDialog", this);
+				this.getView().addDependent(this._dialog);
+			}
+
+			// open dialog
+			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._dialog);
+			this._dialog.open();
+
+			// simulate end of operation
+			// _timeout = jQuery.sap.delayedCall(3000, this, function () {
+			// 	this._dialog.close();
+			// });
+		},
+
+		onDialogClosed: function (oEvent) {
+			jQuery.sap.clearDelayedCall(_timeout);
+
+			if (oEvent.getParameter("cancelPressed")) {
+				MessageToast.show("The operation has been cancelled");
+			} else {
+				MessageToast.show("The operation has been completed");
+			}
+		},	
+		
+		
+		
 
 		_navigateToMainScreen: function() {
 
 			// if (this._dataupdateSuccessful == true) {
 
-			var showRecordSaved = this._oResourceBundle.getText("RECORD_SAVED_INSAP");
+			// var showRecordSaved = this._oResourceBundle.getText("RECORD_SAVED_INSAP");
 
-			sap.m.MessageToast.show(showRecordSaved, {
-				duration: 3000,
-				width: "15em",
-				my: "center middle",
-				at: "center middle",
-				of: window,
-				offset: "0 0",
-				collision: "fit fit",
-				onClose: null,
-				autoClose: true,
-				animationTimingFunction: "ease",
-				animationDuration: 1000,
-				closeOnBrowserNavigation: false
-			});
+			// sap.m.MessageToast.show(showRecordSaved, {
+			// 	duration: 3000,
+			// 	width: "15em",
+			// 	my: "center middle",
+			// 	at: "center middle",
+			// 	of: window,
+			// 	offset: "0 0",
+			// 	collision: "fit fit",
+			// 	onClose: null,
+			// 	autoClose: true,
+			// 	animationTimingFunction: "ease",
+			// 	animationDuration: 1000,
+			// 	closeOnBrowserNavigation: false
+			// });
+
+
+          // try to close the indicator	
+          this._dialog.close();
+
+
 
 			this.resultsLossofData = false; // the data is saved,  so no message
 			this._loadTheData(); // reload the data from SAP. 
@@ -997,7 +1059,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							var modelCodeWithDescription = item.zzmodel + " - " + item.model_desc_fr;
 						}
 
-						uiForcolorTrim = item.zzextcol + "-" + mktgDescriptionBasedOnLang + "/" + item.zzintcol + "-" + interiorTrimDesc;
+
+//  turn off the zzintcol from the bleow With Rob Mc Carthy - item.zzintcol
+
+						uiForcolorTrim = item.zzextcol + "-" + mktgDescriptionBasedOnLang + "/" +  + "-" + interiorTrimDesc;
 
 						var suffixToUi = item.zzsuffix + " " + suffixDescription;
 
@@ -1037,7 +1102,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							zsrc_werks: item.zsrc_werks,
 							zzprod_month: item.zzprod_month,
 							zzeta_month: item.zzeta_month,
-							zzsuffix: item.zzsuffix
+							zzsuffix: item.zzsuffix,
+							zzzadddata1 :item.zzzadddata1 // this is used for Sort
 
 						});
 
@@ -1068,7 +1134,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							zzprod_month: item.zzprod_month,
 							zzeta_month: item.zzeta_month,
 							zzordertype: item.zzordertype,
-							zzsuffix: item.zzsuffix
+							zzsuffix: item.zzsuffix,
+							zzzadddata1 :item.zzzadddata1 // this is used for Sort
 
 						});
 
@@ -1089,7 +1156,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							zzprod_month: item.zzprod_month,
 							zzeta_month: item.zzeta_month,
 							zzordertype: item.zzordertype,
-							zzsuffix: item.zzsuffix
+							zzsuffix: item.zzsuffix,
+							zzzadddata1 :item.zzzadddata1 // this is used for Sort
 
 						});
 
@@ -1155,6 +1223,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						}
 
 					});
+					
+					// lets sort the model data as per the zzzadddata1 field.
+					
+					/*global  _:true*/
+					
+					 oStockAllocationData = _.sortBy( oStockAllocationData, "zzzadddata1" );
+					 oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" );
+					
+					
+					
+					
 
 					// suggested Data here. 			
 					var oStockData = new sap.ui.model.json.JSONModel();
@@ -1348,7 +1427,37 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					sap.ui.core.BusyIndicator.hide();
 				}
 			});
-		}
+		},
+			onLiveChange: function (oEvent) {
+			this.sSearchQuery = oEvent.getSource()
+				.getValue();
+			this.fnApplyFiltersAndOrdering();
+		},
+		fnApplyFiltersAndOrdering: function (oEvent) {
+			var aFilters = [],
+				aSorters = [];
+
+			// aSorters.push(new Sorter("dealerId1", this.bDescending));
+
+			if (this.sSearchQuery) {
+				var oFilter = new Filter([
+					new Filter("model", sap.ui.model.FilterOperator.Contains, this.sSearchQuery),
+					new Filter("modelCodeDescription", sap.ui.model.FilterOperator.Contains, this.sSearchQuery),
+					new Filter("suffix_desc", sap.ui.model.FilterOperator.Contains, this.sSearchQuery),
+						new Filter("colour_Trim", sap.ui.model.FilterOperator.Contains, this.sSearchQuery)
+				], false);
+				// this.sSearchQuery);
+				aFilters.push(oFilter);
+			}
+
+			this.byId("stockDataModelTableId")
+				.getBinding("items")
+				.filter(aFilters)
+				.sort(aSorters);
+		},	
+		
+		
+		
 
 	});
 }, /* bExport= */ true);

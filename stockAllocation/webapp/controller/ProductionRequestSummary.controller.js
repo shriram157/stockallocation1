@@ -597,9 +597,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var that = this;
 					//                var timeForBanner  ;	
 					$.each(oData.results, function(i, item) {
-						if ((item.zzdlr_ref_no == "") || (item.zzdlr_ref_no == undefined)) {
+						// if ((item.zzdlr_ref_no == "") || (item.zzdlr_ref_no == undefined)) {
 							order_Number = "XXXXXX";
-						}
+						// }
 
 						if (that.sCurrentLocale == 'FR') {
 							seriesDescription = item.zzseries_desc_fr;
@@ -619,7 +619,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							visibleProperty: true,
 							zzseries: item.zzseries,
 							zzallocation_ind: item.zzallocation_ind,
-							zzdel_review: item.zzdel_review
+							zzdel_review: item.zzdel_review,
+							zzzadddata4: item.zzzadddata4  // this field needed to apply the sort logic.
 
 						});
 						// requested Data	
@@ -682,7 +683,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							suggestedMixRequested: suggestedMixRequested, //item.tot_suggest_mix_requested,
 							dealerCode: item.zzdealer_code,
 							dealerReviewCount: item.dealer_review_count,
-							zzdel_review: item.zzdel_review
+							zzdel_review: item.zzdel_review,
+								zzzadddata4: item.zzzadddata4  // this field needed to apply the sort logic.
 
 						});
 
@@ -704,11 +706,25 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							pendingAllocation: item.pending_allocation,
 							unfilledAllocation: item.unfilled_allocation,
 							dealerCode: item.zzdealer_code,
-							zzdel_review: item.zzdel_review
+							zzdel_review: item.zzdel_review,
+								zzzadddata4: item.zzzadddata4  // this field needed to apply the sort logic.
 
 						});
 
 					});
+					
+					//  the suggestedDatamodel is with Series data and this needs to be sorted by addddata4 ascending. 
+					// sort the array oViewSuggestData, oViewRequestedData, oViewAllocatedData
+					
+						/*global  _:true*/
+					 oViewSuggestData = _.sortBy( oViewSuggestData, "zzzadddata4" );
+					 oViewRequestedData = _.sortBy( oViewRequestedData, "zzzadddata4" );
+					 oViewAllocatedData = _.sortBy( oViewAllocatedData, "zzzadddata4" );
+					
+					
+					
+					
+					
 					// suggested Data here. 			
 					var oSuggestModel = new sap.ui.model.json.JSONModel();
 					oSuggestModel.setData(oViewSuggestData);
@@ -977,6 +993,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					// 	timeZone: "America/New_York"
 					// });
 					var torontoTime = new Date();
+				    		/*global  moment:true*/
 					var extractTimeZone = moment(torontoTime);
 					//var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
 					var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY HH:mm'); //24 hour format

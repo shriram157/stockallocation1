@@ -59,9 +59,12 @@
 			<!--<content>-->
 			<!--<Table width="auto" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="true" growingThreshold="20"-->
 			<!--	growingScrollToLoad="true" class="sapUiResponsiveMargin">-->
-			<Table items="{path:'stockDataModel>/', sorter : { path : 'model' }}" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
+			<!--<Table items="{path:'stockDataModel>/', sorter : { path : 'model' }}" width="auto" noDataText="{i18n>NO_DATA}" mode="None"-->
+			<!--	showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"-->
+			<!--  alternateRowColors="true">-->
+						<Table items="{path:'stockDataModel>/'}" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
 				showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
-			  alternateRowColors="true">
+			  alternateRowColors="true" id="stockDataModelTableId">
 				<infoToolbar/>
 				<headerToolbar>
 					<OverflowToolbar width="auto" height="55px" design="Transparent" visible="true" enabled="true">
@@ -74,7 +77,20 @@
 							<Button text="{i18n>RESET_TO_SUGGESTED}" type="Reject" iconFirst="true" width="auto"
 								enabled="{oViewLocalDataModel>/setEnableFalseReset}" visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="resetToSuggestedClick"/>
 							<ToolbarSpacer/>
-							<Button text="{i18n>SAVE_REQUEST}" type="Accept" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/enableForDealer}"
+				
+				          <SearchField id="searchVehicleList" liveChange="onLiveChange" showSearchButton="true"
+                                     placeholder="Search ...">  
+                            <layoutData>
+                                <OverflowToolbarLayoutData minWidth="200px" maxWidth="300px" shrinkable="true"/>
+                            </layoutData>
+                        </SearchField>
+                        
+                        <!--<Button text="Reset" type="Transparent" press="onReset"/>-->
+						
+						
+						
+						
+							<Button text="{i18n>SAVE_REQUEST}" type="Accept" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/enableForDealer}" id="saveReqId"
 								visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="_onButtonPressSave"/>
 						</content>
 					</OverflowToolbar>

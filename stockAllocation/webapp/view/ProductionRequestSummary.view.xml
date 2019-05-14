@@ -81,9 +81,17 @@
 				<items>
 					<IconTabFilter id="iconTabFilterSuggested" icon="sap-icon://add-process" iconColor="Default" text="{i18n>SUGGESTED}" visible="{detailView>/showSuggestionTab}" count="{countViewModel>/suggestedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" iconDensityAware="false">
 						<content>
+							   		<!--items="{path:'suggestedDataModel>/', sorter : { path : 'series' }}" -->
 							<Table  
-					         		items="{path:'suggestedDataModel>/', sorter : { path : 'series' }}" 
-							
+
+									          items="{
+				                    path: 'suggestedDataModel>/',
+				                    sorter: {
+				                    path: 'zzadddata4',
+				                    descending: true
+				                    }
+				                    }"		 
+	
 							      width="auto" noDataText="{i18n>NO_DATA}" mode="None" 
 							      
 							      showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress"   alternateRowColors="true">
@@ -147,7 +155,17 @@
 					<IconTabFilter id="iconTabFilterRequested" icon="sap-icon://process" iconColor="Critical" text="{i18n>REQUESTED}" count="{countViewModel>/requestedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="{detailView>/showRequestedTab}" iconDensityAware="false">
 						<content>
 						 
-								<Table items="{path:'requestedDataModel>/', sorter : { path : 'series' }}" 
+								<!--<Table items="{path:'requestedDataModel>/', sorter : { path : 'zzzadddata4' }}" -->
+								
+							<Table 		
+								
+						          items="{
+				                    path: 'requestedDataModel>/',
+				                    sorter: {
+				                    path: 'zzadddata4',
+				                    descending: true
+				                    }
+				                    }"	
 								
 							
 							   noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
@@ -170,7 +188,7 @@
 								<columns>
 									<Column width="200px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
 										<header>
-											<Text text="{i18n>SERIES}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{i18n>SERIES}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 										</header>
 										<footer/>
 									</Column>
@@ -214,7 +232,7 @@
 								<items>
 									<ColumnListItem type="Navigation">
 										<cells>
-											<Text text="{requestedDataModel>series}" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{requestedDataModel>series}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 											<Input value="{requestedDataModel>orderPrefix}" type="Text" showValueHelp="false" enabled="true" editable="{detailView>/editOrderPrefix}" visible="true" width="80px" valueHelpOnly="false" maxLength="5"/>
 											<Text text="{requestedDataModel>orderNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 											<Text text="{requestedDataModel>suggestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -230,7 +248,17 @@
 					</IconTabFilter>
 					<IconTabFilter id="iconTabFilterAllocated" icon="sap-icon://status-completed" iconColor="Positive" text="{i18n>ALLOCATED}" count="{countViewModel>/allocatedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true" visible="{detailView>/showAllocatedTab}" iconDensityAware="false">
 						<content>
-							<Table items="{path:'allocatedDataModel>/', sorter : { path : 'series' }}" 
+							<!--<Table items="{path:'allocatedDataModel>/', sorter : { path : 'zzzadddata4' }}" -->
+							
+								<Table	       items="{
+				                    path: 'allocatedDataModel>/',
+				                    sorter: {
+				                    path: 'zzadddata4',
+				                    descending: true
+				                    }
+				                    }"
+							
+							
 										
 							     noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" 
 							     growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
@@ -264,7 +292,7 @@
 								<columns>
 									<Column width="200px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
 										<header>
-											<Text text="{i18n>SERIES}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{i18n>SERIES}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 										</header>
 										<footer/>
 									</Column>
@@ -326,7 +354,7 @@
 								<items>
 									<ColumnListItem type="Navigation">
 										<cells>
-											<Text text="{allocatedDataModel>series}" width="181.35000610351562px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											<Text text="{allocatedDataModel>series}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 											<Text text="{allocatedDataModel>orderNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 											<Text text="{allocatedDataModel>suggestedVolume}"  width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 											<Text text="{allocatedDataModel>requestedVolume}"   width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
