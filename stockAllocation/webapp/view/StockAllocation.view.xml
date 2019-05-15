@@ -62,7 +62,22 @@
 			<!--<Table items="{path:'stockDataModel>/', sorter : { path : 'model' }}" width="auto" noDataText="{i18n>NO_DATA}" mode="None"-->
 			<!--	showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"-->
 			<!--  alternateRowColors="true">-->
-						<Table items="{path:'stockDataModel>/'}" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
+						<!--<Table items="{path:'stockDataModel>/'}" -->
+						
+						
+									 	<Table         items="{
+				                    path: 'stockDataModel>/',
+				                    sorter: {
+				                    path: 'zzadddata4',
+				                    descending: true
+				                    }
+				                    }"		 
+						
+						
+						
+						
+						
+						width="auto" noDataText="{i18n>NO_DATA}" mode="None"
 				showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
 			  alternateRowColors="true" id="stockDataModelTableId">
 				<infoToolbar/>
