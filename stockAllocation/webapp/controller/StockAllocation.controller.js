@@ -258,10 +258,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
  //var oBusyDialog = new sap.m.BusyDialog(); 
  //      oBusyDialog.open();
 
-
-
-
-
+ 
 
 			 sap.ui.core.BusyIndicator.show(0);
 			// jsut send the data to SAP Plain vanilla. 

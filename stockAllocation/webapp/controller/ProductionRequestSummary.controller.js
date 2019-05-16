@@ -717,12 +717,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					// sort the array oViewSuggestData, oViewRequestedData, oViewAllocatedData
 					
 						/*global  _:true*/
-					 oViewSuggestData = _.sortBy( oViewSuggestData, "zzzadddata4" );
-					 oViewRequestedData = _.sortBy( oViewRequestedData, "zzzadddata4" );
-					 oViewAllocatedData = _.sortBy( oViewAllocatedData, "zzzadddata4" );
+					 oViewSuggestData = _.sortBy( oViewSuggestData, "zzzadddata4" ).reverse();
+					 oViewRequestedData = _.sortBy( oViewRequestedData, "zzzadddata4" ).reverse();
+					 oViewAllocatedData = _.sortBy( oViewAllocatedData, "zzzadddata4" ).reverse();
 					
-					
-					
+			
 					
 					
 					// suggested Data here. 			
@@ -940,6 +939,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						oModel.setProperty("/startDateofWindow", windowEndDateFormatted);
 						oModel.setProperty("/endDateofTheWindow", dateForBanner);
 						oModel.setProperty("/dateForValidation", newTempDate);
+						oModel.setProperty("/statusFromCalender", item.zzstatus);
 
 					});
 
@@ -1053,6 +1053,38 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			// along with count if the status is A and is out of window end date then do not display the allocated tab. 
 			var oModel = this.getView().getModel("detailView");
 			var oModelData = oModel.getData();
+			
+			if ((oModelData.statusFromCalender == "R" || oModelData.statusFromCalender == "") && oModelData.allocationInidcator == "S" && oModelData.parsedtodayDate >= oModelData.windowEndDateP) {
+			// 	// reset all the models to initial State and return, 
+							var oViewSuggestData = [];
+					var oSuggestModel = new sap.ui.model.json.JSONModel();
+					oSuggestModel.setData(oViewSuggestData);
+					this.getView().setModel(oSuggestModel, "suggestedDataModel");
+
+
+                                        var oViewRequestedData= [];
+					var oRequestModel = new sap.ui.model.json.JSONModel();
+					oRequestModel.setData(oViewRequestedData);
+					this.getView().setModel(oRequestModel, "requestedDataModel");
+
+                                        var oViewAllocatedData = [];
+					var oAllocatedModel = new sap.ui.model.json.JSONModel();
+					oAllocatedModel.setData(oViewAllocatedData);
+					this.getView().setModel(oAllocatedModel, "allocatedDataModel");
+	                
+	                var oViewCountData = [];
+  	                 var oCountModel = new sap.ui.model.json.JSONModel();
+					oCountModel.setData(oViewCountData);
+					this.getView().setModel(oCountModel, "countViewModel");
+					
+				 		    	oModel.setProperty("/showAllocatedTab", false);
+				 					oModel.setProperty("/showSuggestionTab", false);
+				 					oModel.setProperty("/showRequestedTab", false);					
+					
+					
+				 return;
+	 
+			 }
 
 			if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {
 
@@ -1202,10 +1234,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				// 	if (allocatedModelData[i].allocatedVolume <= 0) {
 				// 		allocatedModelLength = allocatedModelLength - 1;
 				// 	}
-
-				// }// TODO: 
-
-			}
+				}
 
 			// if (oAllocatedModel) {
 			// 	var allocatedModelLength = oAllocatedModel.getData().length;
@@ -1219,6 +1248,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 				oCountModel.updateBindings(true);
 			}
+			
+// if the calender status and suggest order status does not match do not display the data. 
+
+       
+			
+			
+			
+			
+			
+			
+			
+			
 			sap.ui.core.BusyIndicator.hide();
 		},
 
