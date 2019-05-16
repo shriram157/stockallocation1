@@ -1228,9 +1228,7 @@
 					 oStockAllocationData = _.sortBy( oStockAllocationData, "zzzadddata1" ).reverse();
 					 oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
 					
-					
-					
-					
+		
 
 					// suggested Data here. 			
 					var oStockData = new sap.ui.model.json.JSONModel();
