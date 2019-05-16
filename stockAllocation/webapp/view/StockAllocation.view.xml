@@ -69,7 +69,7 @@
 				                    path: 'stockDataModel>/',
 				                    sorter: {
 				                    path: 'ZZZADDDATA1',
-				                    descending: true
+				                    descending: false
 				                    }
 				                    }"		 
 						
