@@ -1022,6 +1022,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
 					oModel.setProperty("/parsedtodayDate", parsedtodayDate);
 					oModel.setProperty("/windowEndDateP", windowEndDateP);
+					oModel.setProperty("/windowStartDateP", windowStartDateP);
 
 					if ((parsedtodayDate >= windowEndDateP)) {
 
@@ -1054,7 +1055,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oModel = this.getView().getModel("detailView");
 			var oModelData = oModel.getData();
 			
-			if ((oModelData.statusFromCalender == "R" || oModelData.statusFromCalender == "") && oModelData.allocationInidcator == "S" && oModelData.parsedtodayDate >= oModelData.windowEndDateP) {
+			if ((oModelData.statusFromCalender == "R" || oModelData.statusFromCalender == "") && oModelData.allocationInidcator == "S" && oModelData.parsedtodayDate > oModelData.windowEndDateP 
+			                   || oModelData.parsedtodayDate < oModelData.windowStartDateP) {
 			// 	// reset all the models to initial State and return, 
 							var oViewSuggestData = [];
 					var oSuggestModel = new sap.ui.model.json.JSONModel();
