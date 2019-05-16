@@ -1225,8 +1225,8 @@
 					
 					/*global  _:true*/
 					
-					 oStockAllocationData = _.sortBy( oStockAllocationData, "zzzadddata1" );
-					 oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" );
+					 oStockAllocationData = _.sortBy( oStockAllocationData, "zzzadddata1" ).reverse();
+					 oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
 					
 					
 					
