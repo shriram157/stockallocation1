@@ -1,4 +1,4 @@
-sap.ui.define(["sap/ui/core/mvc/Controller",
+	sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"./utilities",
 	"sap/ui/core/routing/History",

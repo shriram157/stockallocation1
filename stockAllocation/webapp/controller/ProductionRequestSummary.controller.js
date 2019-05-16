@@ -2,11 +2,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"./utilities",
 	"sap/ui/core/routing/History"
-], function(BaseController, MessageBox, Utilities, History) {
+], function (BaseController, MessageBox, Utilities, History) {
 	"use strict";
 
 	return BaseController.extend("suggestOrder.controller.ProductionRequestSummary", {
-		handleRouteMatched: function(oEvent) {
+		handleRouteMatched: function (oEvent) {
 			var sAppId = "App5bb4c41429720e1dcc397810";
 
 			var oParams = {};
@@ -25,7 +25,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			} else {
 				if (this.getOwnerComponent().getComponentData()) {
-					var patternConvert = function(oParam) {
+					var patternConvert = function (oParam) {
 						if (Object.keys(oParam).length !== 0) {
 							for (var prop in oParam) {
 								if (prop !== "sourcePrototype") {
@@ -52,11 +52,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			// on every route matched lets set the count. 
 
-
 		},
 		//  All my custom Modules - Begin///////////////////////////////////////////////////////////////////////////////////////
 
-		onClickShowAllSeries: function(oEvent) {
+		onClickShowAllSeries: function (oEvent) {
 
 			var showSuggestSeriesText = this._oResourceBundle.getText("SHOW_SUGGEST_SERIES"),
 				showAllSeriesText = this._oResourceBundle.getText("SHOW_ALL_SERIES");
@@ -72,7 +71,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 
-		_showSuggestedQuantity: function() {
+		_showSuggestedQuantity: function () {
 			var oModelData2 = this.getView().getModel("suggestedDataModel").getData();
 
 			for (var i = 0; i < oModelData2.length; i++) {
@@ -91,7 +90,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 
-		_showAllSeries: function() {
+		_showAllSeries: function () {
 			var oModelData = this.getView().getModel("suggestedDataModel").getData();
 
 			for (var i = 0; i < oModelData.length; i++) {
@@ -108,7 +107,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 
-		onBusinessPartnerSelected: function(oEvent) {
+		onBusinessPartnerSelected: function (oEvent) {
 
 			//  validate only to check the business partners from the screen.  do not allow anything else. 
 			var oViewModel = this.getView().getModel("detailView");
@@ -157,7 +156,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		// All my custom modules - End	-//////////////////////////////////////////////////////////////////////////////////////////////	
 
-		_onTableItemPress: function(oEvent) {
+		_onTableItemPress: function (oEvent) {
 
 			var oBindingContextPath = oEvent.getParameter("listItem").getBindingContextPath();
 
@@ -222,16 +221,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			//	var oBindingContext = oEvent.getParameter("listItem").getBindingContextPath();
 
-			return new Promise(function(fnResolve) {
+			return new Promise(function (fnResolve) {
 				this.doNavigate("StockAllocation", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
+			}.bind(this)).catch(function (err) {
 				if (err !== undefined) {
 					MessageBox.error(err.message);
 				}
 			});
 
 		},
-		doNavigate: function(sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
+		doNavigate: function (sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
 			var sPath = (oBindingContext) ? oBindingContext.getPath() : null;
 			var oModel = (oBindingContext) ? oBindingContext.getModel() : null;
 
@@ -256,7 +255,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						masterContext: sMasterContext
 					}, false);
 				} else {
-					oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function(bindingContext) {
+					oModel.createBindingContext(sNavigationPropertyName, oBindingContext, null, function (bindingContext) {
 						if (bindingContext) {
 							sPath = bindingContext.getPath();
 							if (sPath.substring(0, 1) === "/") {
@@ -286,50 +285,50 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 
 		},
-		_onTableItemPress1: function(oEvent) {
+		_onTableItemPress1: function (oEvent) {
 
 			var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
 
-			return new Promise(function(fnResolve) {
+			return new Promise(function (fnResolve) {
 				this.doNavigate("StockAllocation", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
+			}.bind(this)).catch(function (err) {
 				if (err !== undefined) {
 					MessageBox.error(err.message);
 				}
 			});
 
 		},
-		_onTableItemPress2: function(oEvent) {
+		_onTableItemPress2: function (oEvent) {
 
 			var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
 
-			return new Promise(function(fnResolve) {
+			return new Promise(function (fnResolve) {
 				this.doNavigate("StockAllocation", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
+			}.bind(this)).catch(function (err) {
 				if (err !== undefined) {
 					MessageBox.error(err.message);
 				}
 			});
 
 		},
-		_onTableItemPress3: function(oEvent) {
+		_onTableItemPress3: function (oEvent) {
 
 			var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
 
-			return new Promise(function(fnResolve) {
+			return new Promise(function (fnResolve) {
 				this.doNavigate("StockAllocation", oBindingContext, fnResolve, "");
-			}.bind(this)).catch(function(err) {
+			}.bind(this)).catch(function (err) {
 				if (err !== undefined) {
 					MessageBox.error(err.message);
 				}
 			});
 
 		},
-		_onButtonPress: function() {
+		_onButtonPress: function () {
 			window.close();
 
 		},
-		onInit: function() {
+		onInit: function () {
 
 			// initialize  local models and data calls
 
@@ -373,7 +372,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				url: this.sPrefix + this.currentScopeUrl,
 				type: "GET",
 				dataType: "json",
-				success: function(oData) {
+				success: function (oData) {
 					// var userScopes = oData;
 					// userScopes.forEach(function (data) {
 
@@ -383,41 +382,41 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var sLocation_conf = sLocation.search("webide");
 					if (sLocation_conf == 0) {
 						// if a local user from weide 
-						userType = "Dealer_User";  
+						userType = "Dealer_User";
 					} else {
 						var userType = oData.loggedUserType[0];
 						//////////////////////////////////////////////////////////////////						
 					}
 
 					switch (userType) {
-						case "Dealer_User":
+					case "Dealer_User":
 
-							that.sLoggedinUserType = "Dealer_User";
-							oModelDetailview.setProperty("/editOrderPrefix", true);
-							oModelDetailview.setProperty("/loggedInUserType", "Dealer_User");
-							oModelDetailview.setProperty("/editAllowed", false);
-							oModelDetailview.setProperty("/visibleForInternalUser", false);
+						that.sLoggedinUserType = "Dealer_User";
+						oModelDetailview.setProperty("/editOrderPrefix", true);
+						oModelDetailview.setProperty("/loggedInUserType", "Dealer_User");
+						oModelDetailview.setProperty("/editAllowed", false);
+						oModelDetailview.setProperty("/visibleForInternalUser", false);
 
-							break;
+						break;
 
-						case "TCI_User":
-							that.sLoggedinUserType = "TCI_User";
-							oModelDetailview.setProperty("/editOrderPrefix", false);
-							oModelDetailview.setProperty("/loggedInUserType", "TCI_User");
-							oModelDetailview.setProperty("/editAllowed", true);
-							oModelDetailview.setProperty("/visibleForInternalUser", true);
+					case "TCI_User":
+						that.sLoggedinUserType = "TCI_User";
+						oModelDetailview.setProperty("/editOrderPrefix", false);
+						oModelDetailview.setProperty("/loggedInUserType", "TCI_User");
+						oModelDetailview.setProperty("/editAllowed", true);
+						oModelDetailview.setProperty("/visibleForInternalUser", true);
 
-							break;
-						case "Zone_User":
-							that.sLoggedinUserType = "Zone_User";
-							oModelDetailview.setProperty("/editOrderPrefix", false);
-							oModelDetailview.setProperty("/loggedInUserType", "Zone_User");
-							oModelDetailview.setProperty("/editAllowed", true);
-							oModelDetailview.setProperty("/visibleForInternalUser", true);
+						break;
+					case "Zone_User":
+						that.sLoggedinUserType = "Zone_User";
+						oModelDetailview.setProperty("/editOrderPrefix", false);
+						oModelDetailview.setProperty("/loggedInUserType", "Zone_User");
+						oModelDetailview.setProperty("/editAllowed", true);
+						oModelDetailview.setProperty("/visibleForInternalUser", true);
 
-							break;
-						default:
-							// raise a message, because this should not be allowed. 
+						break;
+					default:
+						// raise a message, because this should not be allowed. 
 
 					}
 
@@ -432,19 +431,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 
-		_callTheDealerFetchService: function(oEvent) {
+		_callTheDealerFetchService: function (oEvent) {
 			var that = this;
 			$.ajax({
 				url: this.sPrefix + this.attributeUrl,
 				type: "GET",
 				dataType: "json",
 
-				success: function(oData) {
+				success: function (oData) {
 					var BpDealer = [];
 					var userAttributes = [];
 					var oModelDetailView = this.getView().getModel("detailView");
 
-					$.each(oData.attributes, function(i, item) {
+					$.each(oData.attributes, function (i, item) {
 						var BpLength = item.BusinessPartner.length;
 
 						if (i == 0) {
@@ -484,7 +483,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							"BusinessPartnerType": item.BusinessPartnerType,
 							"searchTermReceivedDealerName": item.SearchTerm2
 						});
-
 
 					});
 
@@ -548,7 +546,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					//	that._getTheUserAttributes();
 
 				}.bind(this),
-				error: function(response) {
+				error: function (response) {
 					sap.ui.core.BusyIndicator.hide();
 				}
 			});
@@ -556,7 +554,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this._navigateToHandleRouteMatched();
 		},
 
-		reqcomplete: function() {
+		reqcomplete: function () {
 
 			// call the oData service
 			// =======================================================================
@@ -572,8 +570,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				this.sSelectedDealer = oDataFromModel.BusinessPartnerKey;
 			}
 
-
-
 			var oGetModel = this.getView().getModel("ZCDS_SUGGEST_ORD_SUM_CDS");
 			oGetModel.read("/ZCDS_SUGGEST_ORD_SUM", {
 
@@ -583,7 +579,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "' "
 				},
 
-				success: function(oData) {
+				success: function (oData) {
 
 					//first get count model and then call the 
 					var oViewSuggestData = [];
@@ -596,9 +592,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var seriesDescription;
 					var that = this;
 					//                var timeForBanner  ;	
-					$.each(oData.results, function(i, item) {
+					$.each(oData.results, function (i, item) {
 						// if ((item.zzdlr_ref_no == "") || (item.zzdlr_ref_no == undefined)) {
-							order_Number = "XXXXXX";
+						order_Number = "XXXXXX";
 						// }
 
 						if (that.sCurrentLocale == 'FR') {
@@ -620,7 +616,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							zzseries: item.zzseries,
 							zzallocation_ind: item.zzallocation_ind,
 							zzdel_review: item.zzdel_review,
-							zzzadddata4: item.zzzadddata4  // this field needed to apply the sort logic.
+							zzzadddata4: item.zzzadddata4 // this field needed to apply the sort logic.
 
 						});
 						// requested Data	
@@ -684,7 +680,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							dealerCode: item.zzdealer_code,
 							dealerReviewCount: item.dealer_review_count,
 							zzdel_review: item.zzdel_review,
-								zzzadddata4: item.zzzadddata4  // this field needed to apply the sort logic.
+							zzzadddata4: item.zzzadddata4 // this field needed to apply the sort logic.
 
 						});
 
@@ -707,23 +703,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							unfilledAllocation: item.unfilled_allocation,
 							dealerCode: item.zzdealer_code,
 							zzdel_review: item.zzdel_review,
-								zzzadddata4: item.zzzadddata4  // this field needed to apply the sort logic.
+							zzzadddata4: item.zzzadddata4 // this field needed to apply the sort logic.
 
 						});
 
 					});
-					
+
 					//  the suggestedDatamodel is with Series data and this needs to be sorted by addddata4 ascending. 
 					// sort the array oViewSuggestData, oViewRequestedData, oViewAllocatedData
-					
-						/*global  _:true*/
-					 oViewSuggestData = _.sortBy( oViewSuggestData, "zzzadddata4" ).reverse();
-					 oViewRequestedData = _.sortBy( oViewRequestedData, "zzzadddata4" ).reverse();
-					 oViewAllocatedData = _.sortBy( oViewAllocatedData, "zzzadddata4" ).reverse();
-					
-			
-					
-					
+
+					/*global  _:true*/
+					oViewSuggestData = _.sortBy(oViewSuggestData, "zzzadddata4").reverse();
+					oViewRequestedData = _.sortBy(oViewRequestedData, "zzzadddata4").reverse();
+					oViewAllocatedData = _.sortBy(oViewAllocatedData, "zzzadddata4").reverse();
+
 					// suggested Data here. 			
 					var oSuggestModel = new sap.ui.model.json.JSONModel();
 					oSuggestModel.setData(oViewSuggestData);
@@ -867,7 +860,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oModelCalled.attachRequestCompleted(this._callTheCountService());
 
 				}.bind(this),
-				error: function(response) {
+				error: function (response) {
 					sap.ui.core.BusyIndicator.hide();
 				}
 
@@ -876,7 +869,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		}, // end of req complete
 
 		//  make a call to count model.   this.sSelectedDealer
-		_callTheCountService: function(oEvent) {
+		_callTheCountService: function (oEvent) {
 			var oGetModelCount = this.getView().getModel("ZCDS_SUGGEST_ORD_COUNT_CDS");
 
 			oGetModelCount.read("/ZCDS_SUGGEST_ORD_COUNT", {
@@ -888,13 +881,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "' "
 				},
 
-				success: function(oData) {
+				success: function (oData) {
 					var oViewCountData = [];
 					var oModel = this.getView().getModel("detailView");
 
 					//	this.getView().setModel(new sap.ui.model.json.JSONModel(oData.results), "countViewModel");
 					// sap.ui.core.BusyIndicator.hide();
-					$.each(oData.results, function(i, item) {
+					$.each(oData.results, function (i, item) {
 						if (item.totalUnfilledcount == 0) {
 							item.totalUnfilledcount = "0";
 						}
@@ -960,18 +953,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						var tempDueDate = "Dû le" + sDateForBanner + ' à  ' + sDateForTime + "(HNE)";
 						oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 	
 
-
-
 					} else {
 						// var WordDueOn = 'Due on ';
 
 						var tempDueDate = 'Due on ' + sDateForBanner + " at " + sDateForTime + "(EST)";
 						oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 
 
-
-
 					}
-
 
 					// Dû le 29/04/2019 à 14h30 (HNE)
 
@@ -993,7 +981,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					// 	timeZone: "America/New_York"
 					// });
 					var torontoTime = new Date();
-				    		/*global  moment:true*/
+					/*global  moment:true*/
 					var extractTimeZone = moment(torontoTime);
 					//var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
 					var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY HH:mm'); //24 hour format
@@ -1042,51 +1030,49 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					this._updateTheCount();
 
 				}.bind(this),
-				error: function(response) {
+				error: function (response) {
 					sap.ui.core.BusyIndicator.hide();
 				}
 			});
 
 		},
 
-		_updateTheCount: function(oEvent) {
+		_updateTheCount: function (oEvent) {
 
 			// along with count if the status is A and is out of window end date then do not display the allocated tab. 
 			var oModel = this.getView().getModel("detailView");
 			var oModelData = oModel.getData();
-			
-			if ((oModelData.statusFromCalender == "R" || oModelData.statusFromCalender == "") && oModelData.allocationInidcator == "S" && oModelData.parsedtodayDate > oModelData.windowEndDateP 
-			                   || oModelData.parsedtodayDate < oModelData.windowStartDateP) {
-			// 	// reset all the models to initial State and return, 
-							var oViewSuggestData = [];
-					var oSuggestModel = new sap.ui.model.json.JSONModel();
-					oSuggestModel.setData(oViewSuggestData);
-					this.getView().setModel(oSuggestModel, "suggestedDataModel");
 
+			if ((oModelData.statusFromCalender == "R" || oModelData.statusFromCalender == "") && oModelData.allocationInidcator == "S" &&
+				oModelData.parsedtodayDate > oModelData.windowEndDateP || oModelData.parsedtodayDate < oModelData.windowStartDateP) {
+				// 	// reset all the models to initial State and return, 
+				var oViewSuggestData = [];
+				var oSuggestModel = new sap.ui.model.json.JSONModel();
+				oSuggestModel.setData(oViewSuggestData);
+				this.getView().setModel(oSuggestModel, "suggestedDataModel");
 
-                                        var oViewRequestedData= [];
-					var oRequestModel = new sap.ui.model.json.JSONModel();
-					oRequestModel.setData(oViewRequestedData);
-					this.getView().setModel(oRequestModel, "requestedDataModel");
+				var oViewRequestedData = [];
+				var oRequestModel = new sap.ui.model.json.JSONModel();
+				oRequestModel.setData(oViewRequestedData);
+				this.getView().setModel(oRequestModel, "requestedDataModel");
 
-                                        var oViewAllocatedData = [];
-					var oAllocatedModel = new sap.ui.model.json.JSONModel();
-					oAllocatedModel.setData(oViewAllocatedData);
-					this.getView().setModel(oAllocatedModel, "allocatedDataModel");
-	                
-	                var oViewCountData = [];
-  	                 var oCountModel = new sap.ui.model.json.JSONModel();
-					oCountModel.setData(oViewCountData);
-					this.getView().setModel(oCountModel, "countViewModel");
-					
-				 		    	oModel.setProperty("/showAllocatedTab", false);
-				 					oModel.setProperty("/showSuggestionTab", false);
-				 					oModel.setProperty("/showRequestedTab", false);					
-					
-					
-				 return;
-	 
-			 }
+				var oViewAllocatedData = [];
+				var oAllocatedModel = new sap.ui.model.json.JSONModel();
+				oAllocatedModel.setData(oViewAllocatedData);
+				this.getView().setModel(oAllocatedModel, "allocatedDataModel");
+
+				var oViewCountData = [];
+				var oCountModel = new sap.ui.model.json.JSONModel();
+				oCountModel.setData(oViewCountData);
+				this.getView().setModel(oCountModel, "countViewModel");
+
+				oModel.setProperty("/showAllocatedTab", false);
+				oModel.setProperty("/showSuggestionTab", false);
+				oModel.setProperty("/showRequestedTab", false);
+
+				return;
+
+			}
 
 			if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {
 
@@ -1191,38 +1177,32 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				if (requestedModelLength < 0) {
 					requestedModelLength = 0;
 				}
-		// if the window is out of date, remove the records with suggested, requested = 0.		
-					var oModelDetail = this.getView().getModel("detailView");
-					var isOutofWindow = false;
-				     isOutofWindow = oModelDetail.getProperty("/outOfWindowDate");
-				   
-				   
-				   if (isOutofWindow == true){
-				   				for (var i = requestedModelLengthTemp - 1; i >= 0; i--) {
+				// if the window is out of date, remove the records with suggested, requested = 0.		
+				var oModelDetail = this.getView().getModel("detailView");
+				var isOutofWindow = false;
+				isOutofWindow = oModelDetail.getProperty("/outOfWindowDate");
 
-					// for (var i = 0; i < requestedModelLengthTemp; i++) {
+				if (isOutofWindow == true) {
+					for (var i = requestedModelLengthTemp - 1; i >= 0; i--) {
 
-					if (requestedModelData[i].suggestedVolume <= "0" && requestedModelData[i].requestedVolume <= "0") {
-						requestedModelData.splice(i, 1);
-						requestedModelLength = requestedModelLength - 1;
-						//  continue;
+						// for (var i = 0; i < requestedModelLengthTemp; i++) {
+
+						if (requestedModelData[i].suggestedVolume <= "0" && requestedModelData[i].requestedVolume <= "0") {
+							requestedModelData.splice(i, 1);
+							requestedModelLength = requestedModelLength - 1;
+							//  continue;
+						}
+
+						// if (requestedModelData[i].dealerReviewCount == "Y") {
+
 					}
 
-					// if (requestedModelData[i].dealerReviewCount == "Y") {
-
-
 				}
-				   	
-				   	
-				   }
-				   
-				   
-								if (requestedModelLength < 0) {
+
+				if (requestedModelLength < 0) {
 					requestedModelLength = 0;
 				}
-				
-				
-				
+
 				oRequestedModel.updateBindings(true);
 			}
 			var oAllocatedModel = this.getView().getModel("allocatedDataModel");
@@ -1236,7 +1216,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				// 	if (allocatedModelData[i].allocatedVolume <= 0) {
 				// 		allocatedModelLength = allocatedModelLength - 1;
 				// 	}
-				}
+			}
 
 			// if (oAllocatedModel) {
 			// 	var allocatedModelLength = oAllocatedModel.getData().length;
@@ -1250,22 +1230,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 				oCountModel.updateBindings(true);
 			}
-			
-// if the calender status and suggest order status does not match do not display the data. 
 
-       
-			
-			
-			
-			
-			
-			
-			
-			
+			// if the calender status and suggest order status does not match do not display the data. 
+
 			sap.ui.core.BusyIndicator.hide();
 		},
 
-		_showColor: function(Flag, color) {
+		_showColor: function (Flag, color) {
 			var oContentDOM = $('#content'); //Pass div Content ID
 			var oParent = $('#content').parent(); //Get Parent
 			//Find for MessageToast class
@@ -1274,13 +1245,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 
-		_navigateToHandleRouteMatched: function(oEvent) {
+		_navigateToHandleRouteMatched: function (oEvent) {
 
 			this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			this.oRouter.getTarget("ProductionRequestSummary").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 
 		},
-		_setTheLanguage: function(oEvent) {
+		_setTheLanguage: function (oEvent) {
 
 			var oI18nModel = new sap.ui.model.resource.ResourceModel({
 				bundleUrl: "i18n/i18n.properties"
@@ -1321,7 +1292,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this._oResourceBundle = oModeli18n.getResourceBundle();
 		},
 
-		_setTheLogo: function(oEvent) {
+		_setTheLogo: function (oEvent) {
 
 			// if (userDetails[0].UserType == 'Dealer') {
 
@@ -1348,7 +1319,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 
-		formatColor: function(color) {
+		formatColor: function (color) {
 			// check if the date is past the due date then do a different color. 
 
 			return color ? color : "Error";
