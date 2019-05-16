@@ -68,8 +68,8 @@
 									 	<Table         items="{
 				                    path: 'stockDataModel>/',
 				                    sorter: {
-				                    path: 'ZZZADDDATA1',
-				                    descending: false
+				                    path: 'zzzadddata1',
+				                    descending: true
 				                    }
 				                    }"		 
 						
