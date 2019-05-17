@@ -616,7 +616,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							zzseries: item.zzseries,
 							zzallocation_ind: item.zzallocation_ind,
 							zzdel_review: item.zzdel_review,
-							zzzadddata4: item.zzzadddata4 // this field needed to apply the sort logic.
+							zzzadddata4: item.zzzadddata4, // this field needed to apply the sort logic.
+							modelYear:item.zzmoyr
 
 						});
 						// requested Data	
@@ -680,7 +681,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							dealerCode: item.zzdealer_code,
 							dealerReviewCount: item.dealer_review_count,
 							zzdel_review: item.zzdel_review,
-							zzzadddata4: item.zzzadddata4 // this field needed to apply the sort logic.
+							zzzadddata4: item.zzzadddata4, // this field needed to apply the sort logic.
+									modelYear:item.zzmoyr
 
 						});
 
@@ -703,7 +705,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							unfilledAllocation: item.unfilled_allocation,
 							dealerCode: item.zzdealer_code,
 							zzdel_review: item.zzdel_review,
-							zzzadddata4: item.zzzadddata4 // this field needed to apply the sort logic.
+							zzzadddata4: item.zzzadddata4, // this field needed to apply the sort logic.
+									modelYear:item.zzmoyr
 
 						});
 
@@ -713,9 +716,26 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					// sort the array oViewSuggestData, oViewRequestedData, oViewAllocatedData
 
 					/*global  _:true*/
-					oViewSuggestData = _.sortBy(oViewSuggestData, "zzzadddata4").reverse();
-					oViewRequestedData = _.sortBy(oViewRequestedData, "zzzadddata4").reverse();
-					oViewAllocatedData = _.sortBy(oViewAllocatedData, "zzzadddata4").reverse();
+				
+					
+					var oViewSuggestData = _.chain(oViewSuggestData)
+								.sortBy('zzzadddata4')  
+							  .sortBy('modelYear')                      
+							  
+							  .value();
+												
+							var oViewRequestedData = _.chain(oViewRequestedData)
+							 .sortBy('zzzadddata4') 
+							  .sortBy('modelYear')                     
+							 
+							  .value();
+					
+								var oViewAllocatedData = _.chain(oViewAllocatedData)
+								.sortBy('zzzadddata4') 
+							  .sortBy('modelYear')                        
+							  
+							  .value();
+					
 
 					// suggested Data here. 			
 					var oSuggestModel = new sap.ui.model.json.JSONModel();

@@ -72,10 +72,7 @@
 				                    descending: true
 				                    }
 				                    }"		 
-						
-						
-						
-						
+ 
 						
 						width="auto" noDataText="{i18n>NO_DATA}" mode="None"
 				showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
