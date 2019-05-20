@@ -718,24 +718,29 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					/*global  _:true*/
 				
 					
-					var oViewSuggestData = _.chain(oViewSuggestData)
-								.sortBy('zzzadddata4')  
-							  .sortBy('modelYear')                      
+					// var oViewSuggestData = _.chain(oViewSuggestData)
+					// 			.sortBy('zzzadddata4')  
+					// 		  .sortBy('modelYear')                      
 							  
-							  .value();
+					// 		  .value();
 												
-							var oViewRequestedData = _.chain(oViewRequestedData)
-							 .sortBy('zzzadddata4') 
-							  .sortBy('modelYear')                     
+					// 		var oViewRequestedData = _.chain(oViewRequestedData)
+					// 		 .sortBy('zzzadddata4') 
+					// 		  .sortBy('modelYear')                     
 							 
-							  .value();
+					// 		  .value();
 					
-								var oViewAllocatedData = _.chain(oViewAllocatedData)
-								.sortBy('zzzadddata4') 
-							  .sortBy('modelYear')                        
+					// 			var oViewAllocatedData = _.chain(oViewAllocatedData)
+					// 			.sortBy('zzzadddata4') 
+					// 		  .sortBy('modelYear')                        
 							  
-							  .value();
+					// 		  .value();
 					
+					// var fullySorted =  _.chain(list).sortBy('age').sortBy('name').value(); syntax
+					var oViewSuggestData = _.sortBy(( _.sortBy(oViewSuggestData, 'zzzadddata4')), 'modelYear');
+					var oViewRequestedData = _.sortBy(( _.sortBy(oViewRequestedData, 'zzzadddata4')), 'modelYear');	
+			    	var oViewAllocatedData = _.sortBy(( _.sortBy(oViewAllocatedData, 'zzzadddata4')), 'modelYear');			
+ 
 
 					// suggested Data here. 			
 					var oSuggestModel = new sap.ui.model.json.JSONModel();
