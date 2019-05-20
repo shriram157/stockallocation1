@@ -616,7 +616,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							zzseries: item.zzseries,
 							zzallocation_ind: item.zzallocation_ind,
 							zzdel_review: item.zzdel_review,
-							zzzadddata4: item.zzzadddata4, // this field needed to apply the sort logic.
+							zzzadddata4: Number(item.zzzadddata4),  // this field needed to apply the sort logic.
 							modelYear:item.zzmoyr
 
 						});
@@ -681,7 +681,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							dealerCode: item.zzdealer_code,
 							dealerReviewCount: item.dealer_review_count,
 							zzdel_review: item.zzdel_review,
-							zzzadddata4: item.zzzadddata4, // this field needed to apply the sort logic.
+							zzzadddata4: Number(item.zzzadddata4),  // this field needed to apply the sort logic.
 									modelYear:item.zzmoyr
 
 						});
@@ -705,7 +705,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							unfilledAllocation: item.unfilled_allocation,
 							dealerCode: item.zzdealer_code,
 							zzdel_review: item.zzdel_review,
-							zzzadddata4: item.zzzadddata4, // this field needed to apply the sort logic.
+							zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.Number('123')
 									modelYear:item.zzmoyr
 
 						});
