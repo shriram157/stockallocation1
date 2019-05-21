@@ -1,0 +1,11 @@
+_schema-version: "3.1"
+ID: suggestOrder.prod
+extends: suggestOrder
+
+modules:
+ - name: suggestOrder_Node
+   parameters:
+      host: tci-stockallocation-node
+ - name: stockAllocation
+   parameters:
+      host: tci-stockallocation

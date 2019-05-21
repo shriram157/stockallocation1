@@ -1059,7 +1059,7 @@
 
 //  turn off the zzintcol from the bleow With Rob Mc Carthy - item.zzintcol
 
-						uiForcolorTrim = item.zzextcol + "-" + mktgDescriptionBasedOnLang + "/" +  + "-" + interiorTrimDesc;
+						uiForcolorTrim = item.zzextcol + "-" + mktgDescriptionBasedOnLang + "/" + interiorTrimDesc;
 
 						var suffixToUi = item.zzsuffix + " " + suffixDescription;
 
