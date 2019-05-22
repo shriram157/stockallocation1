@@ -1242,11 +1242,23 @@
 					});
 					
 					// lets sort the model data as per the zzzadddata1 field.
-					
+						// var oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1')), 'zzsuffix', 'zzintcol');
 					/*global  _:true*/
 					 if ( this.afterSAPDataUpdate != true ) {
-					 oStockAllocationData = _.sortBy( oStockAllocationData, "zzzadddata1" ).reverse();
-					 oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
+					  oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1').reverse()), 'zzsuffix', 'zzintcol');
+					   oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, 'zzzadddata1').reverse()), "zzsuffix", "zzintcol");
+					 //oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
+					 } else {
+					 	
+					 // reset and set again to retain the sort order 	
+					var oStockAllocationDataReset = [];	
+					var oStockData = new sap.ui.model.json.JSONModel();
+					oStockData.setData(oStockAllocationDataReset);
+					this.getView().setModel(oStockData, "stockDataModel");	
+					
+	  oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1').reverse()), 'zzsuffix', "zzintcol");
+					   oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, 'zzzadddata1').reverse()), "zzsuffix", "zzintcol");
+
 					 }
 		
 
