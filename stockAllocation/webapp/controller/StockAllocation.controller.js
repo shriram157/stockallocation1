@@ -351,10 +351,26 @@
 		},
 
 		_postTheDataToSAP: function(oSuggestUpdateModel, sendTheDataToSAP) {
-			var requestedVolume = sendTheDataToSAP.requested_Volume.toString();
+	
+    			var requestedVolumeNumb = Number(sendTheDataToSAP.requested_Volume);
+                var suggestedQtyFromTCINumb = Number(sendTheDataToSAP.suggested);
+	
+	
 			var dealerCode = this.dealerCode;
 			var orderPrefix = this.orderPrefix.toUpperCase();
-
+	//  greater of suggested qty or requested qty should be moved to 		
+		   var suggestedQtyFromTCI = sendTheDataToSAP.suggested;
+		   if (suggestedQtyFromTCINumb > requestedVolumeNumb) {
+		   //sendTheDataToSAP.zzint_alc_qty;
+			 var initialAllocatedQty = requestedVolumeNumb;
+		  } else if (requestedVolumeNumb > suggestedQtyFromTCINumb ){
+		      	 var initialAllocatedQty = suggestedQtyFromTCINumb;
+		  } else {
+		  	 var initialAllocatedQty = suggestedQtyFromTCINumb;
+		  }
+           		var requestedVolume = requestedVolumeNumb.toString(); 
+           		var initialAllocatedQty = initialAllocatedQty.toString();
+           		
 			var oData = {
 
 				ZzsugSeqNo: sendTheDataToSAP.zzsug_seq_no,
@@ -371,8 +387,8 @@
 				ZzetaMonth: sendTheDataToSAP.zzeta_month,
 				ZzdelReview: "Y",
 				ZzrequestQty: requestedVolume,
-				Zzprefix: orderPrefix
-
+				Zzprefix: orderPrefix,
+				ZzintAlcQty: initialAllocatedQty
 			};
 
 			var that = this;
@@ -943,7 +959,8 @@
 					ZzprodMonth: item.zzprod_month,
 					ZzetaMonth: item.zzeta_month,
 					zzdel_review: "Y",
-					ZzrequestQty: requestedVolume
+					ZzrequestQty: requestedVolume,
+				    zzint_alc_qty:item.zzint_alc_qty
 
 				});
 			});
@@ -1100,7 +1117,8 @@
 							zzprod_month: item.zzprod_month,
 							zzeta_month: item.zzeta_month,
 							zzsuffix: item.zzsuffix,
-							zzzadddata1 :item.zzzadddata1 // this is used for Sort
+							zzzadddata1 :item.zzzadddata1, // this is used for Sort
+							zzint_alc_qty:item.zzint_alc_qty
 
 						});
 
@@ -1132,7 +1150,8 @@
 							zzeta_month: item.zzeta_month,
 							zzordertype: item.zzordertype,
 							zzsuffix: item.zzsuffix,
-							zzzadddata1 :item.zzzadddata1 // this is used for Sort
+							zzzadddata1 :item.zzzadddata1, // this is used for Sort
+							zzint_alc_qty:item.zzint_alc_qty
 
 						});
 
@@ -1154,7 +1173,8 @@
 							zzeta_month: item.zzeta_month,
 							zzordertype: item.zzordertype,
 							zzsuffix: item.zzsuffix,
-							zzzadddata1 :item.zzzadddata1 // this is used for Sort
+							zzzadddata1 :item.zzzadddata1, // this is used for Sort
+							zzint_alc_qty:item.zzint_alc_qty
 
 						});
 
