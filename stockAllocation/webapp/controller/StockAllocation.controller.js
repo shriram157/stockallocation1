@@ -1245,8 +1245,23 @@
 						// var oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1')), 'zzsuffix', 'zzintcol');
 					/*global  _:true*/
 					 if ( this.afterSAPDataUpdate != true ) {
-					  oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1').reverse()), 'zzsuffix', 'zzintcol');
-					   oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, 'zzzadddata1').reverse()), "zzsuffix", "zzintcol");
+					 
+					 	 oStockAllocationData = _.sortBy( oStockAllocationData, "zzzadddata1" ).reverse();
+					 	 oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
+					 	
+					 		// var oStockAllocationData = _.chain(oStockAllocationData)
+								// .sortBy('zzzadddata1').reverse()  
+							 // .sortBy('zzsuffix');                      
+							  
+					 	
+					 	 //		var oStockAlocationBkup = _.chain(oStockAlocationBkup)
+								// .sortBy('zzzadddata1').reverse()  
+							 // .sortBy('zzsuffix');                  
+							   
+					 	
+					 	
+					  //oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1').reverse()), 'zzsuffix', 'zzintcol');
+					  // oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, 'zzzadddata1').reverse()), "zzsuffix", "zzintcol");
 					 //oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
 					 } else {
 					 	
@@ -1256,8 +1271,10 @@
 					oStockData.setData(oStockAllocationDataReset);
 					this.getView().setModel(oStockData, "stockDataModel");	
 					
-	  oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1').reverse()), 'zzsuffix', "zzintcol");
-					   oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, 'zzzadddata1').reverse()), "zzsuffix", "zzintcol");
+	  //oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1').reverse()), 'zzsuffix', "zzintcol");
+			// 		   oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, 'zzzadddata1').reverse()), "zzsuffix", "zzintcol");
+				  oStockAllocationData = _.sortBy( oStockAllocationData, "zzzadddata1" ).reverse();
+					 	 oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
 
 					 }
 		
