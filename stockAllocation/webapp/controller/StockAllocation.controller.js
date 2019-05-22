@@ -101,7 +101,7 @@
 			this._setTheLogo();
 
 			this.oModel = this.getOwnerComponent().getModel("ZCDS_SUGGEST_ORD_CDS");
-
+			this.afterSAPDataUpdate = false;
 			// var oGetModelDetailData = this.getView().getModel("ZCDS_SUGGEST_ORD_CDS");
 			// oGetModelDetailData.read("/zcds_suggest_ord", {
 			this._loadTheData(); // data to SAP screen
@@ -342,7 +342,7 @@
           // try to close the indicator	
           this._dialog.close();
 
-
+            this.afterSAPDataUpdate = true;
 
 			this.resultsLossofData = false; // the data is saved,  so no message
 			this._loadTheData(); // reload the data from SAP. 
@@ -1244,10 +1244,10 @@
 					// lets sort the model data as per the zzzadddata1 field.
 					
 					/*global  _:true*/
-					
+					 if ( this.afterSAPDataUpdate != true ) {
 					 oStockAllocationData = _.sortBy( oStockAllocationData, "zzzadddata1" ).reverse();
 					 oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
-					
+					 }
 		
 
 					// suggested Data here. 			
