@@ -84,7 +84,7 @@
 							<ToggleButton pressed="false" text="{i18n>SHOW_ALL_MODELS}" iconFirst="true" width="230px"
 								enabled="{oViewLocalDataModel>/setEnableFalseSuggest}" visible="true" press="onClickShowAllModels" id="showAllModelsBtn"/>
 							<ToggleButton pressed="false" text="{i18n>SHOW_PERCENTAGES}" iconFirst="true" width="220px"
-								enabled="{oViewLocalDataModel>/setEnableFalsePercentages}" visible="true" press="onClickShowPercentages" id="showPercentagesBtn"/>
+								enabled="{oViewLocalDataModel>/setEnableFalsePercentages}" visible="false" press="onClickShowPercentages" id="showPercentagesBtn"/>
 							<ToolbarSpacer width="310px"/>
 							<Button text="{i18n>RESET_TO_SUGGESTED}" type="Reject" iconFirst="true" width="auto"
 								enabled="{oViewLocalDataModel>/setEnableFalseReset}" visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="resetToSuggestedClick"/>
