@@ -102,7 +102,10 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
 					"json": true,
-					"useBatch": false
+					"useBatch": false,
+					"headers": {
+						"X-Requested-With": "XMLHttpRequest"
+					}
 				},
 				"dataSource": "ZCDS_SUGGEST_ORD_CDS",
 				"preload": false
@@ -115,10 +118,13 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
 					"json": true,
-					"useBatch": false
+					"useBatch": false,
+					"headers": {
+						"X-Requested-With": "XMLHttpRequest"
+					}
 				},
 				"dataSource": "ZCDS_SUGGEST_ORD_SUM_CDS",
-					"preload": false
+				"preload": false
 			},
 		    "ZCDS_SUGGEST_ORD_COUNT_CDS": {
 				"uri": "/node/ZCDS_SUGGEST_ORD_COUNT_CDS/",
@@ -128,12 +134,15 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
 					"json": true,
-					"useBatch": false
+					"useBatch": false,
+					"headers": {
+						"X-Requested-With": "XMLHttpRequest"
+					}
 				},
 				"dataSource": "ZCDS_SUGGEST_ORD_COUNT_CDS",
-					"preload": false
+				"preload": false
 			},
-					    "ZSD_SUGGEST_ORDER_UPDATE_SRV": {
+			"ZSD_SUGGEST_ORDER_UPDATE_SRV": {
 				"uri": "/node/ZSD_SUGGEST_ORDER_UPDATE_SRV/",
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
@@ -141,10 +150,13 @@
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
 					"json": true,
-					"useBatch": true
+					"useBatch": true,
+					"headers": {
+						"X-Requested-With": "XMLHttpRequest"
+					}
 				},
 				"dataSource": "ZSD_SUGGEST_ORDER_UPDATE_SRV",
-					"preload": false
+				"preload": false
 			}
 		},
      "resources": {

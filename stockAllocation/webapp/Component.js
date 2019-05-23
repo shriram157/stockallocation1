@@ -42,7 +42,10 @@ sap.ui.define([
 				useBatch: false,
 				// disableHeadRequestForToken: false,
 				//defaultUpdateMethod: 'PUT',
-				json: true
+				json: true,
+				headers: {
+					"X-Requested-With": "XMLHttpRequest"
+				}
 			});
 			this.setModel(oDataModel, "ZCDS_SUGGEST_ORD_CDS");
 			
@@ -58,7 +61,10 @@ sap.ui.define([
 				useBatch: false,
 				// disableHeadRequestForToken: false,
 				//defaultUpdateMethod: 'PUT',
-				json: true
+				json: true,
+				headers: {
+					"X-Requested-With": "XMLHttpRequest"
+				}
 			});
 			this.setModel(oDataModel, "ZCDS_SUGGEST_ORD_SUM_CDS");
 			
@@ -74,7 +80,10 @@ sap.ui.define([
 				useBatch: false,
 				// disableHeadRequestForToken: false,
 				//defaultUpdateMethod: 'PUT',
-				json: true
+				json: true,
+				headers: {
+					"X-Requested-With": "XMLHttpRequest"
+				}
 			});
 			this.setModel(oDataModel, "ZCDS_SUGGEST_ORD_COUNT_CDS");
 
@@ -89,7 +98,10 @@ sap.ui.define([
 				useBatch: false,
 				// disableHeadRequestForToken: false,
 				//defaultUpdateMethod: 'PUT',
-				json: true
+				json: true,
+				headers: {
+					"X-Requested-With": "XMLHttpRequest"
+				}
 			});
 			this.setModel(oDataModel, "ZSD_SUGGEST_ORDER_UPDATE_SRV");
  
