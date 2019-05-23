@@ -161,7 +161,7 @@
 						</header>
 						<footer>
 							<Text text="{initialStockTotalModel>/0/currentDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" class="setOrangeFont"
-								visible="true" />
+								visible="false" />
 						</footer>
 					</Column>
 					<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
@@ -263,7 +263,7 @@
 								visible="true"/>
 					    	<Text text="{stockDataModel>current1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="false"/>			
 							<Text text="{stockDataModel>current}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-							<Text text="{stockDataModel>current_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{stockDataModel>current_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="false"/>
 							<Text text="{stockDataModel>suggested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							<Text text="{stockDataModel>suggested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 								visible="true"/>

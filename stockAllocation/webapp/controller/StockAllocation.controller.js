@@ -635,6 +635,11 @@
 
 			} else {
 
+				var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
+				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
+				var oInitialTotalStockModel = oInitalTotalStock.getData();
+
+
 				oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
 				oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
 				oInitialTotalStockModel["0"].currentTotal = currentTotal;
