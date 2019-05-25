@@ -5,7 +5,17 @@ extends: suggestOrder
 modules:
  - name: suggestOrder_Node
    parameters:
-      host: tci-stockallocation-node
+      host: stockallocation-node
+      domain: scp.toyota.ca
  - name: stockAllocation
    parameters:
-      host: tci-stockallocation
+      host: stockallocation
+      domain: scp.toyota.ca
+
+resources:
+ - name: uaa_suggestOrder
+   parameters:
+      config:
+         oauth2-configuration:
+            redirect-uris:
+               - https://stockallocation.scp.toyota.ca/login/callback
