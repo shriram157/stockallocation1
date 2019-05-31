@@ -7,7 +7,7 @@
 		"i18n": "i18n/i18n.properties",
  
 		"applicationVersion": {
-			"version": "1.2.2"
+			"version": "1.0.0"
 		},
 		"dataSources": {
 				"ZCDS_SUGGEST_ORD_CDS": {
