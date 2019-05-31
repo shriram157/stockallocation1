@@ -27,7 +27,9 @@ sap.ui.define([
 		init: function () {
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
-
+             // set the language to the core
+             
+                           this._setTheLanguage();
 			// Get resource bundle
 			var bundle = this.getModel('i18n').getResourceBundle();
 
@@ -165,7 +167,47 @@ sap.ui.define([
 		getNavigationPropertyForNavigationWithContext: function (sEntityNameSet, targetPageName) {
 			var entityNavigations = navigationWithContext[sEntityNameSet];
 			return entityNavigations == null ? null : entityNavigations[targetPageName];
-		}
+		},
+		
+					_setTheLanguage: function (oEvent) {
+
+			// var oI18nModel = new sap.ui.model.resource.ResourceModel({
+			// 	bundleUrl: "i18n/i18n.properties"
+			// });
+			// this.getView().setModel(oI18nModel, "i18n");
+
+			//  get the locale to determine the language. 
+			var isLocaleSent = window.location.search.match(/language=([^&]*)/i);
+			if (isLocaleSent) {
+				var sSelectedLocale = window.location.search.match(/language=([^&]*)/i)[1];
+			} else {
+				var sSelectedLocale = "en"; // default is english 
+			}
+
+			if (sSelectedLocale == "fr") {
+				// var i18nModel = new sap.ui.model.resource.ResourceModel({
+				// 	bundleUrl: "i18n/i18n.properties",
+				// 	bundleLocale: ("fr")
+
+				// });
+				// this.getView().setModel(i18nModel, "i18n");
+						sap.ui.getCore().getConfiguration().setLanguage("fr");
+
+			} else {
+				// var i18nModel = new sap.ui.model.resource.ResourceModel({
+				// 	bundleUrl: "i18n/i18n.properties",
+				// 	bundleLocale: ("en")
+
+				// });
+				 sap.ui.getCore().getConfiguration().setLanguage("en");
+			}
+
+			// var oModeli18n = this.getView().getModel("i18n");
+			// this._oResourceBundle = oModeli18n.getResourceBundle();
+		}	
+		
+		
+		
 
 	});
 

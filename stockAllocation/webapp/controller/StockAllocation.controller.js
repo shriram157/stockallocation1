@@ -324,11 +324,12 @@
 
 			onDialogClosed: function (oEvent) {
 				// jQuery.sap.clearDelayedCall(_timeout);
-
+	var messageForCancelled = this.getView().getModel("i18n").getResourceBundle().getText("operationCancelled");
+	var messageForCompleted = this.getView().getModel("i18n").getResourceBundle().getText("operationCompleted");
 				if (oEvent.getParameter("cancelPressed")) {
-					MessageToast.show("The operation has been cancelled");
+					MessageToast.show(messageForCancelled);
 				} else {
-					MessageToast.show("The operation has been completed");
+					MessageToast.show(messageForCompleted);
 				}
 			},
 
