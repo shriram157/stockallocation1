@@ -636,7 +636,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						}
 						// suggest MIX requested totals. 
 						if (item.total_request_rec && item.total_suggest_rec) {
-							var suggestedMixRequested = ((item.total_request_rec / item.total_suggest_rec) * 100);
+							// var suggestedMixRequested = ((item.total_request_rec / item.total_suggest_rec) * 100);
+						var suggestedMixRequested = (( item.total_suggest_rec / item.total_request_rec ) * 100);
 							suggestedMixRequested = parseFloat(suggestedMixRequested).toFixed(2);
 							suggestedMixRequested = suggestedMixRequested + "%";
 						} else if (item.total_request_rec <= 0 && item.total_suggest_rec > 0) {
