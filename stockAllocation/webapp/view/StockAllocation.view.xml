@@ -272,7 +272,7 @@
 							  width="5.5rem" step="1" largerStep="2"
 								valueState="None" 
 								enabled="{oViewLocalDataModel>/enableForDealer}" 
-								editable="false"
+							    editable="{oViewLocalDataModel>/enableForDealer}" 
 							 
 		 
 								change="whenUserChangesRequestedData"/>
