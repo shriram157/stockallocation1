@@ -97,17 +97,15 @@ module.exports = function (appContext) {
 			}
 
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
-				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or " +
-				"BusinessPartnerType eq 'Z004' or BusinessPartnerType eq 'Z005') and zstatus ne 'X'" +
-				"&$orderby=BusinessPartner asc";
+				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
+				"and zstatus ne 'X' &$orderby=BusinessPartner asc &$select=BusinessPartner,BusinessPartnerName,BusinessPartnerType,OrganizationBPName1,SearchTerm2,to_Customer/Attribute1,to_Customer/to_CustomerSalesArea/SalesOffice,to_Customer/to_CustomerSalesArea/Customer,to_Customer/to_CustomerSalesArea/SalesOrganization,to_Customer/to_CustomerSalesArea/DistributionChannel,to_Customer/to_CustomerSalesArea/Division,to_Customer/to_CustomerSalesArea/SalesGroup";
 		}
 
 		// National user (TCI user)
 		else {
 			bpReqUrl = url + "/API_BUSINESS_PARTNER/A_BusinessPartner?sap-client=" + s4Client + "&$format=json" +
-				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or " +
-				"BusinessPartnerType eq 'Z004' or BusinessPartnerType eq 'Z005') and zstatus ne 'X'" +
-				"&$orderby=BusinessPartner asc";
+				"&$expand=to_Customer/to_CustomerSalesArea&$filter=(BusinessPartnerType eq 'Z001' or BusinessPartnerType eq 'Z004')" +
+				"and zstatus ne 'X' &$orderby=BusinessPartner asc &$select=BusinessPartner,BusinessPartnerName,BusinessPartnerType,OrganizationBPName1,SearchTerm2,to_Customer/Attribute1,to_Customer/to_CustomerSalesArea/SalesOffice,to_Customer/to_CustomerSalesArea/Customer,to_Customer/to_CustomerSalesArea/SalesOrganization,to_Customer/to_CustomerSalesArea/DistributionChannel,to_Customer/to_CustomerSalesArea/Division,to_Customer/to_CustomerSalesArea/SalesGroup";
 		}
 
 		tracer.debug("BP URL: %s", bpReqUrl);
@@ -129,7 +127,6 @@ module.exports = function (appContext) {
 				var bpResBody = JSON.parse(bpResBodyStr);
 				var bpResults = bpResBody.d.results;
 
-				// Filter BP results by sales area for zone user
 				if (userType === "Zone") {
 					bpResults = bpResults.filter(o => {
 						if (!o.to_Customer) {
@@ -139,17 +136,36 @@ module.exports = function (appContext) {
 						if (!customerSalesArea) {
 							return false;
 						}
+						var filtered = false;
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
 							if (customerSalesArea.results[i].SalesOffice === bpZone) {
-								return true;
+								filtered = true;
 							}
 						}
-						return false;
+						return filtered;
 					});
 				}
 				if (userType === "National") {
 					bpResults = bpResults.filter(o => {
-						return !!o.to_Customer;
+						if (!o.to_Customer) {
+							return false;
+						}
+						var customerSalesArea = o.to_Customer.to_CustomerSalesArea;
+						if (!customerSalesArea) {
+							return false;
+						}
+						var filtered = false;
+						for (var i = 0; i < customerSalesArea.results.length; i++) {
+							if ((customerSalesArea.results[i].SalesOffice === "1000" || customerSalesArea.results[i].SalesOffice === "2000" ||
+									customerSalesArea.results[i].SalesOffice === "3000" || customerSalesArea.results[i].SalesOffice === "4000" ||
+									customerSalesArea.results[i].SalesOffice === "5000" || customerSalesArea.results[i].SalesOffice === "7000" ||
+									customerSalesArea.results[i].SalesOffice === "9000" || customerSalesArea.results[i].SalesOffice === "8000") && ((
+									customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10" &&
+									customerSalesArea.results[i].SalesGroup != "T99"))) {
+								filtered = true;
+							}
+						}
+						return filtered;
 					});
 				}
 
