@@ -247,18 +247,16 @@
 				var that = this;
 				var promise = new Promise(function (resolve, reject) {
 					// sap.ui.core.BusyIndicator.show(0);
-					 that.onOpenDialog();
-					 setTimeout(function() {
-							
-				 
-					    	    	 resolve(that);
-					 }, 1);
-										 
-				 
+					that.onOpenDialog();
+					setTimeout(function () {
+
+						resolve(that);
+					}, 1);
+
 				});
 
 				promise.then(function () {
-			 
+
 					that._onButtonPressSave1();
 
 				});
@@ -286,17 +284,59 @@
 				//  now check where ever there is a change in quantity,  send a flag to SAP,  the data is changed. 
 
 				var oStockSapData = that.getView().getModel("stockDataModel");
-				var stockFromSAP = oStockSapData.getData();
+				var sendTheDataToSAP = oStockSapData.getData();
 				var stockSAPProp = oStockSapData.getProperty("/");
-				var stockFromScreen = that.getView().getModel("stockFromSAPModel").getData();
+				// var stockFromScreen = that.getView().getModel("stockFromSAPModel").getData();
 				this._dataupdateSuccessful = false;
 				// replace teh stock from screen with stock from sap. 
-				this.totalRecordsUpdated = (stockFromSAP.length);
-				for (var i = 0; i < stockFromSAP.length; i++) {
+				this.totalRecordsUpdated = (sendTheDataToSAP.length);
+				var tempArrayToHoldData = [];
 
-					this._postTheDataToSAP(oSuggestUpdateModel, stockSAPProp[i]);
+				for (var i = 0; i < sendTheDataToSAP.length; i++) {
+
+					//this._postTheDataToSAP(oSuggestUpdateModel, stockSAPProp[i], tempArrayToHoldData );
+
+					var requestedVolumeNumb = Number(sendTheDataToSAP[i].requested_Volume);
+					var suggestedQtyFromTCINumb = Number(sendTheDataToSAP[i].suggested);
+
+					var dealerCode = this.dealerCode;
+					var orderPrefix = this.orderPrefix.toUpperCase();
+					//  greater of suggested qty or requested qty should be moved to 		
+					var suggestedQtyFromTCI = sendTheDataToSAP[i].suggested;
+					if (suggestedQtyFromTCINumb > requestedVolumeNumb) {
+						//sendTheDataToSAP.zzint_alc_qty;
+						var initialAllocatedQty = requestedVolumeNumb;
+					} else if (requestedVolumeNumb > suggestedQtyFromTCINumb) {
+						var initialAllocatedQty = suggestedQtyFromTCINumb;
+					} else {
+						var initialAllocatedQty = suggestedQtyFromTCINumb;
+					}
+					var requestedVolume = requestedVolumeNumb.toString();
+					var initialAllocatedQty = initialAllocatedQty.toString();
+
+					tempArrayToHoldData.push({
+
+						ZzsugSeqNo: sendTheDataToSAP[i].zzsug_seq_no,
+						ZzprocessDt: sendTheDataToSAP[i].zzprocess_dt,
+						Zzmodel: sendTheDataToSAP[i].model,
+						Zzmoyr: sendTheDataToSAP[i].zzmoyr,
+						Zzsuffix: sendTheDataToSAP[i].zzsuffix,
+						Zzextcol: sendTheDataToSAP[i].zzextcol,
+						Zzintcol: sendTheDataToSAP[i].zzintcol,
+						ZsrcWerks: sendTheDataToSAP[i].zsrc_werks,
+						Zzordertype: sendTheDataToSAP[i].zzordertype,
+						ZzdealerCode: dealerCode,
+						ZzprodMonth: sendTheDataToSAP[i].zzprod_month,
+						ZzetaMonth: sendTheDataToSAP[i].zzeta_month,
+						ZzdelReview: "Y",
+						ZzrequestQty: requestedVolume,
+						Zzprefix: orderPrefix,
+						ZzintAlcQty: initialAllocatedQty
+					});
 
 				}
+				// call the deep entity. 
+				this.actualPushToSAPoDataDeepEntity(oSuggestUpdateModel, tempArrayToHoldData);
 
 			},
 
@@ -318,14 +358,13 @@
 				// _timeout = jQuery.sap.delayedCall(3000, this, function () {
 				// 	this._dialog.close();
 				// });
-				
-				
+
 			},
 
 			onDialogClosed: function (oEvent) {
 				// jQuery.sap.clearDelayedCall(_timeout);
-	var messageForCancelled = this.getView().getModel("i18n").getResourceBundle().getText("operationCancelled");
-	var messageForCompleted = this.getView().getModel("i18n").getResourceBundle().getText("operationCompleted");
+				var messageForCancelled = this.getView().getModel("i18n").getResourceBundle().getText("operationCancelled");
+				var messageForCompleted = this.getView().getModel("i18n").getResourceBundle().getText("operationCompleted");
 				if (oEvent.getParameter("cancelPressed")) {
 					MessageToast.show(messageForCancelled);
 				} else {
@@ -365,7 +404,7 @@
 
 			},
 
-			_postTheDataToSAP: function (oSuggestUpdateModel, sendTheDataToSAP) {
+			_postTheDataToSAP: function (oSuggestUpdateModel, sendTheDataToSAP, tempArrayToHoldData) {
 
 				var requestedVolumeNumb = Number(sendTheDataToSAP.requested_Volume);
 				var suggestedQtyFromTCINumb = Number(sendTheDataToSAP.suggested);
@@ -385,7 +424,7 @@
 				var requestedVolume = requestedVolumeNumb.toString();
 				var initialAllocatedQty = initialAllocatedQty.toString();
 
-				var oData = {
+				tempArrayToHoldData.push({
 
 					ZzsugSeqNo: sendTheDataToSAP.zzsug_seq_no,
 					ZzprocessDt: sendTheDataToSAP.zzprocess_dt,
@@ -403,23 +442,39 @@
 					ZzrequestQty: requestedVolume,
 					Zzprefix: orderPrefix,
 					ZzintAlcQty: initialAllocatedQty
+				});
+
+			},
+
+			actualPushToSAPoDataDeepEntity: function (oSuggestUpdateModel, oItemSet) {
+
+				// lets move all the below update functionality to a different subroutine and call it once the above is done. 
+
+				this.obj = {
+					"ZzsugSeqNo": "ALL",
+					"OrderHtoOrderI": oItemSet
+
 				};
 
 				var that = this;
 				that.responseReceived = 0;
 				oSuggestUpdateModel.refreshSecurityToken();
-				oSuggestUpdateModel.create("/TSuggestOrdSet", (oData), {
+
+				// oClaimModel.create("/zc_headSet", this.obj, {
+				// 	success: $.proxy(function (data, response) {   SuggestOrdSet
+
+				oSuggestUpdateModel.create("/SuggestOrdSet", (this.obj), {
 					success: $.proxy(function (data, response) {
 
-						that.responseReceived = that.responseReceived + 1;
+						// that.responseReceived = that.responseReceived + 1;
 
-						if (that.totalRecordsUpdated == that.responseReceived) {
-							// all is done lets navigate back to the main screen. 
-							// sap.ui.core.BusyIndicator.hide();
-							//sap.ui.core.BusyIndicator.show();
-							that._navigateToMainScreen(); // instead reload the current page. 
+						// if (that.totalRecordsUpdated == that.responseReceived) {
+						// all is done lets navigate back to the main screen. 
+						// sap.ui.core.BusyIndicator.hide();
+						//sap.ui.core.BusyIndicator.show();
+						that._navigateToMainScreen(); // instead reload the current page. 
 
-						}
+						// }
 
 					}),
 					error: function (err) {
@@ -1284,7 +1339,7 @@
 							// var oStockData = new sap.ui.model.json.JSONModel();
 							// oStockData.setData(oStockAllocationDataReset);
 							// this.getView().setModel(oStockData, "stockDataModel");
- 
+
 							// oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
 							// oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
 
