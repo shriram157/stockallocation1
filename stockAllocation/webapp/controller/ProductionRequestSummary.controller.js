@@ -625,7 +625,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						if (+item.total_request_qty && +item.total_suggest_qty) {
 							var suggestedVolPercentRequested = ((+item.total_request_qty / +item.total_suggest_qty) * 100);
-							suggestedVolPercentRequested = parseFloat(suggestedVolPercentRequested).toFixed(2);
+							suggestedVolPercentRequested = parseFloat(suggestedVolPercentRequested).toFixed(0);
 							suggestedVolPercentRequested = suggestedVolPercentRequested + "%";
 						} else if (+item.total_request_qty <= 0 && +item.total_suggest_qty > 0) {
 							suggestedVolPercentRequested = 0;
@@ -638,7 +638,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						if (item.total_request_rec && item.total_suggest_rec) {
 							// var suggestedMixRequested = ((item.total_request_rec / item.total_suggest_rec) * 100);
 						var suggestedMixRequested = (( item.total_suggest_rec / item.total_request_rec ) * 100);
-							suggestedMixRequested = parseFloat(suggestedMixRequested).toFixed(2);
+							suggestedMixRequested = parseFloat(suggestedMixRequested).toFixed(0);
 							suggestedMixRequested = suggestedMixRequested + "%";
 						} else if (item.total_request_rec <= 0 && item.total_suggest_rec > 0) {
 							suggestedMixRequested = 0;
@@ -650,7 +650,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						// percent request volume allocated. 
 						if (+item.total_allocated_qty && +item.total_request_qty) {
 							var percentRequestVolAllocated = ((+item.total_allocated_qty / +item.total_request_qty) * 100);
-							percentRequestVolAllocated = parseFloat(percentRequestVolAllocated).toFixed(2);
+							percentRequestVolAllocated = parseFloat(percentRequestVolAllocated).toFixed(0);
 							percentRequestVolAllocated = percentRequestVolAllocated + "%";
 						} else if (+item.total_allocated_qty <= 0 && +item.total_request_qty > 0) {
 							percentRequestVolAllocated = 0;

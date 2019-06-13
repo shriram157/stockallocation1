@@ -66,11 +66,8 @@
 						
 						
 									 	<Table         items="{
-				                    path: 'stockDataModel>/',
-				                    sorter: {
-				                    path: 'zzzadddata1',
-				                    descending: true
-				                    }
+				                    path: 'stockDataModel>/'
+				                   
 				                    }"		 
  
 						
@@ -181,7 +178,7 @@
 						</header>
 						<footer>
 							<Text text="{initialStockTotalModel>/0/suggestedDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
-								textDirection="Inherit" visible="true"/>
+								textDirection="Inherit" visible="false"/>
 						</footer>
 					</Column>
 					<Column width="125px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
@@ -266,7 +263,7 @@
 							<Text text="{stockDataModel>current_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="false"/>
 							<Text text="{stockDataModel>suggested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							<Text text="{stockDataModel>suggested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-								visible="true"/>
+								visible="false"/>
 							<StepInput value="{stockDataModel>requested_Volume}" 
 							  displayValuePrecision="0" min="0" max="100" 
 							  width="5.5rem" step="1" largerStep="2"
@@ -278,10 +275,10 @@
 								change="whenUserChangesRequestedData"/>
 							<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							<Text text="{stockDataModel>requested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-								visible="true"/>
+								visible="false"/>
 							<Text text="{stockDataModel>allocated}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							<Text text="{stockDataModel>allocated_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-								visible="true"/>
+								visible="false"/>
 							<Text text="{stockDataModel>pendingAllocation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 								visible="true"/>
 							<Text text="{stockDataModel>unfilled_Allocation}" width="auto" maxLines="2" wrapping="false" textAlign="Begin" textDirection="Inherit"

@@ -5,12 +5,12 @@
 		"id": "suggestOrder",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
- 
+
 		"applicationVersion": {
 			"version": "1.0.0"
 		},
 		"dataSources": {
-				"ZCDS_SUGGEST_ORD_CDS": {
+			"ZCDS_SUGGEST_ORD_CDS": {
 				"uri": "/node/ZCDS_SUGGEST_ORD_CDS/",
 				"type": "OData",
 				"settings": {
@@ -34,7 +34,7 @@
 					"localUri": "localService/ZCDS_SUGGEST_ORD_COUNT_CDS/metadata.xml"
 				}
 			},
-						"ZSD_SUGGEST_ORDER_UPDATE_SRV": {
+			"ZSD_SUGGEST_ORDER_UPDATE_SRV": {
 				"uri": "/node/ZSD_SUGGEST_ORDER_UPDATE_SRV/",
 				"type": "OData",
 				"settings": {
@@ -42,8 +42,7 @@
 					"localUri": "localService/ZSD_SUGGEST_ORDER_UPDATE_SRV/metadata.xml"
 				}
 			}
-  
-			
+
 		},
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
@@ -94,7 +93,7 @@
 				"type": "sap.ui.model.resource.ResourceModel",
 				"uri": "i18n/i18n.properties"
 			},
-				"ZCDS_SUGGEST_ORD_CDS": {
+			"ZCDS_SUGGEST_ORD_CDS": {
 				"uri": "/node/ZCDS_SUGGEST_ORD_CDS/",
 				"type": "sap.ui.model.odata.ODataModel",
 				"settings": {
@@ -126,7 +125,7 @@
 				"dataSource": "ZCDS_SUGGEST_ORD_SUM_CDS",
 				"preload": false
 			},
-		    "ZCDS_SUGGEST_ORD_COUNT_CDS": {
+			"ZCDS_SUGGEST_ORD_COUNT_CDS": {
 				"uri": "/node/ZCDS_SUGGEST_ORD_COUNT_CDS/",
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
@@ -159,22 +158,22 @@
 				"preload": false
 			}
 		},
-     "resources": {
-            "js": [{
-                "uri": "lib/moment-with-locales.js"
-            },
-            {
-                "uri": "lib/moment-timezone-with-data.js"
-            },
-           {
-                "uri": "lib/underscore.js"
-            }
-            
-            ],
-             "css": [{
-                "uri": "css/style.css"
-            }]
-        },
+		"resources": {
+			"js": [{
+					"uri": "lib/moment-with-locales.js"
+				}, {
+					"uri": "lib/moment-timezone-with-data.js"
+				}, {
+					"uri": "lib/underscore.js"
+				}, {
+					"uri": "lib/changeFabicon.js"
+				}
+
+			],
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
 		"routing": {
 			"config": {
 				"routerClass": "sap.m.routing.Router",

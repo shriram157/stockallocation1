@@ -630,7 +630,7 @@
 						currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
 						suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 						suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
-						requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+						// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
 						allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
 						allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
 						pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
@@ -638,6 +638,21 @@
 						differenceTotal = +oModelData2[i].difference + +differenceTotal;
 					}
 				}
+//  requested volume is not based on suggested stock. 
+					for (var i = 0; i < oModelData2.length; i++) {
+						
+						
+						requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+						
+						
+					}
+          
+				
+				
+				
+				
+				
+				
 
 				if (duringPercentage == true) {
 
@@ -663,7 +678,7 @@
 							currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
 							suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 							suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
-							requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+							// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
 							allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
 							allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
 							pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
@@ -677,7 +692,7 @@
 								currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
 								suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 								suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
-								requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+								// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
 								allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
 								allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
 								pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
@@ -1285,7 +1300,7 @@
 									differenceTotal: zeroSuggestiondifferenceTotal,
 									suggestedTotal: zeroSuggestionsuggestedTotal,
 									suggestedDSTotal: zeroSuggestionsuggestedDSTotal,
-									requestedVolumeTotal: zeroSuggestionrequestedVolumeTotal,
+									requestedVolumeTotal: requestedVolumeTotal,
 									allocatedTotal: zeroSuggestionallocatedTotal,
 									allocatedDSTotal: zeroSuggestionallocatedDSTotal,
 									pendingAllocationTotal: zeroSuggestionpendingAllocationTotal,
@@ -1316,10 +1331,10 @@
 						// lets sort the model data as per the zzzadddata1 field.
 						// var oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1')), 'zzsuffix', 'zzintcol');
 						/*global  _:true*/
-						if (this.afterSAPDataUpdate != true) {
+						// if (this.afterSAPDataUpdate != true) {
 
-							oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
-							oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
+							// oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
+							// oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
 
 							// var oStockAllocationData = _.chain(oStockAllocationData)
 							// .sortBy('zzzadddata1').reverse()  
@@ -1329,10 +1344,9 @@
 							// .sortBy('zzzadddata1').reverse()  
 							// .sortBy('zzsuffix');                  
 
-							//oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1').reverse()), 'zzsuffix', 'zzintcol');
-							// oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, 'zzzadddata1').reverse()), "zzsuffix", "zzintcol");
+							
 							//oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
-						} else {
+						// } else {
 
 							// reset and set again to retain the sort order 	
 							// var oStockAllocationDataReset = [];
@@ -1343,7 +1357,44 @@
 							// oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
 							// oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
 
-						}
+						// }
+						
+			
+							// oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1'), 'zzsuffix', "zzextcol"));
+							// oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, "zzzadddata1"), "zzsuffix", "zzextcol"));			
+						
+							// 	var oStockAllocationData = _.chain(oStockAllocationData)
+							// .sortBy("zzextcol")
+							// .sortBy("zzsuffix")
+							// 	.sortBy("zzzadddata1");
+						
+						
+						
+								// var oStockAllocationData = _.chain(oStockAllocationData)
+								// .sortBy("zzzadddata1")
+								// .sortBy("zzsuffix")
+								// 	.sortBy("zzextcol");
+						
+							// var oStockAlocationBkup = _.chain(oStockAlocationBkup)
+							// .sortBy("zzextcol")
+							// .sortBy("zzsuffix")
+							// 	.sortBy("zzzadddata1");
+				 
+						  oStockAllocationData = _.chain(oStockAllocationData)
+							  .sortBy("zzextcol")
+							  .sortBy("zzsuffix")
+							  	.sortBy("zzzadddata1")
+							  .value();
+											 
+				 	  oStockAlocationBkup = _.chain(oStockAlocationBkup)
+							  .sortBy("zzextcol")
+							  .sortBy("zzsuffix")
+							  	.sortBy("zzzadddata1")
+							  .value();
+				 
+				 
+				 
+				 
 
 						// suggested Data here. 			
 						var oStockData = new sap.ui.model.json.JSONModel();
