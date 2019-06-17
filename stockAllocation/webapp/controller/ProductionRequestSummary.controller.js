@@ -382,7 +382,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var sLocation_conf = sLocation.search("webide");
 					if (sLocation_conf == 0) {
 						// if a local user from weide 
-						userType = "Dealer_User";
+						userType = "TCI_User";
 					} else {
 						var userType = oData.loggedUserType[0];
 						//////////////////////////////////////////////////////////////////						
@@ -474,16 +474,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 								oModelDetailView.setProperty("/Dealer_Name", tempDealerText);
 							}
 						}
-						BpDealer.push({
+						// for toyota login show only toyota dealers, for lexus show only lexus. 
 
-							"BusinessPartnerKey": item.BusinessPartnerKey,
-							"BusinessPartner": item.BusinessPartner, //.substring(5, BpLength),
-							"BusinessPartnerName": item.BusinessPartnerName, //item.OrganizationBPName1 //item.BusinessPartnerFullName
-							"Division": item.Division,
-							"BusinessPartnerType": item.BusinessPartnerType,
-							"searchTermReceivedDealerName": item.SearchTerm2
-						});
+						if (item.Division == that.sDivision || item.Division == "Dual") {
+							BpDealer.push({
 
+								"BusinessPartnerKey": item.BusinessPartnerKey,
+								"BusinessPartner": item.BusinessPartner, //.substring(5, BpLength),
+								"BusinessPartnerName": item.BusinessPartnerName, //item.OrganizationBPName1 //item.BusinessPartnerFullName
+								"Division": item.Division,
+								"BusinessPartnerType": item.BusinessPartnerType,
+								"searchTermReceivedDealerName": item.SearchTerm2
+							});
+						}
 					});
 
 					// BpDealer.push({
@@ -510,12 +513,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					// 	"BusinessPartnerType": "10",
 					// 	"searchTermReceivedDealerName": "42120"
 					// });
+					
+						if (BpDealer.length == 0) {
+						sap.m.MessageBox.error(
+							"The Dealer data not received,  check the URL Division, Logged in ID, clear the Browser Cache, Pick the Right ID and Retry"
+						);
+					}
+
+ 
 
 					that.getView().setModel(new sap.ui.model.json.JSONModel(BpDealer), "BpDealerModel");
 
-					//	that.getModel("LocalDataModel").setProperty("/BpDealerModel", BpDealer);
-					//that.getView().setModel(new sap.ui.model.json.JSONModel(BpDealer), "BpDealerModel");
-					// read the saml attachments the same way 
 					var dealerCode = "";
 					if (oData.samlAttributes.DealerCode) {
 						dealerCode = oData.samlAttributes.DealerCode["0"];
@@ -526,14 +534,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						"Language": oData.samlAttributes.Language["0"]
 					});
 
-					// $.each(oData.samlAttributes, function (i, item) {
-					// 	if (item.DealerCode) {
-					// 		dealerCode = item.DealerCode["0"];
-					// 	}
-
-					// });
-
-					that.getView().setModel(new sap.ui.model.json.JSONModel(userAttributes), "userAttributesModel");
+						that.getView().setModel(new sap.ui.model.json.JSONModel(userAttributes), "userAttributesModel");
 					// set the bp for further calls. 
 					// var oModelDetailData= this.getView().getModel("detailView").getData();
 					// 	 this.sSelectedDealer = oModelDetailData.BusinessPartnerKey;
@@ -616,8 +617,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							zzseries: item.zzseries,
 							zzallocation_ind: item.zzallocation_ind,
 							zzdel_review: item.zzdel_review,
-							zzzadddata4: Number(item.zzzadddata4),  // this field needed to apply the sort logic.
-							modelYear:item.zzmoyr
+							zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.
+							modelYear: item.zzmoyr
 
 						});
 						// requested Data	
@@ -637,7 +638,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						// suggest MIX requested totals. 
 						if (item.total_request_rec && item.total_suggest_rec) {
 							// var suggestedMixRequested = ((item.total_request_rec / item.total_suggest_rec) * 100);
-						var suggestedMixRequested = (( item.total_suggest_rec / item.total_request_rec ) * 100);
+							var suggestedMixRequested = ((item.total_suggest_rec / item.total_request_rec) * 100);
 							suggestedMixRequested = parseFloat(suggestedMixRequested).toFixed(0);
 							suggestedMixRequested = suggestedMixRequested + "%";
 						} else if (item.total_request_rec <= 0 && item.total_suggest_rec > 0) {
@@ -682,8 +683,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							dealerCode: item.zzdealer_code,
 							dealerReviewCount: item.dealer_review_count,
 							zzdel_review: item.zzdel_review,
-							zzzadddata4: Number(item.zzzadddata4),  // this field needed to apply the sort logic.
-									modelYear:item.zzmoyr
+							zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.
+							modelYear: item.zzmoyr
 
 						});
 
@@ -707,7 +708,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							dealerCode: item.zzdealer_code,
 							zzdel_review: item.zzdel_review,
 							zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.Number('123')
-									modelYear:item.zzmoyr
+							modelYear: item.zzmoyr
 
 						});
 
@@ -717,31 +718,29 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					// sort the array oViewSuggestData, oViewRequestedData, oViewAllocatedData
 
 					/*global  _:true*/
-				
-					
+
 					// var oViewSuggestData = _.chain(oViewSuggestData)
 					// 			.sortBy('zzzadddata4')  
 					// 		  .sortBy('modelYear')                      
-							  
+
 					// 		  .value();
-												
+
 					// 		var oViewRequestedData = _.chain(oViewRequestedData)
 					// 		 .sortBy('zzzadddata4') 
 					// 		  .sortBy('modelYear')                     
-							 
+
 					// 		  .value();
-					
+
 					// 			var oViewAllocatedData = _.chain(oViewAllocatedData)
 					// 			.sortBy('zzzadddata4') 
 					// 		  .sortBy('modelYear')                        
-							  
+
 					// 		  .value();
-					
+
 					// var fullySorted =  _.chain(list).sortBy('age').sortBy('name').value(); syntax
-					var oViewSuggestData = _.sortBy(( _.sortBy(oViewSuggestData, 'zzzadddata4')), 'modelYear');
-					var oViewRequestedData = _.sortBy(( _.sortBy(oViewRequestedData, 'zzzadddata4')), 'modelYear');	
-			    	var oViewAllocatedData = _.sortBy(( _.sortBy(oViewAllocatedData, 'zzzadddata4')), 'modelYear');			
- 
+					var oViewSuggestData = _.sortBy((_.sortBy(oViewSuggestData, 'zzzadddata4')), 'modelYear');
+					var oViewRequestedData = _.sortBy((_.sortBy(oViewRequestedData, 'zzzadddata4')), 'modelYear');
+					var oViewAllocatedData = _.sortBy((_.sortBy(oViewAllocatedData, 'zzzadddata4')), 'modelYear');
 
 					// suggested Data here. 			
 					var oSuggestModel = new sap.ui.model.json.JSONModel();

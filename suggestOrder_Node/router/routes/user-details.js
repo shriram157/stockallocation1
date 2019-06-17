@@ -138,7 +138,9 @@ module.exports = function (appContext) {
 						}
 						var filtered = false;
 						for (var i = 0; i < customerSalesArea.results.length; i++) {
-							if (customerSalesArea.results[i].SalesOffice === bpZone) {
+							if ((customerSalesArea.results[i].SalesOffice === bpZone) && ((
+									customerSalesArea.results[i].SalesOrganization == "6000") && (customerSalesArea.results[i].DistributionChannel == "10" &&
+									customerSalesArea.results[i].SalesGroup != "T99"))) { 
 								filtered = true;
 							}
 						}
@@ -171,6 +173,10 @@ module.exports = function (appContext) {
 
 				for (var i = 0; i < bpResults.length; i++) {
 					var bpLength = bpResults[i].BusinessPartner.length;
+					if (bpResults[i].BusinessPartner === "2400029000" || bpResults[i].BusinessPartner === "2400049000" ||
+					    bpResults[i].BusinessPartner === "2400500078" || bpResults[i].BusinessPartner === "2400542217"    ) {
+					continue;	
+					}
 					bpAttributes = {
 						BusinessPartnerName: bpResults[i].OrganizationBPName1,
 						BusinessPartnerKey: bpResults[i].BusinessPartner,
