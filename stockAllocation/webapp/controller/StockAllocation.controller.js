@@ -1383,13 +1383,13 @@
 						  oStockAllocationData = _.chain(oStockAllocationData)
 							  .sortBy("zzextcol")
 							  .sortBy("zzsuffix")
-							  	.sortBy("zzzadddata1")
+							  	.sortBy("model")
 							  .value();
 											 
 				 	  oStockAlocationBkup = _.chain(oStockAlocationBkup)
 							  .sortBy("zzextcol")
 							  .sortBy("zzsuffix")
-							  	.sortBy("zzzadddata1")
+							  	.sortBy("model")
 							  .value();
 				 
 				 
