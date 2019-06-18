@@ -567,7 +567,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			if (!this.sSelectedDealer) {
 				var oModelDetailview = this.getView().getModel("detailView");
 				var oDataFromModel = oModelDetailview.getData();
-
 				this.sSelectedDealer = oDataFromModel.BusinessPartnerKey;
 			}
 
@@ -575,9 +574,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oGetModel.read("/ZCDS_SUGGEST_ORD_SUM", {
 
 				urlParameters: {
-					//	"$filter": "zzdealer_code eq '"+ this.dealerCode      
-					//"$filter": "zzdealer_code eq '" + 2400042193 + "' "
-					"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "' "
+			    // lets also filter the Division 18th June
+					// "$filter": "zzdealer_code eq '" + this.sSelectedDealer + "' "
+				"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "'and zdivision eq '" + this.sapDivision + "'"
 				},
 
 				success: function (oData) {
@@ -903,7 +902,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					// "$filter": "zzdealer_code eq '"+ this.dealerCode                                  //" + 2400042193 + "' "
 					// "$filter": "zzdealer_code eq '" + 2400042193 + "' "
 
-					"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "' "
+					// "$filter": "zzdealer_code eq '" + this.sSelectedDealer + "' "
+					
+				"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "'and zdivision eq '" + this.sapDivision + "'"		
 				},
 
 				success: function (oData) {
@@ -1333,11 +1334,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				{
 					var currentImageSource = this.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/toyota_logo_colour.png");
+					this.sapDivision = "TOY";
 
 				} else { // set the lexus logo
 					var currentImageSource = this.getView().byId("idLexusLogo");
 					currentImageSource.setProperty("src", "images/i_lexus_black_full.png");
-
+					this.sapDivision = "LEX";
 					// }
 				}
 			}
