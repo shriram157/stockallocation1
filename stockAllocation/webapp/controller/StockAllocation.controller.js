@@ -1582,7 +1582,7 @@
 						if (localeG == 'EN') {
 							var dateToUI = "ETA :" + fromMonthAndYear + " To " + toMonthAndYear;
 						} else {
-							var dateToUI = "heure d'arrivée estimée :" + fromMonthAndYear + " To " + toMonthAndYear;
+							var dateToUI = "heure d'arrivée estimée :" + fromMonthAndYear + " à " + toMonthAndYear;
 						}
 						
 						
