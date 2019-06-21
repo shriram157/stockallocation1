@@ -1578,7 +1578,18 @@
 						var getTheDaysIntheMonth = new Date(+etaToDateYear, +etaToDateMonth, 0).getDate();
 						//   console.log(getDaysInMonth(1, 2012))
 						var toMonthAndYear = getTheDaysIntheMonth + " " + month + " " + etaToDateYear;
-						var dateToUI = "ETA :" + fromMonthAndYear + " To " + toMonthAndYear;
+						
+						if (localeG == 'EN') {
+							var dateToUI = "ETA :" + fromMonthAndYear + " To " + toMonthAndYear;
+						} else {
+							var dateToUI = "heure d'arrivée estimée :" + fromMonthAndYear + " To " + toMonthAndYear;
+						}
+						
+						
+						
+						
+						
+					
 						oModelLocalData.setProperty("/etaFrom", dateToUI);
 
 						//

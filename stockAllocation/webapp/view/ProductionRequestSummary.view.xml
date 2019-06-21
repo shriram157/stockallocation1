@@ -33,13 +33,15 @@
 				<!--  <Label design="Standard" id="idDealerInputLabel" text="{i18n>DEALER_SEARCH_FIELD_LABEL}" textAlign="Left" labelFor="idDealerComboBox" visible="{detailView>/visibleForInternalUser}">-->
 				<!--</Label>-->
 				<ComboBox id="idDealerComboBox" showSecondaryValues="true" required="true" visible="{detailView>/visibleForInternalUser}"
-					fieldGroupIds="requiredField" editable="{detailView>/editAllowed}" width="10rem" value="{detailView>/Dealer_No}"
+					fieldGroupIds="requiredField" editable="{detailView>/editAllowed}" width="10rem"  value="{BpDealerModel>/BusinessPartnerKey}"
 					filterSecondaryValues="true" enabled="{detailView>/enabled}"
 					items="{path: 'BpDealerModel>/', sorter: { path: 'BusinessPartner' }, length:750 }" selectedKey="{BusinessPartnerKey}"
 					selectionChange="onBusinessPartnerSelected" showValueStateMessage="false" textAlign="Begin">
 					<core:ListItem key="{BpDealerModel>BusinessPartnerKey}" text="{BpDealerModel>BusinessPartner}"
 						additionalText="{BpDealerModel>BusinessPartnerName}"/>
 				</ComboBox>
+				
+				
 				<!--<Text id="dealerTextWithNo1" text="{detailView>/Dealer_Name}" visible="{detailView>/visibleForInternalUser}"/>-->
 				<!--<Text id="dealerTextWithNo" text="{detailView>/dealerNumberAndName}" visible="{detailView>/visibleForDealer}"/>-->
 				<Title text="{detailView>/Dealer_Name}" titleStyle="H2" width="475.59722900390625px" textAlign="Begin" visible="true" wrapping="false"
