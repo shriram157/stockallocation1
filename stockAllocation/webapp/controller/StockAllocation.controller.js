@@ -1163,9 +1163,9 @@
 
 							//  turn off the zzintcol from the bleow With Rob Mc Carthy - item.zzintcol
 
-							uiForcolorTrim = item.zzextcol + "-" + mktgDescriptionBasedOnLang + "/" + interiorTrimDesc;
+							uiForcolorTrim = item.zzextcol + "-" + mktgDescriptionBasedOnLang;
 
-							var suffixToUi = item.zzsuffix + " " + suffixDescription;
+							var suffixToUi = item.zzsuffix + " " + suffixDescription + "/" + interiorTrimDesc;
 
 							etaFromAndToDates.push({
 								sEtaFromData: item.zzeta_month,
