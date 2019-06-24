@@ -144,7 +144,7 @@
 					<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 						mergeDuplicates="false">
 						<header>
-							<Text text="{i18n>CURRENT}" width="50px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							<Text text="{i18n>CURRENT}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 						</header>
 						<footer>
 							<Text text="{initialStockTotalModel>/0/currentTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" class="setOrangeFont"
