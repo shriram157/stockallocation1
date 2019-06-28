@@ -813,6 +813,7 @@
 				// oInitalTotalStock.updateBindings(true);
 				var oSuggestModel = new sap.ui.model.json.JSONModel();
 				oSuggestModel.setData(oModelData);
+				oSuggestModel.setSizeLimit(1000);
 				this.getView().setModel(oSuggestModel, "stockDataModel");
 
 			},
