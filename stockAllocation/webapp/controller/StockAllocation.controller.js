@@ -776,6 +776,7 @@
 				//	oInitalTotalStock.updateBindings(true);
 				var oSuggestModel = new sap.ui.model.json.JSONModel();
 				oSuggestModel.setData(oModelData2);
+					oSuggestModel.setSizeLimit(1000);
 				this.getView().setModel(oSuggestModel, "stockDataModel");
 
 			},
@@ -1400,6 +1401,7 @@
 						// suggested Data here. 			
 						var oStockData = new sap.ui.model.json.JSONModel();
 						oStockData.setData(oStockAllocationData);
+							oStockData.setSizeLimit(1000);
 						this.getView().setModel(oStockData, "stockDataModel");
 						// By default lets show the suggested only and by clicking on show all models then we expland the screen. 
 
@@ -1467,22 +1469,27 @@
 						var oStockDataBkup = new sap.ui.model.json.JSONModel();
 						var aDataCopy = JSON.parse(JSON.stringify(oStockAlocationBkup));
 						oStockDataBkup.setData(aDataCopy);
+								oStockDataBkup.setSizeLimit(1000);
+						
 						this.getView().setModel(oStockDataBkup, "stockDataModelBkup");
 
 						// Totals Received From SAP.
 						var oTotalRecevied = new sap.ui.model.json.JSONModel();
 						oTotalRecevied.setData(oInitialTotalsForUI);
+							oTotalRecevied.setSizeLimit(1000);
 						this.getView().setModel(oTotalRecevied, "initialStockTotalModel");
 
 						// Bkup total Model. 
 						var oTotalReceviedBkupModel = new sap.ui.model.json.JSONModel();
 						// oTotalReceviedBkupModel.setData(oInitialTotalsForUIBkup);
 						oTotalReceviedBkupModel.setData(oInitialTotalsForUI);
+							oTotalReceviedBkupModel.setSizeLimit(1000);
 						this.getView().setModel(oInitialTotalsForUIBkup, "initialStockTotalModelBkup");
 
 						// build the model received before reset
 						var oStockBefore = new sap.ui.model.json.JSONModel();
 						oStockBefore.setData(oStockBeforeReset);
+							oStockBefore.setSizeLimit(1000);
 						this.getView().setModel(oStockBefore, "stockFromSAPModel");
 
 						// for the totals subtract from the total					
