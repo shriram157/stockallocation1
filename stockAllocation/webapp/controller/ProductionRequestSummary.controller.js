@@ -216,7 +216,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			selectedData.windowEndDateP = oModelDetailViewData.windowEndDateP;
 			selectedData.allocationIndicator = oModelDetailViewData.allocationInidcator;
 			selectedData.zzmoyr = selectedData.series.slice(0, 4);
-
+			selectedData.UserId =  this.UserId;
+ 
 			sap.ui.getCore().setModel(new sap.ui.model.json.JSONModel(selectedData), 'selectedSeries');
 
 			//	var oBindingContext = oEvent.getParameter("listItem").getBindingContextPath();
@@ -382,7 +383,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var sLocation_conf = sLocation.search("webide");
 					if (sLocation_conf == 0) {
 						// if a local user from weide 
-						userType = "TCI_User";
+						// userType = "TCI_User";
+							userType = "Dealer_User";
 					} else {
 						var userType = oData.loggedUserType[0];
 						//////////////////////////////////////////////////////////////////						
@@ -442,7 +444,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var BpDealer = [];
 					var userAttributes = [];
 					var oModelDetailView = this.getView().getModel("detailView");
-
+                    
+                    
+                    that.UserId = oData.userProfile.id;
+                    
 					$.each(oData.attributes, function (i, item) {
 						var BpLength = item.BusinessPartner.length;
 

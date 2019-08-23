@@ -85,6 +85,10 @@
 							<ToolbarSpacer width="310px"/>
 							<Button text="{i18n>RESET_TO_SUGGESTED}" type="Reject" iconFirst="true" width="auto"
 								enabled="{oViewLocalDataModel>/setEnableFalseReset}" visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="resetToSuggestedClick"/>
+							<ToolbarSpacer width="310px"/>
+							<Button text="{i18n>REQUEST_ADD_MODEL}" type="Accept" iconFirst="true" width="auto"
+								enabled="{oViewLocalDataModel>/setEnableFalseReset}" visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="onClickRequestNewModel"/>
+						
 							<ToolbarSpacer/>
 				
 				          <SearchField id="searchVehicleList" liveChange="onLiveChange" showSearchButton="true"
@@ -270,8 +274,6 @@
 								valueState="None" 
 								enabled="{oViewLocalDataModel>/enableForDealer}" 
 							    editable="{oViewLocalDataModel>/enableForDealer}" 
-							 
-		 
 								change="whenUserChangesRequestedData"/>
 							<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							<Text text="{stockDataModel>requested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"

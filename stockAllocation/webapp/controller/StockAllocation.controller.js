@@ -11,6 +11,7 @@
 		"use strict";
 		var _timeout;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
+			
 			handleRouteMatched: function (oEvent) {
 				var sAppId = "App5bb4c41429720e1dcc397810";
 
@@ -19,6 +20,10 @@
 				this.resultsLossofData = false;
 
 				var selectedSeries = sap.ui.getCore().getModel('selectedSeries').getData();
+
+				this.zzseries = selectedSeries.zzseries;
+				this.zzmoyr = selectedSeries.zzmoyr;
+				this.UserId = selectedSeries.UserId;
 
 				this.removeSuggestedRequestedZeroQty = false;
 				var modelSereiesHead = selectedSeries.series; //selectedSeries.Zzmoyr + " - " + selectedSeries.zzseries_desc_en;
@@ -67,7 +72,7 @@
 				}
 
 				// if it is allocated and greater than window due date,  then turn off the 
-
+                  this.comingFromAddingaModel = false;
 				this._oViewLocalData = new sap.ui.model.json.JSONModel({
 					busy: false,
 					delay: 0,
@@ -99,6 +104,14 @@
 
 				// Also the logo for the second screen. 
 				this._setTheLogo();
+
+				// initilize the models
+
+				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
+				// _that.oUserModel = new JSONModel();
+				// _that.oModelYearModel = new JSONModel();
+				// _that.getView().setModel(_that.oModelYearModel, "ModelYearModel");
+				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
 
 				this.oModel = this.getOwnerComponent().getModel("ZCDS_SUGGEST_ORD_CDS");
 				this.afterSAPDataUpdate = false;
@@ -312,11 +325,11 @@
 						var initialAllocatedQty = suggestedQtyFromTCINumb;
 					}
 					var requestedVolume = requestedVolumeNumb.toString();
-					var initialAllocatedQty = initialAllocatedQty.toString();
+					// var initialAllocatedQty = initialAllocatedQty.toString();
 
 					tempArrayToHoldData.push({
 
-						ZzsugSeqNo: sendTheDataToSAP[i].zzsug_seq_no,
+						ZzsugSeqNo: sendTheDataToSAP[i].zzsug_seq_no,  
 						ZzprocessDt: sendTheDataToSAP[i].zzprocess_dt,
 						Zzmodel: sendTheDataToSAP[i].model,
 						Zzmoyr: sendTheDataToSAP[i].zzmoyr,
@@ -331,7 +344,10 @@
 						ZzdelReview: "Y",
 						ZzrequestQty: requestedVolume,
 						Zzprefix: orderPrefix,
-						ZzintAlcQty: initialAllocatedQty
+						// zzseries :sendTheDataToSAP[i].zzseries,
+						// ZZseries: sendTheDataToSAP[i].zzseries,
+						// ZzintAlcQty: initialAllocatedQty,
+						ZcreatedBy: this.UserId
 					});
 
 				}
@@ -543,6 +559,16 @@
 			},
 			onInit: function () {
 
+				var sLocation = window.location.host;
+				var sLocation_conf = sLocation.search("webide");
+				if (sLocation_conf == 0) {
+					this.sPrefix = "/Suggest_Order";
+				} else {
+					//Cloud Deployment
+					this.sPrefix = "";
+				}
+				this.nodeJsUrl = this.sPrefix + "/node";
+
 				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 				this.oRouter.getTarget("StockAllocation").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
 
@@ -566,6 +592,7 @@
 					});
 					this.getView().setModel(i18nModel, "i18n");
 					this.sCurrentLocale = 'FR';
+					this.Language = "F";
 
 				} else {
 					var i18nModel = new sap.ui.model.resource.ResourceModel({
@@ -575,6 +602,7 @@
 					});
 					this.getView().setModel(i18nModel, "i18n");
 					this.sCurrentLocale = 'EN';
+					this.Language = "E";
 
 				}
 
@@ -625,6 +653,7 @@
 				for (var i = 0; i < oModelData2.length; i++) {
 					var duringPercentage = oModelData2[i].current.includes("%");
 					if (oModelData2[i].visibleProperty == true && duringPercentage == false) {
+				 
 						// if ( oModelData2[i].visibleProperty == true ) {
 						currentTotal = +oModelData2[i].current + +currentTotal;
 						currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
@@ -636,23 +665,15 @@
 						pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
 						unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
 						differenceTotal = +oModelData2[i].difference + +differenceTotal;
+					 
 					}
 				}
-//  requested volume is not based on suggested stock. 
-					for (var i = 0; i < oModelData2.length; i++) {
-						
-						
-						requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
-						
-						
-					}
-          
-				
-				
-				
-				
-				
-				
+				//  requested volume is not based on suggested stock. 
+				for (var i = 0; i < oModelData2.length; i++) {
+
+					requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+
+				}
 
 				if (duringPercentage == true) {
 
@@ -776,7 +797,7 @@
 				//	oInitalTotalStock.updateBindings(true);
 				var oSuggestModel = new sap.ui.model.json.JSONModel();
 				oSuggestModel.setData(oModelData2);
-					oSuggestModel.setSizeLimit(1000);
+				oSuggestModel.setSizeLimit(1000);
 				this.getView().setModel(oSuggestModel, "stockDataModel");
 
 			},
@@ -1335,73 +1356,65 @@
 						/*global  _:true*/
 						// if (this.afterSAPDataUpdate != true) {
 
-							// oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
-							// oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
+						// oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
+						// oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
 
-							// var oStockAllocationData = _.chain(oStockAllocationData)
-							// .sortBy('zzzadddata1').reverse()  
-							// .sortBy('zzsuffix');                      
+						// var oStockAllocationData = _.chain(oStockAllocationData)
+						// .sortBy('zzzadddata1').reverse()  
+						// .sortBy('zzsuffix');                      
 
-							//		var oStockAlocationBkup = _.chain(oStockAlocationBkup)
-							// .sortBy('zzzadddata1').reverse()  
-							// .sortBy('zzsuffix');                  
+						//		var oStockAlocationBkup = _.chain(oStockAlocationBkup)
+						// .sortBy('zzzadddata1').reverse()  
+						// .sortBy('zzsuffix');                  
 
-							
-							//oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
+						//oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
 						// } else {
 
-							// reset and set again to retain the sort order 	
-							// var oStockAllocationDataReset = [];
-							// var oStockData = new sap.ui.model.json.JSONModel();
-							// oStockData.setData(oStockAllocationDataReset);
-							// this.getView().setModel(oStockData, "stockDataModel");
+						// reset and set again to retain the sort order 	
+						// var oStockAllocationDataReset = [];
+						// var oStockData = new sap.ui.model.json.JSONModel();
+						// oStockData.setData(oStockAllocationDataReset);
+						// this.getView().setModel(oStockData, "stockDataModel");
 
-							// oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
-							// oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
+						// oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
+						// oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
 
 						// }
-						
-			
-							// oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1'), 'zzsuffix', "zzextcol"));
-							// oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, "zzzadddata1"), "zzsuffix", "zzextcol"));			
-						
-							// 	var oStockAllocationData = _.chain(oStockAllocationData)
-							// .sortBy("zzextcol")
-							// .sortBy("zzsuffix")
-							// 	.sortBy("zzzadddata1");
-						
-						
-						
-								// var oStockAllocationData = _.chain(oStockAllocationData)
-								// .sortBy("zzzadddata1")
-								// .sortBy("zzsuffix")
-								// 	.sortBy("zzextcol");
-						
-							// var oStockAlocationBkup = _.chain(oStockAlocationBkup)
-							// .sortBy("zzextcol")
-							// .sortBy("zzsuffix")
-							// 	.sortBy("zzzadddata1");
-				 
-						  oStockAllocationData = _.chain(oStockAllocationData)
-							  .sortBy("zzextcol")
-							  .sortBy("zzsuffix")
-							  	.sortBy("model")
-							  .value();
-											 
-				 	  oStockAlocationBkup = _.chain(oStockAlocationBkup)
-							  .sortBy("zzextcol")
-							  .sortBy("zzsuffix")
-							  	.sortBy("model")
-							  .value();
-				 
-				 
-				 
-				 
+
+						// oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1'), 'zzsuffix', "zzextcol"));
+						// oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, "zzzadddata1"), "zzsuffix", "zzextcol"));			
+
+						// 	var oStockAllocationData = _.chain(oStockAllocationData)
+						// .sortBy("zzextcol")
+						// .sortBy("zzsuffix")
+						// 	.sortBy("zzzadddata1");
+
+						// var oStockAllocationData = _.chain(oStockAllocationData)
+						// .sortBy("zzzadddata1")
+						// .sortBy("zzsuffix")
+						// 	.sortBy("zzextcol");
+
+						// var oStockAlocationBkup = _.chain(oStockAlocationBkup)
+						// .sortBy("zzextcol")
+						// .sortBy("zzsuffix")
+						// 	.sortBy("zzzadddata1");
+
+						oStockAllocationData = _.chain(oStockAllocationData)
+							.sortBy("zzextcol")
+							.sortBy("zzsuffix")
+							.sortBy("model")
+							.value();
+
+						oStockAlocationBkup = _.chain(oStockAlocationBkup)
+							.sortBy("zzextcol")
+							.sortBy("zzsuffix")
+							.sortBy("model")
+							.value();
 
 						// suggested Data here. 			
 						var oStockData = new sap.ui.model.json.JSONModel();
 						oStockData.setData(oStockAllocationData);
-							oStockData.setSizeLimit(1000);
+						oStockData.setSizeLimit(1000);
 						this.getView().setModel(oStockData, "stockDataModel");
 						// By default lets show the suggested only and by clicking on show all models then we expland the screen. 
 
@@ -1469,43 +1482,37 @@
 						var oStockDataBkup = new sap.ui.model.json.JSONModel();
 						var aDataCopy = JSON.parse(JSON.stringify(oStockAlocationBkup));
 						oStockDataBkup.setData(aDataCopy);
-								oStockDataBkup.setSizeLimit(1000);
-						
+						oStockDataBkup.setSizeLimit(1000);
+
 						this.getView().setModel(oStockDataBkup, "stockDataModelBkup");
 
 						// Totals Received From SAP.
 						var oTotalRecevied = new sap.ui.model.json.JSONModel();
 						oTotalRecevied.setData(oInitialTotalsForUI);
-							oTotalRecevied.setSizeLimit(1000);
+						oTotalRecevied.setSizeLimit(1000);
 						this.getView().setModel(oTotalRecevied, "initialStockTotalModel");
 
 						// Bkup total Model. 
 						var oTotalReceviedBkupModel = new sap.ui.model.json.JSONModel();
 						// oTotalReceviedBkupModel.setData(oInitialTotalsForUIBkup);
 						oTotalReceviedBkupModel.setData(oInitialTotalsForUI);
-							oTotalReceviedBkupModel.setSizeLimit(1000);
+						oTotalReceviedBkupModel.setSizeLimit(1000);
 						this.getView().setModel(oInitialTotalsForUIBkup, "initialStockTotalModelBkup");
 
 						// build the model received before reset
 						var oStockBefore = new sap.ui.model.json.JSONModel();
 						oStockBefore.setData(oStockBeforeReset);
-							oStockBefore.setSizeLimit(1000);
+						oStockBefore.setSizeLimit(1000);
 						this.getView().setModel(oStockBefore, "stockFromSAPModel");
 
 						// for the totals subtract from the total					
 						var oModel = this.getView().getModel("initialStockTotalModel");
 						if (oModel.oData.length <= 1) {
 							this._calculateTotals();
-							// var oDetailModel = this.getView().getModel("oViewLocalDataModel");
-							// 	oDetailModel.setProperty("/setEnableFalseSuggest", false);	
+
 						}
 
-						//	   this._carryOnWithtotals();
-						// check if initialallocation stock is blank do not display the column. 
 
-						//var oStockModel = this.getView().getModel("initialStockTotalModel").getData();
-
-						//var allocatedQtyTotal = oStockModel["0"].allocatedTotal;
 						var oViewLocalModel = this.getView().getModel("oViewLocalDataModel");
 
 						if (currentStatus == "S") {
@@ -1522,13 +1529,10 @@
 
 							}
 
-							// } else {
-							// 	oViewLocalModel.setProperty("/viewInSuggestedTab", true);
 						}
 
 						if (currentStatus == "R") {
-							//	oViewLocalModel.setProperty("/viewInSuggestedTab", true);
-							// oViewLocalDataModel>/setEnableFalseReset   
+
 							oViewLocalModel.setProperty("/setEnableFalseReset", false);
 							oViewLocalModel.setProperty("/enableForDealer", false);
 						}
@@ -1553,10 +1557,14 @@
 							valueOFEarlierEtaTo = etaFromAndToDates[i].sEtaToData;
 						}
 
-						var etaFromDateMonth = lowestEtaFrom.substr(4, 2);
-						var etaFromDateYear = lowestEtaFrom.substr(0, 4);
-						var etaToDateMonth = highestEtaTo.substr(4, 2);
-						var etaToDateYear = highestEtaTo.substr(0, 4);
+						if (lowestEtaFrom !== undefined) {
+							var etaFromDateMonth = lowestEtaFrom.substr(4, 2);
+							var etaFromDateYear = lowestEtaFrom.substr(0, 4);
+						}
+						if (highestEtaTo !== undefined) {
+							var etaToDateMonth = highestEtaTo.substr(4, 2);
+							var etaToDateYear = highestEtaTo.substr(0, 4);
+						}
 						var dummyDate = "01";
 						var fromCompleteDate = etaFromDateMonth + "/" + dummyDate + "/" + etaFromDateYear;
 						var toCompleteDate = etaToDateMonth + "/" + dummyDate + "/" + etaToDateYear;
@@ -1586,18 +1594,13 @@
 						var getTheDaysIntheMonth = new Date(+etaToDateYear, +etaToDateMonth, 0).getDate();
 						//   console.log(getDaysInMonth(1, 2012))
 						var toMonthAndYear = getTheDaysIntheMonth + " " + month + " " + etaToDateYear;
-						
+
 						if (localeG == 'EN') {
 							var dateToUI = "ETA :" + fromMonthAndYear + " To " + toMonthAndYear;
 						} else {
 							var dateToUI = "heure d'arrivée estimée :" + fromMonthAndYear + " à " + toMonthAndYear;
 						}
-						
-						
-						
-						
-						
-					
+
 						oModelLocalData.setProperty("/etaFrom", dateToUI);
 
 						//
@@ -1635,6 +1638,333 @@
 					.filter(aFilters)
 					.sort(aSorters);
 			},
+
+			onClickRequestNewModel: function (oEvent) {
+				//  call the function get all the models already
+	
+				this._getAllTheModelsFortheSeries();
+
+			},
+
+			_getAllTheModelsFortheSeries: function (oSeriesVal2) {
+				sap.ui.core.BusyIndicator.show();
+
+				var Modelyear = this.zzmoyr;
+				var oSeriesVal = this.zzseries;
+			
+				this.oModelStockExistingData = this.getView().getModel("stockDataModel").getData();
+				var _that = this;
+				_that.oGlobalJSONModel.getData().modelData = [];
+				$.ajax({
+					dataType: "json",
+					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + Modelyear +
+						"' and TCISeries eq '" + oSeriesVal + "'",
+					type: "GET",
+					success: function (oData) {
+						if (oData.d.results.length > 0) {
+							var b = 0;
+							for (var i = 0; i < oData.d.results.length; i++) {
+                                   
+								var oModel = oData.d.results[i].Model;
+								for (var j = 0; j < _that.oGlobalJSONModel.getData().modelData.length; j++) {
+									if (oModel != _that.oGlobalJSONModel.getData().modelData[j].Model) {
+										b++;
+									}
+								}
+								if (b == _that.oGlobalJSONModel.getData().modelData.length) {
+									
+								// if the model already in the list remove the same from here. 
+								   
+									
+									_that.oGlobalJSONModel.getData().modelData.push({
+										"Model": oData.d.results[i].Model,
+										"ENModelDesc": oData.d.results[i].ENModelDesc,
+										"FRModelDesc": oData.d.results[i].FRModelDesc,
+										"localLang": _that.Language
+									});
+									_that.oGlobalJSONModel.updateBindings(true);
+									
+									
+									
+									
+								}
+								b = 0;
+							}
+							sap.ui.core.BusyIndicator.hide();
+							_that.oGlobalJSONModel.getData().modelData.unshift({
+								// "Model": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),  
+								"Model": _that._oResourceBundle.getText("PleaseSelect"),
+								"ENModelDesc": "",
+								"FRModelDesc": "",
+								"localLang": ""
+							});
+
+						} else {
+							sap.ui.core.BusyIndicator.hide();
+						}
+						_that.oGlobalJSONModel.updateBindings(true);
+
+						_that._requestCompletedOpenDialog();
+
+					},
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						_that.errorFlag = true;
+					}
+				});
+			
+			},
+
+			_requestCompletedOpenDialog: function (oEvent) {
+
+				var checkModelData = this.oGlobalJSONModel.getData().modelData.length;
+				 if (checkModelData > 0) {
+                	if (!this._modelRequestDialog) {
+				this._modelRequestDialog = sap.ui.xmlfragment("modelDialog", "suggestOrder.fragment.NewCarModelDialog", this);
+
+				this.getView().addDependent(this._modelRequestDialog);
+                	}
+				this._modelRequestDialog.open();
+				 sap.ui.core.Fragment.byId("modelDialog", "clickNewModelDialog").setVisible(false);
+					
+                
+				 } else {
+
+				 	var messageForNoModelData = this.getView().getModel("i18n").getResourceBundle().getText("noModelDataReceived");
+				 		MessageToast.show(messageForNoModelData);
+
+				 }	
+
+			},
+
+			//on Model Selection Change
+			onModelSelectionChange: function (oModel) {
+				var _that = this;
+			
+				sap.ui.core.BusyIndicator.show();
+			
+
+				_that.Modelyear = this.zzmoyr;
+				_that.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
+				_that.oGlobalJSONModel.getData().suffixData = [];
+				$.ajax({
+					dataType: "json",
+					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _that.Model + "' and Modelyear eq '" +
+						_that.Modelyear + "'&$orderby=Suffix asc",
+					type: "GET",
+					success: function (oData) {
+						if (oData.d.results.length > 0) {
+							$.each(oData.d.results, function (i, item) {
+								_that.oGlobalJSONModel.getData().suffixData.push({
+									"Model": item.Model,
+									"Modelyear": item.Model,
+									"Suffix": item.Suffix,
+									"int_c": item.int_c,
+									"SuffixDescriptionEN": item.SuffixDescriptionEN,
+									"SuffixDescriptionFR": item.SuffixDescriptionFR,
+									"mrktg_int_desc_en": item.mrktg_int_desc_en,
+									"mrktg_int_desc_fr": item.mrktg_int_desc_fr,
+									"localLang": _that.Language
+								});
+							});
+							sap.ui.core.BusyIndicator.hide();
+							_that.oGlobalJSONModel.getData().suffixData.unshift({
+								"Model": "",
+								"Modelyear": "",
+								"Suffix": _that._oResourceBundle.getText("PleaseSelect"),
+								"int_c": "",
+								"SuffixDescriptionEN": "",
+								"SuffixDescriptionFR": "",
+								"mrktg_int_desc_en": "",
+								"mrktg_int_desc_fr": "",
+								"localLang": ""
+							});
+							_that.oGlobalJSONModel.updateBindings(true);
+						} else {
+							sap.ui.core.BusyIndicator.hide();
+						}
+					},
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						_that.errorFlag = true;
+					}
+				});
+			},
+
+			onSuffixChange: function (oSuffixVal) {
+				var _that = this;
+				
+				sap.ui.core.BusyIndicator.show();
+			
+
+				_that.Suffix = oSuffixVal.getParameters("selectedItem").selectedItem.getKey();
+			
+
+				_that.oGlobalJSONModel.getData().colorData = [];
+				$.ajax({
+					dataType: "json",
+					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_exterior_trim?$filter=ModelYear eq '" + _that.Modelyear +
+						"' and Model eq '" + _that.Model + "' and Suffix eq '" + _that.Suffix + "' and TCISeries eq '" + _that.zzseries + "'",
+					type: "GET",
+					success: function (oData) {
+						
+							// sap.ui.core.Fragment.byId("modelDialog", "clickNewModelDialog").setVisible(true);
+						
+						if (oData.d.results.length > 0) {
+							$.each(oData.d.results, function (i, item) {
+								_that.oGlobalJSONModel.getData().colorData.push({
+									"ExteriorColorCode": item.ExteriorColorCode,
+									"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN,
+									"MarketingDescriptionEXTColorFR": item.MarketingDescriptionEXTColorFR,
+									"localLang": _that.Language,
+									"InteriorColorCode":item.TrimInteriorColor
+								});
+							});
+							_that.oGlobalJSONModel.getData().colorData.unshift({
+								"ExteriorColorCode": _that._oResourceBundle.getText("PleaseSelect"),
+								"MarketingDescriptionEXTColorEN": "",
+								"MarketingDescriptionEXTColorFR": "",
+								"localLang": ""
+							});
+							_that.oGlobalJSONModel.updateBindings(true);
+							sap.ui.core.BusyIndicator.hide();
+						} else {
+							sap.ui.core.BusyIndicator.hide();
+						}
+					},
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						_that.errorFlag = true;
+					}
+				});
+			},
+
+			// 	onColorCodeChange: function (oModVal) {
+			// 	var _that = this;
+			// 	// _that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
+			// 	sap.ui.core.BusyIndicator.show();
+			// 	// var Modelyear = _that.modelYearPicker.getSelectedKey();
+			// 	// var Suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
+			// 	// var Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
+			// 	_that.ExteriorColorCode = oModVal.getParameters("ID_ExteriorColorCode").selectedItem.getKey();
+
+			// 	var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + _that.Modelyear + "' and zzmodel eq '" +
+			// 		_that.Model + "' and zzsuffix eq '" + _that.Suffix + "' and zzextcol eq '" + _that.ExteriorColorCode + "'";
+			// 	$.ajax({
+			// 		dataType: "json",
+			// 		url: url,
+			// 		type: "GET",
+			// 		success: function (oAPXData) {
+			// 			if (oAPXData.d.results.length > 0) {
+			// 				var b = 0;
+			// 				_that.oGlobalJSONModel.getData().APXCollection = [];
+			// 				for (var i = 0; i < oAPXData.d.results.length; i++) {
+			// 					var zzapx = oAPXData.d.results[i].zzapx;
+			// 					for (var j = 0; j < _that.oGlobalJSONModel.getData().APXCollection.length; j++) {
+			// 						if (zzapx != _that.oGlobalJSONModel.getData().APXCollection[j].APX) {
+			// 							b++;
+			// 						}
+			// 					}
+			// 					if (b == _that.oGlobalJSONModel.getData().APXCollection.length) {
+			// 						_that.oGlobalJSONModel.getData().APXCollection.push({
+			// 							"APX": oAPXData.d.results[i].zzapx
+			// 						});
+			// 						_that.oGlobalJSONModel.updateBindings(true);
+			// 						sap.ui.core.BusyIndicator.hide();
+			// 					}
+			// 					b = 0;
+			// 				}
+			// 				_that.oGlobalJSONModel.getData().APXCollection.unshift({
+			// 					"APX": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
+			// 				});
+			// 				_that.oGlobalJSONModel.updateBindings(true);
+			// 			} else {
+			// 				sap.ui.core.BusyIndicator.hide();
+			// 			}
+			// 		},
+			// 		error: function (oError) {
+			// 			sap.ui.core.BusyIndicator.hide();
+			// 			_that.errorFlag = true;
+			// 		}
+			// 	});
+			// },	
+
+			onColorSelectionDoneEnableAddButton: function (oEvent) {
+				
+					 sap.ui.core.Fragment.byId("modelDialog", "clickNewModelDialog").setVisible(true);
+					
+					// check for all mandatory fields and allow submit. 
+					
+			},
+			
+			onClickCloseNewModelDialog: function (oEvent) {
+				
+					this._modelRequestDialog.close();
+			
+			},
+			
+			onClickAddNewModelDialog: function (oEvt) {
+		
+				
+				var newAddedQty =  sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
+				var newAddedModel = sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().getKey();
+				var newAddedModelAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().getText();
+				var newAddedSuffix = sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getKey();
+				var newAddedSuffixAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getText();
+				var newAddedExteriorColorCode = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getKey();
+				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getText();
+				var temp = this.oGlobalJSONModel.getData().colorData;
+				var res = temp.find(({ExteriorColorCode}) => ExteriorColorCode == newAddedExteriorColorCode);
+				// var res = temp.find(({ExteriorColorCode}) => ExteriorColorCode === newAddedExteriorColorCode );
+				
+				// var interiorColor = this.oGlobalJSONModel.getData().colorData.find(({TrimInteriorColor}) => ExteriorColorCode == newAddedExteriorColorCode )
+				// var res = ArrObj.find(({id}) => id === Obj1.id );
+				
+			 var oModelStock = this.getView().getModel("stockDataModel");
+			 var oModelStockData = this.getView().getModel("stockDataModel").getData();
+			oModelStockData.push({
+					  model: newAddedModel,
+					  
+					  zzprocess_dt : oModelStockData["0"].zzprocess_dt,
+					  modelCodeDescription: newAddedModelAndDescription,
+					  zzsuffix: newAddedSuffix,
+					  zzmoyr: this.yearModel,
+					  suffix_desc: newAddedSuffixAndDescription,
+					  zzextcol : newAddedExteriorColorCode,
+					  requested_Volume : newAddedQty,
+					  colour_Trim : newAddedExteriorColorCodeAndDescription,
+					  current :"0",
+					  zzintcol:res.InteriorColorCode,
+					  visibleProperty :true,
+					  zzseries:this.series
+				
+					});
+				    this.comingFromAddingaModel = true;
+	// lets get teh totals straight. 
+	
+	    	var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
+	        var oInitialTotalStockModel = oInitalTotalStock.getData();
+	
+             oInitialTotalStockModel["0"].requestedVolumeTotal = oInitialTotalStockModel["0"].requestedVolumeTotal + newAddedQty;
+		    	oInitalTotalStock.updateBindings(true);
+	// sort the data. 
+                 
+						oModelStockData = _.chain(oModelStockData)
+							.sortBy("zzextcol")
+							.sortBy("zzsuffix")
+							.sortBy("model")
+							.value();
+
+				oModelStock.updateBindings(true);		
+				this._modelRequestDialog.close();
+					 
+				
+				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
+				 
+				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
+				
+			}
+			
 
 		});
 	}, /* bExport= */ true);

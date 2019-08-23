@@ -41,7 +41,7 @@
 					"odataVersion": "2.0",
 					"localUri": "localService/ZSD_SUGGEST_ORDER_UPDATE_SRV/metadata.xml"
 				}
-			}
+			} 
 
 		},
 		"title": "{{appTitle}}",
@@ -157,6 +157,7 @@
 				"dataSource": "ZSD_SUGGEST_ORDER_UPDATE_SRV",
 				"preload": false
 			}
+ 
 		},
 		"resources": {
 			"js": [{
