@@ -11,7 +11,7 @@
 		"use strict";
 		var _timeout;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
-			
+
 			handleRouteMatched: function (oEvent) {
 				var sAppId = "App5bb4c41429720e1dcc397810";
 
@@ -72,7 +72,7 @@
 				}
 
 				// if it is allocated and greater than window due date,  then turn off the 
-                  this.comingFromAddingaModel = false;
+				this.comingFromAddingaModel = false;
 				this._oViewLocalData = new sap.ui.model.json.JSONModel({
 					busy: false,
 					delay: 0,
@@ -119,6 +119,11 @@
 				// oGetModelDetailData.read("/zcds_suggest_ord", {
 				this._loadTheData(); // data to SAP screen
 
+			},
+
+			onAfterRendering: function () {
+				console.log("rendering");
+				this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
 			},
 
 			whenUserChangesRequestedData: function (oEvt) {
@@ -277,21 +282,8 @@
 			},
 
 			_onButtonPressSave1: function (oEvent) {
-
 				var that = this;
-
-				//var oButton = this.getView().byId("saveReqId");
-				//  oButton.setBusy(true);
-				//  oButton.setBusyIndicatorDelay(0); 
-
-				//var oBusyDialog = new sap.m.BusyDialog(); 
-				//      oBusyDialog.open();
-
-				//sap.ui.core.BusyIndicator.show(0);
-				// jsut send the data to SAP Plain vanilla. 
-
 				this.SaveButtonClicked = true;
-
 				var oSuggestUpdateModel = that.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
 
 				//  now check where ever there is a change in quantity,  send a flag to SAP,  the data is changed. 
@@ -329,18 +321,18 @@
 
 					tempArrayToHoldData.push({
 
-						ZzsugSeqNo: sendTheDataToSAP[i].zzsug_seq_no,  
+						ZzsugSeqNo: sendTheDataToSAP[i].zzsug_seq_no,
 						ZzprocessDt: sendTheDataToSAP[i].zzprocess_dt,
 						Zzmodel: sendTheDataToSAP[i].model,
 						Zzmoyr: sendTheDataToSAP[i].zzmoyr,
 						Zzsuffix: sendTheDataToSAP[i].zzsuffix,
 						Zzextcol: sendTheDataToSAP[i].zzextcol,
 						Zzintcol: sendTheDataToSAP[i].zzintcol,
-						ZsrcWerks: sendTheDataToSAP[i].zsrc_werks,
+						ZsrcWerks: this.SourcePlant,
 						Zzordertype: sendTheDataToSAP[i].zzordertype,
 						ZzdealerCode: dealerCode,
-						ZzprodMonth: sendTheDataToSAP[i].zzprod_month,
-						ZzetaMonth: sendTheDataToSAP[i].zzeta_month,
+						// ZzprodMonth: sendTheDataToSAP[i].zzprod_month,
+						// zzend_date: sendTheDataToSAP[i].zzend_date,
 						ZzdelReview: "Y",
 						ZzrequestQty: requestedVolume,
 						Zzprefix: orderPrefix,
@@ -351,6 +343,7 @@
 					});
 
 				}
+				debugger;
 				// call the deep entity. 
 				this.actualPushToSAPoDataDeepEntity(oSuggestUpdateModel, tempArrayToHoldData);
 
@@ -359,22 +352,12 @@
 			onOpenDialog: function (oEvent) {
 				// instantiate dialog
 				if (!this._dialog) {
-
-					// this._sortDialog = sap.ui.xmlfragment("vehicleSortDialog", "vehicleLocator.fragment.vehicleSortDialog", this);
-					// this._dialog = sap.ui.xmlfragment("sap.m.sample.BusyDialog.BusyDialog", this);
 					this._dialog = sap.ui.xmlfragment("BusyDialog", "suggestOrder.fragment.BusyDialog", this);
 					this.getView().addDependent(this._dialog);
 				}
-
 				// open dialog
 				jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._dialog);
 				this._dialog.open();
-
-				// simulate end of operation
-				// _timeout = jQuery.sap.delayedCall(3000, this, function () {
-				// 	this._dialog.close();
-				// });
-
 			},
 
 			onDialogClosed: function (oEvent) {
@@ -389,35 +372,12 @@
 			},
 
 			_navigateToMainScreen: function () {
-
-				// if (this._dataupdateSuccessful == true) {
-
-				// var showRecordSaved = this._oResourceBundle.getText("RECORD_SAVED_INSAP");
-
-				// sap.m.MessageToast.show(showRecordSaved, {
-				// 	duration: 3000,
-				// 	width: "15em",
-				// 	my: "center middle",
-				// 	at: "center middle",
-				// 	of: window,
-				// 	offset: "0 0",
-				// 	collision: "fit fit",
-				// 	onClose: null,
-				// 	autoClose: true,
-				// 	animationTimingFunction: "ease",
-				// 	animationDuration: 1000,
-				// 	closeOnBrowserNavigation: false
-				// });
-
 				// try to close the indicator	
 				this._dialog.close();
 
 				this.afterSAPDataUpdate = true;
-
 				this.resultsLossofData = false; // the data is saved,  so no message
 				this._loadTheData(); // reload the data from SAP. 
-				// };
-
 			},
 
 			_postTheDataToSAP: function (oSuggestUpdateModel, sendTheDataToSAP, tempArrayToHoldData) {
@@ -441,7 +401,6 @@
 				var initialAllocatedQty = initialAllocatedQty.toString();
 
 				tempArrayToHoldData.push({
-
 					ZzsugSeqNo: sendTheDataToSAP.zzsug_seq_no,
 					ZzprocessDt: sendTheDataToSAP.zzprocess_dt,
 					Zzmodel: sendTheDataToSAP.model,
@@ -453,7 +412,7 @@
 					Zzordertype: sendTheDataToSAP.zzordertype,
 					ZzdealerCode: dealerCode,
 					ZzprodMonth: sendTheDataToSAP.zzprod_month,
-					ZzetaMonth: sendTheDataToSAP.zzeta_month,
+					ZzetaMonth: sendTheDataToSAP.zzend_date,
 					ZzdelReview: "Y",
 					ZzrequestQty: requestedVolume,
 					Zzprefix: orderPrefix,
@@ -463,41 +422,25 @@
 			},
 
 			actualPushToSAPoDataDeepEntity: function (oSuggestUpdateModel, oItemSet) {
-
 				// lets move all the below update functionality to a different subroutine and call it once the above is done. 
 
 				this.obj = {
 					"ZzsugSeqNo": "ALL",
 					"OrderHtoOrderI": oItemSet
-
 				};
 
 				var that = this;
 				that.responseReceived = 0;
 				oSuggestUpdateModel.refreshSecurityToken();
 
-				// oClaimModel.create("/zc_headSet", this.obj, {
-				// 	success: $.proxy(function (data, response) {   SuggestOrdSet
-
 				oSuggestUpdateModel.create("/SuggestOrdSet", (this.obj), {
 					success: $.proxy(function (data, response) {
-
-						// that.responseReceived = that.responseReceived + 1;
-
-						// if (that.totalRecordsUpdated == that.responseReceived) {
-						// all is done lets navigate back to the main screen. 
-						// sap.ui.core.BusyIndicator.hide();
-						//sap.ui.core.BusyIndicator.show();
 						that._navigateToMainScreen(); // instead reload the current page. 
-
-						// }
-
 					}),
 					error: function (err) {
 						// console.log(err);
 					}
 				});
-
 			},
 
 			getQueryParameters: function (oLocation) {
@@ -511,25 +454,19 @@
 
 			},
 			_onLinkPress: function (oEvent) {
-
 				var oBindingContext = oEvent.getSource().getBindingContext();
-
 				return new Promise(function (fnResolve) {
-
 					this.doNavigate("RundownSummary", oBindingContext, fnResolve, "");
 				}.bind(this)).catch(function (err) {
 					if (err !== undefined) {
 						MessageBox.error(err.message);
 					}
 				});
-
 			},
+
 			_onLinkPress1: function (oEvent) {
-
 				var oBindingContext = oEvent.getSource().getBindingContext();
-
 				return new Promise(function (fnResolve) {
-
 					this.doNavigate("SalesPlanSummary", oBindingContext, fnResolve, "");
 				}.bind(this)).catch(function (err) {
 					if (err !== undefined) {
@@ -541,24 +478,20 @@
 			_onButtonPress2: function (oEvent) {
 
 				var oBindingContext = oEvent.getSource().getBindingContext();
-
 				return new Promise(function (fnResolve) {
-
 					this.doNavigate("SalesDetails", oBindingContext, fnResolve, "");
 				}.bind(this)).catch(function (err) {
 					if (err !== undefined) {
 						MessageBox.error(err.message);
 					}
 				});
-
 			},
+
 			_onButtonPress3: function () {
-
 				window.close();
-
 			},
-			onInit: function () {
 
+			onInit: function () {
 				var sLocation = window.location.host;
 				var sLocation_conf = sLocation.search("webide");
 				if (sLocation_conf == 0) {
@@ -571,11 +504,9 @@
 
 				this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 				this.oRouter.getTarget("StockAllocation").attachDisplay(jQuery.proxy(this.handleRouteMatched, this));
-
 			},
 
 			_setTheLanguage: function (language) {
-
 				if (language == "EN") {
 					var sSelectedLocale = "en"; // default is english 
 				} else {
@@ -583,7 +514,6 @@
 				}
 
 				//selected language. 
-
 				if (sSelectedLocale == "fr") {
 					var i18nModel = new sap.ui.model.resource.ResourceModel({
 						bundleUrl: "i18n/i18n.properties",
@@ -598,12 +528,10 @@
 					var i18nModel = new sap.ui.model.resource.ResourceModel({
 						bundleUrl: "i18n/i18n.properties",
 						bundleLocale: ("en")
-
 					});
 					this.getView().setModel(i18nModel, "i18n");
 					this.sCurrentLocale = 'EN';
 					this.Language = "E";
-
 				}
 
 				var oModeli18n = this.getView().getModel("i18n");
@@ -611,7 +539,6 @@
 			},
 
 			onClickShowAllModels: function (oEvent) {
-
 				var showSuggestModelsText = this._oResourceBundle.getText("SHOW_SUGGEST_MODELS"),
 					showAllModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS");
 
@@ -622,21 +549,16 @@
 					// enabled="{oViewLocalDataModel>/setEnableFalse}"
 
 					oDetailModel.setProperty("/setEnableFalsePercentages", true);
-
 					this._showSuggestedModels();
 				} else {
 					this.getView().byId("showAllModelsBtn").setProperty("text", showSuggestModelsText);
 					oDetailModel.setProperty("/setEnableFalsePercentages", true);
-
 					this._showAllModels();
 				}
-
 			},
 
 			_calculateTotals: function (includeZero) {
-
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
-
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
 				var currentTotal = 0,
@@ -653,7 +575,6 @@
 				for (var i = 0; i < oModelData2.length; i++) {
 					var duringPercentage = oModelData2[i].current.includes("%");
 					if (oModelData2[i].visibleProperty == true && duringPercentage == false) {
-				 
 						// if ( oModelData2[i].visibleProperty == true ) {
 						currentTotal = +oModelData2[i].current + +currentTotal;
 						currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
@@ -665,18 +586,14 @@
 						pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
 						unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
 						differenceTotal = +oModelData2[i].difference + +differenceTotal;
-					 
 					}
 				}
 				//  requested volume is not based on suggested stock. 
 				for (var i = 0; i < oModelData2.length; i++) {
-
 					requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
-
 				}
 
 				if (duringPercentage == true) {
-
 					var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
 					var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 					var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -1068,7 +985,7 @@
 						Zzordertype: item.zzordertype,
 						ZzdealerCode: item.dealer_code,
 						ZzprodMonth: item.zzprod_month,
-						ZzetaMonth: item.zzeta_month,
+						ZzetaMonth: item.zzend_date,
 						zzdel_review: "Y",
 						ZzrequestQty: requestedVolume,
 						zzint_alc_qty: item.zzint_alc_qty
@@ -1110,7 +1027,6 @@
 
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
-
 						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" + "and zzmoyr eq '" + this.yearModel +
 							"'"
 					},
@@ -1190,14 +1106,19 @@
 
 							var suffixToUi = item.zzsuffix + " " + suffixDescription + "/" + interiorTrimDesc;
 
+							// etaFromAndToDates.push({
+							// 	sEtaFromData: item.zzend_date,
+							// 	sEtaToData: item.zzend_date,
+							// 	//	sEtaToData: item.zzprod_month
+							// }); 
+
 							etaFromAndToDates.push({
-								sEtaFromData: item.zzeta_month,
-								sEtaToData: item.zzeta_month,
+								sEtaFromData: item.zzstart_date,
+								sEtaToData: item.zzend_date,
 								//	sEtaToData: item.zzprod_month
-							});
+							}); //change by aarti
 
 							oStockAllocationData.push({
-
 								model: item.zzmodel,
 								modelCodeDescription: modelCodeWithDescription,
 								suffix: item.zzsuffix, //,
@@ -1225,7 +1146,7 @@
 								zzintcol: item.zzintcol,
 								zsrc_werks: item.zsrc_werks,
 								zzprod_month: item.zzprod_month,
-								zzeta_month: item.zzeta_month,
+								zzend_date: item.zzend_date,
 								zzsuffix: item.zzsuffix,
 								zzzadddata1: item.zzzadddata1, // this is used for Sort
 								zzint_alc_qty: item.zzint_alc_qty
@@ -1257,7 +1178,7 @@
 								zzintcol: item.zzintcol,
 								zsrc_werks: item.zsrc_werks,
 								zzprod_month: item.zzprod_month,
-								zzeta_month: item.zzeta_month,
+								zzend_date: item.zzend_date,
 								zzordertype: item.zzordertype,
 								zzsuffix: item.zzsuffix,
 								zzzadddata1: item.zzzadddata1, // this is used for Sort
@@ -1280,7 +1201,7 @@
 								zzintcol: item.zzintcol,
 								zsrc_werks: item.zsrc_werks,
 								zzprod_month: item.zzprod_month,
-								zzeta_month: item.zzeta_month,
+								zzend_date: item.zzend_date,
 								zzordertype: item.zzordertype,
 								zzsuffix: item.zzsuffix,
 								zzzadddata1: item.zzzadddata1, // this is used for Sort
@@ -1512,7 +1433,6 @@
 
 						}
 
-
 						var oViewLocalModel = this.getView().getModel("oViewLocalDataModel");
 
 						if (currentStatus == "S") {
@@ -1641,7 +1561,7 @@
 
 			onClickRequestNewModel: function (oEvent) {
 				//  call the function get all the models already
-	
+
 				this._getAllTheModelsFortheSeries();
 
 			},
@@ -1651,320 +1571,312 @@
 
 				var Modelyear = this.zzmoyr;
 				var oSeriesVal = this.zzseries;
-			
+
 				this.oModelStockExistingData = this.getView().getModel("stockDataModel").getData();
 				var _that = this;
 				_that.oGlobalJSONModel.getData().modelData = [];
+
+				var uri = _that.nodeJsUrl + "/ZSD_SUGGEST_ORDER_UPDATE_SRV/ZCDS_SUGGEST_ORD_READ?$filter=zzmoyr eq '" + Modelyear +
+					"' and zzseries eq '" + oSeriesVal + "'";
 				$.ajax({
 					dataType: "json",
-					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_MODEL_DETAILS?$filter=Modelyear eq '" + Modelyear +
-						"' and TCISeries eq '" + oSeriesVal + "'",
+					url: uri,
 					type: "GET",
 					success: function (oData) {
+						console.log("oData.d.results", oData.d.results);
+
 						if (oData.d.results.length > 0) {
 							var b = 0;
 							for (var i = 0; i < oData.d.results.length; i++) {
-                                   
-								var oModel = oData.d.results[i].Model;
+								var oModel = oData.d.results[i].zzmodel;
 								for (var j = 0; j < _that.oGlobalJSONModel.getData().modelData.length; j++) {
 									if (oModel != _that.oGlobalJSONModel.getData().modelData[j].Model) {
 										b++;
 									}
 								}
 								if (b == _that.oGlobalJSONModel.getData().modelData.length) {
-									
-								// if the model already in the list remove the same from here. 
-								   
-									
+									// if the model already in the list remove the same from here. 
+
 									_that.oGlobalJSONModel.getData().modelData.push({
-										"Model": oData.d.results[i].Model,
-										"ENModelDesc": oData.d.results[i].ENModelDesc,
-										"FRModelDesc": oData.d.results[i].FRModelDesc,
-										"localLang": _that.Language
+										"localLang": _that.Language,
+										"mrktg_int_desc_en": oData.d.results[i].int_trim_desc_en,
+										"mrktg_int_desc_fr": oData.d.results[i].int_trim_desc_fr,
+										"MarketingDescriptionEXTColorEN": oData.d.results[i].mktg_desc_en,
+										"MarketingDescriptionEXTColorFR": oData.d.results[i].mktg_desc_fr,
+										"ENModelDesc": oData.d.results[i].model_desc_en,
+										"FRModelDesc": oData.d.results[i].model_desc_fr,
+										"SuffixDescriptionEN": oData.d.results[i].suffix_desc_en,
+										"SuffixDescriptionFR": oData.d.results[i].suffix_desc_fr,
+										"ExteriorColorCode": oData.d.results[i].zzextcol,
+										"zzintcol": oData.d.results[i].zzintcol,
+										"Model": oData.d.results[i].zzmodel,
+										"zzmoyr": oData.d.results[i].zzmoyr,
+										"zzorder_ind": oData.d.results[i].zzorder_ind,
+										"zzseries": oData.d.results[i].zzseries,
+										"zzseries_desc_en": oData.d.results[i].zzseries_desc_en,
+										"zzseries_desc_fr": oData.d.results[i].zzseries_desc_fr,
+										"Suffix": oData.d.results[i].zzsuffix
 									});
 									_that.oGlobalJSONModel.updateBindings(true);
-									
-									
-									
-									
+
 								}
 								b = 0;
 							}
 							sap.ui.core.BusyIndicator.hide();
 							_that.oGlobalJSONModel.getData().modelData.unshift({
-								// "Model": _that.oI18nModel.getResourceBundle().getText("PleaseSelect"),  
 								"Model": _that._oResourceBundle.getText("PleaseSelect"),
 								"ENModelDesc": "",
 								"FRModelDesc": "",
-								"localLang": ""
+								"localLang": "",
+								"int_trim_desc_en": "",
+								"int_trim_desc_fr": "",
+								"mktg_desc_en": "",
+								"mktg_desc_fr": "",
+								"suffix_desc_en": "",
+								"suffix_desc_fr": "",
+								"zzextcol": "",
+								"zzintcol": "",
+								"zzmoyr": "",
+								"zzorder_ind": "",
+								"zzseries": "",
+								"zzseries_desc_en": "",
+								"zzseries_desc_fr": "",
+								"zzsuffix": ""
 							});
+							_that.GlobalModelData = _that.oGlobalJSONModel.getData().modelData;
 
 						} else {
 							sap.ui.core.BusyIndicator.hide();
 						}
 						_that.oGlobalJSONModel.updateBindings(true);
-
 						_that._requestCompletedOpenDialog();
-
 					},
 					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
 						_that.errorFlag = true;
 					}
 				});
-			
+
 			},
 
 			_requestCompletedOpenDialog: function (oEvent) {
-
 				var checkModelData = this.oGlobalJSONModel.getData().modelData.length;
-				 if (checkModelData > 0) {
-                	if (!this._modelRequestDialog) {
-				this._modelRequestDialog = sap.ui.xmlfragment("modelDialog", "suggestOrder.fragment.NewCarModelDialog", this);
+				if (checkModelData > 0) {
+					if (!this._modelRequestDialog) {
+						this._modelRequestDialog = sap.ui.xmlfragment("modelDialog", "suggestOrder.fragment.NewCarModelDialog", this);
 
-				this.getView().addDependent(this._modelRequestDialog);
-                	}
-				this._modelRequestDialog.open();
-				 sap.ui.core.Fragment.byId("modelDialog", "clickNewModelDialog").setVisible(false);
-					
-                
-				 } else {
+						this.getView().addDependent(this._modelRequestDialog);
+					}
+					this._modelRequestDialog.open();
+					sap.ui.core.Fragment.byId("modelDialog", "clickNewModelDialog").setVisible(false);
 
-				 	var messageForNoModelData = this.getView().getModel("i18n").getResourceBundle().getText("noModelDataReceived");
-				 		MessageToast.show(messageForNoModelData);
-
-				 }	
-
+				} else {
+					var messageForNoModelData = this.getView().getModel("i18n").getResourceBundle().getText("noModelDataReceived");
+					MessageToast.show(messageForNoModelData);
+				}
 			},
 
 			//on Model Selection Change
 			onModelSelectionChange: function (oModel) {
 				var _that = this;
-			
-				sap.ui.core.BusyIndicator.show();
-			
-
 				_that.Modelyear = this.zzmoyr;
 				_that.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
 				_that.oGlobalJSONModel.getData().suffixData = [];
-				$.ajax({
-					dataType: "json",
-					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_INTCOL?$filter=Model eq '" + _that.Model + "' and Modelyear eq '" +
-						_that.Modelyear + "'&$orderby=Suffix asc",
-					type: "GET",
-					success: function (oData) {
-						if (oData.d.results.length > 0) {
-							$.each(oData.d.results, function (i, item) {
-								_that.oGlobalJSONModel.getData().suffixData.push({
-									"Model": item.Model,
-									"Modelyear": item.Model,
-									"Suffix": item.Suffix,
-									"int_c": item.int_c,
-									"SuffixDescriptionEN": item.SuffixDescriptionEN,
-									"SuffixDescriptionFR": item.SuffixDescriptionFR,
-									"mrktg_int_desc_en": item.mrktg_int_desc_en,
-									"mrktg_int_desc_fr": item.mrktg_int_desc_fr,
-									"localLang": _that.Language
-								});
-							});
-							sap.ui.core.BusyIndicator.hide();
-							_that.oGlobalJSONModel.getData().suffixData.unshift({
-								"Model": "",
-								"Modelyear": "",
-								"Suffix": _that._oResourceBundle.getText("PleaseSelect"),
-								"int_c": "",
-								"SuffixDescriptionEN": "",
-								"SuffixDescriptionFR": "",
-								"mrktg_int_desc_en": "",
-								"mrktg_int_desc_fr": "",
-								"localLang": ""
-							});
-							_that.oGlobalJSONModel.updateBindings(true);
-						} else {
-							sap.ui.core.BusyIndicator.hide();
+
+				var temp = _that.GlobalModelData.filter(function (item) {
+					console.log(item);
+					if (item.Model == _that.Model && item.zzmoyr == _that.Modelyear) {
+						var obj = {
+							"Model": item.Model,
+							"Modelyear": item.zzmoyr,
+							"Suffix": item.Suffix,
+							"int_c": item.int_c,
+							"SuffixDescriptionEN": item.SuffixDescriptionEN,
+							"SuffixDescriptionFR": item.SuffixDescriptionFR,
+							"mrktg_int_desc_en": item.mrktg_int_desc_en,
+							"mrktg_int_desc_fr": item.mrktg_int_desc_fr,
+							"localLang": _that.Language
 						}
-					},
-					error: function (oError) {
-						sap.ui.core.BusyIndicator.hide();
-						_that.errorFlag = true;
+						_that.oGlobalJSONModel.getData().suffixData.push(obj);
+						_that.oGlobalJSONModel.getData().suffixData.unshift({
+							"Model": _that._oResourceBundle.getText("PleaseSelect"),
+							"localLang": "",
+							"int_c": "",
+							"mrktg_int_desc_en": "",
+							"mrktg_int_desc_fr": "",
+							"SuffixDescriptionEN": "",
+							"SuffixDescriptionFR": "",
+							"Modelyear": "",
+							"Suffix": ""
+						});
+						_that.oGlobalJSONModel.updateBindings(true);
 					}
-				});
+				})
+				console.log("oData.d.results", _that.oGlobalJSONModel.getData().suffixData);
 			},
 
 			onSuffixChange: function (oSuffixVal) {
 				var _that = this;
-				
-				sap.ui.core.BusyIndicator.show();
-			
-
 				_that.Suffix = oSuffixVal.getParameters("selectedItem").selectedItem.getKey();
-			
 
 				_that.oGlobalJSONModel.getData().colorData = [];
+				var temp = _that.GlobalModelData.filter(function (item) {
+					console.log(item);
+					if (item.Model == _that.Model && item.zzmoyr == _that.Modelyear && item.Suffix == _that.Suffix && item.zzseries == _that.zzseries) {
+						var obj = {
+							"ExteriorColorCode": item.ExteriorColorCode,
+							"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN,
+							"MarketingDescriptionEXTColorFR": item.MarketingDescriptionEXTColorFR,
+							"localLang": _that.Language,
+							"InteriorColorCode": item.zzintcol
+						}
+					}
+					console.log("oData.d.results", obj);
+					_that.oGlobalJSONModel.getData().colorData.push(obj);
+
+					_that.oGlobalJSONModel.getData().suffixData.unshift({
+						"ExteriorColorCode": "",
+						"MarketingDescriptionEXTColorEN": "",
+						"MarketingDescriptionEXTColorFR": "",
+						"localLang": "",
+						"InteriorColorCode": item.zzintcol
+					});
+					_that.oGlobalJSONModel.updateBindings(true);
+				})
+				console.log("oData.d.results", _that.oGlobalJSONModel.getData().colorData);
+			},
+
+			onColorSelectionDoneEnableAddButton: function (oEvent) {
+				sap.ui.core.Fragment.byId("modelDialog", "clickNewModelDialog").setVisible(true);
+				// check for all mandatory fields and allow submit. 
+
+			},
+
+			onClickCloseNewModelDialog: function (oEvent) {
+				this._modelRequestDialog.close();
+			},
+
+			getSorucePlant: function (objNew) {
+				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + this.zzmoyr +
+					"' and Model eq '" + objNew.model + "'";
+				//ModelSeriesNo
 				$.ajax({
 					dataType: "json",
-					url: _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/zc_exterior_trim?$filter=ModelYear eq '" + _that.Modelyear +
-						"' and Model eq '" + _that.Model + "' and Suffix eq '" + _that.Suffix + "' and TCISeries eq '" + _that.zzseries + "'",
+					url: uri,
 					type: "GET",
 					success: function (oData) {
-						
-							// sap.ui.core.Fragment.byId("modelDialog", "clickNewModelDialog").setVisible(true);
-						
-						if (oData.d.results.length > 0) {
-							$.each(oData.d.results, function (i, item) {
-								_that.oGlobalJSONModel.getData().colorData.push({
-									"ExteriorColorCode": item.ExteriorColorCode,
-									"MarketingDescriptionEXTColorEN": item.MarketingDescriptionEXTColorEN,
-									"MarketingDescriptionEXTColorFR": item.MarketingDescriptionEXTColorFR,
-									"localLang": _that.Language,
-									"InteriorColorCode":item.TrimInteriorColor
-								});
-							});
-							_that.oGlobalJSONModel.getData().colorData.unshift({
-								"ExteriorColorCode": _that._oResourceBundle.getText("PleaseSelect"),
-								"MarketingDescriptionEXTColorEN": "",
-								"MarketingDescriptionEXTColorFR": "",
-								"localLang": ""
-							});
-							_that.oGlobalJSONModel.updateBindings(true);
-							sap.ui.core.BusyIndicator.hide();
-						} else {
-							sap.ui.core.BusyIndicator.hide();
-						}
+						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
+						console.log("Source Plant", oData.d.results[0].SourcePlant);
 					},
-					error: function (oError) {
-						sap.ui.core.BusyIndicator.hide();
-						_that.errorFlag = true;
+					error: function (oErr) {
+						console.log("Error in fetching source plant", oErr);
+					}
+				});
+
+			},
+
+			getSeqNumber: function (objNew) {
+				//ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')
+				var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
+				//ModelSeriesNo
+				$.ajax({
+					dataType: "json",
+					url: uri,
+					type: "POST",
+					data: objNew,
+					success: function (oData) {
+						console.log("odata seq", oData.d.results);
+						objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+					},
+					error: function (oErr) {
+						console.log("Error in fetching source plant", oErr);
 					}
 				});
 			},
 
-			// 	onColorCodeChange: function (oModVal) {
-			// 	var _that = this;
-			// 	// _that.getView().byId("ID_APXValue").getSelectedKey(_that.oI18nModel.getResourceBundle().getText("PleaseSelect"));
-			// 	sap.ui.core.BusyIndicator.show();
-			// 	// var Modelyear = _that.modelYearPicker.getSelectedKey();
-			// 	// var Suffix = _that.getView().byId("ID_marktgIntDesc").getSelectedKey();
-			// 	// var Model = _that.getView().byId("ID_modelDesc").getSelectedKey();
-			// 	_that.ExteriorColorCode = oModVal.getParameters("ID_ExteriorColorCode").selectedItem.getKey();
-
-			// 	var url = _that.nodeJsUrl + "/ZPIPELINE_ETA_INVENT_SUMMARY_SRV/ZC_APX?$filter=zzmoyr eq '" + _that.Modelyear + "' and zzmodel eq '" +
-			// 		_that.Model + "' and zzsuffix eq '" + _that.Suffix + "' and zzextcol eq '" + _that.ExteriorColorCode + "'";
-			// 	$.ajax({
-			// 		dataType: "json",
-			// 		url: url,
-			// 		type: "GET",
-			// 		success: function (oAPXData) {
-			// 			if (oAPXData.d.results.length > 0) {
-			// 				var b = 0;
-			// 				_that.oGlobalJSONModel.getData().APXCollection = [];
-			// 				for (var i = 0; i < oAPXData.d.results.length; i++) {
-			// 					var zzapx = oAPXData.d.results[i].zzapx;
-			// 					for (var j = 0; j < _that.oGlobalJSONModel.getData().APXCollection.length; j++) {
-			// 						if (zzapx != _that.oGlobalJSONModel.getData().APXCollection[j].APX) {
-			// 							b++;
-			// 						}
-			// 					}
-			// 					if (b == _that.oGlobalJSONModel.getData().APXCollection.length) {
-			// 						_that.oGlobalJSONModel.getData().APXCollection.push({
-			// 							"APX": oAPXData.d.results[i].zzapx
-			// 						});
-			// 						_that.oGlobalJSONModel.updateBindings(true);
-			// 						sap.ui.core.BusyIndicator.hide();
-			// 					}
-			// 					b = 0;
-			// 				}
-			// 				_that.oGlobalJSONModel.getData().APXCollection.unshift({
-			// 					"APX": _that.oI18nModel.getResourceBundle().getText("PleaseSelect")
-			// 				});
-			// 				_that.oGlobalJSONModel.updateBindings(true);
-			// 			} else {
-			// 				sap.ui.core.BusyIndicator.hide();
-			// 			}
-			// 		},
-			// 		error: function (oError) {
-			// 			sap.ui.core.BusyIndicator.hide();
-			// 			_that.errorFlag = true;
-			// 		}
-			// 	});
-			// },	
-
-			onColorSelectionDoneEnableAddButton: function (oEvent) {
-				
-					 sap.ui.core.Fragment.byId("modelDialog", "clickNewModelDialog").setVisible(true);
-					
-					// check for all mandatory fields and allow submit. 
-					
-			},
-			
-			onClickCloseNewModelDialog: function (oEvent) {
-				
-					this._modelRequestDialog.close();
-			
-			},
-			
 			onClickAddNewModelDialog: function (oEvt) {
-		
-				
-				var newAddedQty =  sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
+				//to get source plant Z_VEHICLE_MASTER_SRV/zc_c_vehicle?$top=2
+
+				var newAddedQty = sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
 				var newAddedModel = sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().getKey();
 				var newAddedModelAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().getText();
 				var newAddedSuffix = sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getKey();
 				var newAddedSuffixAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getText();
 				var newAddedExteriorColorCode = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getKey();
-				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getText();
+				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem()
+					.getText();
 				var temp = this.oGlobalJSONModel.getData().colorData;
-				var res = temp.find(({ExteriorColorCode}) => ExteriorColorCode == newAddedExteriorColorCode);
+				// var res = temp.find(({
+				// 	ExteriorColorCode
+				// }) => ExteriorColorCode == newAddedExteriorColorCode);
+				for (var i = 0; i < temp.length; i++) {
+					if (temp[i] != undefined && temp[i] !== null) {
+						temp[i].ExteriorColorCode = newAddedExteriorColorCode;
+						this.InteriorColorCode = temp[i].InteriorColorCode;
+					}
+				}
 				// var res = temp.find(({ExteriorColorCode}) => ExteriorColorCode === newAddedExteriorColorCode );
-				
+
 				// var interiorColor = this.oGlobalJSONModel.getData().colorData.find(({TrimInteriorColor}) => ExteriorColorCode == newAddedExteriorColorCode )
 				// var res = ArrObj.find(({id}) => id === Obj1.id );
-				
-			 var oModelStock = this.getView().getModel("stockDataModel");
-			 var oModelStockData = this.getView().getModel("stockDataModel").getData();
-			oModelStockData.push({
-					  model: newAddedModel,
-					  
-					  zzprocess_dt : oModelStockData["0"].zzprocess_dt,
-					  modelCodeDescription: newAddedModelAndDescription,
-					  zzsuffix: newAddedSuffix,
-					  zzmoyr: this.yearModel,
-					  suffix_desc: newAddedSuffixAndDescription,
-					  zzextcol : newAddedExteriorColorCode,
-					  requested_Volume : newAddedQty,
-					  colour_Trim : newAddedExteriorColorCodeAndDescription,
-					  current :"0",
-					  zzintcol:res.InteriorColorCode,
-					  visibleProperty :true,
-					  zzseries:this.series
-				
-					});
-				    this.comingFromAddingaModel = true;
-	// lets get teh totals straight. 
-	
-	    	var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
-	        var oInitialTotalStockModel = oInitalTotalStock.getData();
-	
-             oInitialTotalStockModel["0"].requestedVolumeTotal = oInitialTotalStockModel["0"].requestedVolumeTotal + newAddedQty;
-		    	oInitalTotalStock.updateBindings(true);
-	// sort the data. 
-                 
-						oModelStockData = _.chain(oModelStockData)
-							.sortBy("zzextcol")
-							.sortBy("zzsuffix")
-							.sortBy("model")
-							.value();
 
-				oModelStock.updateBindings(true);		
+				var oModelStock = this.getView().getModel("stockDataModel");
+				var oModelStockData = this.getView().getModel("stockDataModel").getData();
+				var objNew = {};
+				objNew.ZzsugSeqNo = '00000000';
+				objNew.model = newAddedModel;
+				objNew.zzprocess_dt = oModelStockData["0"].zzprocess_dt;
+				objNew.modelCodeDescription = newAddedModelAndDescription;
+				objNew.zzsuffix = newAddedSuffix;
+				objNew.zzmoyr = this.yearModel;
+				objNew.suffix_desc = newAddedSuffixAndDescription;
+				objNew.zzextcol = newAddedExteriorColorCode;
+				objNew.requested_Volume = newAddedQty;
+				objNew.colour_Trim = newAddedExteriorColorCodeAndDescription;
+				objNew.zzintcol = this.InteriorColorCode;
+				objNew.zzseries = this.series;
+				objNew.ZzdealerCode="";
+				
+				this.getSorucePlant(objNew);
+				this.getSeqNumber(objNew);
+
+				oModelStockData.push({
+					model: newAddedModel,
+					zzprocess_dt: oModelStockData["0"].zzprocess_dt,
+					modelCodeDescription: newAddedModelAndDescription,
+					zzsuffix: newAddedSuffix,
+					zzmoyr: this.yearModel,
+					suffix_desc: newAddedSuffixAndDescription,
+					zzextcol: newAddedExteriorColorCode,
+					requested_Volume: newAddedQty,
+					colour_Trim: newAddedExteriorColorCodeAndDescription,
+					current: "0",
+					zzintcol: this.InteriorColorCode,
+					visibleProperty: true,
+					zzseries: this.series
+				});
+				this.comingFromAddingaModel = true;
+				// lets get teh totals straight. 
+
+				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
+				var oInitialTotalStockModel = oInitalTotalStock.getData();
+
+				oInitialTotalStockModel["0"].requestedVolumeTotal = oInitialTotalStockModel["0"].requestedVolumeTotal + newAddedQty;
+				oInitalTotalStock.updateBindings(true);
+				// sort the data. 
+
+				oModelStockData = _.chain(oModelStockData)
+					.sortBy("zzextcol")
+					.sortBy("zzsuffix")
+					.sortBy("model")
+					.value();
+
+				oModelStock.updateBindings(true);
 				this._modelRequestDialog.close();
-					 
-				
-				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
-				 
-				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
-				
+				sap.ui.getCore().setModel(this.getView().getModel("stockDataModel"), "stockDataModel");
+				// this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
+				// this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
 			}
-			
 
 		});
 	}, /* bExport= */ true);
