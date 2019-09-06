@@ -1756,7 +1756,7 @@
 				this._modelRequestDialog.close();
 			},
 
-			getSorucePlant: function (objNew) {
+			getSourcePlant: function (objNew) {
 				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + this.zzmoyr +
 					"' and Model eq '" + objNew.model + "'";
 				//ModelSeriesNo
@@ -1772,7 +1772,6 @@
 						console.log("Error in fetching source plant", oErr);
 					}
 				});
-
 			},
 
 			getSeqNumber: function (objNew) {
@@ -1837,7 +1836,7 @@
 				objNew.zzseries = this.series;
 				objNew.ZzdealerCode="";
 				
-				this.getSorucePlant(objNew);
+				this.getSourcePlant(objNew);
 				this.getSeqNumber(objNew);
 
 				oModelStockData.push({
