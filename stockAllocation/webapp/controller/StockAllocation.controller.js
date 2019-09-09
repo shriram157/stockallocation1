@@ -1779,16 +1779,31 @@
 				var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
 				//ModelSeriesNo
 				$.ajax({
-					dataType: "json",
-					url: uri,
-					type: "POST",
-					data: objNew,
-					success: function (oData) {
-						console.log("odata seq", oData.d.results);
-						objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+					type: "GET",
+					headers: {
+						"X-Csrf-Token": "Fetch"
 					},
-					error: function (oErr) {
-						console.log("Error in fetching source plant", oErr);
+					url: uri + "?$format=json",
+					success: function (data, textStatus, request) {
+						this.csrfToken = request.getResponseHeader('X-Csrf-Token');
+						$.ajax({
+							dataType: "json",
+							url: uri,
+							type: "POST",
+							cache: false,
+							headers: {
+								"X-Csrf-Token": this.csrfToken,
+								"Content-Type": "application/json; charset=utf-8"
+							},
+							data: JSON.stringify(objNew),
+							success: function (oData) {
+								console.log("odata seq", oData.d.results);
+								objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+							},
+							error: function (oErr) {
+								console.log("Error in fetching source plant", oErr);
+							}
+						});
 					}
 				});
 			},
@@ -1834,8 +1849,8 @@
 				objNew.colour_Trim = newAddedExteriorColorCodeAndDescription;
 				objNew.zzintcol = this.InteriorColorCode;
 				objNew.zzseries = this.series;
-				objNew.ZzdealerCode="";
-				
+				objNew.ZzdealerCode = "";
+
 				this.getSourcePlant(objNew);
 				this.getSeqNumber(objNew);
 
