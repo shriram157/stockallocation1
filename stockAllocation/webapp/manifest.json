@@ -169,7 +169,8 @@
 					"defaultOperationMode": "Server",
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
-					"useBatch": true
+					"json": true,
+					"useBatch": false
 				},
 				"dataSource": "ZIBP_VMS_SUGGEST_ORD_ETL_SRV",
 				"preload": true
