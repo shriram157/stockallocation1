@@ -1783,7 +1783,7 @@
 					headers: {
 						"X-Csrf-Token": "Fetch"
 					},
-					url: uri + "?$format=json",
+					url: this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet",
 					success: function (data, textStatus, request) {
 						this.csrfToken = request.getResponseHeader('X-Csrf-Token');
 						$.ajax({
