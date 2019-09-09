@@ -1790,10 +1790,9 @@
 							dataType: "json",
 							url: uri,
 							type: "POST",
-							cache: false,
+							crossOrigin: true,
 							headers: {
-								"X-Csrf-Token": this.csrfToken,
-								"Content-Type": "application/json; charset=utf-8"
+								"X-Csrf-Token": this.csrfToken
 							},
 							data: JSON.stringify(objNew),
 							success: function (oData) {
