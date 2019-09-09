@@ -1778,32 +1778,44 @@
 				//ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')
 				var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
 				//ModelSeriesNo
-				$.ajax({
-					type: "GET",
-					headers: {
-						"X-Csrf-Token": "Fetch"
-					},
-					url: this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet",
-					success: function (data, textStatus, request) {
-						this.csrfToken = request.getResponseHeader('X-Csrf-Token');
-						$.ajax({
-							dataType: "json",
-							url: uri,
-							type: "POST",
-							cache: false,
-							headers: {
-								"X-Csrf-Token": this.csrfToken,
-								"Content-Type": "application/json; charset=utf-8"
-							},
-							data: JSON.stringify(objNew),
-							success: function (oData) {
-								console.log("odata seq", oData.d.results);
-								objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
-							},
-							error: function (oErr) {
-								console.log("Error in fetching source plant", oErr);
-							}
-						});
+				// $.ajax({
+				// 	type: "GET",
+				// 	headers: {
+				// 		"X-Csrf-Token": "Fetch"
+				// 	},
+				// 	url: this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV",
+				// 	success: function (data, textStatus, request) {
+				// 		this.csrfToken = request.getResponseHeader('X-Csrf-Token');
+				// 		$.ajax({
+				// 			dataType: "json",
+				// 			url: uri,
+				// 			type: "POST",
+				// 			cache: false,
+				// 			headers: {
+				// 				"X-Csrf-Token": this.csrfToken,
+				// 				"Content-Type": "application/json; charset=utf-8"
+				// 			},
+				// 			data: JSON.stringify(objNew),
+				// 			success: function (oData) {
+				// 				console.log("odata seq", oData.d.results);
+				// 				objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+				// 			},
+				// 			error: function (oErr) {
+				// 				console.log("Error in fetching source plant", oErr);
+				// 			}
+				// 		});
+				// 	}
+				// });
+				//
+				var that= this;
+				this.oModel = this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
+				this.oModel.create("/SuggestOrderSet('00000000')", (objNew), {
+					success: $.proxy(function (data, response) {
+						console.log("odata seq", oData.d.results);
+						objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+					}),
+					error: function (err) {
+						console.log("Error in fetching source plant", err);
 					}
 				});
 			},
