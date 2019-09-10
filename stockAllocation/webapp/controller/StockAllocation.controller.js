@@ -1766,7 +1766,10 @@
 					this.sPrefix = "";
 				}
 				this.nodeJsUrl = this.sPrefix + "/node";
-				this.suggestOrderModel = this.getOwnerComponent().getModel("suggestOrderModel");
+				// this.suggestOrderModel = this.getOwnerComponent().getModel("suggestOrderModel");
+				var uri2 =  this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/";
+				this.suggestOrderModel = new sap.ui.model.odata.v2.ODataModel(uri2, true);
+				this.suggestOrderModel.setUseBatch(false);
 				this.suggestOrderModel.refreshSecurityToken();
 				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + objNew.Zzmoyr +
 					"' and Model eq '" + objNew.Zzmodel + "'";
