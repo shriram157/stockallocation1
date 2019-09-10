@@ -1766,8 +1766,8 @@
 					this.sPrefix = "";
 				}
 				this.nodeJsUrl = this.sPrefix + "/node";
-				// this.suggestOrderModel = this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
-				// this.suggestOrderModel.refreshSecurityToken();
+				this.suggestOrderModel = this.getOwnerComponent().getModel("suggestOrderModel");
+				this.suggestOrderModel.refreshSecurityToken();
 				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + objNew.Zzmoyr +
 					"' and Model eq '" + objNew.Zzmodel + "'";
 				//ModelSeriesNo
@@ -1778,15 +1778,15 @@
 					type: "GET",
 					success: function (oData) {
 						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
-						// that.suggestOrderModel.create("/SuggestOrderSet('00000000')", objNew, {
-						// 	success: $.proxy(function (data, response) {
-						// 		console.log("odata seq", oData.d.results);
-						// 		objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
-						// 	}),
-						// 	error: function (err) {
-						// 		console.log("Error in fetching source plant", err);
-						// 	}
-						// });
+						that.suggestOrderModel.create("/SuggestOrderSet('00000000')", objNew, {
+							success: $.proxy(function (data, response) {
+								console.log("odata seq", oData.d.results);
+								objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+							}),
+							error: function (err) {
+								console.log("Error in fetching source plant", err);
+							}
+						});
 						// that.getSeqNumber(objNew);
 						console.log("Source Plant", oData.d.results[0].SourcePlant);
 					},
@@ -1867,17 +1867,17 @@
 				// 	"Zzadddata5": "Test Data 60"
 				// };
 
-				// var that = this;
-				// this.oModel = this.getOwnerComponent().getModel("suggestOrderModel");
-				// this.oModel.create("/SuggestOrderSet('00000000')", objNew, {
-				// 	success: $.proxy(function (data, response) {
-				// 		console.log("odata seq", oData.d.results);
-				// 		objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
-				// 	}),
-				// 	error: function (err) {
-				// 		console.log("Error in fetching source plant", err);
-				// 	}
-				// });
+				var that = this;
+				this.oModel = this.getOwnerComponent().getModel("suggestOrderModel");
+				this.oModel.create("/SuggestOrderSet('00000000')", objNew, {
+					success: $.proxy(function (data, response) {
+						console.log("odata seq", oData.d.results);
+						objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+					}),
+					error: function (err) {
+						console.log("Error in fetching source plant", err);
+					}
+				});
 			},
 
 			onClickAddNewModelDialog: function (oEvt) {
