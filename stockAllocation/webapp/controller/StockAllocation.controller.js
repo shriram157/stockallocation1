@@ -1757,20 +1757,6 @@
 			},
 
 			getSourcePlant: function (objNew) {
-				var sLocation = window.location.host;
-				var sLocation_conf = sLocation.search("webide");
-				if (sLocation_conf == 0) {
-					this.sPrefix = "/Suggest_Order";
-				} else {
-					//Cloud Deployment
-					this.sPrefix = "";
-				}
-				this.nodeJsUrl = this.sPrefix + "/node";
-				// this.suggestOrderModel = this.getOwnerComponent().getModel("suggestOrderModel");
-				// var uri2 = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/";
-				// this.suggestOrderModel = new sap.ui.model.odata.v2.ODataModel(uri2, true);
-				// this.suggestOrderModel.setUseBatch(false);
-				// this.suggestOrderModel.refreshSecurityToken();
 				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + objNew.Zzmoyr +
 					"' and Model eq '" + objNew.Zzmodel + "'";
 				//ModelSeriesNo
@@ -1780,99 +1766,53 @@
 					url: uri,
 					type: "GET",
 					success: function (oData) {
-						console.log("Source Plant", oData.d.results[0].SourcePlant);
 						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
-
-						// that.suggestOrderModel.create("/SuggestOrderSet", objNew, {
-						// 	success: $.proxy(function (data, response) {
-						// 		console.log("odata seq", oData.d.results);
-						// 		objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
-						// 	}),
-						// 	error: function (err) {
-						// 		console.log("Error in fetching source plant", err);
-						// 	}
-						// });
+						console.log("Source Plant", oData.d.results[0].SourcePlant);
 						that.getSeqNumber(objNew);
 					},
 					error: function (oErr) {
 						console.log("Error in fetching source plant", oErr);
-					},
-					complete: function (objNew) {
-
 					}
 				});
 			},
 
 			getSeqNumber: function (objNew) {
-				var uri2 = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
-				var uri3 = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet";
+				//ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')
+				var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
+				//ModelSeriesNo
 				$.ajax({
 					type: "GET",
 					headers: {
 						"X-Csrf-Token": "Fetch"
 					},
-					url: uri2,
+					url: uri,
 					success: function (data, textStatus, request) {
 						this.csrfToken = request.getResponseHeader('X-Csrf-Token');
-						// 		$.ajax({
-						// 			dataType: "json",
-						// 			url: uri3,
-						// 			type: "POST",
-						// 			cache: false,
-						// 			crossOrigin: true,
-						// 			headers: {
-						// 				"X-Csrf-Token": this.csrfToken
-						// 			},
-						// 			data: objNew,
-						// 			contentType: "application/json; charset=utf-8",
-						// 			success: function (oData) {
-						// 				console.log("odata seq", oData.d.results);
-						// 				objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
-						// 			},
-						// 			error: function (oErr) {
-						// 				console.log("Error in fetching source plant", oErr);
-						// 			}
-						// 		});
+						$.ajax({
+							dataType: "json",
+							url: this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet",
+							type: "POST",
+							cache: false,
+							crossOrigin: true,
+							headers: {
+								"X-Csrf-Token": this.csrfToken
+							},
+							data: JSON.stringify(objNew),
+							contentType: "application/json; charset=utf-8",
+							success: function (oData) {
+								console.log("odata seq", oData.d.results);
+								objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+							},
+							error: function (oErr) {
+								console.log("Error in fetching source plant", oErr);
+							}
+						});
 					}
 				});
-				// var obj = {
-				// 	"ZzsugSeqNo": "00000000",
-				// 	"ZzprocessDt": "\/Date(1564704000000)\/",
-				// 	"Zzmodel": "YZ3DCT",
-				// 	"Zzmoyr": "2019",
-				// 	"Zzsuffix": "AL",
-				// 	"Zzextcol": "0218",
-				// 	"Zzintcol": "LC14",
-				// 	"ZsrcWerks": "X",
-				// 	"ZzdealerCode": "2400042120",
-				// 	"ZzstarveFactor": "0.150122",
-				// 	"Zzseries": "SIE",
-				// 	"ZzseriesDescEn": "SIENNA",
-				// 	"ZzseriesTag": "U",
-				// 	"ZzsuggestQty": "2",
-				// 	"ZzrequestQty": "1",
-				// 	"ZzintAlcQty": "1",
-				// 	"ZzalcQty2ndcut": "0",
-				// 	"ZzalcQty3rdcut": "0",
-				// 	"ZzallocatedQty": "1",
-				// 	"ZzcurStock": "0",
-				// 	"ZzcurPipeline": "0",
-				// 	"ZcurTotal": "0",
-				// 	"ZzcurDs": "0",
-				// 	"ZzunitDs": "0",
-				// 	"Zzprefix": "",
-				// 	"ZzallocationInd": "R",
-				// 	"ZzdelReview": "Y",
-				// 	"Zzadddata1": "Test Data 19",
-				// 	"Zzadddata2": "Test Data 21",
-				// 	"Zzadddata3": "Test Data 40",
-				// 	"Zzadddata4": "Test Data 50",
-				// 	"Zzadddata5": "Test Data 60"
-				// };
 
-				// var that = this;
-				// this.oModel = this.getOwnerComponent().getModel("suggestOrderModel");
-				// this.oModel.create("/SuggestOrderSet('00000000')", objNew, {
+				// var that= this;
+				// this.oModel = this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
+				// this.oModel.create("/SuggestOrderSet('00000000')", (objNew), {
 				// 	success: $.proxy(function (data, response) {
 				// 		console.log("odata seq", oData.d.results);
 				// 		objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
@@ -1915,20 +1855,14 @@
 				objNew.ZzsugSeqNo = '00000000';
 				objNew.Zzmodel = newAddedModel;
 				objNew.ZzprocessDt = oModelStockData["0"].zzprocess_dt;
-				// objNew.modelCodeDescription = newAddedModelAndDescription;
 				objNew.Zzsuffix = newAddedSuffix;
 				objNew.Zzmoyr = this.yearModel;
-				// objNew.suffix_desc = newAddedSuffixAndDescription;
 				objNew.Zzextcol = newAddedExteriorColorCode;
-				// objNew.requested_Volume = newAddedQty;
-				// objNew.colour_Trim = newAddedExteriorColorCodeAndDescription;
 				objNew.Zzintcol = this.InteriorColorCode;
-				// objNew.zzseries = this.series;
 				objNew.ZzdealerCode = this.dealerCode;
 
 				this.getSourcePlant(objNew);
-				// jQuery.sap.intervalCall(3000, this.getSeqNumber(objNew), this);
-				// setTimeout(this.getSeqNumber(objNew), 3000);
+				// this.getSeqNumber(objNew);
 
 				oModelStockData.push({
 					model: newAddedModel,
