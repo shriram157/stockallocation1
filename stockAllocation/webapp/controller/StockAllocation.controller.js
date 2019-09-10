@@ -1757,6 +1757,8 @@
 			},
 
 			getSourcePlant: function (objNew) {
+				this.oModel = this.getOwnerComponent().getModel("suggestOrderModel");
+				this.oModel.refreshSecurityToken();
 				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + objNew.Zzmoyr +
 					"' and Model eq '" + objNew.Zzmodel + "'";
 				//ModelSeriesNo
@@ -1767,7 +1769,16 @@
 					type: "GET",
 					success: function (oData) {
 						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
-						that.getSeqNumber(objNew);
+						that.oModel.create("/SuggestOrderSet('00000000')", objNew, {
+							success: $.proxy(function (data, response) {
+								console.log("odata seq", oData.d.results);
+								objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+							}),
+							error: function (err) {
+								console.log("Error in fetching source plant", err);
+							}
+						});
+						// that.getSeqNumber(objNew);
 						console.log("Source Plant", oData.d.results[0].SourcePlant);
 					},
 					error: function (oErr) {
