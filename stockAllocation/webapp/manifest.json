@@ -40,6 +40,14 @@
 					"odataVersion": "2.0",
 					"localUri": "localService/ZSD_SUGGEST_ORDER_UPDATE_SRV/metadata.xml"
 				}
+			},
+			"ZIBP_VMS_SUGGEST_ORD_ETL_SRV": {
+				"uri": "/node/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/metadata.xml"
+				}
 			}
 		},
 		"title": "{{appTitle}}",
@@ -47,8 +55,8 @@
 		"ach": "ach",
 		"resources": "resources.json",
 		"sourceTemplate": {
-			"id": "servicecatalog.connectivityComponentForManifest",
-			"version": "0.0.0"
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.32.0"
 		}
 	},
 	"sap.ui": {
@@ -154,6 +162,18 @@
 				},
 				"dataSource": "ZSD_SUGGEST_ORDER_UPDATE_SRV",
 				"preload": false
+			},
+			"ZIBP_VMS_SUGGEST_ORD_ETL_SRV": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"json": true,
+					"useBatch": false
+				},
+				"dataSource": "ZIBP_VMS_SUGGEST_ORD_ETL_SRV",
+				"preload": true
 			}
 		},
 		"resources": {

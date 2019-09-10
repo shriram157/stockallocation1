@@ -1760,7 +1760,6 @@
 				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + objNew.Zzmoyr +
 					"' and Model eq '" + objNew.Zzmodel + "'";
 				//ModelSeriesNo
-				var that = this;
 				$.ajax({
 					dataType: "json",
 					url: uri,
@@ -1768,59 +1767,60 @@
 					success: function (oData) {
 						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
 						console.log("Source Plant", oData.d.results[0].SourcePlant);
-						that.getSeqNumber(objNew);
 					},
 					error: function (oErr) {
 						console.log("Error in fetching source plant", oErr);
 					}
 				});
+				
+				this.getSeqNumber(objNew);
 			},
 
 			getSeqNumber: function (objNew) {
 				//ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')
 				var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
 				//ModelSeriesNo
-				$.ajax({
-					type: "GET",
-					headers: {
-						"X-Csrf-Token": "Fetch"
-					},
-					url: uri,
-					success: function (data, textStatus, request) {
-						this.csrfToken = request.getResponseHeader('X-Csrf-Token');
-						$.ajax({
-							dataType: "json",
-							url: this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet",
-							type: "POST",
-							cache: false,
-							crossOrigin: true,
-							headers: {
-								"X-Csrf-Token": this.csrfToken
-							},
-							data: JSON.stringify(objNew),
-							contentType: "application/json; charset=utf-8",
-							success: function (oData) {
-								console.log("odata seq", oData.d.results);
-								objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
-							},
-							error: function (oErr) {
-								console.log("Error in fetching source plant", oErr);
-							}
-						});
-					}
-				});
-
-				// var that= this;
-				// this.oModel = this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
-				// this.oModel.create("/SuggestOrderSet('00000000')", (objNew), {
-				// 	success: $.proxy(function (data, response) {
-				// 		console.log("odata seq", oData.d.results);
-				// 		objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
-				// 	}),
-				// 	error: function (err) {
-				// 		console.log("Error in fetching source plant", err);
+				// $.ajax({
+				// 	type: "GET",
+				// 	headers: {
+				// 		"X-Csrf-Token": "Fetch"
+				// 	},
+				// 	url: uri,
+				// 	success: function (data, textStatus, request) {
+				// 		this.csrfToken = request.getResponseHeader('X-Csrf-Token');
+				// 		$.ajax({
+				// 			dataType: "json",
+				// 			url: uri,
+				// 			type: "POST",
+				// 			cache: false,
+				// 			crossOrigin: true,
+				// 			headers: {
+				// 				"X-Csrf-Token": this.csrfToken
+				// 			},
+				// 			data: JSON.stringify(objNew),
+				// 			contentType: "application/json; charset=utf-8",
+				// 			success: function (oData) {
+				// 				console.log("odata seq", oData.d.results);
+				// 				objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+				// 			},
+				// 			error: function (oErr) {
+				// 				console.log("Error in fetching source plant", oErr);
+				// 			}
+				// 		});
 				// 	}
 				// });
+
+				var that= this;
+				this.oModel = this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
+				this.oModel.create("/SuggestOrderSet", (objNew), {
+					success: $.proxy(function (data, response) {
+						console.log("odata seq", oData.d.results);
+						objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+					}),
+					error: function (err) {
+						console.log("Error in fetching source plant", err);
+					}
+				});
 			},
 
 			onClickAddNewModelDialog: function (oEvt) {
@@ -1862,7 +1862,6 @@
 				objNew.ZzdealerCode = this.dealerCode;
 
 				this.getSourcePlant(objNew);
-				// this.getSeqNumber(objNew);
 
 				oModelStockData.push({
 					model: newAddedModel,
