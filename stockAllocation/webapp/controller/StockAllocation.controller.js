@@ -1812,10 +1812,44 @@
 				// 		});
 				// 	}
 				// });
+				// var obj = {
+				// 	"ZzsugSeqNo": "00000000",
+				// 	"ZzprocessDt": "\/Date(1564704000000)\/",
+				// 	"Zzmodel": "YZ3DCT",
+				// 	"Zzmoyr": "2019",
+				// 	"Zzsuffix": "AL",
+				// 	"Zzextcol": "0218",
+				// 	"Zzintcol": "LC14",
+				// 	"ZsrcWerks": "X",
+				// 	"ZzdealerCode": "2400042120",
+				// 	"ZzstarveFactor": "0.150122",
+				// 	"Zzseries": "SIE",
+				// 	"ZzseriesDescEn": "SIENNA",
+				// 	"ZzseriesTag": "U",
+				// 	"ZzsuggestQty": "2",
+				// 	"ZzrequestQty": "1",
+				// 	"ZzintAlcQty": "1",
+				// 	"ZzalcQty2ndcut": "0",
+				// 	"ZzalcQty3rdcut": "0",
+				// 	"ZzallocatedQty": "1",
+				// 	"ZzcurStock": "0",
+				// 	"ZzcurPipeline": "0",
+				// 	"ZcurTotal": "0",
+				// 	"ZzcurDs": "0",
+				// 	"ZzunitDs": "0",
+				// 	"Zzprefix": "",
+				// 	"ZzallocationInd": "R",
+				// 	"ZzdelReview": "Y",
+				// 	"Zzadddata1": "Test Data 19",
+				// 	"Zzadddata2": "Test Data 21",
+				// 	"Zzadddata3": "Test Data 40",
+				// 	"Zzadddata4": "Test Data 50",
+				// 	"Zzadddata5": "Test Data 60"
+				// };
 
 				var that = this;
 				this.oModel = this.getOwnerComponent().getModel("suggestOrderModel");
-				this.oModel.create("/SuggestOrderSet('00000000')", (objNew), {
+				this.oModel.create("/SuggestOrderSet('00000000')", objNew, {
 					success: $.proxy(function (data, response) {
 						console.log("odata seq", oData.d.results);
 						objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
