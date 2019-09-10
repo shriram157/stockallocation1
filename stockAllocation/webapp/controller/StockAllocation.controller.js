@@ -1855,17 +1855,17 @@
 				var oModelStock = this.getView().getModel("stockDataModel");
 				var oModelStockData = this.getView().getModel("stockDataModel").getData();
 				var objNew = {};
-				// objNew.ZzsugSeqNo = '00000000';
+				objNew.ZzsugSeqNo = '00000000';
 				objNew.Zzmodel = newAddedModel;
-				objNew.zzprocess_dt = oModelStockData["0"].zzprocess_dt;
+				objNew.ZzprocessDt = oModelStockData["0"].zzprocess_dt;
 				// objNew.modelCodeDescription = newAddedModelAndDescription;
-				objNew.zzsuffix = newAddedSuffix;
-				objNew.zzmoyr = this.yearModel;
+				objNew.Zzsuffix = newAddedSuffix;
+				objNew.Zzmoyr = this.yearModel;
 				// objNew.suffix_desc = newAddedSuffixAndDescription;
-				objNew.zzextcol = newAddedExteriorColorCode;
+				objNew.Zzextcol = newAddedExteriorColorCode;
 				// objNew.requested_Volume = newAddedQty;
 				// objNew.colour_Trim = newAddedExteriorColorCodeAndDescription;
-				objNew.zzintcol = this.InteriorColorCode;
+				objNew.Zzintcol = this.InteriorColorCode;
 				// objNew.zzseries = this.series;
 				objNew.ZzdealerCode = this.dealerCode;
 
