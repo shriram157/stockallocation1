@@ -1757,19 +1757,24 @@
 			},
 
 			getSourcePlant: function (objNew) {
-				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + this.zzmoyr +
-					"' and Model eq '" + objNew.model + "'";
+				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + objNew.zzmoyr +
+					"' and Model eq '" + objNew.Zzmodel + "'";
 				//ModelSeriesNo
+				var that = this;
 				$.ajax({
 					dataType: "json",
 					url: uri,
 					type: "GET",
 					success: function (oData) {
 						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
+						that.getSeqNumber(objNew);
 						console.log("Source Plant", oData.d.results[0].SourcePlant);
 					},
 					error: function (oErr) {
 						console.log("Error in fetching source plant", oErr);
+					},
+					complete: function (objNew) {
+
 					}
 				});
 			},
@@ -1808,7 +1813,7 @@
 				// 	}
 				// });
 
-				var that= this;
+				var that = this;
 				this.oModel = this.getOwnerComponent().getModel("suggestOrderModel");
 				this.oModel.create("/SuggestOrderSet('00000000')", (objNew), {
 					success: $.proxy(function (data, response) {
@@ -1850,22 +1855,23 @@
 				var oModelStock = this.getView().getModel("stockDataModel");
 				var oModelStockData = this.getView().getModel("stockDataModel").getData();
 				var objNew = {};
-				objNew.ZzsugSeqNo = '00000000';
-				objNew.model = newAddedModel;
+				// objNew.ZzsugSeqNo = '00000000';
+				objNew.Zzmodel = newAddedModel;
 				objNew.zzprocess_dt = oModelStockData["0"].zzprocess_dt;
-				objNew.modelCodeDescription = newAddedModelAndDescription;
+				// objNew.modelCodeDescription = newAddedModelAndDescription;
 				objNew.zzsuffix = newAddedSuffix;
 				objNew.zzmoyr = this.yearModel;
-				objNew.suffix_desc = newAddedSuffixAndDescription;
+				// objNew.suffix_desc = newAddedSuffixAndDescription;
 				objNew.zzextcol = newAddedExteriorColorCode;
-				objNew.requested_Volume = newAddedQty;
-				objNew.colour_Trim = newAddedExteriorColorCodeAndDescription;
+				// objNew.requested_Volume = newAddedQty;
+				// objNew.colour_Trim = newAddedExteriorColorCodeAndDescription;
 				objNew.zzintcol = this.InteriorColorCode;
-				objNew.zzseries = this.series;
-				objNew.ZzdealerCode = "";
+				// objNew.zzseries = this.series;
+				objNew.ZzdealerCode = this.dealerCode;
 
 				this.getSourcePlant(objNew);
-				this.getSeqNumber(objNew);
+				// jQuery.sap.intervalCall(3000, this.getSeqNumber(objNew), this);
+				// setTimeout(this.getSeqNumber(objNew), 3000);
 
 				oModelStockData.push({
 					model: newAddedModel,
