@@ -1767,8 +1767,6 @@
 				}
 				this.nodeJsUrl = this.sPrefix + "/node";
 				// this.suggestOrderModel = this.getOwnerComponent().getModel("suggestOrderModel");
-				var uri2 = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
-				var uri3 = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet";
 				// var uri2 = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/";
 				// this.suggestOrderModel = new sap.ui.model.odata.v2.ODataModel(uri2, true);
 				// this.suggestOrderModel.setUseBatch(false);
@@ -1806,6 +1804,8 @@
 			},
 
 			getSeqNumber: function (objNew) {
+				var uri2 = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
+				var uri3 = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet";
 				$.ajax({
 					type: "GET",
 					headers: {
