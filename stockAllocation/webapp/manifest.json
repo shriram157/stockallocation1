@@ -163,38 +163,35 @@
 				"preload": false
 			},
 			"ZIBP_VMS_SUGGEST_ORD_ETL_SRV": {
+				"uri": "/node/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/",
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
 					"defaultBindingMode": "OneWay",
 					"defaultCountMode": "Request",
 					"json": true,
-					"useBatch": false
+					"useBatch": false,
+					"headers": {
+						"X-Requested-With": "XMLHttpRequest"
+					}
 				},
 				"dataSource": "ZIBP_VMS_SUGGEST_ORD_ETL_SRV",
-				"preload": true
+				"preload": false
 			}
 		},
 		"resources": {
-			"js": [
-				{
-					"uri": "lib/moment-with-locales.js"
-				},
-				{
-					"uri": "lib/moment-timezone-with-data.js"
-				},
-				{
-					"uri": "lib/underscore.js"
-				},
-				{
-					"uri": "lib/changeFabicon.js"
-				}
-			],
-			"css": [
-				{
-					"uri": "css/style.css"
-				}
-			]
+			"js": [{
+				"uri": "lib/moment-with-locales.js"
+			}, {
+				"uri": "lib/moment-timezone-with-data.js"
+			}, {
+				"uri": "lib/underscore.js"
+			}, {
+				"uri": "lib/changeFabicon.js"
+			}],
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		},
 		"routing": {
 			"config": {
@@ -205,9 +202,7 @@
 				"clearTarget": false,
 				"controlAggregation": "pages",
 				"bypassed": {
-					"target": [
-						"ProductionRequestSummary"
-					]
+					"target": ["ProductionRequestSummary"]
 				}
 			},
 			"targets": {
@@ -254,57 +249,35 @@
 					"transition": "show"
 				}
 			},
-			"routes": [
-				{
-					"pattern": "ProductionRequestSummary/:context:",
-					"name": "ProductionRequestSummary",
-					"target": [
-						"ProductionRequestSummary"
-					]
-				},
-				{
-					"pattern": "",
-					"name": "default",
-					"target": [
-						"ProductionRequestSummary"
-					]
-				},
-				{
-					"pattern": "StockAllocation/:context:",
-					"name": "StockAllocation",
-					"target": [
-						"StockAllocation"
-					]
-				},
-				{
-					"pattern": "RundownSummary/:context:",
-					"name": "RundownSummary",
-					"target": [
-						"RundownSummary"
-					]
-				},
-				{
-					"pattern": "SalesDetails/:context:",
-					"name": "SalesDetails",
-					"target": [
-						"SalesDetails"
-					]
-				},
-				{
-					"pattern": "SeriesSummary/:context:",
-					"name": "SeriesSummary",
-					"target": [
-						"SeriesSummary"
-					]
-				},
-				{
-					"pattern": "SalesPlanSummary/:context:",
-					"name": "SalesPlanSummary",
-					"target": [
-						"SalesPlanSummary"
-					]
-				}
-			]
+			"routes": [{
+				"pattern": "ProductionRequestSummary/:context:",
+				"name": "ProductionRequestSummary",
+				"target": ["ProductionRequestSummary"]
+			}, {
+				"pattern": "",
+				"name": "default",
+				"target": ["ProductionRequestSummary"]
+			}, {
+				"pattern": "StockAllocation/:context:",
+				"name": "StockAllocation",
+				"target": ["StockAllocation"]
+			}, {
+				"pattern": "RundownSummary/:context:",
+				"name": "RundownSummary",
+				"target": ["RundownSummary"]
+			}, {
+				"pattern": "SalesDetails/:context:",
+				"name": "SalesDetails",
+				"target": ["SalesDetails"]
+			}, {
+				"pattern": "SeriesSummary/:context:",
+				"name": "SeriesSummary",
+				"target": ["SeriesSummary"]
+			}, {
+				"pattern": "SalesPlanSummary/:context:",
+				"name": "SalesPlanSummary",
+				"target": ["SalesPlanSummary"]
+			}]
 		}
 	}
 }
