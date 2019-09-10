@@ -45,7 +45,6 @@
 				"uri": "/node/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/",
 				"type": "OData",
 				"settings": {
-					"odataVersion": "2.0",
 					"localUri": "localService/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/metadata.xml"
 				}
 			}
@@ -55,8 +54,8 @@
 		"ach": "ach",
 		"resources": "resources.json",
 		"sourceTemplate": {
-			"id": "ui5template.basicSAPUI5ApplicationProject",
-			"version": "1.32.0"
+			"id": "servicecatalog.connectivityComponentForManifest",
+			"version": "0.0.0"
 		}
 	},
 	"sap.ui": {
@@ -163,8 +162,7 @@
 				"dataSource": "ZSD_SUGGEST_ORDER_UPDATE_SRV",
 				"preload": false
 			},
-			"suggestOrderModel": {
-				"uri": "/node/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/",
+			"ZIBP_VMS_SUGGEST_ORD_ETL_SRV": {
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
@@ -174,7 +172,7 @@
 					"useBatch": false
 				},
 				"dataSource": "ZIBP_VMS_SUGGEST_ORD_ETL_SRV",
-				"preload": false
+				"preload": true
 			}
 		},
 		"resources": {

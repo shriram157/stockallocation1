@@ -1757,8 +1757,17 @@
 			},
 
 			getSourcePlant: function (objNew) {
-				this.oModel = this.getOwnerComponent().getModel("suggestOrderModel");
-				this.oModel.refreshSecurityToken();
+				var sLocation = window.location.host;
+				var sLocation_conf = sLocation.search("webide");
+				if (sLocation_conf == 0) {
+					this.sPrefix = "/Suggest_Order";
+				} else {
+					//Cloud Deployment
+					this.sPrefix = "";
+				}
+				this.nodeJsUrl = this.sPrefix + "/node";
+				this.suggestOrderModel = this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
+				this.suggestOrderModel.refreshSecurityToken();
 				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + objNew.Zzmoyr +
 					"' and Model eq '" + objNew.Zzmodel + "'";
 				//ModelSeriesNo
@@ -1769,7 +1778,7 @@
 					type: "GET",
 					success: function (oData) {
 						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
-						that.oModel.create("/SuggestOrderSet('00000000')", objNew, {
+						that.suggestOrderModel.create("/SuggestOrderSet('00000000')", objNew, {
 							success: $.proxy(function (data, response) {
 								console.log("odata seq", oData.d.results);
 								objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
