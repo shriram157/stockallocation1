@@ -1757,7 +1757,7 @@
 			},
 
 			getSourcePlant: function (objNew) {
-				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + objNew.zzmoyr +
+				var uri = this.nodeJsUrl + "/Z_VEHICLE_MASTER_SRV/zc_myear?$filter= ModelYear eq '" + objNew.Zzmoyr +
 					"' and Model eq '" + objNew.Zzmodel + "'";
 				//ModelSeriesNo
 				var that = this;
