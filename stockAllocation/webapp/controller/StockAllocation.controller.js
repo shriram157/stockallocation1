@@ -1811,8 +1811,8 @@
 
 				var that = this;
 				var service = that.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/";
-				that.oModel = new sap.ui.model.odata.ODataModel(service, true); //this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
-				that._oToken = this.oModel.getHeaders()['x-csrf-token'];
+				that.oIBPModel = new sap.ui.model.odata.ODataModel(service, true); //this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
+				that._oToken = this.oIBPModel.getHeaders()['x-csrf-token'];
 				var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
 				$.ajax({
 					type: "GET",
@@ -1830,7 +1830,7 @@
 
 					}
 				});
-				that.oModel.create("/SuggestOrderSet", objNew, {
+				that.oIBPModel.create("/SuggestOrderSet", objNew, {
 					success: $.proxy(function (data, response) {
 						console.log("odata seq", data.ZzsugSeqNo);
 						objNew.zzsug_seq_no = data.ZzsugSeqNo;
