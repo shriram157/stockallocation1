@@ -1777,38 +1777,6 @@
 			},
 
 			getSeqNumber: function (objNew) {
-				//ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')
-				// var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
-				// //ModelSeriesNo
-				// var that=this;
-				// $.ajax({
-				// 	type: "GET",
-				// 	headers: {
-				// 		"X-Csrf-Token": "Fetch"
-				// 	},
-				// 	url: uri,
-				// 	success: function (data, textStatus, request) {
-				// 		that.csrfToken = request.getResponseHeader('X-Csrf-Token');
-				// 		$.ajax({
-				// 			dataType: "json",
-				// 			url: that.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet",
-				// 			type: "POST",
-				// 			crossOrigin: true,
-				// 			headers: {
-				// 				"X-Csrf-Token": that.csrfToken
-				// 			},
-				// 			data: JSON.stringify(objNew),
-				// 			success: function (oData) {
-				// 				console.log("odata seq", oData.d.results);
-				// 				objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
-				// 			},
-				// 			error: function (oErr) {
-				// 				console.log("Error in fetching source plant", oErr);
-				// 			}
-				// 		});
-				// 	}
-				// });
-
 				var that = this;
 				var service = that.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/";
 				that.oIBPModel = new sap.ui.model.odata.ODataModel(service, true); //this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
@@ -1835,6 +1803,7 @@
 						console.log("odata seq", data.ZzsugSeqNo);
 						objNew.ZzsugSeqNo = data.ZzsugSeqNo;
 						that.oModelStockData[that.oModelStockData.length-1].zzsug_seq_no = data.ZzsugSeqNo;
+						that._loadTheData();
 					}),
 					error: function (err) {
 						console.log("Error in fetching source plant", err);
