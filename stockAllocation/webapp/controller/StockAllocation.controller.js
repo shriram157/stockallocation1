@@ -1768,7 +1768,7 @@
 					success: function (oData) {
 						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
 						console.log("Source Plant", oData.d.results[0].SourcePlant);
-						that.getSeqNumber(objNew);
+						// that.getSeqNumber(objNew);
 					},
 					error: function (oErr) {
 						console.log("Error in fetching source plant", oErr);
@@ -1776,38 +1776,38 @@
 				});
 			},
 
-			getSeqNumber: function (objNew) {
-				//ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')
-				var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
-				//ModelSeriesNo
-				var that=this;
-				$.ajax({
-					type: "GET",
-					headers: {
-						"X-Csrf-Token": "Fetch"
-					},
-					url: uri,
-					success: function (data, textStatus, request) {
-						that.csrfToken = request.getResponseHeader('X-Csrf-Token');
-						$.ajax({
-							dataType: "json",
-							url: that.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet",
-							type: "POST",
-							crossOrigin: true,
-							headers: {
-								"X-Csrf-Token": that.csrfToken
-							},
-							data: JSON.stringify(objNew),
-							success: function (oData) {
-								console.log("odata seq", oData.d.results);
-								objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
-							},
-							error: function (oErr) {
-								console.log("Error in fetching source plant", oErr);
-							}
-						});
-					}
-				});
+			// getSeqNumber: function (objNew) {
+			// 	//ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')
+			// 	var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
+			// 	//ModelSeriesNo
+			// 	var that=this;
+			// 	$.ajax({
+			// 		type: "GET",
+			// 		headers: {
+			// 			"X-Csrf-Token": "Fetch"
+			// 		},
+			// 		url: uri,
+			// 		success: function (data, textStatus, request) {
+			// 			that.csrfToken = request.getResponseHeader('X-Csrf-Token');
+			// 			$.ajax({
+			// 				dataType: "json",
+			// 				url: that.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet",
+			// 				type: "POST",
+			// 				crossOrigin: true,
+			// 				headers: {
+			// 					"X-Csrf-Token": that.csrfToken
+			// 				},
+			// 				data: JSON.stringify(objNew),
+			// 				success: function (oData) {
+			// 					console.log("odata seq", oData.d.results);
+			// 					objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+			// 				},
+			// 				error: function (oErr) {
+			// 					console.log("Error in fetching source plant", oErr);
+			// 				}
+			// 			});
+			// 		}
+			// 	});
 
 				// var that= this;
 				// this.oModel = this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
@@ -1820,7 +1820,7 @@
 				// 		console.log("Error in fetching source plant", err);
 				// 	}
 				// });
-			},
+			// },
 
 			onClickAddNewModelDialog: function (oEvt) {
 				//to get source plant Z_VEHICLE_MASTER_SRV/zc_c_vehicle?$top=2
