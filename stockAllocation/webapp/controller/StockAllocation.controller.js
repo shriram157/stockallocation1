@@ -1833,7 +1833,7 @@
 				that.oIBPModel.create("/SuggestOrderSet", objNew, {
 					success: $.proxy(function (data, response) {
 						console.log("odata seq", data.ZzsugSeqNo);
-						objNew.zzsug_seq_no = data.ZzsugSeqNo;
+						objNew.ZzsugSeqNo = data.ZzsugSeqNo;
 						that.oModelStockData[that.oModelStockData.length-1].zzsug_seq_no = data.ZzsugSeqNo;
 					}),
 					error: function (err) {
