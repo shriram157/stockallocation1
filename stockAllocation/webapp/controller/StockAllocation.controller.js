@@ -9,7 +9,7 @@
 
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
-		var _timeout;
+		var _timeout, objNew = {};
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -289,6 +289,7 @@
 				//  now check where ever there is a change in quantity,  send a flag to SAP,  the data is changed. 
 
 				var oStockSapData = that.getView().getModel("stockDataModel");
+
 				var sendTheDataToSAP = oStockSapData.getData();
 				var stockSAPProp = oStockSapData.getProperty("/");
 				// var stockFromScreen = that.getView().getModel("stockFromSAPModel").getData();
@@ -298,7 +299,6 @@
 				var tempArrayToHoldData = [];
 
 				for (var i = 0; i < sendTheDataToSAP.length; i++) {
-
 					//this._postTheDataToSAP(oSuggestUpdateModel, stockSAPProp[i], tempArrayToHoldData );
 
 					var requestedVolumeNumb = Number(sendTheDataToSAP[i].requested_Volume);
@@ -320,7 +320,6 @@
 					// var initialAllocatedQty = initialAllocatedQty.toString();
 
 					tempArrayToHoldData.push({
-
 						ZzsugSeqNo: sendTheDataToSAP[i].zzsug_seq_no,
 						ZzprocessDt: sendTheDataToSAP[i].zzprocess_dt,
 						Zzmodel: sendTheDataToSAP[i].model,
@@ -328,7 +327,7 @@
 						Zzsuffix: sendTheDataToSAP[i].zzsuffix,
 						Zzextcol: sendTheDataToSAP[i].zzextcol,
 						Zzintcol: sendTheDataToSAP[i].zzintcol,
-						ZsrcWerks: this.SourcePlant,
+						ZsrcWerks: sendTheDataToSAP[i].ZsrcWerks,
 						Zzordertype: sendTheDataToSAP[i].zzordertype,
 						ZzdealerCode: dealerCode,
 						// ZzprodMonth: sendTheDataToSAP[i].zzprod_month,
@@ -343,7 +342,7 @@
 					});
 
 				}
-				debugger;
+				// debugger;
 				// call the deep entity. 
 				this.actualPushToSAPoDataDeepEntity(oSuggestUpdateModel, tempArrayToHoldData);
 
@@ -1766,8 +1765,9 @@
 					url: uri,
 					type: "GET",
 					success: function (oData) {
-						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
 						console.log("Source Plant", oData.d.results[0].SourcePlant);
+						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
+						that.oModelStockData[that.oModelStockData.length-1].ZsrcWerks = oData.d.results[0].SourcePlant;
 						that.getSeqNumber(objNew);
 					},
 					error: function (oErr) {
@@ -1822,10 +1822,9 @@
 					url: uri,
 					success: function (data, textStatus, request) {
 						that.csrfToken = request.getResponseHeader('X-Csrf-Token');
-
 						$.ajaxSetup({
 							headers: {
-								'X-CSRF-Token': that.csrfToken 
+								'X-CSRF-Token': that.csrfToken
 							}
 						});
 
@@ -1834,7 +1833,8 @@
 				that.oModel.create("/SuggestOrderSet", objNew, {
 					success: $.proxy(function (data, response) {
 						console.log("odata seq", data.ZzsugSeqNo);
-						objNew.ZzsugSeqNo = data.ZzsugSeqNo;
+						objNew.zzsug_seq_no = data.ZzsugSeqNo;
+						that.oModelStockData[that.oModelStockData.length-1].zzsug_seq_no = data.ZzsugSeqNo;
 					}),
 					error: function (err) {
 						console.log("Error in fetching source plant", err);
@@ -1854,6 +1854,18 @@
 				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem()
 					.getText();
 				var temp = this.oGlobalJSONModel.getData().colorData;
+
+				var oModelStock = this.getView().getModel("stockDataModel");
+				this.oModelStockData = this.getView().getModel("stockDataModel").getData();
+				
+				objNew.ZzsugSeqNo = '00000000';
+				objNew.Zzmodel = newAddedModel;
+				objNew.ZzprocessDt = new Date();
+				objNew.Zzsuffix = newAddedSuffix;
+				objNew.Zzmoyr = this.yearModel;
+				objNew.Zzextcol = newAddedExteriorColorCode;
+				objNew.Zzintcol = this.InteriorColorCode;
+				objNew.ZzdealerCode = this.dealerCode;
 				// var res = temp.find(({
 				// 	ExteriorColorCode
 				// }) => ExteriorColorCode == newAddedExteriorColorCode);
@@ -1868,23 +1880,11 @@
 				// var interiorColor = this.oGlobalJSONModel.getData().colorData.find(({TrimInteriorColor}) => ExteriorColorCode == newAddedExteriorColorCode )
 				// var res = ArrObj.find(({id}) => id === Obj1.id );
 
-				var oModelStock = this.getView().getModel("stockDataModel");
-				var oModelStockData = this.getView().getModel("stockDataModel").getData();
-				var objNew = {};
-				objNew.ZzsugSeqNo = '00000000';
-				objNew.Zzmodel = newAddedModel;
-				objNew.ZzprocessDt = oModelStockData["0"].zzprocess_dt;
-				objNew.Zzsuffix = newAddedSuffix;
-				objNew.Zzmoyr = this.yearModel;
-				objNew.Zzextcol = newAddedExteriorColorCode;
-				objNew.Zzintcol = this.InteriorColorCode;
-				objNew.ZzdealerCode = this.dealerCode;
-
-				this.getSourcePlant(objNew);
-
-				oModelStockData.push({
+				this.oModelStockData.push({
 					model: newAddedModel,
-					zzprocess_dt: oModelStockData["0"].zzprocess_dt,
+					ZsrcWerks: objNew.ZsrcWerks,
+					zzsug_seq_no: objNew.zzsug_seq_no,
+					zzprocess_dt: new Date(),
 					modelCodeDescription: newAddedModelAndDescription,
 					zzsuffix: newAddedSuffix,
 					zzmoyr: this.yearModel,
@@ -1897,6 +1897,7 @@
 					visibleProperty: true,
 					zzseries: this.series
 				});
+				this.getSourcePlant(objNew);
 				this.comingFromAddingaModel = true;
 				// lets get teh totals straight. 
 
@@ -1907,7 +1908,7 @@
 				oInitalTotalStock.updateBindings(true);
 				// sort the data. 
 
-				oModelStockData = _.chain(oModelStockData)
+				this.oModelStockData = _.chain(this.oModelStockData)
 					.sortBy("zzextcol")
 					.sortBy("zzsuffix")
 					.sortBy("model")
