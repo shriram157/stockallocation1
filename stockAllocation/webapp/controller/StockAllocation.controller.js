@@ -1836,6 +1836,7 @@
 				objNew.Zzintcol = this.InteriorColorCode;
 				objNew.ZzdealerCode = this.dealerCode;
 				objNew.ZzrequestQty = newAddedQty.toString();
+				objNew.Zzseries = this.series;
 				// var res = temp.find(({
 				// 	ExteriorColorCode
 				// }) => ExteriorColorCode == newAddedExteriorColorCode);
