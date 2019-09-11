@@ -1833,8 +1833,8 @@
 				});
 				that.oModel.create("/SuggestOrderSet", objNew, {
 					success: $.proxy(function (data, response) {
-						console.log("odata seq", oData.d.results);
-						objNew.ZzsugSeqNo = oData.d.results[0].ZzsugSeqNo;
+						console.log("odata seq", data.ZzsugSeqNo);
+						objNew.ZzsugSeqNo = data.ZzsugSeqNo;
 					}),
 					error: function (err) {
 						console.log("Error in fetching source plant", err);
