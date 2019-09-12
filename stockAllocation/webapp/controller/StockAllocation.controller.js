@@ -134,6 +134,18 @@
 
 				var oldValue = oEvt.getSource()._sOldValue;
 				var tempRequestedTotal = 0;
+
+				// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
+				//     If the dealer rejects a vechile vehicle then :
+				// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
+				
+				if (currentValue > oldValue) {
+					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
+				}
+				else if (currentValue < oldValue) {
+					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
+				}
+
 				if (currentValue != oldValue) {
 					// trigger the flag to show a loss of data. 
 					this.resultsLossofData = true;
@@ -562,6 +574,10 @@
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
 				var currentTotal = 0,
 					currentDSTotal = 0,
+					currentCTSTotal = 0,
+					currentCPTotal = 0,
+					currentUDSTotal = 0,
+
 					suggestedTotal = 0,
 					suggestedDSTotal = 0,
 					requestedVolumeTotal = 0,
@@ -571,12 +587,22 @@
 					unfilledAllocationTotal = 0,
 					differenceTotal = 0;
 
+				//current: item.zzcur_stock,//Current Inventory
+				// 		current_Ds: item.zzcur_ds, //Current Stock Days Supply
+				// 		current_CTS: item.zcur_total,
+				// 		current_CP: item.zzcur_pipeline,
+				// 		currentU_DS: item.zzunit_ds,
+
 				for (var i = 0; i < oModelData2.length; i++) {
 					var duringPercentage = oModelData2[i].current.includes("%");
 					if (oModelData2[i].visibleProperty == true && duringPercentage == false) {
 						// if ( oModelData2[i].visibleProperty == true ) {
 						currentTotal = +oModelData2[i].current + +currentTotal;
 						currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
+						currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
+						currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
+						currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
+
 						suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 						suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
 						// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
@@ -598,6 +624,10 @@
 					var oInitialTotalStockModel = oInitalTotalStock.getData();
 					var currentTotal = 0,
 						currentDSTotal = 0,
+						currentCTSTotal = 0,
+						currentCPTotal = 0,
+						currentUDSTotal = 0,
+
 						suggestedTotal = 0,
 						suggestedDSTotal = 0,
 						requestedVolumeTotal = 0,
@@ -613,6 +643,11 @@
 							//if ( oModelData2[i].suggested < "0" ) {
 							currentTotal = +oModelData2[i].current + +currentTotal;
 							currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
+
+							currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
+							currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
+							currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
+
 							suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 							suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
 							// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
@@ -627,6 +662,11 @@
 							if (oModelData2[i].suggested > "0") {
 								currentTotal = +oModelData2[i].current + +currentTotal;
 								currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
+
+								currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
+								currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
+								currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
+
 								suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 								suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
 								// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
@@ -643,6 +683,11 @@
 					oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
 					oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
 					oInitialTotalStockModel["0"].currentTotal = currentTotal;
+
+					oInitialTotalStockModel["0"].currentCTSTotal = currentCTSTotal;
+					oInitialTotalStockModel["0"].currentCPTotal = currentCPTotal;
+					oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
+
 					oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
 					oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
 					oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
@@ -663,6 +708,11 @@
 					oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
 					oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
 					oInitialTotalStockModel["0"].currentTotal = currentTotal;
+
+					oInitialTotalStockModel["0"].currentCTSTotal = currentCTSTotal;
+					oInitialTotalStockModel["0"].currentCPTotal = currentCPTotal;
+					oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
+
 					oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
 					oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
 					oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
@@ -1053,6 +1103,10 @@
 						totalRecordsReceived = totalRecordsReceived - 1;
 						var currentTotal = 0,
 							currentDSTotal = 0,
+							currentCTSTotal = 0,
+							currentCPTotal = 0,
+							currentUDSTotal = 0,
+
 							suggestedTotal = 0,
 							suggestedDSTotal = 0,
 							requestedVolumeTotal = 0,
@@ -1061,8 +1115,13 @@
 							pendingAllocationTotal = 0,
 							unfilledAllocationTotal = 0,
 							differenceTotal = 0;
+
 						var zeroSuggestioncurrentTotal = 0,
 							zeroSuggestioncurrentDSTotal = 0,
+							zeroSuggestioncurrentCTSTotal = 0,
+							zeroSuggestioncurrentCPTotal = 0,
+							zeroSuggestioncurrentUDSTotal = 0,
+
 							zeroSuggestionsuggestedTotal = 0,
 							zeroSuggestiondifferenceTotal = 0,
 							zeroSuggestionsuggestedDSTotal = 0,
@@ -1071,6 +1130,7 @@
 							zeroSuggestionallocatedDSTotal = 0,
 							zeroSuggestionpendingAllocationTotal = 0,
 							zeroSuggestionunfilledAllocationTotal = 0;
+
 						var uiForcolorTrim;
 						var dealerCode = this.dealerCode;
 						var localeG = this.sCurrentLocale;
@@ -1123,13 +1183,20 @@
 								suffix: item.zzsuffix, //,
 								suffix_desc: suffixToUi,
 								colour_Trim: uiForcolorTrim,
+
 								current: item.zzcur_stock,
+								current_CP: item.zzcur_pipeline,
 								current_Ds: item.zzcur_ds,
+								current_CTS: +item.zzcur_pipeline + +item.zzcur_stock,
+								currentU_DS: item.zzunit_ds,
+
 								suggested: item.zzsuggest_qty,
-								suggested_Ds: item.suggested_ds,
+								// Current Days of Supply + (Unit Days of Supply * Vehicles suggested by IBP at Model-Dealer Level.
+								//+item.zzcur_ds++(+item.zzunit_ds+*zzsuggest_qty)
+								suggested_Ds: +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty), //item.suggested_ds,  
 								requested_Volume: item.zzrequest_qty,
 								difference: item.diff_sugg_req,
-								requested_Ds: item.requested_ds,
+								requested_Ds:  +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty) ,//item.requested_ds,
 								allocated: item.zzallocated_qty,
 								allocated_Ds: item.allocated_ds,
 								pendingAllocation: item.pending_allocation,
@@ -1159,13 +1226,18 @@
 								suffix: item.zzsuffix, //,
 								suffix_desc: suffixToUi,
 								colour_Trim: uiForcolorTrim,
+
 								current: item.zzcur_stock,
+								current_CP: item.zzcur_pipeline,
 								current_Ds: item.zzcur_ds,
+								current_CTS: +item.zzcur_pipeline + +item.zzcur_stock,
+								currentU_DS: item.zzunit_ds,
+
 								suggested: item.zzsuggest_qty,
-								suggested_Ds: item.suggested_ds,
+								suggested_Ds: +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty), //item.suggested_ds,
 								requested_Volume: item.zzrequest_qty,
 								difference: item.diff_sugg_req,
-								requested_Ds: item.requested_ds,
+								requested_Ds: +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty) + +item.zzunit_ds, //item.requested_ds,
 								allocated: item.zzallocated_qty,
 								allocated_Ds: item.allocated_ds,
 								pendingAllocation: item.pending_allocation,
@@ -1210,6 +1282,10 @@
 
 							currentTotal = currentTotal + +item.zzcur_stock;
 							currentDSTotal = currentDSTotal + +item.zzcur_ds;
+							currentCTSTotal = currentCTSTotal + +item.zcur_total;
+							currentCPTotal = currentCPTotal + +item.zzcur_pipeline;
+							currentUDSTotal = currentUDSTotal + +item.zzunit_ds;
+
 							suggestedTotal = suggestedTotal + +item.zzsuggest_qty;
 							differenceTotal = differenceTotal + +item.diff_sugg_req;
 							suggestedDSTotal = suggestedDSTotal + +item.suggested_ds;
@@ -1223,6 +1299,10 @@
 							if (item.zzsuggest_qty <= 0) {
 								zeroSuggestioncurrentTotal = zeroSuggestioncurrentTotal + +item.zzcur_stock;
 								zeroSuggestioncurrentDSTotal = zeroSuggestioncurrentDSTotal + +item.zzcur_ds;
+								zeroSuggestioncurrentCTSTotal = zeroSuggestioncurrentCTSTotal + +item.zcur_total;
+								zeroSuggestioncurrentCPTotal = zeroSuggestioncurrentCPTotal + +item.zzcur_pipeline;
+								zeroSuggestioncurrentUDSTotal = zeroSuggestioncurrentUDSTotal + +item.zzunit_ds;
+
 								zeroSuggestionsuggestedTotal = zeroSuggestionsuggestedTotal + +item.zzsuggest_qty;
 								zeroSuggestiondifferenceTotal = zeroSuggestiondifferenceTotal + +item.diff_sugg_req;
 								zeroSuggestionsuggestedDSTotal = zeroSuggestionsuggestedDSTotal + +item.suggested_ds;
@@ -1240,6 +1320,10 @@
 
 									currentTotal: zeroSuggestioncurrentTotal,
 									currentDSTotal: zeroSuggestioncurrentDSTotal,
+									currentCTSTotal: zeroSuggestioncurrentCTSTotal,
+									currentCPTotal: zeroSuggestioncurrentCPTotal,
+									currentUDSTotal: zeroSuggestioncurrentUDSTotal,
+
 									differenceTotal: zeroSuggestiondifferenceTotal,
 									suggestedTotal: zeroSuggestionsuggestedTotal,
 									suggestedDSTotal: zeroSuggestionsuggestedDSTotal,
@@ -1252,9 +1336,11 @@
 								});
 
 								oInitialTotalsForUIBkup.push({
-
 									currentTotal: currentTotal,
 									currentDSTotal: currentDSTotal,
+									currentCTSTotal: currentCTSTotal,
+									currentCPTotal: currentCPTotal,
+									currentUDSTotal: currentUDSTotal,
 									differenceTotal: differenceTotal,
 									suggestedTotal: suggestedTotal,
 									suggestedDSTotal: suggestedDSTotal,
@@ -1270,54 +1356,6 @@
 							}
 
 						});
-
-						// lets sort the model data as per the zzzadddata1 field.
-						// var oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1')), 'zzsuffix', 'zzintcol');
-						/*global  _:true*/
-						// if (this.afterSAPDataUpdate != true) {
-
-						// oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
-						// oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
-
-						// var oStockAllocationData = _.chain(oStockAllocationData)
-						// .sortBy('zzzadddata1').reverse()  
-						// .sortBy('zzsuffix');                      
-
-						//		var oStockAlocationBkup = _.chain(oStockAlocationBkup)
-						// .sortBy('zzzadddata1').reverse()  
-						// .sortBy('zzsuffix');                  
-
-						//oStockAlocationBkup = _.sortBy( oStockAlocationBkup, "zzzadddata1" ).reverse();
-						// } else {
-
-						// reset and set again to retain the sort order 	
-						// var oStockAllocationDataReset = [];
-						// var oStockData = new sap.ui.model.json.JSONModel();
-						// oStockData.setData(oStockAllocationDataReset);
-						// this.getView().setModel(oStockData, "stockDataModel");
-
-						// oStockAllocationData = _.sortBy(oStockAllocationData, "zzzadddata1").reverse();
-						// oStockAlocationBkup = _.sortBy(oStockAlocationBkup, "zzzadddata1").reverse();
-
-						// }
-
-						// oStockAllocationData = _.sortBy(( _.sortBy(oStockAllocationData, 'zzzadddata1'), 'zzsuffix', "zzextcol"));
-						// oStockAlocationBkup = _.sortBy(( _.sortBy(oStockAlocationBkup, "zzzadddata1"), "zzsuffix", "zzextcol"));			
-
-						// 	var oStockAllocationData = _.chain(oStockAllocationData)
-						// .sortBy("zzextcol")
-						// .sortBy("zzsuffix")
-						// 	.sortBy("zzzadddata1");
-
-						// var oStockAllocationData = _.chain(oStockAllocationData)
-						// .sortBy("zzzadddata1")
-						// .sortBy("zzsuffix")
-						// 	.sortBy("zzextcol");
-
-						// var oStockAlocationBkup = _.chain(oStockAlocationBkup)
-						// .sortBy("zzextcol")
-						// .sortBy("zzsuffix")
-						// 	.sortBy("zzzadddata1");
 
 						oStockAllocationData = _.chain(oStockAllocationData)
 							.sortBy("zzextcol")
@@ -1767,7 +1805,7 @@
 					success: function (oData) {
 						console.log("Source Plant", oData.d.results[0].SourcePlant);
 						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
-						that.oModelStockData[that.oModelStockData.length-1].ZsrcWerks = oData.d.results[0].SourcePlant;
+						that.oModelStockData[that.oModelStockData.length - 1].ZsrcWerks = oData.d.results[0].SourcePlant;
 						that.getSeqNumber(objNew);
 					},
 					error: function (oErr) {
@@ -1802,7 +1840,7 @@
 					success: $.proxy(function (data, response) {
 						console.log("odata seq", data.ZzsugSeqNo);
 						objNew.ZzsugSeqNo = data.ZzsugSeqNo;
-						that.oModelStockData[that.oModelStockData.length-1].zzsug_seq_no = data.ZzsugSeqNo;
+						that.oModelStockData[that.oModelStockData.length - 1].zzsug_seq_no = data.ZzsugSeqNo;
 						that._loadTheData();
 					}),
 					error: function (err) {
@@ -1826,7 +1864,7 @@
 
 				var oModelStock = this.getView().getModel("stockDataModel");
 				this.oModelStockData = this.getView().getModel("stockDataModel").getData();
-				
+
 				objNew.ZzsugSeqNo = '00000000';
 				objNew.Zzmodel = newAddedModel;
 				objNew.ZzprocessDt = new Date();

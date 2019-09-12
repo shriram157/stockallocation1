@@ -460,9 +460,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							if (sLocation_conf == 0) {
 								// if a local user from weide 
 								// -- Guna // TODO: While testing locally for Dealer	 
-								oModelDetailView.setProperty("/BusinessPartnerKey", "2400042120");
-								oModelDetailView.setProperty("/Dealer_No", "2400042120");
-								var tempDealerText = "2400042120" + " - " + "For local testing only";
+								oModelDetailView.setProperty("/BusinessPartnerKey", "2400042130");
+								oModelDetailView.setProperty("/Dealer_No", "2400042130");
+								var tempDealerText = "2400042130" + " - " + "For local testing only";
 								// oModelDetailView.setProperty("/Dealer_Name", item.BusinessPartnerName);
 
 								oModelDetailView.setProperty("/Dealer_Name", tempDealerText);
