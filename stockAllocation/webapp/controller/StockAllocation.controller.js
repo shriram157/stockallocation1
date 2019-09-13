@@ -176,6 +176,7 @@
 					}
 					
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
+					oTotalModelData.oData["0"].requestedDSTotal = requestedDSTotal;
 					var updationRequestedVolume = oTotalModelData.getProperty("/");
 
 					updationRequestedVolume["0"].requestedVolumeTotal = tempRequestedTotal;
