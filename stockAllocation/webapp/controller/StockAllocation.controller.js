@@ -148,22 +148,7 @@
 
 				var oldValue = oEvt.getSource()._sOldValue;
 				var tempRequestedTotal = 0;
-				
-				if (currentValue != oldValue) {
-					// trigger the flag to show a loss of data. 
-					this.resultsLossofData = true;
-
-					var oStockModelData = this.getView().getModel("stockDataModel").getData();
-					for (var i = 0; i < oStockModelData.length; i++) {
-						tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
-					}
-					
-					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
-					var updationRequestedVolume = oTotalModelData.getProperty("/");
-
-					updationRequestedVolume["0"].requestedVolumeTotal = tempRequestedTotal;
-					oTotalModelData.updateBindings(true);
-				}
+				var requestedDSTotal = 0;
 				
 				if (currentValue > oldS4Value) {
 					var additionalQty = currentValue - oldS4Value;
@@ -179,6 +164,23 @@
 				}
 				
 				this.getView().getModel("stockDataModel").updateBindings(true);
+				
+				if (currentValue != oldValue) {
+					// trigger the flag to show a loss of data. 
+					this.resultsLossofData = true;
+
+					var oStockModelData = this.getView().getModel("stockDataModel").getData();
+					for (var i = 0; i < oStockModelData.length; i++) {
+						tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
+						requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
+					}
+					
+					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
+					var updationRequestedVolume = oTotalModelData.getProperty("/");
+
+					updationRequestedVolume["0"].requestedVolumeTotal = tempRequestedTotal;
+					oTotalModelData.updateBindings(true);
+				}
 
 				// when before click navigates to previous screen the popup might need to be thrown. 
 
