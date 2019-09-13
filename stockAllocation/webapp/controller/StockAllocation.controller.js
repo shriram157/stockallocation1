@@ -131,41 +131,55 @@
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
 				// requestedVolumeTotal
 				var currentValue = oEvt.getSource().getProperty("value");
+				console.log("currentValue",currentValue);
+				var backupData = this.getView().getModel("stockDataModelBkup").getData();
+				console.log("backupData",backupData);
+				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
+				var currentSeqNumber = currentData.zzsug_seq_no;
+				console.log("currentSeqNumber",currentSeqNumber);
+				var oldS4Entry = backupData.filter(function(val){
+					if(val.zzsug_seq_no == currentSeqNumber)
+					return val;
+				});
+				
+				var oldS4Value = parseInt(oldS4Entry[0].requested_Volume);
+				
+				console.log("oldS4Value",oldS4Value);
 
 				var oldValue = oEvt.getSource()._sOldValue;
 				var tempRequestedTotal = 0;
-
-				// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
-				//     If the dealer rejects a vechile vehicle then :
-				// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 				
-				if (currentValue > oldValue) {
+				if (currentValue > oldS4Value) {
+					var additionalQty = currentValue - oldS4Value;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
+					currentData.requested_Ds = currentData.suggested_Ds+ (parseInt(currentData.currentU_DS) * additionalQty);
 				}
-				else if (currentValue < oldValue) {
+				else if (currentValue < oldS4Value) {
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
+					
+					var rejectedQty = oldS4Value -currentValue;
+					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
+					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
 				}
-
+				
+				this.getView().getModel("stockDataModel").updateBindings(true);
+				
 				if (currentValue != oldValue) {
 					// trigger the flag to show a loss of data. 
 					this.resultsLossofData = true;
 
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
-
 						tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
-
 					}
-
+					
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
-
 					var updationRequestedVolume = oTotalModelData.getProperty("/");
 
 					updationRequestedVolume["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.updateBindings(true);
-
 				}
-
+				
 				// when before click navigates to previous screen the popup might need to be thrown. 
 
 			},
