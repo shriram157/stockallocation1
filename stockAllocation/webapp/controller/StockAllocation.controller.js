@@ -149,21 +149,6 @@
 				var oldValue = oEvt.getSource()._sOldValue;
 				var tempRequestedTotal = 0;
 				
-				if (currentValue > oldS4Value) {
-					var additionalQty = currentValue - oldS4Value;
-					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
-					currentData.requested_Ds = currentData.suggested_Ds+ (parseInt(currentData.currentU_DS) * additionalQty);
-				}
-				else if (currentValue < oldS4Value) {
-					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
-					
-					var rejectedQty = oldS4Value -currentValue;
-					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
-					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
-				}
-				
-				this.getView().getModel("stockDataModel").updateBindings(true);
-				
 				if (currentValue != oldValue) {
 					// trigger the flag to show a loss of data. 
 					this.resultsLossofData = true;
@@ -180,6 +165,21 @@
 					oTotalModelData.updateBindings(true);
 				}
 				
+				if (currentValue > oldS4Value) {
+					var additionalQty = currentValue - oldS4Value;
+					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
+					currentData.requested_Ds = currentData.suggested_Ds+ (parseInt(currentData.currentU_DS) * additionalQty);
+				}
+				else if (currentValue < oldS4Value) {
+					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
+					
+					var rejectedQty = oldS4Value -currentValue;
+					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
+					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
+				}
+				
+				this.getView().getModel("stockDataModel").updateBindings(true);
+
 				// when before click navigates to previous screen the popup might need to be thrown. 
 
 			},
@@ -594,6 +594,7 @@
 
 					suggestedTotal = 0,
 					suggestedDSTotal = 0,
+					requestedDSTotal = 0,
 					requestedVolumeTotal = 0,
 					allocatedTotal = 0,
 					allocatedDSTotal = 0,
@@ -620,6 +621,7 @@
 						suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 						suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
 						// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+						requestedDSTotal = +oModelData2[i].requested_Ds + +requestedDSTotal;
 						allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
 						allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
 						pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
@@ -645,6 +647,7 @@
 						suggestedTotal = 0,
 						suggestedDSTotal = 0,
 						requestedVolumeTotal = 0,
+						requestedDSTotal=0,
 						allocatedTotal = 0,
 						allocatedDSTotal = 0,
 						pendingAllocationTotal = 0,
@@ -665,6 +668,7 @@
 							suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 							suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
 							// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+							requestedDSTotal = +oModelData2[i].requested_Ds + +requestedDSTotal;
 							allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
 							allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
 							pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
@@ -684,6 +688,7 @@
 								suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 								suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
 								// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+								requestedDSTotal = +oModelData2[i].requested_Ds + +requestedDSTotal;
 								allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
 								allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
 								pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
@@ -705,6 +710,7 @@
 					oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
 					oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
 					oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
+					oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
 
 					oInitialTotalStockModel["0"].allocatedTotal = allocatedTotal;
 					oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
@@ -730,6 +736,7 @@
 					oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
 					oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
 					oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
+					oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
 
 					oInitialTotalStockModel["0"].allocatedTotal = allocatedTotal;
 					oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
@@ -1128,7 +1135,8 @@
 							allocatedDSTotal = 0,
 							pendingAllocationTotal = 0,
 							unfilledAllocationTotal = 0,
-							differenceTotal = 0;
+							differenceTotal = 0,
+							requestedDSTotal=0;
 
 						var zeroSuggestioncurrentTotal = 0,
 							zeroSuggestioncurrentDSTotal = 0,
@@ -1143,7 +1151,8 @@
 							zeroSuggestionallocatedTotal = 0,
 							zeroSuggestionallocatedDSTotal = 0,
 							zeroSuggestionpendingAllocationTotal = 0,
-							zeroSuggestionunfilledAllocationTotal = 0;
+							zeroSuggestionunfilledAllocationTotal = 0,
+							zeroSuggestionrequestedDSTotal=0;
 
 						var uiForcolorTrim;
 						var dealerCode = this.dealerCode;
@@ -1303,6 +1312,8 @@
 							suggestedTotal = suggestedTotal + +item.zzsuggest_qty;
 							differenceTotal = differenceTotal + +item.diff_sugg_req;
 							suggestedDSTotal = suggestedDSTotal + +item.suggested_ds;
+							
+							requestedDSTotal = requestedDSTotal+ +item.requested_Ds;
 
 							requestedVolumeTotal = requestedVolumeTotal + +item.zzrequest_qty;
 							allocatedTotal = allocatedTotal + +item.zzallocated_qty;
@@ -1320,6 +1331,7 @@
 								zeroSuggestionsuggestedTotal = zeroSuggestionsuggestedTotal + +item.zzsuggest_qty;
 								zeroSuggestiondifferenceTotal = zeroSuggestiondifferenceTotal + +item.diff_sugg_req;
 								zeroSuggestionsuggestedDSTotal = zeroSuggestionsuggestedDSTotal + +item.suggested_ds;
+								zeroSuggestionrequestedDSTotal = zeroSuggestionrequestedDSTotal + +item.requested_Ds;
 
 								zeroSuggestionrequestedVolumeTotal = zeroSuggestionrequestedVolumeTotal + +item.zzrequest_qty;
 								zeroSuggestionallocatedTotal = zeroSuggestionallocatedTotal + +item.zzallocated_qty;
@@ -1342,6 +1354,8 @@
 									suggestedTotal: zeroSuggestionsuggestedTotal,
 									suggestedDSTotal: zeroSuggestionsuggestedDSTotal,
 									requestedVolumeTotal: requestedVolumeTotal,
+									requestedDSTotal:zeroSuggestionrequestedDSTotal,
+									
 									allocatedTotal: zeroSuggestionallocatedTotal,
 									allocatedDSTotal: zeroSuggestionallocatedDSTotal,
 									pendingAllocationTotal: zeroSuggestionpendingAllocationTotal,
@@ -1358,6 +1372,7 @@
 									differenceTotal: differenceTotal,
 									suggestedTotal: suggestedTotal,
 									suggestedDSTotal: suggestedDSTotal,
+									requestedDSTotal:requestedDSTotal,
 									requestedVolumeTotal: requestedVolumeTotal,
 									allocatedTotal: allocatedTotal,
 									allocatedDSTotal: allocatedDSTotal,
@@ -1533,7 +1548,7 @@
 							var etaFromDateYear = lowestEtaFrom.substr(0, 4);
 						}
 						if (highestEtaTo !== undefined) {
-							var etaToDateMonth = highestEtaTo.substr(4, 2);
+							var etaToDateMonth = parseInt(highestEtaTo.substr(4, 2))+2; //it ll be process date plus two future months
 							var etaToDateYear = highestEtaTo.substr(0, 4);
 						}
 						var dummyDate = "01";
