@@ -9,7 +9,7 @@
 
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
-		var _timeout, objNew = {};
+		var _timeout, objNew = {},firstScreenData;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -20,6 +20,11 @@
 				this.resultsLossofData = false;
 
 				var selectedSeries = sap.ui.getCore().getModel('selectedSeries').getData();
+				
+				if(sap.ui.getCore().getModel("suggestedDataModel")){
+					firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
+				}
+				console.log("firstScreenData",firstScreenData);
 
 				this.zzseries = selectedSeries.zzseries;
 				this.zzmoyr = selectedSeries.zzmoyr;
@@ -131,40 +136,39 @@
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
 				// requestedVolumeTotal
 				var currentValue = oEvt.getSource().getProperty("value");
-				console.log("currentValue",currentValue);
+				console.log("currentValue", currentValue);
 				var backupData = this.getView().getModel("stockDataModelBkup").getData();
-				console.log("backupData",backupData);
+				console.log("backupData", backupData);
 				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
 				var currentSeqNumber = currentData.zzsug_seq_no;
-				console.log("currentSeqNumber",currentSeqNumber);
-				var oldS4Entry = backupData.filter(function(val){
-					if(val.zzsug_seq_no == currentSeqNumber)
-					return val;
+				console.log("currentSeqNumber", currentSeqNumber);
+				var oldS4Entry = backupData.filter(function (val) {
+					if (val.zzsug_seq_no == currentSeqNumber)
+						return val;
 				});
-				
+
 				var oldS4Value = parseInt(oldS4Entry[0].requested_Volume);
-				
-				console.log("oldS4Value",oldS4Value);
+
+				console.log("oldS4Value", oldS4Value);
 
 				var oldValue = oEvt.getSource()._sOldValue;
 				var tempRequestedTotal = 0;
 				var requestedDSTotal = 0;
-				
+
 				if (currentValue > oldS4Value) {
 					var additionalQty = currentValue - oldS4Value;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
-					currentData.requested_Ds = currentData.suggested_Ds+ (parseInt(currentData.currentU_DS) * additionalQty);
-				}
-				else if (currentValue < oldS4Value) {
+					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * additionalQty);
+				} else if (currentValue < oldS4Value) {
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
-					
-					var rejectedQty = oldS4Value -currentValue;
+
+					var rejectedQty = oldS4Value - currentValue;
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
 				}
-				
+
 				this.getView().getModel("stockDataModel").updateBindings(true);
-				
+
 				if (currentValue != oldValue) {
 					// trigger the flag to show a loss of data. 
 					this.resultsLossofData = true;
@@ -174,7 +178,7 @@
 						tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 						requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
 					}
-					
+
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.oData["0"].requestedDSTotal = requestedDSTotal;
 					var updationRequestedVolume = oTotalModelData.getProperty("/");
@@ -650,7 +654,7 @@
 						suggestedTotal = 0,
 						suggestedDSTotal = 0,
 						requestedVolumeTotal = 0,
-						requestedDSTotal=0,
+						requestedDSTotal = 0,
 						allocatedTotal = 0,
 						allocatedDSTotal = 0,
 						pendingAllocationTotal = 0,
@@ -1097,6 +1101,11 @@
 			},
 
 			_loadTheData: function (oEvent) {
+				
+				if(sap.ui.getCore().getModel("suggestedDataModel")){
+					var firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
+				}
+				console.log("firstScreenData",firstScreenData);
 
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
@@ -1139,7 +1148,7 @@
 							pendingAllocationTotal = 0,
 							unfilledAllocationTotal = 0,
 							differenceTotal = 0,
-							requestedDSTotal=0;
+							requestedDSTotal = 0;
 
 						var zeroSuggestioncurrentTotal = 0,
 							zeroSuggestioncurrentDSTotal = 0,
@@ -1155,7 +1164,7 @@
 							zeroSuggestionallocatedDSTotal = 0,
 							zeroSuggestionpendingAllocationTotal = 0,
 							zeroSuggestionunfilledAllocationTotal = 0,
-							zeroSuggestionrequestedDSTotal=0;
+							zeroSuggestionrequestedDSTotal = 0;
 
 						var uiForcolorTrim;
 						var dealerCode = this.dealerCode;
@@ -1222,7 +1231,7 @@
 								suggested_Ds: +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty), //item.suggested_ds,  
 								requested_Volume: item.zzrequest_qty,
 								difference: item.diff_sugg_req,
-								requested_Ds:  +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty) ,//item.requested_ds,
+								requested_Ds: +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty), //item.requested_ds,
 								allocated: item.zzallocated_qty,
 								allocated_Ds: item.allocated_ds,
 								pendingAllocation: item.pending_allocation,
@@ -1315,8 +1324,8 @@
 							suggestedTotal = suggestedTotal + +item.zzsuggest_qty;
 							differenceTotal = differenceTotal + +item.diff_sugg_req;
 							suggestedDSTotal = suggestedDSTotal + +item.suggested_ds;
-							
-							requestedDSTotal = requestedDSTotal+ +item.requested_Ds;
+
+							requestedDSTotal = requestedDSTotal + +item.requested_Ds;
 
 							requestedVolumeTotal = requestedVolumeTotal + +item.zzrequest_qty;
 							allocatedTotal = allocatedTotal + +item.zzallocated_qty;
@@ -1357,8 +1366,8 @@
 									suggestedTotal: zeroSuggestionsuggestedTotal,
 									suggestedDSTotal: zeroSuggestionsuggestedDSTotal,
 									requestedVolumeTotal: requestedVolumeTotal,
-									requestedDSTotal:zeroSuggestionrequestedDSTotal,
-									
+									requestedDSTotal: zeroSuggestionrequestedDSTotal,
+
 									allocatedTotal: zeroSuggestionallocatedTotal,
 									allocatedDSTotal: zeroSuggestionallocatedDSTotal,
 									pendingAllocationTotal: zeroSuggestionpendingAllocationTotal,
@@ -1375,7 +1384,7 @@
 									differenceTotal: differenceTotal,
 									suggestedTotal: suggestedTotal,
 									suggestedDSTotal: suggestedDSTotal,
-									requestedDSTotal:requestedDSTotal,
+									requestedDSTotal: requestedDSTotal,
 									requestedVolumeTotal: requestedVolumeTotal,
 									allocatedTotal: allocatedTotal,
 									allocatedDSTotal: allocatedDSTotal,
@@ -1430,24 +1439,19 @@
 							}
 
 						} else {
-
 							if (currentText == showAllModelsText) {
 								for (var i = 0; i < oModelData2.length; i++) {
 									if (oModelData2[i].suggested <= 0) {
 										oModelData2[i].visibleProperty = false;
-
 									}
 								}
-
 							} else {
 								for (var i = 0; i < oModelData2.length; i++) {
 									if (oModelData2[i].suggested <= 0) {
 										oModelData2[i].visibleProperty = true;
 									}
 								}
-
 							}
-
 						}
 
 						if (this.removeSuggestedRequestedZeroQty == true) {
@@ -1515,13 +1519,10 @@
 									oViewLocalModel.setProperty("/enableForDealer", false);
 									oViewLocalModel.setProperty("/setEnableFalseReset", false);
 								}
-
 							}
-
 						}
 
 						if (currentStatus == "R") {
-
 							oViewLocalModel.setProperty("/setEnableFalseReset", false);
 							oViewLocalModel.setProperty("/enableForDealer", false);
 						}
@@ -1538,7 +1539,11 @@
 							}
 							if ((etaFromAndToDates[i].sEtaToData > valueOFEarlierEtaTo) && (etaFromAndToDates[i].sEtaToData > highestEtaTo) ||
 								highestEtaTo == undefined) {
-								highestEtaTo = etaFromAndToDates[i].sEtaToData;
+								//highestEtaTo = etaFromAndToDates[i].sEtaToData;
+								var jsonDate = (firstScreenData[0].zzprocess_dt).toJSON();
+								var m=jsonDate.replace(/[^a-z0-9/\s/g]|\:\.\d\dZ/g,' ');
+								var newDateTO = m.replace(/\s/g,"");
+								highestEtaTo = newDateTO;
 
 							}
 
@@ -1550,8 +1555,9 @@
 							var etaFromDateMonth = lowestEtaFrom.substr(4, 2);
 							var etaFromDateYear = lowestEtaFrom.substr(0, 4);
 						}
+						debugger;
 						if (highestEtaTo !== undefined) {
-							var etaToDateMonth = parseInt(highestEtaTo.substr(4, 2))+2; //it ll be process date plus two future months
+							var etaToDateMonth = parseInt(highestEtaTo.substr(4, 2)) + 2; //it ll be process date plus two future months
 							var etaToDateYear = highestEtaTo.substr(0, 4);
 						}
 						var dummyDate = "01";
@@ -1899,7 +1905,7 @@
 
 				objNew.ZzsugSeqNo = '00000000';
 				objNew.Zzmodel = newAddedModel;
-				objNew.ZzprocessDt = new Date();
+				objNew.ZzprocessDt = firstScreenData[0].zzprocess_dt;
 				objNew.Zzsuffix = newAddedSuffix;
 				objNew.Zzmoyr = this.yearModel;
 				objNew.Zzextcol = newAddedExteriorColorCode;
@@ -1916,16 +1922,11 @@
 						this.InteriorColorCode = temp[i].InteriorColorCode;
 					}
 				}
-				// var res = temp.find(({ExteriorColorCode}) => ExteriorColorCode === newAddedExteriorColorCode );
-
-				// var interiorColor = this.oGlobalJSONModel.getData().colorData.find(({TrimInteriorColor}) => ExteriorColorCode == newAddedExteriorColorCode )
-				// var res = ArrObj.find(({id}) => id === Obj1.id );
-
 				this.oModelStockData.push({
 					model: newAddedModel,
 					ZsrcWerks: objNew.ZsrcWerks,
 					zzsug_seq_no: objNew.zzsug_seq_no,
-					zzprocess_dt: new Date(),
+					zzprocess_dt: firstScreenData[0].zzprocess_dt,
 					modelCodeDescription: newAddedModelAndDescription,
 					zzsuffix: newAddedSuffix,
 					zzmoyr: this.yearModel,
