@@ -9,7 +9,7 @@
 
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
-		var _timeout, objNew = {},firstScreenData;
+		var _timeout, objNew = {},processDate;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -20,11 +20,12 @@
 				this.resultsLossofData = false;
 
 				var selectedSeries = sap.ui.getCore().getModel('selectedSeries').getData();
+				processDate= selectedSeries.zzprocess_dt;
 				
-				if(sap.ui.getCore().getModel("suggestedDataModel")){
-					firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
-				}
-				console.log("firstScreenData",firstScreenData);
+				// if(sap.ui.getCore().getModel("suggestedDataModel")){
+				// 	firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
+				// }
+				console.log("processDate",processDate);
 
 				this.zzseries = selectedSeries.zzseries;
 				this.zzmoyr = selectedSeries.zzmoyr;
@@ -1102,10 +1103,10 @@
 
 			_loadTheData: function (oEvent) {
 				
-				if(sap.ui.getCore().getModel("suggestedDataModel")){
-					var firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
-				}
-				console.log("firstScreenData",firstScreenData);
+				// if(sap.ui.getCore().getModel("suggestedDataModel")){
+				// 	var firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
+				// }
+				// console.log("firstScreenData",firstScreenData);
 
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
@@ -1540,7 +1541,7 @@
 							if ((etaFromAndToDates[i].sEtaToData > valueOFEarlierEtaTo) && (etaFromAndToDates[i].sEtaToData > highestEtaTo) ||
 								highestEtaTo == undefined) {
 								//highestEtaTo = etaFromAndToDates[i].sEtaToData;
-								var jsonDate = (firstScreenData[0].zzprocess_dt).toJSON();
+								var jsonDate = (processDate).toJSON();
 								var m=jsonDate.replace(/[^a-z0-9/\s/g]|\:\.\d\dZ/g,' ');
 								var newDateTO = m.replace(/\s/g,"");
 								highestEtaTo = newDateTO;
@@ -1905,7 +1906,7 @@
 
 				objNew.ZzsugSeqNo = '00000000';
 				objNew.Zzmodel = newAddedModel;
-				objNew.ZzprocessDt = firstScreenData[0].zzprocess_dt;
+				objNew.ZzprocessDt = processDate;
 				objNew.Zzsuffix = newAddedSuffix;
 				objNew.Zzmoyr = this.yearModel;
 				objNew.Zzextcol = newAddedExteriorColorCode;
@@ -1926,7 +1927,7 @@
 					model: newAddedModel,
 					ZsrcWerks: objNew.ZsrcWerks,
 					zzsug_seq_no: objNew.zzsug_seq_no,
-					zzprocess_dt: firstScreenData[0].zzprocess_dt,
+					zzprocess_dt: processDate,
 					modelCodeDescription: newAddedModelAndDescription,
 					zzsuffix: newAddedSuffix,
 					zzmoyr: this.yearModel,
