@@ -50,29 +50,31 @@
 							<!--<Button text="Reset" type="Transparent" press="onReset"/>-->
 							<Button text="{i18n>SAVE_REQUEST}" type="Accept" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/enableForDealer}"
 								id="saveReqId" visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="_onButtonPressSave"/>
+								<!--enabled="{oViewLocalDataModel>/enableForDealer}"-->
 						</content>
 					</OverflowToolbar>
 				</headerToolbar>
 				<columns>
 					<Column width="200px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-						mergeDuplicates="false">
+						mergeDuplicates="true">
 						<header>
 							<Text text="{i18n>MODEL}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 						</header>
-						<footer/>
+						<footer></footer>
 					</Column>
 					<Column width="155px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 						mergeDuplicates="false">
 						<header>
 							<Text text="{i18n>SUFFIX}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 						</header>
-						<footer/>
+						<footer></footer>
 					</Column>
 					<Column width="185px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 						mergeDuplicates="false">
 						<header>
 							<Text text="{i18n>COLOUR_TRIM}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 						</header>
+						<footer></footer>
 					</Column>
 					<!--Its for totals-->
 					<Column width="15px" hAlign="End" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">

@@ -9,7 +9,8 @@
 
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
-		var _timeout, objNew = {},processDate;
+		var _timeout, objNew = {},
+			processDate;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -20,12 +21,12 @@
 				this.resultsLossofData = false;
 
 				var selectedSeries = sap.ui.getCore().getModel('selectedSeries').getData();
-				processDate= selectedSeries.zzprocess_dt;
-				
+				processDate = selectedSeries.zzprocess_dt;
+
 				// if(sap.ui.getCore().getModel("suggestedDataModel")){
 				// 	firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
 				// }
-				console.log("processDate",processDate);
+				console.log("processDate", processDate);
 
 				this.zzseries = selectedSeries.zzseries;
 				this.zzmoyr = selectedSeries.zzmoyr;
@@ -98,6 +99,8 @@
 				});
 
 				var oModelLocalData = this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
+
+				this.getView().getModel("oViewLocalDataModel").setProperty("/setEnableFalseReset", true); //local testing
 
 				// make a call to SAP and fetch the data for the 4th screen
 				this.dealerCode = selectedSeries.dealerCode;
@@ -590,6 +593,18 @@
 				}
 			},
 
+			// onFooterAdd: function (oEvent) {
+			// 	var oItem = new sap.m.ColumnListItem({
+			// 		cells: [new sap.m.Input(), new sap.m.Input({
+			// 			showValueHelp: true
+
+			// 		})]
+			// 	});
+
+			// 	var oTable = this.getView().byId("stockDataModelTableId");
+			// 	oTable.addItem(oItem);
+			// },
+
 			_calculateTotals: function (includeZero) {
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
@@ -610,11 +625,24 @@
 					unfilledAllocationTotal = 0,
 					differenceTotal = 0;
 
-				//current: item.zzcur_stock,//Current Inventory
-				// 		current_Ds: item.zzcur_ds, //Current Stock Days Supply
-				// 		current_CTS: item.zcur_total,
-				// 		current_CP: item.zzcur_pipeline,
-				// 		currentU_DS: item.zzunit_ds,
+				// $.each(oModelData2, function (i, item) {
+				// 	this.duringPercentage = item.current.includes("%");
+				// 	currentTotal = +item.current + +currentTotal;
+				// 	currentDSTotal = +item.current_Ds + +currentDSTotal;
+				// 	currentCTSTotal = +item.current_CTS + +currentCTSTotal;
+				// 	currentCPTotal = +item.current_CP + +currentCPTotal;
+				// 	currentUDSTotal = +item.currentU_DS + +currentUDSTotal;
+
+				// 	suggestedTotal = +item.suggested + +suggestedTotal;
+				// 	suggestedDSTotal = +item.suggested_Ds + +suggestedDSTotal;
+				// 	// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+				// 	requestedDSTotal = +item.requested_Ds + +requestedDSTotal;
+				// 	allocatedTotal = +item.allocated + +allocatedTotal;
+				// 	allocatedDSTotal = +item.allocated_Ds + +allocatedDSTotal;
+				// 	pendingAllocationTotal = +item.pendingAllocation + +pendingAllocationTotal;
+				// 	unfilledAllocationTotal = +item.unfilled_Allocation + +unfilledAllocationTotal;
+				// 	differenceTotal = +item.difference + +differenceTotal;
+				// });
 
 				for (var i = 0; i < oModelData2.length; i++) {
 					var duringPercentage = oModelData2[i].current.includes("%");
@@ -642,7 +670,7 @@
 					requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
 				}
 
-				if (duringPercentage == true) {
+				if (this.duringPercentage == true) {
 					var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
 					var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 					var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -900,7 +928,7 @@
 			},
 
 			_showPercentagesAgain: function (includeZero) {
-				debugger;
+				// debugger;
 				var oModelData = this.getView().getModel("stockDataModelBkup"),
 					oModelData2 = oModelData.getData(),
 					// oModelProp = oModelData.getProperty("/"),
@@ -1102,7 +1130,7 @@
 			},
 
 			_loadTheData: function (oEvent) {
-				
+
 				// if(sap.ui.getCore().getModel("suggestedDataModel")){
 				// 	var firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
 				// }
@@ -1542,8 +1570,8 @@
 								highestEtaTo == undefined) {
 								//highestEtaTo = etaFromAndToDates[i].sEtaToData;
 								var jsonDate = (processDate).toJSON();
-								var m=jsonDate.replace(/[^a-z0-9/\s/g]|\:\.\d\dZ/g,' ');
-								var newDateTO = m.replace(/\s/g,"");
+								var m = jsonDate.replace(/[^a-z0-9/\s/g]|\:\.\d\dZ/g, ' ');
+								var newDateTO = m.replace(/\s/g, "");
 								highestEtaTo = newDateTO;
 
 							}
@@ -1553,10 +1581,10 @@
 						}
 
 						if (lowestEtaFrom !== undefined) {
-							var etaFromDateMonth = lowestEtaFrom.substr(4, 2);
-							var etaFromDateYear = lowestEtaFrom.substr(0, 4);
+							var etaFromDateMonth = parseInt(highestEtaTo.substr(4, 2)) + 1; //lowestEtaFrom.substr(4, 2);
+							var etaFromDateYear = highestEtaTo.substr(0, 4);
 						}
-						debugger;
+						// debugger;
 						if (highestEtaTo !== undefined) {
 							var etaToDateMonth = parseInt(highestEtaTo.substr(4, 2)) + 2; //it ll be process date plus two future months
 							var etaToDateYear = highestEtaTo.substr(0, 4);
@@ -1670,9 +1698,7 @@
 										b++;
 									}
 								}
-								if (b == _that.oGlobalJSONModel.getData().modelData.length) {
-									// if the model already in the list remove the same from here. 
-
+								if (b == _that.oGlobalJSONModel.getData().modelData.length && oData.d.results[i].zzorder_ind=="Y") {
 									_that.oGlobalJSONModel.getData().modelData.push({
 										"localLang": _that.Language,
 										"mrktg_int_desc_en": oData.d.results[i].int_trim_desc_en,
@@ -1772,7 +1798,7 @@
 							"mrktg_int_desc_en": item.mrktg_int_desc_en,
 							"mrktg_int_desc_fr": item.mrktg_int_desc_fr,
 							"localLang": _that.Language
-						}
+						};
 						_that.oGlobalJSONModel.getData().suffixData.push(obj);
 						_that.oGlobalJSONModel.getData().suffixData.unshift({
 							"Model": _that._oResourceBundle.getText("PleaseSelect"),
@@ -1787,7 +1813,7 @@
 						});
 						_that.oGlobalJSONModel.updateBindings(true);
 					}
-				})
+				});
 				console.log("oData.d.results", _that.oGlobalJSONModel.getData().suffixData);
 			},
 
@@ -1805,7 +1831,7 @@
 							"MarketingDescriptionEXTColorFR": item.MarketingDescriptionEXTColorFR,
 							"localLang": _that.Language,
 							"InteriorColorCode": item.zzintcol
-						}
+						};
 					}
 					console.log("oData.d.results", obj);
 					_that.oGlobalJSONModel.getData().colorData.push(obj);
@@ -1818,7 +1844,7 @@
 						"InteriorColorCode": item.zzintcol
 					});
 					_that.oGlobalJSONModel.updateBindings(true);
-				})
+				});
 				console.log("oData.d.results", _that.oGlobalJSONModel.getData().colorData);
 			},
 
