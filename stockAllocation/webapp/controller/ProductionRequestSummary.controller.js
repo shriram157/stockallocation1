@@ -608,7 +608,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						// Suggested Data
 						oViewSuggestData.push({
-
+							seriesDescription:seriesDescription,
 							// series: item.zzmoyr + "-" + item.zzseries_desc_en,
 							series: item.zzmoyr + "-" + seriesDescription, //item.zzseries_desc_en,
 							orderPrefix: item.zzprefix,
@@ -674,7 +674,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						// countForMixCalc
 
 						oViewRequestedData.push({
-
+							seriesDescription:seriesDescription,
 							// series: item.zzmoyr + "-" + item.zzseries_desc_en,
 							series: item.zzmoyr + "-" + seriesDescription,
 							orderPrefix: item.zzprefix, //order_Number,
@@ -699,6 +699,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						orderNumber = item.zzprefix + " - " + order_Number;
 
 						oViewAllocatedData.push({
+							seriesDescription:seriesDescription,
 							// series: item.zzmoyr + "-" + item.zzseries_desc_en,
 							series: item.zzmoyr + "-" + seriesDescription,
 							zzseries: item.zzseries,

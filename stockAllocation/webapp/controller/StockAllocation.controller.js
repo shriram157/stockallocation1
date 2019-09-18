@@ -29,6 +29,7 @@
 				console.log("processDate", processDate);
 
 				this.zzseries = selectedSeries.zzseries;
+				this.seriesDescription = selectedSeries.seriesDescription;
 				this.zzmoyr = selectedSeries.zzmoyr;
 				this.UserId = selectedSeries.UserId;
 
@@ -472,6 +473,7 @@
 				oSuggestUpdateModel.create("/SuggestOrdSet", (this.obj), {
 					success: $.proxy(function (data, response) {
 						that._navigateToMainScreen(); // instead reload the current page. 
+						that.onClickShowAllModels();
 					}),
 					error: function (err) {
 						// console.log(err);
@@ -575,22 +577,22 @@
 			},
 
 			onClickShowAllModels: function (oEvent) {
-				var showSuggestModelsText = this._oResourceBundle.getText("SHOW_SUGGEST_MODELS"),
+				var showSuggestModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS"), //SHOW_SUGGEST_MODELS
 					showAllModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS");
 
 				var currentText = this.getView().byId("showAllModelsBtn").getText();
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
-				if (currentText == showSuggestModelsText) {
-					this.getView().byId("showAllModelsBtn").setProperty("text", showAllModelsText);
-					// enabled="{oViewLocalDataModel>/setEnableFalse}"
+				// if (currentText == showSuggestModelsText) {
+				this.getView().byId("showAllModelsBtn").setProperty("text", showAllModelsText);
+				// 	// enabled="{oViewLocalDataModel>/setEnableFalse}"
 
-					oDetailModel.setProperty("/setEnableFalsePercentages", true);
-					this._showSuggestedModels();
-				} else {
-					this.getView().byId("showAllModelsBtn").setProperty("text", showSuggestModelsText);
-					oDetailModel.setProperty("/setEnableFalsePercentages", true);
-					this._showAllModels();
-				}
+				// 	oDetailModel.setProperty("/setEnableFalsePercentages", true);
+				// 	this._showSuggestedModels();
+				// } else {
+				// this.getView().byId("showAllModelsBtn").setProperty("text", showSuggestModelsText);
+				oDetailModel.setProperty("/setEnableFalsePercentages", true);
+				this._showAllModels();
+				// }
 			},
 
 			// onFooterAdd: function (oEvent) {
@@ -783,7 +785,6 @@
 			},
 
 			_showSuggestedModels: function (oEvt) {
-
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -793,15 +794,10 @@
 				var oInitalTotalStockBkupData = this.getView().getModel("initialStockTotalModelBkup");
 				// var oInitalTotalStockBkupData = oInitalTotalStockBkup.getData();
 				for (var i = 0; i < oModelData2.length; i++) {
-
 					//	visibleProperty "0%"
-
 					if ((oModelData2[i].suggested <= 0) || (oModelData2[i].suggested <= "0%")) {
-
 						oModelData2[i].visibleProperty = false;
-
 					}
-
 				}
 
 				this._calculateTotals(includeZero);
@@ -816,7 +812,6 @@
 					this._showPercentagesAgain(includeZero);
 
 				}
-
 				//	oInitalTotalStock.updateBindings(true);
 				var oSuggestModel = new sap.ui.model.json.JSONModel();
 				oSuggestModel.setData(oModelData2);
@@ -826,7 +821,6 @@
 			},
 
 			_showAllModels: function (oEvt) {
-
 				var oModelData = this.getView().getModel("stockDataModel").getData();
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -834,12 +828,9 @@
 				var includeZero = true;
 
 				for (var i = 0; i < oModelData.length; i++) {
-
 					if ((oModelData[i].suggested <= 0) || (oModelData[i].suggested <= "0%")) {
 						oModelData[i].visibleProperty = true;
-
 					}
-
 				}
 
 				this._calculateTotals(includeZero);
@@ -848,11 +839,9 @@
 					showAllPercentagesText = this._oResourceBundle.getText("SHOW_ALL_VALUES");
 
 				var currentText = this.getView().byId("showPercentagesBtn").getText();
-
 				if (currentText == showAllPercentagesText) {
 					// 	// get the percent calculation done again. 
 					this._showPercentagesAgain();
-
 				}
 
 				// oInitalTotalStock.updateBindings(true);
@@ -869,15 +858,13 @@
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 				var currentText = this.getView().byId("showPercentagesBtn").getText();
 				if (currentText == showSuggestPercentagesText) {
-					//	oDetailModel.setProperty("/setEnableFalseSuggest", true);
+					oDetailModel.setProperty("/setEnableFalseSuggest", true);
 					this.getView().byId("showPercentagesBtn").setProperty("text", showAllPercentagesText);
 					this._showPercentages();
 				} else {
 					this.getView().byId("showPercentagesBtn").setProperty("text", showSuggestPercentagesText);
-
 					this._showAllVAlues();
 				}
-
 			},
 			_showPercentages: function (oEvt) {
 				var oModelData = this.getView().getModel("stockDataModel"),
@@ -1448,7 +1435,7 @@
 
 						var suggestedTabClick = this._oViewLocalData.getProperty("/fromWhichTabClickIamIn"); //"suggestedTab"
 						var suggestedVolumeonSeries = this._oViewLocalData.getProperty("/seriesSuggestedVolume"); // "0"
-						var showSuggestModelsText = this._oResourceBundle.getText("SHOW_SUGGEST_MODELS"),
+						var showSuggestModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS"),//SHOW_SUGGEST_MODELS
 							showAllModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS");
 						var currentText = this.getView().byId("showAllModelsBtn").getText();
 						var oModelData2 = this.getView().getModel("stockDataModel").getData();
@@ -1698,7 +1685,7 @@
 										b++;
 									}
 								}
-								if (b == _that.oGlobalJSONModel.getData().modelData.length && oData.d.results[i].zzorder_ind=="Y") {
+								if (b == _that.oGlobalJSONModel.getData().modelData.length && oData.d.results[i].zzorder_ind == "Y") {
 									_that.oGlobalJSONModel.getData().modelData.push({
 										"localLang": _that.Language,
 										"mrktg_int_desc_en": oData.d.results[i].int_trim_desc_en,
@@ -1725,26 +1712,28 @@
 								b = 0;
 							}
 							sap.ui.core.BusyIndicator.hide();
-							_that.oGlobalJSONModel.getData().modelData.unshift({
-								"Model": _that._oResourceBundle.getText("PleaseSelect"),
-								"ENModelDesc": "",
-								"FRModelDesc": "",
-								"localLang": "",
-								"int_trim_desc_en": "",
-								"int_trim_desc_fr": "",
-								"mktg_desc_en": "",
-								"mktg_desc_fr": "",
-								"suffix_desc_en": "",
-								"suffix_desc_fr": "",
-								"zzextcol": "",
-								"zzintcol": "",
-								"zzmoyr": "",
-								"zzorder_ind": "",
-								"zzseries": "",
-								"zzseries_desc_en": "",
-								"zzseries_desc_fr": "",
-								"zzsuffix": ""
-							});
+							if (_that.oGlobalJSONModel.getData().modelData[0].Model != "Please Select") {
+								_that.oGlobalJSONModel.getData().modelData.unshift({
+									"Model": _that._oResourceBundle.getText("PleaseSelect"),
+									"ENModelDesc": "",
+									"FRModelDesc": "",
+									"localLang": "",
+									"int_trim_desc_en": "",
+									"int_trim_desc_fr": "",
+									"mktg_desc_en": "",
+									"mktg_desc_fr": "",
+									"suffix_desc_en": "",
+									"suffix_desc_fr": "",
+									"zzextcol": "",
+									"zzintcol": "",
+									"zzmoyr": "",
+									"zzorder_ind": "",
+									"zzseries": "",
+									"zzseries_desc_en": "",
+									"zzseries_desc_fr": "",
+									"zzsuffix": ""
+								});
+							}
 							_that.GlobalModelData = _that.oGlobalJSONModel.getData().modelData;
 
 						} else {
@@ -1940,6 +1929,7 @@
 				objNew.ZzdealerCode = this.dealerCode;
 				objNew.ZzrequestQty = newAddedQty.toString();
 				objNew.Zzseries = this.series;
+				objNew.ZzseriesDescEn = this.seriesDescription;
 				// var res = temp.find(({
 				// 	ExteriorColorCode
 				// }) => ExteriorColorCode == newAddedExteriorColorCode);
@@ -1986,8 +1976,9 @@
 				oModelStock.updateBindings(true);
 				this._modelRequestDialog.close();
 				sap.ui.getCore().setModel(this.getView().getModel("stockDataModel"), "stockDataModel");
-				// this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
-				// this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
+				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
+				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
+				sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
 			}
 
 		});
