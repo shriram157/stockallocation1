@@ -134,6 +134,7 @@
 			onAfterRendering: function () {
 				console.log("rendering");
 				this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
+
 			},
 
 			whenUserChangesRequestedData: function (oEvt) {
@@ -473,7 +474,7 @@
 				oSuggestUpdateModel.create("/SuggestOrdSet", (this.obj), {
 					success: $.proxy(function (data, response) {
 						that._navigateToMainScreen(); // instead reload the current page. 
-						that.onClickShowAllModels();
+						// that.onClickShowAllModels();
 					}),
 					error: function (err) {
 						// console.log(err);
@@ -608,7 +609,13 @@
 			// },
 
 			_calculateTotals: function (includeZero) {
+
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
+				var that = this;
+				that.dynamicIndices = [];
+				var index = 0,
+					count = 0;
+				console.log("oModelData2", oModelData2);
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
 				var currentTotal = 0,
@@ -645,6 +652,226 @@
 				// 	unfilledAllocationTotal = +item.unfilled_Allocation + +unfilledAllocationTotal;
 				// 	differenceTotal = +item.difference + +differenceTotal;
 				// });
+				// function getSum(oModelData2, val){
+				// 	var temp = {};
+				// var obj = null;
+				// for (var i = 0; i < oModelData2.length; i++) {
+				// 	obj = oModelData2[i];
+
+				// 	if (!temp[obj.key]) {
+				// 		temp[obj.key] = obj;
+				// 	} else {
+				// 		temp[obj.key].val = +temp[obj.key].val + +obj.val;
+				// 	}
+				// }
+				// var result = [];
+				// for (var prop in temp)
+				// 	result.push(temp[prop]);
+				// }
+				// getSum(oModelData2, "current");
+
+				var result = [];
+				// that.result.model=[];
+				var resGrouped = oModelData2.reduce(function (res, value) {
+					if (!res[value.model]) {
+						res[value.model] = {
+							model: value.model,
+							currentTotal: 0,
+							currentDSTotal: 0,
+							currentCTSTotal: 0,
+							currentCPTotal: 0,
+							currentUDSTotal: 0,
+							suggestedTotal: 0,
+							suggestedDSTotal: 0,
+							requestedVolumeTotal: 0,
+							requestedDSTotal: 0,
+							allocatedTotal: 0,
+							allocatedDSTotal: 0,
+							pendingAllocationTotal: 0,
+							unfilledAllocationTotal: 0,
+							differenceTotal: 0
+						};
+
+						// that.result.model.push(value.model);
+						result.push(res[value.model]);
+					}
+					res[value.model].currentTotal = +res[value.model].currentTotal + +value.current;
+					res[value.model].currentDSTotal = +res[value.model].currentDSTotal + +value.current_Ds;
+					res[value.model].currentCTSTotal = +res[value.model].currentCTSTotal + +value.current_CTS;
+					res[value.model].currentCPTotal = +res[value.model].currentCPTotal + +value.current_CP;
+					res[value.model].currentUDSTotal = +res[value.model].currentUDSTotal + +value.currentU_DS;
+					res[value.model].suggestedTotal = +res[value.model].suggestedTotal + +value.suggested;
+					res[value.model].suggestedDSTotal = +res[value.model].suggestedDSTotal + +value.suggested_Ds;
+					res[value.model].requestedDSTotal = +res[value.model].requestedDSTotal + +value.requested_Ds;
+					res[value.model].allocatedTotal = +res[value.model].allocatedTotal + +value.allocated;
+					res[value.model].allocatedDSTotal = +res[value.model].allocatedDSTotal + +value.allocated_Ds;
+					res[value.model].pendingAllocationTotal = +res[value.model].pendingAllocationTotal + +value.pendingAllocation;
+					res[value.model].unfilledAllocationTotal = +res[value.model].unfilledAllocationTotal + +value.unfilled_Allocation;
+					res[value.model].differenceTotal = +res[value.model].differenceTotal + +value.difference;
+					res[value.model].requestedVolumeTotal = +res[value.model].requestedVolumeTotal + +value.requested_Volume;
+
+					// res[value.model].currentTotal = + res[value.model].current + +value.current; 
+					// res[value.model].currentDSTotal = + res[value.model].current_Ds + +value.current_Ds; 
+					// res[value.model].currentCTSTotal = + res[value.model].current_CTS + +value.current_CTS; 
+					// res[value.model].requestedVolumeTotal = + res[value.model].current_CP + +value.current_CP; 
+					// res[value.model].requestedVolumeTotal = + res[value.model].currentU_DS + +value.currentU_DS;
+					// res[value.model].requestedVolumeTotal = + res[value.model].suggested + +value.suggested; 
+					// res[value.model].requestedVolumeTotal = + res[value.model].suggested_Ds + +value.suggested_Ds; 
+					// res[value.model].requestedVolumeTotal = + res[value.model].requested_Ds + +value.requested_Ds; 
+					// res[value.model].requestedVolumeTotal = + res[value.model].allocated + +value.allocated; 
+					// res[value.model].requestedVolumeTotal = + res[value.model].allocated_Ds + +value.allocated_Ds; 
+					// res[value.model].requestedVolumeTotal = + res[value.model].pendingAllocation + +value.pendingAllocation; 
+					// res[value.model].requestedVolumeTotal = + res[value.model].unfilled_Allocation + +value.unfilled_Allocation; 
+					// res[value.model].requestedVolumeTotal = +res[value.model].difference + +value.difference;
+					// res[value.model].requestedVolumeTotal = +res[value.model].requested_Volume + +value.requested_Volume;
+					console.log("res", res);
+
+					return res;
+				}, {});
+
+				$.each(result, function (i, item) {
+					addRow(item);
+				});
+
+				function addRow(item) {
+					console.log("resGrouped", resGrouped);
+					var oItem = new sap.m.ColumnListItem({
+						cells: [
+							new sap.m.Text({
+								text: ""
+							}),
+							new sap.m.Text({
+								text: ""
+							}),
+							new sap.m.Text({
+								text: ""
+							}),
+							new sap.m.Text({
+								text: "{i18n>TOTALS}",
+								width: "auto",
+								maxLines: 1,
+								wrapping: false,
+								textAlign: "End",
+								textDirection: "Inherit",
+								visible: true,
+								class:"setOrangeFont"
+							}),
+							new sap.m.Text({
+								text: item.currentTotal
+							}),
+							new sap.m.Text({
+								text: item.currentCPTotal
+							}),
+							new sap.m.Text({
+								text: item.currentCTSTotal
+							}),
+							new sap.m.Text({
+								text: item.currentDSTotal
+							}),
+							new sap.m.Text({
+								text: item.currentUDSTotal
+							}),
+							new sap.m.Text({
+								text: item.suggestedTotal
+							}),
+							new sap.m.Text({
+								text: item.suggestedDSTotal
+							}),
+							new sap.m.Text({
+								text: item.requestedVolumeTotal
+							}),
+							new sap.m.Text({
+								text: item.differenceTotal
+							}),
+							new sap.m.Text({
+								text: item.requestedDSTotal
+							})
+						]
+					});
+					var cells=oItem.getCells();
+					for (var i = 0; i < cells.length; i++) {
+						cells[i].addStyleClass("setOrangeFont");
+					}
+					
+					var tempIndex = [],
+						output = [];
+					var oTable = that.getView().byId("stockDataModelTableId");
+					var tabData = oTable.getBinding("items").oList;
+
+					var group_to_values = tabData.reduce(function (obj, item) {
+						obj[item.model] = obj[item.model] || [];
+						obj[item.model].push(item.current);
+						return obj;
+					}, {});
+
+					var groups = Object.keys(group_to_values).map(function (key) {
+						return {
+							model: key,
+							current: group_to_values[key]
+						};
+					});
+
+					// console.log("groups", groups);
+
+					// for (var i = 0; i < tabData.length; i++) {
+					// 	if (tempIndex[tabData[i].model]) continue;
+					// 	tempIndex[tabData[i].model] = true;
+					// 	output.push(tabData[i].model);
+					// }
+					// console.log("output", output);
+
+					groups.forEach(function (element) {
+						debugger;
+						console.log("element", element);
+						console.log("item", item);
+						if (item.model == element.model) {
+							index = element.current.length + index + count;
+							console.log("index", index);
+							console.log("that.dynamicIndices", that.dynamicIndices);
+							oTable.insertItem(oItem, index);
+							// if (count == 0) {
+							count = count + 1;
+							// }
+							console.log("count", count);
+							that.dynamicIndices.push(index);
+						}
+					});
+
+					// oTable.addRow(oItem);
+					// for(var k=0; k<tabData.length;k++){
+					// 	if((item.model == tabData[k].model)){
+					// 		that.index=k;
+					// 		oTable.insertItem(oItem,k+1);
+					// 	}
+
+					// // // 	// if(item.model !==tabData[k].model){
+					// // // 	// }
+					// }
+				}
+
+				// currentTotal = + res[value.model].current + +value.current; 
+				// currentDSTotal = + res[value.model].current_Ds + +value.current_Ds; 
+				// currentCTSTotal = + res[value.model].current_CTS + +value.current_CTS; 
+				// currentCPTotal = + res[value.model].current_CP + +value.current_CP; 
+				// currentUDSTotal = + res[value.model].currentU_DS + +value.currentU_DS;
+				// suggestedTotal = + res[value.model].suggested + +value.suggested; 
+				// suggestedDSTotal = + res[value.model].suggested_Ds + +value.suggested_Ds; 
+				// requestedDSTotal = + res[value.model].requested_Ds + +value.requested_Ds; 
+				// allocatedTotal = + res[value.model].allocated + +value.allocated; 
+				// allocatedDSTotal = + res[value.model].allocated_Ds + +value.allocated_Ds; 
+				// pendingAllocationTotal = + res[value.model].pendingAllocation + +value.pendingAllocation; 
+				// unfilledAllocationTotal = + res[value.model].unfilled_Allocation + +value.unfilled_Allocation; 
+				// differenceTotal = +res[value.model].difference + +value.difference;
+
+				//For groiping models
+				// var groupBy = key => array =>
+				// 	array.reduce((objectsByKeyValue, obj) => {
+				// 		var value = obj[key];
+				// 		objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+				// 		return objectsByKeyValue;
+				// 	}, {});
+				// var groupByBrand = groupBy('model');
+				// groupByBrand(oModelData2);
 
 				for (var i = 0; i < oModelData2.length; i++) {
 					var duringPercentage = oModelData2[i].current.includes("%");
@@ -785,6 +1012,16 @@
 			},
 
 			_showSuggestedModels: function (oEvt) {
+				// var oTable = this.getView().byId("stockDataModelTableId");
+				// console.log("table", oTable);
+				// if (this.dynamicIndices) {
+				// 	console.log("this.dynamicIndices", this.dynamicIndices);
+				// 	for (var k = 0; k < this.dynamicIndices.length - 1; k++) {
+				// 		oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
+				// 		oTable.updateItems();
+				// 	}
+				// 	// this.dynamicIndices=[];
+				// }
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -799,8 +1036,9 @@
 						oModelData2[i].visibleProperty = false;
 					}
 				}
-
+				// if(this.dynamicIndices.length<1){
 				this._calculateTotals(includeZero);
+				// }
 
 				var showSuggestPercentagesText = this._oResourceBundle.getText("SHOW_PERCENTAGES"),
 					showAllPercentagesText = this._oResourceBundle.getText("SHOW_ALL_VALUES");
@@ -821,6 +1059,17 @@
 			},
 
 			_showAllModels: function (oEvt) {
+				// var oTable = this.getView().byId("stockDataModelTableId");
+				// console.log("table", oTable);
+				// if (this.dynamicIndices) {
+				// 	console.log("this.dynamicIndices", this.dynamicIndices);
+				// 	for (var k = 0; k < this.dynamicIndices.length - 1; k++) {
+				// 		//oTable.getItems()[this.dynamicIndices[1]]
+				// 		oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
+				// 		oTable.updateItems();
+				// 	}
+				// 	// this.dynamicIndices=[];
+				// }
 				var oModelData = this.getView().getModel("stockDataModel").getData();
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -832,8 +1081,9 @@
 						oModelData[i].visibleProperty = true;
 					}
 				}
-
+				// if(this.dynamicIndice.length<1){
 				this._calculateTotals(includeZero);
+				// }
 
 				var showSuggestPercentagesText = this._oResourceBundle.getText("SHOW_PERCENTAGES"),
 					showAllPercentagesText = this._oResourceBundle.getText("SHOW_ALL_VALUES");
@@ -1117,6 +1367,20 @@
 			},
 
 			_loadTheData: function (oEvent) {
+				// debugger;
+				var oTable = this.getView().byId("stockDataModelTableId");
+				console.log("table", oTable);
+				if (oTable.getItems().length > 1) {
+					if (this.dynamicIndices) {
+						console.log("this.dynamicIndices", this.dynamicIndices);
+						for (var k = 0; k < this.dynamicIndices.length - 1; k++) {
+							oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
+							oTable.updateItems();
+						}
+					}
+					this.dynamicIndices = [];
+				}
+				////oTable.getItems().splice(that.dynamicIndices[5])
 
 				// if(sap.ui.getCore().getModel("suggestedDataModel")){
 				// 	var firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
@@ -1435,7 +1699,7 @@
 
 						var suggestedTabClick = this._oViewLocalData.getProperty("/fromWhichTabClickIamIn"); //"suggestedTab"
 						var suggestedVolumeonSeries = this._oViewLocalData.getProperty("/seriesSuggestedVolume"); // "0"
-						var showSuggestModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS"),//SHOW_SUGGEST_MODELS
+						var showSuggestModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS"), //SHOW_SUGGEST_MODELS
 							showAllModelsText = this._oResourceBundle.getText("SHOW_ALL_MODELS");
 						var currentText = this.getView().byId("showAllModelsBtn").getText();
 						var oModelData2 = this.getView().getModel("stockDataModel").getData();
@@ -1455,19 +1719,19 @@
 							}
 
 						} else {
-							if (currentText == showAllModelsText) {
-								for (var i = 0; i < oModelData2.length; i++) {
-									if (oModelData2[i].suggested <= 0) {
-										oModelData2[i].visibleProperty = false;
-									}
-								}
-							} else {
-								for (var i = 0; i < oModelData2.length; i++) {
-									if (oModelData2[i].suggested <= 0) {
-										oModelData2[i].visibleProperty = true;
-									}
+							// if (currentText == showAllModelsText) {
+							// 	for (var i = 0; i < oModelData2.length; i++) {
+							// 		if (oModelData2[i].suggested <= 0) {
+							// 			oModelData2[i].visibleProperty = false;
+							// 		}
+							// 	}
+							// } else {
+							for (var i = 0; i < oModelData2.length; i++) {
+								if (oModelData2[i].suggested <= 0) {
+									oModelData2[i].visibleProperty = true;
 								}
 							}
+							// }
 						}
 
 						if (this.removeSuggestedRequestedZeroQty == true) {
@@ -1979,6 +2243,12 @@
 				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
 				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
 				sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
+			},
+			onExit: function () {
+				debugger;
+				var oTable = this.getView().byId("stockDataModelTableId");
+				console.log("table", oTable);
+				console.log("this.dynamicIndices", this.dynamicIndices);
 			}
 
 		});

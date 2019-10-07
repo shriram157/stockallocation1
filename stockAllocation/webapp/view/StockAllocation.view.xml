@@ -32,7 +32,7 @@
 					<OverflowToolbar width="auto" height="55px" design="Transparent" visible="true" enabled="true">
 						<content>
 							<ToggleButton pressed="false" text="{i18n>SHOW_ALL_MODELS}" iconFirst="true" width="230px"
-								enabled="{oViewLocalDataModel>/setEnableFalseSuggest}" visible="true" press="onClickShowAllModels" id="showAllModelsBtn"/>
+								enabled="{oViewLocalDataModel>/setEnableFalseSuggest}" visible="true" id="showAllModelsBtn"/>
 							<ToggleButton pressed="false" text="{i18n>SHOW_PERCENTAGES}" iconFirst="true" width="220px"
 								enabled="{oViewLocalDataModel>/setEnableFalsePercentages}" visible="false" press="onClickShowPercentages" id="showPercentagesBtn"/>
 							<ToolbarSpacer width="310px"/>
