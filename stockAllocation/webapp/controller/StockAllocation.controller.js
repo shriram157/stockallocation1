@@ -165,13 +165,20 @@
 					var additionalQty = currentValue - oldS4Value;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * additionalQty);
-				} else if (currentValue < oldS4Value) {
+				} 
+				else if (currentValue < oldS4Value) {
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 
 					var rejectedQty = oldS4Value - currentValue;
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
 				}
+				else if (currentValue == 0){
+			        var reversedQty = 0;
+					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
+					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * reversedQty);
+			      }
+							
 
 				this.getView().getModel("stockDataModel").updateBindings(true);
 
