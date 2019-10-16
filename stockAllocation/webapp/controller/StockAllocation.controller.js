@@ -2256,12 +2256,12 @@
 					}
 					this.dynamicIndices=[];
 				}
-				this._calculateTotals(includeZero);
 				this._modelRequestDialog.close();
 				sap.ui.getCore().setModel(this.getView().getModel("stockDataModel"), "stockDataModel");
 				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
 				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
 				sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
+				this._calculateTotals(includeZero);
 			},
 			onExit: function () {
 				debugger;
