@@ -1884,9 +1884,6 @@
 						}
 
 						oModelLocalData.setProperty("/etaFrom", dateToUI);
-
-						//
-
 					}.bind(this),
 					error: function (response) {
 						sap.ui.core.BusyIndicator.hide();
@@ -2170,6 +2167,9 @@
 					}),
 					error: function (err) {
 						console.log("Error in fetching source plant", err);
+					},
+					complete:function(){
+						var includeZero = true; this._calculateTotals(includeZero);	
 					}
 				});
 			},
@@ -2245,7 +2245,7 @@
 					.value();
 
 				oModelStock.updateBindings(true);
-				var includeZero = true;
+			
 				var oTable = this.getView().byId("stockDataModelTableId");
 				console.log("table", oTable);
 				if (this.dynamicIndices) {
@@ -2261,7 +2261,7 @@
 				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
 				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
 				sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
-				this._calculateTotals(includeZero);
+				
 			},
 			onExit: function () {
 				debugger;
