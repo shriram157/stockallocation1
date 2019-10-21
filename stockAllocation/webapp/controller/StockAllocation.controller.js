@@ -388,7 +388,7 @@
 					});
 
 				}
-				// debugger;
+				// //debugger;
 				// call the deep entity. 
 				this.actualPushToSAPoDataDeepEntity(oSuggestUpdateModel, tempArrayToHoldData);
 
@@ -828,19 +828,23 @@
 					// console.log("output", output);
 
 					groups.forEach(function (element) {
-						debugger;
+						//debugger;
 						console.log("element", element);
 						console.log("item", item);
 						if (item.model == element.model) {
+							// if(count==0){
 							index = element.current.length + index + count;
+							// }
 							console.log("index", index);
 							console.log("that.dynamicIndices", that.dynamicIndices);
 							oTable.insertItem(oItem, index);
+							console.log("table data", oTable.getBinding("items").oList);
 							// if (count == 0) {
-							count = count + 1;
+							count = count+1;
 							// }
 							console.log("count", count);
 							that.dynamicIndices.push(index);
+							// count=0;
 						}
 					});
 
@@ -1023,7 +1027,7 @@
 				console.log("table", oTable);
 				if (this.dynamicIndices) {
 					console.log("this.dynamicIndices", this.dynamicIndices);
-					for (var k = 0; k < this.dynamicIndices.length - 1; k++) {
+					for (var k = 0; k < this.dynamicIndices.length; k++) {
 						oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
 						oTable.updateItems();
 					}
@@ -1172,7 +1176,7 @@
 			},
 
 			_showPercentagesAgain: function (includeZero) {
-				// debugger;
+				// //debugger;
 				var oModelData = this.getView().getModel("stockDataModelBkup"),
 					oModelData2 = oModelData.getData(),
 					// oModelProp = oModelData.getProperty("/"),
@@ -1374,19 +1378,20 @@
 			},
 
 			_loadTheData: function (oEvent) {
-				// debugger;
+				// //debugger;
 				var oTable = this.getView().byId("stockDataModelTableId");
-				console.log("table", oTable);
+			
 				if (oTable.getItems().length > 1) {
 					if (this.dynamicIndices) {
 						console.log("this.dynamicIndices", this.dynamicIndices);
-						for (var k = 0; k < this.dynamicIndices.length - 1; k++) {
+						for (var k = 0; k < this.dynamicIndices.length; k++) {
 							oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
 							oTable.updateItems();
 						}
 					}
 					this.dynamicIndices = [];
 				}
+				console.log("table", oTable.getItems());
 				////oTable.getItems().splice(that.dynamicIndices[5])
 
 				// if(sap.ui.getCore().getModel("suggestedDataModel")){
@@ -1788,10 +1793,10 @@
 
 						// for the totals subtract from the total					
 						var oModel = this.getView().getModel("initialStockTotalModel");
-						if (oModel.oData.length <= 1) {
-							this._calculateTotals();
+						// if (oModel.oData.length <= 1) {
+						// 	this._calculateTotals();
 
-						}
+						// }
 
 						var oViewLocalModel = this.getView().getModel("oViewLocalDataModel");
 
@@ -1842,7 +1847,7 @@
 							var etaFromDateMonth = parseInt(highestEtaTo.substr(4, 2)) + 1; //lowestEtaFrom.substr(4, 2);
 							var etaFromDateYear = highestEtaTo.substr(0, 4);
 						}
-						// debugger;
+						// //debugger;
 						if (highestEtaTo !== undefined) {
 							var etaToDateMonth = parseInt(highestEtaTo.substr(4, 2)) + 2; //it ll be process date plus two future months
 							var etaToDateYear = highestEtaTo.substr(0, 4);
@@ -1884,6 +1889,12 @@
 						}
 
 						oModelLocalData.setProperty("/etaFrom", dateToUI);
+						
+						var oTable = this.getView().byId("stockDataModelTableId");
+						oTable.setModel(this.getView().getModel("stockDataModel"), "stockDataModel");
+						oTable.refreshItems();
+						oTable.getModel("stockDataModel").updateBindings();
+						this._calculateTotals();
 					}.bind(this),
 					error: function (response) {
 						sap.ui.core.BusyIndicator.hide();
@@ -2250,7 +2261,7 @@
 				console.log("table", oTable);
 				if (this.dynamicIndices) {
 					console.log("this.dynamicIndices", this.dynamicIndices);
-					for (var k = 0; k < this.dynamicIndices.length - 1; k++) {
+					for (var k = 0; k < this.dynamicIndices.length; k++) {
 						oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
 						oTable.updateItems();
 					}
@@ -2259,15 +2270,26 @@
 				this._modelRequestDialog.close();
 				sap.ui.getCore().setModel(this.getView().getModel("stockDataModel"), "stockDataModel");
 				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
+				debugger;
 				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
 				sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
 				
 			},
 			onExit: function () {
-				debugger;
 				var oTable = this.getView().byId("stockDataModelTableId");
 				console.log("table", oTable);
-				console.log("this.dynamicIndices", this.dynamicIndices);
+				if (this.dynamicIndices) {
+					console.log("this.dynamicIndices", this.dynamicIndices);
+					for (var k = 0; k < this.dynamicIndices.length; k++) {
+						oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
+						oTable.updateItems();
+					}
+					this.dynamicIndices=[];
+				}
+				//debugger;
+				// var oTable = this.getView().byId("stockDataModelTableId");
+				// console.log("table", oTable);
+				// console.log("this.dynamicIndices", this.dynamicIndices);
 			}
 
 		});
