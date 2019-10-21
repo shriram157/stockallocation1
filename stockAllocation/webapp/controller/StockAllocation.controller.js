@@ -1844,8 +1844,8 @@
 						}
 
 						if (lowestEtaFrom !== undefined) {
-							var etaFromDateMonth = parseInt(highestEtaTo.substr(4, 2)) + 1; //lowestEtaFrom.substr(4, 2);
-							var etaFromDateYear = highestEtaTo.substr(0, 4);
+							var etaFromDateMonth = parseInt(lowestEtaFrom.substr(4, 2)) + 1; //lowestEtaFrom.substr(4, 2);
+							var etaFromDateYear = lowestEtaFrom.substr(0, 4);
 						}
 						// //debugger;
 						if (highestEtaTo !== undefined) {
