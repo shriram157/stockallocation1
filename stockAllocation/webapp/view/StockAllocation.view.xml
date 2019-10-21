@@ -120,7 +120,7 @@
 						</header>
 						<footer>
 							<Text text="{initialStockTotalModel>/0/currentDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-								class="setOrangeFont" visible="false"/>
+								class="setOrangeFont" visible="true"/>
 						</footer>
 					</Column>
 					<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
@@ -130,7 +130,7 @@
 						</header>
 						<footer>
 							<Text text="{initialStockTotalModel>/0/currentUDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-								class="setOrangeFont" visible="true"/>
+								class="setOrangeFont" visible="false"/>
 						</footer>
 					</Column>
 					<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
