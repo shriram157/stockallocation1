@@ -285,7 +285,7 @@
 								var updationRequestedVolume = oTotalModelData.getProperty("/");
 								updationRequestedVolume["0"].requestedVolumeTotal = tempRequestedTotal;
 								oTotalModelData.updateBindings(true);
-								that.resetCalaulations();
+								that._calculateTotals();
 							}
 						}
 					}
