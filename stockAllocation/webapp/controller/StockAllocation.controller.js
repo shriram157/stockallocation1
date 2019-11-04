@@ -268,6 +268,7 @@
 										if (stockFromSAP[i].model == stockFromScreen[j].model && stockFromSAP[i].suffix == stockFromScreen[j].suffix &&
 											stockFromSAP[i].zzsug_seq_no == stockFromScreen[j].zzsug_seq_no) {
 											stockSAPProp[i].requested_Volume = stockFromScreen[j].suggested;
+											stockSAPProp[i].difference = stockSAPProp[i].suggested - stockSAPProp[i].requested_Volume;
 											break;
 										}
 									}
@@ -581,8 +582,19 @@
 				oDetailModel.setProperty("/setEnableFalsePercentages", true);
 				this._showAllModels();
 			},
-			
+
 			_calculateTotals: function (includeZero) {
+				var oTable = this.getView().byId("stockDataModelTableId");
+				if (oTable.getItems().length > 1) {
+					if (this.dynamicIndices) {
+						for (var k = 0; k < this.dynamicIndices.length; k++) {
+							oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
+							// oTable.updateItems();
+						}
+					}
+					this.dynamicIndices = [];
+				}
+				oTable.updateItems();
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var that = this;
 				that.dynamicIndices = [];
@@ -886,8 +898,8 @@
 				}
 				oInitalTotalStock.updateBindings(true);
 			},
-			
-			resetCalaulations: function(){
+
+			resetCalaulations: function () {
 				// var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				// var oModelData = this.getView().getModel("stockDataModel"),
 				// 	oModelProp = oModelData.getProperty("/");
@@ -959,9 +971,9 @@
 						// that.result.model.push(value.model);
 						result.push(res[value.model]);
 					}
-					res[value.model].currentTotal =0;
-					res[value.model].currentDSTotal =0;
-					res[value.model].currentCTSTotal =0;
+					res[value.model].currentTotal = 0;
+					res[value.model].currentDSTotal = 0;
+					res[value.model].currentCTSTotal = 0;
 					res[value.model].currentCPTotal = 0;
 					res[value.model].currentUDSTotal = 0;
 					res[value.model].suggestedTotal = 0;
@@ -969,9 +981,9 @@
 					res[value.model].requestedDSTotal = 0;
 					res[value.model].allocatedTotal = 0;
 					res[value.model].allocatedDSTotal = 0;
-					res[value.model].pendingAllocationTotal =0;
+					res[value.model].pendingAllocationTotal = 0;
 					res[value.model].unfilledAllocationTotal = 0;
-					res[value.model].differenceTotal =0;
+					res[value.model].differenceTotal = 0;
 					res[value.model].requestedVolumeTotal = 0;
 
 					return res;
@@ -1073,17 +1085,17 @@
 					var duringPercentage = oModelData2[i].current.includes("%");
 					if (oModelData2[i].visibleProperty == true && duringPercentage == false) {
 						currentTotal = 0;
-						currentDSTotal =0;
+						currentDSTotal = 0;
 						currentCTSTotal = 0;
 						currentCPTotal = 0;
 						currentUDSTotal = 0;
-						suggestedTotal =  0;
-						suggestedDSTotal =  0;
-						requestedDSTotal =  0;
-						allocatedTotal =  0;
-						allocatedDSTotal =  0;
-						pendingAllocationTotal =  0;
-						unfilledAllocationTotal =  0;
+						suggestedTotal = 0;
+						suggestedDSTotal = 0;
+						requestedDSTotal = 0;
+						allocatedTotal = 0;
+						allocatedDSTotal = 0;
+						pendingAllocationTotal = 0;
+						unfilledAllocationTotal = 0;
 						differenceTotal = 0;
 					}
 				}
@@ -1114,37 +1126,37 @@
 						differenceTotal = 0;
 
 					for (var i = 0; i < oModelData2.length; i++) {
-						
+
 						if (includeZero == true) {
-							currentTotal =  0;
-							currentDSTotal =  0;
-							currentCTSTotal =  0;
-							currentCPTotal =  0;
-							currentUDSTotal =  0;
+							currentTotal = 0;
+							currentDSTotal = 0;
+							currentCTSTotal = 0;
+							currentCPTotal = 0;
+							currentUDSTotal = 0;
 							suggestedTotal = 0;
-							suggestedDSTotal =  0;
-							requestedDSTotal =  0;
-							allocatedTotal =  0;
-							allocatedDSTotal =  0;
-							pendingAllocationTotal =  0;
-							unfilledAllocationTotal =  0;
+							suggestedDSTotal = 0;
+							requestedDSTotal = 0;
+							allocatedTotal = 0;
+							allocatedDSTotal = 0;
+							pendingAllocationTotal = 0;
+							unfilledAllocationTotal = 0;
 							differenceTotal = 0;
 						} else {
 							// take only excluding the ones with zero quantities. 
 							if (oModelData2[i].suggested > "0") {
-								currentTotal =  0;
-								currentDSTotal =  0;
+								currentTotal = 0;
+								currentDSTotal = 0;
 								currentCTSTotal = 0;
-								currentCPTotal =  0;
-								currentUDSTotal =  0;
-								suggestedTotal =  0;
+								currentCPTotal = 0;
+								currentUDSTotal = 0;
+								suggestedTotal = 0;
 								suggestedDSTotal = 0;
-								requestedDSTotal =  0;
-								allocatedTotal =  0;
-								allocatedDSTotal =  0;
+								requestedDSTotal = 0;
+								allocatedTotal = 0;
+								allocatedDSTotal = 0;
 								pendingAllocationTotal = 0;
 								unfilledAllocationTotal = 0;
-								differenceTotal =  0;
+								differenceTotal = 0;
 							}
 						}
 					}
