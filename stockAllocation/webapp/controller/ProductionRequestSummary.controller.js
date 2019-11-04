@@ -87,6 +87,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oSuggestModel = new sap.ui.model.json.JSONModel();
 			oSuggestModel.setData(oModelData2);
 			this.getView().setModel(oSuggestModel, "suggestedDataModel");
+			sap.ui.getCore().setModel(oSuggestModel, "suggestedDataModel");
 
 		},
 
@@ -104,7 +105,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oSuggestModel = new sap.ui.model.json.JSONModel();
 			oSuggestModel.setData(oModelData);
 			this.getView().setModel(oSuggestModel, "suggestedDataModel");
-
+			sap.ui.getCore().setModel(oSuggestModel, "suggestedDataModel");
 		},
 
 		onBusinessPartnerSelected: function (oEvent) {
@@ -216,6 +217,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			selectedData.windowEndDateP = oModelDetailViewData.windowEndDateP;
 			selectedData.allocationIndicator = oModelDetailViewData.allocationInidcator;
 			selectedData.zzmoyr = selectedData.series.slice(0, 4);
+			selectedData.UserId = this.UserId;
 
 			sap.ui.getCore().setModel(new sap.ui.model.json.JSONModel(selectedData), 'selectedSeries');
 
@@ -382,7 +384,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var sLocation_conf = sLocation.search("webide");
 					if (sLocation_conf == 0) {
 						// if a local user from weide 
-						userType = "TCI_User";
+						// userType = "TCI_User";
+						userType = "Dealer_User";
 					} else {
 						var userType = oData.loggedUserType[0];
 						//////////////////////////////////////////////////////////////////						
@@ -443,6 +446,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var userAttributes = [];
 					var oModelDetailView = this.getView().getModel("detailView");
 
+					that.UserId = oData.userProfile.id;
+
 					$.each(oData.attributes, function (i, item) {
 						var BpLength = item.BusinessPartner.length;
 
@@ -455,9 +460,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							if (sLocation_conf == 0) {
 								// if a local user from weide 
 								// -- Guna // TODO: While testing locally for Dealer	 
-								oModelDetailView.setProperty("/BusinessPartnerKey", "2400042120");
-								oModelDetailView.setProperty("/Dealer_No", "2400042120");
-								var tempDealerText = "2400042120" + " - " + "For local testing only";
+								oModelDetailView.setProperty("/BusinessPartnerKey", "2400042130");
+								oModelDetailView.setProperty("/Dealer_No", "2400042130");
+								var tempDealerText = "2400042130" + " - " + "For local testing only";
 								// oModelDetailView.setProperty("/Dealer_Name", item.BusinessPartnerName);
 
 								oModelDetailView.setProperty("/Dealer_Name", tempDealerText);
@@ -513,14 +518,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					// 	"BusinessPartnerType": "10",
 					// 	"searchTermReceivedDealerName": "42120"
 					// });
-					
-						if (BpDealer.length == 0) {
+
+					if (BpDealer.length == 0) {
 						sap.m.MessageBox.error(
 							"The Dealer data not received,  check the URL Division, Logged in ID, clear the Browser Cache, Pick the Right ID and Retry"
 						);
 					}
-
- 
 
 					that.getView().setModel(new sap.ui.model.json.JSONModel(BpDealer), "BpDealerModel");
 
@@ -534,7 +537,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						"Language": oData.samlAttributes.Language["0"]
 					});
 
-						that.getView().setModel(new sap.ui.model.json.JSONModel(userAttributes), "userAttributesModel");
+					that.getView().setModel(new sap.ui.model.json.JSONModel(userAttributes), "userAttributesModel");
 					// set the bp for further calls. 
 					// var oModelDetailData= this.getView().getModel("detailView").getData();
 					// 	 this.sSelectedDealer = oModelDetailData.BusinessPartnerKey;
@@ -574,9 +577,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oGetModel.read("/ZCDS_SUGGEST_ORD_SUM", {
 
 				urlParameters: {
-			    // lets also filter the Division 18th June
+					// lets also filter the Division 18th June
 					// "$filter": "zzdealer_code eq '" + this.sSelectedDealer + "' "
-				"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "'and zdivision eq '" + this.sapDivision + "'"
+					"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "'and zdivision eq '" + this.sapDivision + "'"
 				},
 
 				success: function (oData) {
@@ -605,7 +608,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						// Suggested Data
 						oViewSuggestData.push({
-
+							seriesDescription:seriesDescription,
 							// series: item.zzmoyr + "-" + item.zzseries_desc_en,
 							series: item.zzmoyr + "-" + seriesDescription, //item.zzseries_desc_en,
 							orderPrefix: item.zzprefix,
@@ -616,12 +619,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							zzseries: item.zzseries,
 							zzallocation_ind: item.zzallocation_ind,
 							zzdel_review: item.zzdel_review,
+							zzprocess_dt: item.zzprocess_dt,
 							zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.
 							modelYear: item.zzmoyr
 
 						});
 						// requested Data	
 						// calculate the suggestedVolPercentRequested
+						console.log("oViewSuggestData", oViewSuggestData);
 
 						if (+item.total_request_qty && +item.total_suggest_qty) {
 							var suggestedVolPercentRequested = ((+item.total_request_qty / +item.total_suggest_qty) * 100);
@@ -669,7 +674,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						// countForMixCalc
 
 						oViewRequestedData.push({
-
+							seriesDescription:seriesDescription,
 							// series: item.zzmoyr + "-" + item.zzseries_desc_en,
 							series: item.zzmoyr + "-" + seriesDescription,
 							orderPrefix: item.zzprefix, //order_Number,
@@ -683,14 +688,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							dealerReviewCount: item.dealer_review_count,
 							zzdel_review: item.zzdel_review,
 							zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.
-							modelYear: item.zzmoyr
+							modelYear: item.zzmoyr,
+							zzprocess_dt: item.zzprocess_dt
 
 						});
+
+						console.log("oViewRequestedData", oViewRequestedData);
 
 						//Allocated Data
 						orderNumber = item.zzprefix + " - " + order_Number;
 
 						oViewAllocatedData.push({
+							seriesDescription:seriesDescription,
 							// series: item.zzmoyr + "-" + item.zzseries_desc_en,
 							series: item.zzmoyr + "-" + seriesDescription,
 							zzseries: item.zzseries,
@@ -707,34 +716,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							dealerCode: item.zzdealer_code,
 							zzdel_review: item.zzdel_review,
 							zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.Number('123')
-							modelYear: item.zzmoyr
-
+							modelYear: item.zzmoyr,
+							zzprocess_dt: item.zzprocess_dt
 						});
 
+						console.log("oViewAllocatedData", oViewAllocatedData);
 					});
-
-					//  the suggestedDatamodel is with Series data and this needs to be sorted by addddata4 ascending. 
-					// sort the array oViewSuggestData, oViewRequestedData, oViewAllocatedData
-
-					/*global  _:true*/
-
-					// var oViewSuggestData = _.chain(oViewSuggestData)
-					// 			.sortBy('zzzadddata4')  
-					// 		  .sortBy('modelYear')                      
-
-					// 		  .value();
-
-					// 		var oViewRequestedData = _.chain(oViewRequestedData)
-					// 		 .sortBy('zzzadddata4') 
-					// 		  .sortBy('modelYear')                     
-
-					// 		  .value();
-
-					// 			var oViewAllocatedData = _.chain(oViewAllocatedData)
-					// 			.sortBy('zzzadddata4') 
-					// 		  .sortBy('modelYear')                        
-
-					// 		  .value();
 
 					// var fullySorted =  _.chain(list).sortBy('age').sortBy('name').value(); syntax
 					var oViewSuggestData = _.sortBy((_.sortBy(oViewSuggestData, 'zzzadddata4')), 'modelYear');
@@ -745,6 +732,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var oSuggestModel = new sap.ui.model.json.JSONModel();
 					oSuggestModel.setData(oViewSuggestData);
 					this.getView().setModel(oSuggestModel, "suggestedDataModel");
+					sap.ui.getCore().setModel(oSuggestModel, "suggestedDataModel");
 
 					var oSuggestedModelData = this.getView().getModel("suggestedDataModel").getData();
 					// by default lets show only suggested data. 
@@ -899,20 +887,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			oGetModelCount.read("/ZCDS_SUGGEST_ORD_COUNT", {
 
 				urlParameters: {
-					// "$filter": "zzdealer_code eq '"+ this.dealerCode                                  //" + 2400042193 + "' "
-					// "$filter": "zzdealer_code eq '" + 2400042193 + "' "
-
-					// "$filter": "zzdealer_code eq '" + this.sSelectedDealer + "' "
-					
-				"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "'and zdivision eq '" + this.sapDivision + "'"		
+					"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "'and zdivision eq '" + this.sapDivision + "'"
 				},
 
 				success: function (oData) {
 					var oViewCountData = [];
 					var oModel = this.getView().getModel("detailView");
-
-					//	this.getView().setModel(new sap.ui.model.json.JSONModel(oData.results), "countViewModel");
-					// sap.ui.core.BusyIndicator.hide();
 					$.each(oData.results, function (i, item) {
 						if (item.totalUnfilledcount == 0) {
 							item.totalUnfilledcount = "0";
@@ -959,7 +939,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						oModel.setProperty("/endDateofTheWindow", dateForBanner);
 						oModel.setProperty("/dateForValidation", newTempDate);
 						oModel.setProperty("/statusFromCalender", item.zzstatus);
-
 					});
 
 					// count View model			
@@ -1012,22 +991,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					//var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
 					var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY HH:mm'); //24 hour format
 
-					// var torontoTimeZone  = moment.tz(torontoTime , "America/New_York");
-
-					//	 var currentDate = new Date(torontoTimeZone); 
-					// var currentDate = new Date(torontoTime);
-
-					// var currentDate = new Date();
-
-					// var dd = currentDate.getDate();
-					// var mm = currentDate.getMonth() + 1; //January is 0!
-					// var yyyy = currentDate.getFullYear();
-					// var hours = currentDate.getHours();
-					// var mins = currentDate.getMinutes();
-					// var seconds = currentDate.getSeconds();
-
-					//	currentDate = mm + '/' + dd + '/' + yyyy + " " + hours + ":" + mins;
-
 					var parsedtodayDate = Date.parse(currentDate);
 
 					if ((parsedtodayDate <= windowEndDateP && parsedtodayDate >= windowStartDateP)) {
@@ -1039,18 +1002,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oModel.setProperty("/windowStartDateP", windowStartDateP);
 
 					if ((parsedtodayDate >= windowEndDateP)) {
-
 						oModel.setProperty("/editOrderPrefix", false);
 						oModel.setProperty("/outOfWindowDate", true);
-						//	oModelDetailview.setProperty("/editAllowed", true);
-
-						// 					var oModel = this.getView().getModel("detailView");
-						// oModel.setProperty("/showAllocatedTab", false);
-						// 	oModel.setProperty("/showRequestedTab", true);
-						// oModel.setProperty("/showSuggestionTab", true);
 
 					}
-
 					//  new change -  within the window date,  lets show only records where the dealer has reviewed. 						
 
 					this._updateTheCount();
@@ -1064,7 +1019,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 
 		_updateTheCount: function (oEvent) {
-
 			// along with count if the status is A and is out of window end date then do not display the allocated tab. 
 			var oModel = this.getView().getModel("detailView");
 			var oModelData = oModel.getData();
@@ -1076,6 +1030,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var oSuggestModel = new sap.ui.model.json.JSONModel();
 				oSuggestModel.setData(oViewSuggestData);
 				this.getView().setModel(oSuggestModel, "suggestedDataModel");
+				sap.ui.getCore().setModel(oSuggestModel, "suggestedDataModel");
 
 				var oViewRequestedData = [];
 				var oRequestModel = new sap.ui.model.json.JSONModel();
@@ -1113,9 +1068,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 
 			if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "S") {
-
 				oModel.setProperty("/showSuggestionTab", false);
-
 			}
 
 			// get the data from requestedDataModel  suggestedDataModel allocatedDataModel  allocationInidcator
