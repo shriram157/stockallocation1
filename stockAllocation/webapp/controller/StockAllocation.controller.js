@@ -1212,10 +1212,10 @@
 					// console.log("this.dynamicIndices", this.dynamicIndices);
 					for (var k = 0; k < this.dynamicIndices.length; k++) {
 						oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
-						oTable.updateItems();
 					}
 					this.dynamicIndices = [];
 				}
+				oTable.updateItems();
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -1569,11 +1569,11 @@
 						// console.log("this.dynamicIndices", this.dynamicIndices);
 						for (var k = 0; k < this.dynamicIndices.length; k++) {
 							oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
-							oTable.updateItems();
 						}
 					}
 					this.dynamicIndices = [];
 				}
+				oTable.updateItems();
 				// console.log("table", oTable.getItems());
 				////oTable.getItems().splice(that.dynamicIndices[5])
 
@@ -2466,10 +2466,10 @@
 					// console.log("this.dynamicIndices", this.dynamicIndices);
 					for (var k = 0; k < this.dynamicIndices.length; k++) {
 						oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
-						oTable.updateItems();
 					}
 					this.dynamicIndices = [];
 				}
+				oTable.updateItems();
 			}
 		});
 	}, /* bExport= */ true);
