@@ -2237,37 +2237,47 @@
 				_that.Model = oModel.getParameters("selectedItem").selectedItem.getKey();
 				_that.oGlobalJSONModel.getData().suffixData = [];
 
-				backupModelData.filter(function (item) {
-					// console.log(item);
-					if (item.zzmodel == _that.Model && item.zzmoyr == _that.Modelyear) {
-						var obj = {
-							"Model": item.zzmodel,
-							"Modelyear": item.zzmoyr,
-							"Suffix": item.zzsuffix,
-							"int_c": item.zzintcol,
-							"SuffixDescriptionEN": item.suffix_desc_en,
-							"SuffixDescriptionFR": item.suffix_desc_fr,
-							"mrktg_int_desc_en": item.int_trim_desc_en,
-							"mrktg_int_desc_fr": item.int_trim_desc_fr,
-							"localLang": _that.Language
-						};
-						_that.oGlobalJSONModel.getData().suffixData.push(obj);
+				var b = 0;
+				for (var i = 0; i < backupModelData.length; i++) {
+					var zzsuffix = backupModelData[i].zzsuffix;
+					for (var j = 0; j < _that.oGlobalJSONModel.getData().suffixData.length; j++) {
+						if (zzsuffix !== _that.oGlobalJSONModel.getData().suffixData[j].Suffix) {
+							b++;
+						}
 					}
-				});
+					if (b === _that.oGlobalJSONModel.getData().suffixData.length && backupModelData[i].zzmodel == _that.Model && backupModelData[i].zzmoyr ==
+						_that.Modelyear) {
+						_that.oGlobalJSONModel.getData().suffixData.push({
+							"Model": backupModelData[i].zzmodel,
+							"Modelyear": backupModelData[i].zzmoyr,
+							"Suffix": backupModelData[i].zzsuffix,
+							"int_c": backupModelData[i].zzintcol,
+							"SuffixDescriptionEN": backupModelData[i].suffix_desc_en,
+							"SuffixDescriptionFR": backupModelData[i].suffix_desc_fr,
+							"mrktg_int_desc_en": backupModelData[i].int_trim_desc_en,
+							"mrktg_int_desc_fr": backupModelData[i].int_trim_desc_fr,
+							"localLang": _that.Language
+						});
+						_that.oGlobalJSONModel.updateBindings(true);
 
-				_that.oGlobalJSONModel.getData().suffixData.unshift({
-					"Model": "",
-					"localLang": "",
-					"int_c": "",
-					"mrktg_int_desc_en": "",
-					"mrktg_int_desc_fr": "",
-					"SuffixDescriptionEN": "",
-					"SuffixDescriptionFR": "",
-					"Modelyear": "",
-					"Suffix": _that._oResourceBundle.getText("PleaseSelect")
-				});
+					}
+					b = 0;
+				}
+				sap.ui.core.BusyIndicator.hide();
+				if (_that.oGlobalJSONModel.getData().suffixData[0].zzsuffix !== "Please Select") {
+					_that.oGlobalJSONModel.getData().suffixData.unshift({
+						"Model": "",
+						"localLang": "",
+						"int_c": "",
+						"mrktg_int_desc_en": "",
+						"mrktg_int_desc_fr": "",
+						"SuffixDescriptionEN": "",
+						"SuffixDescriptionFR": "",
+						"Modelyear": "",
+						"Suffix": _that._oResourceBundle.getText("PleaseSelect")
+					});
+				}
 				_that.oGlobalJSONModel.updateBindings(true);
-				// console.log("oData.d.results", _that.oGlobalJSONModel.getData().suffixData);
 			},
 
 			onSuffixChange: function (oSuffixVal) {
