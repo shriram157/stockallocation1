@@ -2114,7 +2114,6 @@
 
 			onClickRequestNewModel: function (oEvent) {
 				//  call the function get all the models already
-
 				this._getAllTheModelsFortheSeries();
 
 			},
@@ -2175,6 +2174,10 @@
 								b = 0;
 							}
 							sap.ui.core.BusyIndicator.hide();
+							if(_that.oGlobalJSONModel.getData().modelData.length<1){
+								MessageToast.show("Selected model configuration is not allowed by TCI");
+							}
+							else{
 							if (_that.oGlobalJSONModel.getData().modelData[0].Model != "Please Select") {
 								_that.oGlobalJSONModel.getData().modelData.unshift({
 									"Model": _that._oResourceBundle.getText("PleaseSelect"),
@@ -2198,6 +2201,7 @@
 								});
 							}
 							_that.GlobalModelData = _that.oGlobalJSONModel.getData().modelData;
+							}
 
 						} else {
 							sap.ui.core.BusyIndicator.hide();
