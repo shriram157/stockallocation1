@@ -10,7 +10,7 @@
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
 		var _timeout, objNew = {},
-			backupModelData, processDate;
+			backupModelData, processDate, itemModel;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -586,12 +586,17 @@
 			_calculateTotals: function (includeZero) {
 				var oTable = this.getView().byId("stockDataModelTableId");
 				if (oTable.getItems().length > 1) {
-					if (this.dynamicIndices) {
-						console.log("this.dynamicIndices", this.dynamicIndices);
-						for (var k = 0; k < this.dynamicIndices.length; k++) {
-							oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
+					var minuscount = 0;
+					// if (this.dynamicIndices) {
+					console.log("this.dynamicIndices", this.dynamicIndices);
+					for (var k = 0; k < oTable.getItems().length; k++) {
+						if (oTable.getItems()[0].getId().split("-")[0] != oTable.getItems()[k].getId().split("-")[0]) {
+							oTable.removeItem(oTable.getItems()[k].getId().split("-")[0]);
+							// minuscount++;
 						}
 					}
+					oTable.updateItems();
+					// }
 				}
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var that = this;
@@ -653,7 +658,7 @@
 
 					return res;
 				}, {});
-				this.dynamicIndices=[];
+				this.dynamicIndices = [];
 
 				$.each(resGrouped, function (i, item) {
 					addRow(item);
@@ -738,15 +743,14 @@
 					});
 
 					groups.forEach(function (element) {
-						if (item.model === element.model) {
+						if (item.model == element.model) {
 							index = element.current.length + index + count;
+							console.log("index", index);
 							oTable.insertItem(oItem, index);
 							that.dynamicIndices.push(index);
-							////oTable.updateItems();
+							count = 1;
+							// index = index + 1;
 							console.log("index", index);
-							count = 1;	
-							index=index+1;
-							console.log("index", index);	
 							console.log("table data", oTable.getBinding("items").oList);
 						}
 					});
