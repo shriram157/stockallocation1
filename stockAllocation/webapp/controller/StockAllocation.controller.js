@@ -2395,10 +2395,10 @@
 							// console.log("this.dynamicIndices", this.dynamicIndices);
 							for (var k = 0; k < that.dynamicIndices.length; k++) {
 								oTable.removeItem(oTable.getItems()[that.dynamicIndices[k]]);
-								oTable.updateItems();
 							}
 							that.dynamicIndices = [];
 						}
+						oTable.updateItems();
 						that._modelRequestDialog.close();
 						sap.ui.getCore().setModel(that.getView().getModel("stockDataModel"), "stockDataModel");
 						that.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
