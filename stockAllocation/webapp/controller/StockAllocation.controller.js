@@ -657,7 +657,7 @@
 					return res;
 				}, {});
 
-				$.each(result, function (i, item) {
+				$.each(resGrouped, function (i, item) {
 					addRow(item);
 				});
 
@@ -2389,16 +2389,16 @@
 
 						oModelStock.updateBindings(true);
 
-						var oTable = that.getView().byId("stockDataModelTableId");
-						// console.log("table", oTable);
-						if (that.dynamicIndices) {
-							// console.log("this.dynamicIndices", this.dynamicIndices);
-							for (var k = 0; k < that.dynamicIndices.length; k++) {
-								oTable.removeItem(oTable.getItems()[that.dynamicIndices[k]]);
-							}
-							that.dynamicIndices = [];
-						}
-						oTable.updateItems();
+						// var oTable = that.getView().byId("stockDataModelTableId");
+						// // console.log("table", oTable);
+						// if (that.dynamicIndices) {
+						// 	// console.log("this.dynamicIndices", this.dynamicIndices);
+						// 	for (var k = 0; k < that.dynamicIndices.length; k++) {
+						// 		oTable.removeItem(oTable.getItems()[that.dynamicIndices[k]]);
+						// 	}
+						// 	that.dynamicIndices = [];
+						// }
+						// oTable.updateItems();
 						that._modelRequestDialog.close();
 						sap.ui.getCore().setModel(that.getView().getModel("stockDataModel"), "stockDataModel");
 						that.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
