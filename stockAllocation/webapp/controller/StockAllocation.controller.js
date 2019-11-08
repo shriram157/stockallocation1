@@ -1708,11 +1708,20 @@
 
 						if (lowestEtaFrom !== undefined) {
 							var etaFromDateMonth = parseInt(lowestEtaFrom.substr(4, 2)) + 1; //lowestEtaFrom.substr(4, 2);
+							if(etaFromDateMonth>12)
+							{
+								etaFromDateMonth = etaFromDateMonth -12;
+							}
 							var etaFromDateYear = lowestEtaFrom.substr(0, 4);
 						}
 						// //debugger;
 						if (highestEtaTo !== undefined) {
 							var etaToDateMonth = parseInt(highestEtaTo.substr(4, 2)) + 2; //it ll be process date plus two future months
+						//changes done by Vivek Saraogi
+							if(etaToDateMonth>12)
+							{
+								etaToDateMonth = etaToDateMonth -12;
+							}
 							var etaToDateYear = highestEtaTo.substr(0, 4);
 						}
 						var dummyDate = "01";
