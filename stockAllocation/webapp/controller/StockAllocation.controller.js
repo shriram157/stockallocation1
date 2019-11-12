@@ -64,7 +64,9 @@
 						setEnableFalseReset = false;
 					}
 				}
-				
+				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
+				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
+
 				this._getAllTheModelsFortheSeries();
 
 				if ((selectedSeries.parsedtodayDate >= selectedSeries.windowEndDateP) && (selectedSeries.allocationIndicator == "A")) {
@@ -2097,9 +2099,6 @@
 						// //oTable.updateItems();
 						that._modelRequestDialog.close();
 						sap.ui.getCore().setModel(that.getView().getModel("stockDataModel"), "stockDataModel");
-						that.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
-						// debugger;
-						that.getView().setModel(that.oGlobalJSONModel, "GlobalJSONModel");
 						sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
 						that._loadTheData();
 					}),
