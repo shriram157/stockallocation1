@@ -1814,7 +1814,7 @@
 				var Modelyear = this.zzmoyr;
 				var oSeriesVal = this.zzseries;
 
-				this.oModelStockExistingData = this.getView().getModel("stockDataModel").getData();
+				// this.oModelStockExistingData = this.getView().getModel("stockDataModel").getData();
 				var _that = this;
 				_that.oGlobalJSONModel.getData().modelData = [];
 
