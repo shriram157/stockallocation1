@@ -48,6 +48,8 @@
 					this.sLoggedinUserIsDealer = false;
 					enableForDealer = false;
 				}
+				
+				this.modelClickFlag = false;
 
 				if ((selectedSeries.parsedtodayDate >= selectedSeries.windowEndDateP)) {
 					// turn of the editable fields
@@ -1805,6 +1807,7 @@
 			},
 
 			onClickRequestNewModel: function (oEvent) {
+				this.modelClickFlag = true;
 				//  call the function get all the models already
 				this._getAllTheModelsFortheSeries();
 
@@ -1904,7 +1907,7 @@
 							sap.ui.core.BusyIndicator.hide();
 						}
 						_that.oGlobalJSONModel.updateBindings(true);
-						if (_that.oGlobalJSONModel.getData().modelData.length >0) {
+						if (this.modelClickFlag == true) {
 							_that._requestCompletedOpenDialog();
 						}
 					},
