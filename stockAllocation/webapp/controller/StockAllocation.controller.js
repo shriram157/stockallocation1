@@ -1867,9 +1867,9 @@
 							}
 							sap.ui.core.BusyIndicator.hide();
 							if (_that.oGlobalJSONModel.getData().modelData.length < 1) {
-								var oModelLocalData = this.getView().getModel("oViewLocalDataModel");
+								var oModelLocalData = _that.getView().getModel("oViewLocalDataModel");
 								oModelLocalData.setProperty("/enableForDealer", false);
-								var messageForNoModelData = this.getView().getModel("i18n").getResourceBundle().getText("noModelDataReceived");
+								var messageForNoModelData = _that.getView().getModel("i18n").getResourceBundle().getText("noModelDataReceived");
 								MessageToast.show(messageForNoModelData);
 							} else {
 								if (_that.oGlobalJSONModel.getData().modelData[0].Model != "Please Select") {
