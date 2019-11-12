@@ -626,7 +626,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						});
 						// requested Data	
 						// calculate the suggestedVolPercentRequested
-						console.log("oViewSuggestData", oViewSuggestData);
+						// console.log("oViewSuggestData", oViewSuggestData);
 
 						if (+item.total_request_qty && +item.total_suggest_qty) {
 							var suggestedVolPercentRequested = ((+item.total_request_qty / +item.total_suggest_qty) * 100);
@@ -693,7 +693,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						});
 
-						console.log("oViewRequestedData", oViewRequestedData);
+						// console.log("oViewRequestedData", oViewRequestedData);
 
 						//Allocated Data
 						orderNumber = item.zzprefix + " - " + order_Number;
@@ -720,7 +720,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							zzprocess_dt: item.zzprocess_dt
 						});
 
-						console.log("oViewAllocatedData", oViewAllocatedData);
+						// console.log("oViewAllocatedData", oViewAllocatedData);
 					});
 
 					// var fullySorted =  _.chain(list).sortBy('age').sortBy('name').value(); syntax
