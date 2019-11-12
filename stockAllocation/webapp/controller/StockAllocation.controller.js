@@ -2167,17 +2167,19 @@
 			},
 			onExit: function () {
 				// var oTable = this.getView().byId("stockDataModelTableId");
-				// // console.log("table", oTable);
-				// if (this.dynamicIndices) {
-				// 	// console.log("this.dynamicIndices", this.dynamicIndices);
-				// 	for (var k = 0; k < this.dynamicIndices.length; k++) {
-				// 		//oTable.getItems()
-				// 		oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
-				// 		//oTable.updateItems();
+				// if (oTable.getItems().length > 1) {
+				// 	// var minuscount = 0;
+				// 	// if (this.dynamicIndices) {
+				// 	console.log("this.dynamicIndices", this.dynamicIndices);
+				// 	for (var k = 0; k < oTable.getItems().length; k++) {
+				// 		if (oTable.getItems()[0].getId().split("-")[0] != oTable.getItems()[k].getId().split("-")[0]) {
+				// 			oTable.removeItem(oTable.getItems()[k].getId().split("-")[0]);
+				// 			// minuscount++;
+				// 		}
 				// 	}
+				// 	// oTable.updateItems();
+				// 	// }
 				// }
-				// this.dynamicIndices = [];
-				// //oTable.updateItems();
 			}
 		});
 	}, /* bExport= */ true);
