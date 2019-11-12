@@ -64,6 +64,8 @@
 						setEnableFalseReset = false;
 					}
 				}
+				
+				this._getAllTheModelsFortheSeries();
 
 				if ((selectedSeries.parsedtodayDate >= selectedSeries.windowEndDateP) && (selectedSeries.allocationIndicator == "A")) {
 					viewInSuggestedTab = false;
@@ -586,7 +588,7 @@
 			_calculateTotals: function (includeZero) {
 				var oTable = this.getView().byId("stockDataModelTableId");
 				if (oTable.getItems().length > 1) {
-					var minuscount = 0;
+					// var minuscount = 0;
 					// if (this.dynamicIndices) {
 					console.log("this.dynamicIndices", this.dynamicIndices);
 					for (var k = 0; k < oTable.getItems().length; k++) {
@@ -595,9 +597,10 @@
 							// minuscount++;
 						}
 					}
-					oTable.updateItems();
+					// oTable.updateItems();
 					// }
 				}
+				console.log("oTable.getItems()", oTable.getItems());
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var that = this;
 				var index = 0,
@@ -1708,19 +1711,17 @@
 
 						if (lowestEtaFrom !== undefined) {
 							var etaFromDateMonth = parseInt(lowestEtaFrom.substr(4, 2)) + 1; //lowestEtaFrom.substr(4, 2);
-							if(etaFromDateMonth>12)
-							{
-								etaFromDateMonth = etaFromDateMonth -12;
+							if (etaFromDateMonth > 12) {
+								etaFromDateMonth = etaFromDateMonth - 12;
 							}
 							var etaFromDateYear = lowestEtaFrom.substr(0, 4);
 						}
 						// //debugger;
 						if (highestEtaTo !== undefined) {
 							var etaToDateMonth = parseInt(highestEtaTo.substr(4, 2)) + 2; //it ll be process date plus two future months
-						//changes done by Vivek Saraogi
-							if(etaToDateMonth>12)
-							{
-								etaToDateMonth = etaToDateMonth -12;
+							//changes done by Vivek Saraogi
+							if (etaToDateMonth > 12) {
+								etaToDateMonth = etaToDateMonth - 12;
 							}
 							var etaToDateYear = highestEtaTo.substr(0, 4);
 						}
@@ -1864,7 +1865,10 @@
 							}
 							sap.ui.core.BusyIndicator.hide();
 							if (_that.oGlobalJSONModel.getData().modelData.length < 1) {
-								MessageToast.show("Selected model configuration is not allowed by TCI");
+								var oModelLocalData = this.getView().getModel("oViewLocalDataModel");
+								oModelLocalData.setProperty("/enableForDealer", false);
+								var messageForNoModelData = this.getView().getModel("i18n").getResourceBundle().getText("noModelDataReceived");
+								MessageToast.show(messageForNoModelData);
 							} else {
 								if (_that.oGlobalJSONModel.getData().modelData[0].Model != "Please Select") {
 									_that.oGlobalJSONModel.getData().modelData.unshift({
