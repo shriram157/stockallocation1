@@ -599,7 +599,7 @@
 							// minuscount++;
 						}
 					}
-					oTable.updateItems();
+					// oTable.updateItems();
 					// }
 				}
 				console.log("oTable.getItems()", oTable.getItems());
