@@ -1907,7 +1907,7 @@
 							sap.ui.core.BusyIndicator.hide();
 						}
 						_that.oGlobalJSONModel.updateBindings(true);
-						if (this.modelClickFlag == true) {
+						if (_that.modelClickFlag == true) {
 							_that._requestCompletedOpenDialog();
 						}
 					},
