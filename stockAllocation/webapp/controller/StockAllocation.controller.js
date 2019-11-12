@@ -599,7 +599,7 @@
 							// minuscount++;
 						}
 					}
-					// oTable.updateItems();
+					oTable.updateItems();
 					// }
 				}
 				console.log("oTable.getItems()", oTable.getItems());
@@ -1904,7 +1904,9 @@
 							sap.ui.core.BusyIndicator.hide();
 						}
 						_that.oGlobalJSONModel.updateBindings(true);
-						_that._requestCompletedOpenDialog();
+						if (_that.oGlobalJSONModel.getData().modelData.length >0) {
+							_that._requestCompletedOpenDialog();
+						}
 					},
 					error: function (oError) {
 						sap.ui.core.BusyIndicator.hide();
