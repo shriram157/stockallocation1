@@ -1829,7 +1829,7 @@
 					success: function (oData) {
 						// console.log("oData.d.results", oData.d.results);
 						backupModelData = oData.d.results;
-						if(_that.oGlobalJSONModel.getData().modelData.length==undefined){
+						if(_that.oGlobalJSONModel.getData().modelData == undefined){
 							_that.oGlobalJSONModel.getData().modelData.length=0;
 						}
 
