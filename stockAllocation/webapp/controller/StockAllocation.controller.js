@@ -48,7 +48,7 @@
 					this.sLoggedinUserIsDealer = false;
 					enableForDealer = false;
 				}
-				
+
 				this.modelClickFlag = false;
 
 				if ((selectedSeries.parsedtodayDate >= selectedSeries.windowEndDateP)) {
@@ -592,15 +592,15 @@
 			_calculateTotals: function (includeZero) {
 				var oTable = this.getView().byId("stockDataModelTableId");
 				if (oTable.getItems().length > 1) {
-					console.log("this.dynamicIndices", this.dynamicIndices);
+					// console.log("this.dynamicIndices", this.dynamicIndices);
 					for (var k = 0; k < oTable.getItems().length; k++) {
 						if (oTable.getItems()[0].getId().split("-")[0] != oTable.getItems()[k].getId().split("-")[0]) {
 							oTable.removeItem(oTable.getItems()[k].getId().split("-")[0]);
 							// minuscount++;
 						}
 					}
-					oTable.updateItems();
-				console.log("oTable.getItems()", oTable.getItems());
+					// oTable.updateItems();
+					console.log("oTable.getItems()", oTable.getItems());
 				}
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var that = this;
@@ -1829,8 +1829,8 @@
 					success: function (oData) {
 						// console.log("oData.d.results", oData.d.results);
 						backupModelData = oData.d.results;
-						if(_that.oGlobalJSONModel.getData().modelData == undefined){
-							_that.oGlobalJSONModel.getData().modelData =[];
+						if (_that.oGlobalJSONModel.getData().modelData == undefined) {
+							_that.oGlobalJSONModel.getData().modelData = [];
 						}
 
 						if (oData.d.results.length > 0) {
@@ -2172,14 +2172,14 @@
 			onExit: function () {
 				var oTable = this.getView().byId("stockDataModelTableId");
 				if (oTable.getItems().length > 1) {
-					this.dynamicIndices=[];
+					this.dynamicIndices = [];
 					console.log("this.dynamicIndices", this.dynamicIndices);
 					for (var k = 0; k < oTable.getItems().length; k++) {
 						if (oTable.getItems()[0].getId().split("-")[0] != oTable.getItems()[k].getId().split("-")[0]) {
 							oTable.removeItem(oTable.getItems()[k].getId().split("-")[0]);
 						}
 					}
-					oTable.updateItems();
+					// oTable.updateItems();
 				}
 			}
 		});
