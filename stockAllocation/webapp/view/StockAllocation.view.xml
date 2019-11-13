@@ -56,7 +56,7 @@
 				</headerToolbar>
 				<columns>
 					<Column width="200px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-						mergeDuplicates="false">
+						mergeDuplicates="true">
 						<header>
 							<Text text="{i18n>MODEL}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 						</header>

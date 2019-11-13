@@ -592,8 +592,6 @@
 			_calculateTotals: function (includeZero) {
 				var oTable = this.getView().byId("stockDataModelTableId");
 				if (oTable.getItems().length > 1) {
-					// var minuscount = 0;
-					// if (this.dynamicIndices) {
 					console.log("this.dynamicIndices", this.dynamicIndices);
 					for (var k = 0; k < oTable.getItems().length; k++) {
 						if (oTable.getItems()[0].getId().split("-")[0] != oTable.getItems()[k].getId().split("-")[0]) {
@@ -601,10 +599,9 @@
 							// minuscount++;
 						}
 					}
-					// oTable.updateItems();
-					// }
-				}
+					oTable.updateItems();
 				console.log("oTable.getItems()", oTable.getItems());
+				}
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var that = this;
 				var index = 0,
@@ -2173,20 +2170,17 @@
 
 			},
 			onExit: function () {
-				// var oTable = this.getView().byId("stockDataModelTableId");
-				// if (oTable.getItems().length > 1) {
-				// 	// var minuscount = 0;
-				// 	// if (this.dynamicIndices) {
-				// 	console.log("this.dynamicIndices", this.dynamicIndices);
-				// 	for (var k = 0; k < oTable.getItems().length; k++) {
-				// 		if (oTable.getItems()[0].getId().split("-")[0] != oTable.getItems()[k].getId().split("-")[0]) {
-				// 			oTable.removeItem(oTable.getItems()[k].getId().split("-")[0]);
-				// 			// minuscount++;
-				// 		}
-				// 	}
-				// 	// oTable.updateItems();
-				// 	// }
-				// }
+				var oTable = this.getView().byId("stockDataModelTableId");
+				if (oTable.getItems().length > 1) {
+					this.dynamicIndices=[];
+					console.log("this.dynamicIndices", this.dynamicIndices);
+					for (var k = 0; k < oTable.getItems().length; k++) {
+						if (oTable.getItems()[0].getId().split("-")[0] != oTable.getItems()[k].getId().split("-")[0]) {
+							oTable.removeItem(oTable.getItems()[k].getId().split("-")[0]);
+						}
+					}
+					oTable.updateItems();
+				}
 			}
 		});
 	}, /* bExport= */ true);
