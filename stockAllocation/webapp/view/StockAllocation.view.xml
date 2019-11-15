@@ -34,7 +34,7 @@
 					<headerToolbar>
 						<OverflowToolbar width="auto" height="55px" design="Transparent" visible="true" enabled="true">
 							<content>
-								<ToggleButton pressed="false" text="{i18n>SHOW_ALL}" iconFirst="true" press="onClickShowAll"/>
+								<ToggleButton pressed="true" text="{i18n>SHOW_ALL}" iconFirst="true" press="onClickShowAll"/>
 
 								<ToggleButton pressed="false" text="{i18n>SHOW_ALL_MODELS}" iconFirst="true" width="230px"
 									enabled="false" visible="true" id="showAllModelsBtn"/>
@@ -231,47 +231,47 @@
 						</Column>
 					</columns>
 					<items>
-						<ColumnListItem>
-							<cells>
+						<ColumnListItem  class="noheight" visible="{stockDataModel>visibleProperty}">
+							<cells visible="{stockDataModel>visibleProperty}">
 								<Text text="{stockDataModel>modelCodeDescription}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>suffix_desc}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>colour_Trim}" width="auto" maxLines="2" wrapping="true" textAlign="Right" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<!--For Totla column-->
 								<Text text="{stockDataModel>current1}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>current}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>current_CP}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>current_CTS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>current_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text visible="false" text="{stockDataModel>currentU_DS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
-									textDirection="Inherit"/>
+									textDirection="Inherit" class="noheight"/>
 								<Text text="{stockDataModel>suggested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>suggested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="5.5rem" step="1" largerStep="2"
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
-									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}"/>
+									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<!--enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"-->
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>requested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>allocated}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>allocated_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="false"/>
+									visible="false" class="noheight"/>
 								<Text text="{stockDataModel>pendingAllocation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>unfilled_Allocation}" width="auto" maxLines="2" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 							</cells>
 						</ColumnListItem>
 					</items>

@@ -120,6 +120,7 @@
 
 				// Also the logo for the second screen. 
 				this._setTheLogo();
+				// this.onClickShowAll(false);
 
 				// initilize the models
 
@@ -144,6 +145,8 @@
 			},
 
 			onClickShowAll: function (evt) {
+				if(!!this.getView().getModel("stockDataModel")){
+				var oTable = this.getView().byId("stockDataModelTableId");
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				if (evt.getSource().getPressed() == false) {
 					console.log("pressed", evt);
@@ -151,26 +154,19 @@
 						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 							oModelData2[i].visibleProperty = false;
 						}
-						// if (document.getElementsByClassName(".sapMListTblRow").querySelectorAll(".sapUiHiddenPlaceholder").length > 0) {
-						// 	document.getElementsByClassName(".sapMListTblRow").style.height = "0 !important";
-						// }
-						// $(document).ready(function () {
-						// 		$('tr.sapMListTblRow').has('.sapUiHiddenPlaceholder').css('height', '0');
-						// 	});
 					}
 				} else if (evt.getSource().getPressed() == true) {
 					console.log("pressed2", evt);
 					for (var i = 0; i < oModelData2.length; i++) {
 						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 							oModelData2[i].visibleProperty = true;
+							// document.getElementsByClassName("noheight").style.height = "2rem !important";
 						}
 					}
-					// $(document).ready(function () {
-					// 		$('tr.sapMListTblRow').css('height', '2rem');
-					// 	});
 				}
 
 				this.getView().getModel("stockDataModel").updateBindings(true);
+				}
 			},
 
 			whenUserChangesRequestedData: function (oEvt) {
