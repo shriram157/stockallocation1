@@ -167,12 +167,12 @@
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
 				// requestedVolumeTotal
 				var currentValue = oEvt.getSource().getProperty("value");
-				console.log("currentValue", currentValue);
+				// console.log("currentValue", currentValue);
 				var backupData = this.getView().getModel("stockDataModelBkup").getData();
-				console.log("backupData", backupData);
+				// console.log("backupData", backupData);
 				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
 				var currentSeqNumber = currentData.zzsug_seq_no;
-				console.log("currentSeqNumber", currentSeqNumber);
+				// console.log("currentSeqNumber", currentSeqNumber);
 				var oldS4Entry = backupData.filter(function (val) {
 					if (val.zzsug_seq_no == currentSeqNumber)
 						return val;
@@ -202,7 +202,7 @@
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * reversedQty);
 				}
 
-				this.getView().getModel("stockDataModel").updateBindings(true);
+				// this.getView().getModel("stockDataModel").updateBindings(true);
 
 				if (currentValue != oldValue) {
 					// trigger the flag to show a loss of data. 
