@@ -148,14 +148,14 @@
 				if (evt.getSource().getPressed() == false) {
 					console.log("pressed", evt);
 					for (var i = 0; i < oModelData2.length; i++) {
-						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].suggested <= "0%")) {
+						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].suggested <= "0")) {
 							oModelData2[i].visibleProperty = false;
 						}
 					}
 				} else if (evt.getSource().getPressed() == true) {
 					console.log("pressed2", evt);
 					for (var i = 0; i < oModelData2.length; i++) {
-						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].suggested <= "0%")) {
+						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].suggested <= "0")) {
 							oModelData2[i].visibleProperty = true;
 						}
 					}
