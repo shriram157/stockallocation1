@@ -5,7 +5,7 @@
 		.pageHeight{height:100%;}
 	</html:style>
 	<Page showHeader="true" title="{i18n>STOCK_ALLOCATION}" showFooter="true" showNavButton="true" navButtonPress="_onPageNavButtonPress"
-		class="sapUiSizeCompact pageHeight" enableScrolling="false">
+		class="sapUiSizeCompact" enableScrolling="false" height="100%">
 		<customHeader>
 			<Bar class="sapUiSmallPaddingBeginEnd clCustomHeaderBg">
 				<contentLeft>
@@ -27,7 +27,7 @@
 			<Title text="{oViewLocalDataModel>/etaFrom}" titleStyle="H6" width="99%" textAlign="End" visible="true" wrapping="false"
 				class="sapUiTinyMargin"></Title>
 			<ScrollContainer height="85%" vertical="true" focusable="true">
-				<Table items="{ path: 'stockDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
+				<Table sticky="ColumnHeaders" items="{ path: 'stockDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
 					growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" alternateRowColors="true"
 					id="stockDataModelTableId">
 					<infoToolbar/>
