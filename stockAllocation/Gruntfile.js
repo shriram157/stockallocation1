@@ -3,7 +3,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("@sap/grunt-sapui5-bestpractice-build");
 	grunt.loadNpmTasks("@sap/grunt-sapui5-bestpractice-test");
 	grunt.config.merge({
-		compatVersion: "1.54",
+		compatVersion: "1.52",
 		clean: {
 			distRoot: [
 				"dist/*",

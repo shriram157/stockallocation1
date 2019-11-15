@@ -2,9 +2,9 @@
 	xmlns:l="sap.ui.layout" xmlns:tci="partsAvailability.utilities.headerLogo" xmlns:layout="sap.ui.layout"
 	xmlns:html="http://www.w3.org/1999/xhtml" controllerName="suggestOrder.controller.ProductionRequestSummary">
 	<html:style>
-		.pageHeight{height:100%;width:100%;}
+		.pageHeight{height:100%;}
 	</html:style>
-	<Page showHeader="true" title="{i18n>STOCK_ALLOC_SUMMARY}" showFooter="false" showNavButton="false" class="sapUiSizeCompact pageHeight" enableScrolling="false" height="100%">
+	<Page showHeader="true" title="{i18n>STOCK_ALLOC_SUMMARY}" showFooter="false" showNavButton="false" class="sapUiSizeCompact pageHeight" enableScrolling="false">
 		<customHeader>
 			<Bar class="sapUiSmallPaddingBeginEnd clCustomHeaderBg">
 				<contentLeft>
@@ -48,7 +48,7 @@
 						enabled="true" iconDensityAware="false">
 						<content>
 							<ScrollContainer height="90%" vertical="true" focusable="true">
-								<Table sticky="ColumnHeaders" items="{ path: 'suggestedDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
+								<Table items="{ path: 'suggestedDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
 									showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
 									itemPress="_onTableItemPress" alternateRowColors="true">
 									<infoToolbar/>
@@ -123,7 +123,7 @@
 						visible="{detailView>/showRequestedTab}" iconDensityAware="false">
 						<content>
 							<ScrollContainer height="90%" vertical="true" focusable="true">
-								<Table sticky="ColumnHeaders" items="{ path: 'requestedDataModel>/' }" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
+								<Table items="{ path: 'requestedDataModel>/' }" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
 									growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress"
 									alternateRowColors="true">
 									<infoToolbar/>
@@ -227,7 +227,7 @@
 						<content>
 							<ScrollContainer height="90%" vertical="true" focusable="true">
 								<!--<Table items="{path:'allocatedDataModel>/', sorter : { path : 'zzzadddata4' }}" -->
-								<Table sticky="ColumnHeaders" items="{ path: 'allocatedDataModel>/'}" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
+								<Table items="{ path: 'allocatedDataModel>/'}" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
 									growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress"
 									alternateRowColors="true">
 									<infoToolbar/>
