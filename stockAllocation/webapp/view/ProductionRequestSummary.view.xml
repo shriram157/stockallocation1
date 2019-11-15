@@ -10,7 +10,6 @@
 					<Text class="clCustomFont" text="{i18n>STOCK_ALLOC_SUMMARY}"/>
 				</contentLeft>
 				<contentMiddle>
-					<!--<Text class="clCustomFont" text="{i18n>STOCK_ALLOC_SUMMARY}"/>-->
 				</contentMiddle>
 				<contentRight>
 					<!--<Button text="EXIT" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonPress"/>-->
@@ -23,34 +22,19 @@
 			</Bar>
 		</customHeader>
 		<content>
-			<!--<Title text="42120 Don Valley Toyota" titleStyle="H2" width="760.388916015625px" textAlign="Left" visible="true" wrapping="false"-->
-			<!--	class="sapUiTinyMargin"/>-->
 			<OverflowToolbar id="idDealerToolbar">
-				<!--<OverflowToolbarButton id="idBtnDealerData" tooltip="{i18n>dealerData}" type="Transparent" icon="sap-icon://settings" press="onSettings" class="sapUiTinyMarginBottom"/>-->
-				<!--<SearchField id="idSearch" search="onFilter" class="sapUiTinyMarginBottom" placeholder="{i18n>inSearch}">-->
-				<!--      <layoutData><OverflowToolbarLayoutData minWidth="100px" maxWidth="300px" shrinkable="true"/></layoutData>-->
-				<!--</SearchField>-->
-				<!--  <Label design="Standard" id="idDealerInputLabel" text="{i18n>DEALER_SEARCH_FIELD_LABEL}" textAlign="Left" labelFor="idDealerComboBox" visible="{detailView>/visibleForInternalUser}">-->
-				<!--</Label>-->
 				<ComboBox id="idDealerComboBox" showSecondaryValues="true" required="true" visible="{detailView>/visibleForInternalUser}"
-					fieldGroupIds="requiredField" editable="{detailView>/editAllowed}" width="10rem"  value="{BpDealerModel>/BusinessPartnerKey}"
+					fieldGroupIds="requiredField" editable="{detailView>/editAllowed}" width="10rem" value="{BpDealerModel>/BusinessPartnerKey}"
 					filterSecondaryValues="true" enabled="{detailView>/enabled}"
 					items="{path: 'BpDealerModel>/', sorter: { path: 'BusinessPartner' }, length:750 }" selectedKey="{BusinessPartnerKey}"
 					selectionChange="onBusinessPartnerSelected" showValueStateMessage="false" textAlign="Begin">
 					<core:ListItem key="{BpDealerModel>BusinessPartnerKey}" text="{BpDealerModel>BusinessPartner}"
 						additionalText="{BpDealerModel>BusinessPartnerName}"/>
 				</ComboBox>
-				
-				
-				<!--<Text id="dealerTextWithNo1" text="{detailView>/Dealer_Name}" visible="{detailView>/visibleForInternalUser}"/>-->
-				<!--<Text id="dealerTextWithNo" text="{detailView>/dealerNumberAndName}" visible="{detailView>/visibleForDealer}"/>-->
 				<Title text="{detailView>/Dealer_Name}" titleStyle="H2" width="475.59722900390625px" textAlign="Begin" visible="true" wrapping="false"
 					class="sapUiTinyMargin"/>
-				<!--          <OverflowToolbarButton id="idBtnReload" tooltip="{i18n>reloadData}" type="Transparent" icon="sap-icon://restart" press="onReload" class="sapUiTinyMarginBottom"/>-->
 				<ToolbarSpacer/>
 				<Title text="{detailView>/dueDate}" titleStyle="H2" width="auto" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"/>
-				<!--<Title text="Due on{ path: 'detailView>/dueDate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy-MM-ddTHH:mm:ss', strictParsing: true , UTC: true } }"/>      -->
-				<!--<ToolbarSpacer/>-->
 			</OverflowToolbar>
 			<MessageStrip id="wrnMessageStrip" visible="false" text="{i18n>warningMessage}" showIcon="true"
 				class="sapUiTinyMarginTop sapUiSmallMarginBottom"></MessageStrip>
@@ -61,10 +45,7 @@
 						visible="{detailView>/showSuggestionTab}" count="{countViewModel>/suggestedCount}" design="Vertical" showAll="false" textDirection="Inherit"
 						enabled="true" iconDensityAware="false">
 						<content>
-							<!--items="{path:'suggestedDataModel>/', sorter : { path : 'series' }}" -->
-							<Table items="{ path: 'suggestedDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}"
-								mode="None" showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
-								itemPress="_onTableItemPress" alternateRowColors="true">
+							<Table>
 								<infoToolbar/>
 								<headerToolbar>
 									<OverflowToolbar height="54.99374771118164px" design="Solid" visible="true" enabled="true">
@@ -114,6 +95,25 @@
 										<footer/>
 									</Column>
 								</columns>
+							</Table>
+							<ScrollContainer
+								horizontal="true"
+								vertical="true"
+								focusable="true"
+								>
+								<Table items="{ path: 'suggestedDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="false"
+								growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
+								<infoToolbar/>
+								<columns>
+									<Column>
+									</Column>
+									<Column>
+									</Column>
+									<Column>
+									</Column>
+									<Column >
+									</Column>
+								</columns>
 								<items>
 									<ColumnListItem type="Navigation" visible="{suggestedDataModel>visibleProperty}">
 										<cells>
@@ -129,17 +129,15 @@
 									</ColumnListItem>
 								</items>
 							</Table>
+							</ScrollContainer>
 						</content>
 					</IconTabFilter>
 					<IconTabFilter id="iconTabFilterRequested" icon="sap-icon://process" iconColor="Critical" text="{i18n>REQUESTED}"
 						count="{countViewModel>/requestedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true"
 						visible="{detailView>/showRequestedTab}" iconDensityAware="false">
 						<content>
-							<!--<Table items="{path:'requestedDataModel>/', sorter : { path : 'zzzadddata4' }}" -->
-							<!--<Table items="{ path: 'requestedDataModel>/', sorter: { path: 'zzadddata4', descending: true } }" noDataText="{i18n>NO_DATA}" mode="None"-->
-											<Table items="{ path: 'requestedDataModel>/' }" noDataText="{i18n>NO_DATA}" mode="None"
-								showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
-								itemPress="_onTableItemPress" alternateRowColors="true">
+							<Table items="{ path: 'requestedDataModel>/' }" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="true"
+								growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
 								<infoToolbar/>
 								<headerToolbar>
 									<OverflowToolbar width="auto" height="55px" design="Solid" visible="true" enabled="true">
@@ -239,9 +237,8 @@
 						visible="{detailView>/showAllocatedTab}" iconDensityAware="false">
 						<content>
 							<!--<Table items="{path:'allocatedDataModel>/', sorter : { path : 'zzzadddata4' }}" -->
-							<Table items="{ path: 'allocatedDataModel>/'}" noDataText="{i18n>NO_DATA}" mode="None"
-								showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
-								itemPress="_onTableItemPress" alternateRowColors="true">
+							<Table items="{ path: 'allocatedDataModel>/'}" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="false"
+								growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
 								<infoToolbar/>
 								<headerToolbar>
 									<OverflowToolbar width="auto" height="55px" design="Solid" visible="true" enabled="true">
