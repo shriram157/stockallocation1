@@ -45,7 +45,13 @@
 						visible="{detailView>/showSuggestionTab}" count="{countViewModel>/suggestedCount}" design="Vertical" showAll="false" textDirection="Inherit"
 						enabled="true" iconDensityAware="false">
 						<content>
-							<Table>
+							<ScrollContainer
+								horizontal="true"
+								vertical="true"
+								focusable="true"
+								>
+								<Table sticky="ColumnHeaders" items="{ path: 'suggestedDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="false"
+								growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
 								<infoToolbar/>
 								<headerToolbar>
 									<OverflowToolbar height="54.99374771118164px" design="Solid" visible="true" enabled="true">
@@ -93,25 +99,6 @@
 												visible="true"/>
 										</header>
 										<footer/>
-									</Column>
-								</columns>
-							</Table>
-							<ScrollContainer
-								horizontal="true"
-								vertical="true"
-								focusable="true"
-								>
-								<Table items="{ path: 'suggestedDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="false"
-								growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
-								<infoToolbar/>
-								<columns>
-									<Column>
-									</Column>
-									<Column>
-									</Column>
-									<Column>
-									</Column>
-									<Column >
 									</Column>
 								</columns>
 								<items>
