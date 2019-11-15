@@ -231,7 +231,7 @@
 						</Column>
 					</columns>
 					<items>
-						<ColumnListItem visible="{stockDataModel>visibleProperty}">
+						<ColumnListItem>
 							<cells>
 								<Text text="{stockDataModel>modelCodeDescription}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}"/>

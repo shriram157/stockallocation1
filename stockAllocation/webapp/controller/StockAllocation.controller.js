@@ -148,18 +148,29 @@
 				if (evt.getSource().getPressed() == false) {
 					console.log("pressed", evt);
 					for (var i = 0; i < oModelData2.length; i++) {
-						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].suggested <= "0")) {
+						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 							oModelData2[i].visibleProperty = false;
 						}
+						// if (document.getElementsByClassName(".sapMListTblRow").querySelectorAll(".sapUiHiddenPlaceholder").length > 0) {
+						// 	document.getElementsByClassName(".sapMListTblRow").style.height = "0 !important";
+						// }
+						// $(document).ready(function () {
+						// 		$('tr.sapMListTblRow').has('.sapUiHiddenPlaceholder').css('height', '0');
+						// 	});
 					}
 				} else if (evt.getSource().getPressed() == true) {
 					console.log("pressed2", evt);
 					for (var i = 0; i < oModelData2.length; i++) {
-						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].suggested <= "0")) {
+						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 							oModelData2[i].visibleProperty = true;
 						}
 					}
+					// $(document).ready(function () {
+					// 		$('tr.sapMListTblRow').css('height', '2rem');
+					// 	});
 				}
+
+				this.getView().getModel("stockDataModel").updateBindings(true);
 			},
 
 			whenUserChangesRequestedData: function (oEvt) {
@@ -1967,7 +1978,8 @@
 							b++;
 						}
 					}
-					if (b === _that.oGlobalJSONModel.getData().suffixData.length && backupModelData[i].zzmodel == _that.Model && backupModelData[i].zzmoyr ==
+					if (b === _that.oGlobalJSONModel.getData().suffixData.length && backupModelData[i].zzmodel == _that.Model && backupModelData[i]
+						.zzmoyr ==
 						_that.Modelyear) {
 						_that.oGlobalJSONModel.getData().suffixData.push({
 							"Model": backupModelData[i].zzmodel,
