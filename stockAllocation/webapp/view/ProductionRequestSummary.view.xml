@@ -123,7 +123,12 @@
 						count="{countViewModel>/requestedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true"
 						visible="{detailView>/showRequestedTab}" iconDensityAware="false">
 						<content>
-							<Table items="{ path: 'requestedDataModel>/' }" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="true"
+							<ScrollContainer
+								horizontal="true"
+								vertical="true"
+								focusable="true"
+								>
+							<Table sticky="ColumnHeaders" items="{ path: 'requestedDataModel>/' }" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="true"
 								growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
 								<infoToolbar/>
 								<headerToolbar>
@@ -217,14 +222,20 @@
 									</ColumnListItem>
 								</items>
 							</Table>
+							</ScrollContainer>
 						</content>
 					</IconTabFilter>
 					<IconTabFilter id="iconTabFilterAllocated" icon="sap-icon://status-completed" iconColor="Positive" text="{i18n>ALLOCATED}"
 						count="{countViewModel>/allocatedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true"
 						visible="{detailView>/showAllocatedTab}" iconDensityAware="false">
 						<content>
+							<ScrollContainer
+								horizontal="true"
+								vertical="true"
+								focusable="true"
+								>
 							<!--<Table items="{path:'allocatedDataModel>/', sorter : { path : 'zzzadddata4' }}" -->
-							<Table items="{ path: 'allocatedDataModel>/'}" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="false"
+							<Table sticky="ColumnHeaders" items="{ path: 'allocatedDataModel>/'}" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All" growing="false"
 								growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress" alternateRowColors="true">
 								<infoToolbar/>
 								<headerToolbar>
@@ -359,6 +370,7 @@
 									</ColumnListItem>
 								</items>
 							</Table>
+							</ScrollContainer>
 						</content>
 					</IconTabFilter>
 				</items>
