@@ -1804,15 +1804,15 @@
 					}
 				});
 			},
-			onLiveChange: function (oEvent, query) {
-				if (!!query && query.length > 0) {
-					this.sSearchQuery = query;
-					this.fnApplyFiltersAndOrdering();
+			onLiveChange: function (oEvent) {
+				// if (!!query && query.length > 0) {
+				// 	this.sSearchQuery = query;
+				// 	this.fnApplyFiltersAndOrdering();
 
-				} else {
-					this.sSearchQuery = oEvent.getSource().getValue();
-					this.fnApplyFiltersAndOrdering();
-				}
+				// } else {
+				this.sSearchQuery = oEvent.getSource().getValue();
+				this.fnApplyFiltersAndOrdering();
+				// }
 			},
 			fnApplyFiltersAndOrdering: function (oEvent) {
 				var aFilters = [],
@@ -2227,8 +2227,15 @@
 				} else {
 					_that.onClickCloseNewModelDialog();
 					MessageBox.error(newAddedModel + "configuration already exists");
-					_that.getView().byId("searchVehicleList").setValue(newAddedExteriorColorCode);
-					_that.onLiveChange("", this.getView().byId("searchVehicleList").getValue());
+					var aFilters = [];
+					var filter = new Filter([
+						// new Filter("model", sap.ui.model.FilterOperator.Contains, newAddedModel),
+						new Filter("modelCodeDescription", sap.ui.model.FilterOperator.Contains, newAddedModelAndDescription.split(" - ")[0]),
+						new Filter("suffix_desc", sap.ui.model.FilterOperator.Contains, newAddedSuffixAndDescription.split(" - ")[0]),
+						new Filter("colour_Trim", sap.ui.model.FilterOperator.Contains, newAddedExteriorColorCodeAndDescription.split(" - ")[0])
+					], true);
+					aFilters.push(filter);
+					this.byId("stockDataModelTableId").getBinding("items").filter(aFilters, "Application");
 				}
 
 			},
