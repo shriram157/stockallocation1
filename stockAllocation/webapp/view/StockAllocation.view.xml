@@ -82,7 +82,7 @@
 							<footer></footer>
 						</Column>
 						<!--Its for totals-->
-						<Column width="20px" hAlign="End" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<Column width="25px" hAlign="End" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
 							<footer>
 								<Text text="{i18n>TOTALS} " width="auto" maxLines="1" wrapping="false" textAlign="End" textDirection="Inherit" visible="true"
 									class="setOrangeFont"/>
