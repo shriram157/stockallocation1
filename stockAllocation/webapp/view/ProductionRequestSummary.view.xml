@@ -4,7 +4,10 @@
 	<html:style>
 		.pageHeight{height:100%;}
 	</html:style>
-	<Page showHeader="true" title="{i18n>STOCK_ALLOC_SUMMARY}" showFooter="false" showNavButton="false" class="sapUiSizeCompact pageHeight" enableScrolling="false" height="100%">
+	<Page showHeader="true" title="{i18n>STOCK_ALLOC_SUMMARY}" showFooter="true" showNavButton="true"
+		class="sapUiSizeCompact pageHeight" enableScrolling="false">
+	<!--<Page showHeader="true" title="{i18n>STOCK_ALLOC_SUMMARY}" showFooter="false" showNavButton="false" class="sapUiSizeCompact pageHeight"-->
+	<!--	enableScrolling="false">-->
 		<customHeader>
 			<Bar class="sapUiSmallPaddingBeginEnd clCustomHeaderBg">
 				<contentLeft>
@@ -47,7 +50,7 @@
 						visible="{detailView>/showSuggestionTab}" count="{countViewModel>/suggestedCount}" design="Vertical" showAll="false" textDirection="Inherit"
 						enabled="true" iconDensityAware="false">
 						<content>
-							<ScrollContainer height="90%" vertical="true" focusable="true">
+							<ScrollContainer height="85%" vertical="true" focusable="true">
 								<Table sticky="ColumnHeaders" items="{ path: 'suggestedDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
 									showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
 									itemPress="_onTableItemPress" alternateRowColors="true">
