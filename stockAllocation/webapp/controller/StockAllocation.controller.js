@@ -154,7 +154,7 @@
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 								oModelData2[i].visibleProperty = false;
 							}
-						}
+						}this._calculateTotals();
 					} else if (evt.getSource().getPressed() == true) {
 						console.log("pressed2", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
@@ -162,7 +162,7 @@
 								oModelData2[i].visibleProperty = true;
 								// document.getElementsByClassName("noheight").style.height = "2rem !important";
 							}
-						}
+						}this._calculateTotals();
 					}
 
 					this.getView().getModel("stockDataModel").updateBindings(true);
@@ -2155,17 +2155,17 @@
 				var temp = this.oGlobalJSONModel.getData().colorData;
 
 				var oModelStock = this.getView().getModel("stockDataModel");
-				var alreadyExists = oModelStock.filter(function (k) {
+				this.oModelStockData = this.getView().getModel("stockDataModel").getData();
+				// var existingModelData = oModelStock.getData();
+				var alreadyExists = this.oModelStockData.filter(function (k) {
 					if (k.model === newAddedModel && k.suffix === newAddedSuffix && k.zzextcol === newAddedExteriorColorCode)
 						return k;
 				});
-				var exists = Object.keys(oModelStock).some(function (k) {
-					return (oModelStock[k].model === newAddedModel && oModelStock[k].suffix === newAddedSuffix && oModelStock[k].zzextcol ===
+				var exists = Object.keys(this.oModelStockData).some(function (k) {
+					return (this.oModelStockData[k].model === newAddedModel && this.oModelStockData[k].suffix === newAddedSuffix && this.oModelStockData[k].zzextcol ===
 						newAddedExteriorColorCode);
 				});
 				if (!exists) {
-					this.oModelStockData = this.getView().getModel("stockDataModel").getData();
-
 					objNew.ZzsugSeqNo = '00000000';
 					objNew.Zzmodel = newAddedModel;
 					objNew.ZzprocessDt = processDate;
