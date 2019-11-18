@@ -154,7 +154,8 @@
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 								oModelData2[i].visibleProperty = false;
 							}
-						}this._calculateTotals();
+						}
+						this._calculateTotals();
 					} else if (evt.getSource().getPressed() == true) {
 						console.log("pressed2", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
@@ -162,7 +163,8 @@
 								oModelData2[i].visibleProperty = true;
 								// document.getElementsByClassName("noheight").style.height = "2rem !important";
 							}
-						}this._calculateTotals();
+						}
+						this._calculateTotals();
 					}
 
 					this.getView().getModel("stockDataModel").updateBindings(true);
@@ -1802,10 +1804,15 @@
 					}
 				});
 			},
-			onLiveChange: function (oEvent) {
-				this.sSearchQuery = oEvent.getSource()
-					.getValue();
-				this.fnApplyFiltersAndOrdering();
+			onLiveChange: function (oEvent, query) {
+				if (!!query && query.length > 0) {
+					this.sSearchQuery = query;
+					this.fnApplyFiltersAndOrdering();
+
+				} else {
+					this.sSearchQuery = oEvent.getSource().getValue();
+					this.fnApplyFiltersAndOrdering();
+				}
 			},
 			fnApplyFiltersAndOrdering: function (oEvent) {
 				var aFilters = [],
@@ -2050,7 +2057,7 @@
 
 			onClickCloseNewModelDialog: function (oEvent) {
 				// sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().setKey("");
-				
+
 				//  sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
 				// sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().getKey();
 				//  sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().getText();
@@ -2163,6 +2170,7 @@
 				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem()
 					.getText();
 				var temp = this.oGlobalJSONModel.getData().colorData;
+				var tempOBj = [newAddedModel, newAddedModelAndDescription, newAddedSuffixAndDescription, newAddedExteriorColorCodeAndDescription];
 
 				var oModelStock = this.getView().getModel("stockDataModel");
 				this.oModelStockData = this.getView().getModel("stockDataModel").getData();
@@ -2171,9 +2179,10 @@
 					if (k.model === newAddedModel && k.suffix === newAddedSuffix && k.zzextcol === newAddedExteriorColorCode)
 						return k;
 				});
-				var _that=this;
+				var _that = this;
 				var exists = Object.keys(_that.oModelStockData).some(function (k) {
-					return (_that.oModelStockData[k].model === newAddedModel && _that.oModelStockData[k].suffix === newAddedSuffix && _that.oModelStockData[k].zzextcol ===
+					return (_that.oModelStockData[k].model === newAddedModel && _that.oModelStockData[k].suffix === newAddedSuffix && _that.oModelStockData[
+							k].zzextcol ===
 						newAddedExteriorColorCode);
 				});
 				if (!exists) {
@@ -2216,8 +2225,10 @@
 					});
 					this.getSourcePlant(objNew);
 				} else {
-					MessageBox.error(newAddedModel+"configuration already exists");
-					//alreadyExists
+					_that.onClickCloseNewModelDialog();
+					MessageBox.error(newAddedModel + "configuration already exists");
+					_that.getView().byId("searchVehicleList").setValue(newAddedExteriorColorCode);
+					_that.onLiveChange("", this.getView().byId("searchVehicleList").getValue());
 				}
 
 			},
