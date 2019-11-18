@@ -2156,13 +2156,14 @@
 
 				var oModelStock = this.getView().getModel("stockDataModel");
 				this.oModelStockData = this.getView().getModel("stockDataModel").getData();
+				var _that=this;
 				// var existingModelData = oModelStock.getData();
 				var alreadyExists = this.oModelStockData.filter(function (k) {
 					if (k.model === newAddedModel && k.suffix === newAddedSuffix && k.zzextcol === newAddedExteriorColorCode)
 						return k;
 				});
-				var exists = Object.keys(this.oModelStockData).some(function (k) {
-					return (this.oModelStockData[k].model === newAddedModel && this.oModelStockData[k].suffix === newAddedSuffix && this.oModelStockData[k].zzextcol ===
+				var exists = Object.keys(_that.oModelStockData).some(function (k) {
+					return (_that.oModelStockData[k].model === newAddedModel && _that.oModelStockData[k].suffix === newAddedSuffix && _that.oModelStockData[k].zzextcol ===
 						newAddedExteriorColorCode);
 				});
 				if (!exists) {
