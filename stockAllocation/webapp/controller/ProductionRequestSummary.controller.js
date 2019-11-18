@@ -1205,8 +1205,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var oCountModel = this.getView().getModel("countViewModel");
 			if (oCountModel) {
-				oCountModel.setProperty("/suggestedCount", suggestedModelLength);
-				oCountModel.setProperty("/requestedCount", requestedModelLength);
+				oCountModel.setProperty("/totalsuggestedCount", suggestedModelLength);
+				oCountModel.setProperty("/totalRequestedCount", requestedModelLength);
 				oCountModel.setProperty("/allocatedCount", allocatedModelLength);
 
 				oCountModel.updateBindings(true);
