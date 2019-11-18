@@ -5,7 +5,7 @@
 		.pageHeight{height:100%;}
 	</html:style>
 	<Page showHeader="true" title="{i18n>STOCK_ALLOC_SUMMARY}" showFooter="true" showNavButton="true"
-		class="sapUiSizeCompact pageHeight" enableScrolling="false">
+		class="sapUiSizeCompact pageHeight" enableScrolling="true">
 	<!--<Page showHeader="true" title="{i18n>STOCK_ALLOC_SUMMARY}" showFooter="false" showNavButton="false" class="sapUiSizeCompact pageHeight"-->
 	<!--	enableScrolling="false">-->
 		<customHeader>
