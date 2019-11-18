@@ -4,7 +4,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History"
 ], function (BaseController, MessageBox, Utilities, History) {
 	"use strict";
-
+	var suggestedCount, requestedCount, allocatedCount;
 	return BaseController.extend("suggestOrder.controller.ProductionRequestSummary", {
 		handleRouteMatched: function (oEvent) {
 			window.location.reload();
@@ -899,7 +899,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						if (item.totalUnfilledcount == 0) {
 							item.totalUnfilledcount = "0";
 						}
-
+						
+						suggestedCount=item.totalsuggestedCount;
+						requestedCount=item.totalRequestedCount;
+						allocatedCount=item.totalAllocatedCount;
 						oViewCountData.push({
 							suggestedCount: item.totalsuggestedCount,
 							requestedCount: item.totalRequestedCount,
@@ -1205,9 +1208,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var oCountModel = this.getView().getModel("countViewModel");
 			if (oCountModel) {
-				oCountModel.setProperty("/totalsuggestedCount", suggestedModelLength);
-				oCountModel.setProperty("/totalRequestedCount", requestedModelLength);
-				oCountModel.setProperty("/allocatedCount", allocatedModelLength);
+				oCountModel.setProperty("/suggestedCount", suggestedCount);
+				oCountModel.setProperty("/requestedCount", requestedCount);
+				oCountModel.setProperty("/allocatedCount", allocatedCount);
 
 				oCountModel.updateBindings(true);
 			}
