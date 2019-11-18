@@ -2058,7 +2058,7 @@
 				//  sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getText();
 				//  sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getKey();
 				// sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem()
-					.getText();
+				//	.getText();
 				this._modelRequestDialog.close();
 			},
 
