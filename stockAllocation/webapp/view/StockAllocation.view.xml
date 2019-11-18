@@ -35,9 +35,8 @@
 						<OverflowToolbar width="auto" height="55px" design="Transparent" visible="true" enabled="true">
 							<content>
 								<ToggleButton pressed="true" text="{i18n>SHOW_ALL}" iconFirst="true" press="onClickShowAll"/>
-
 								<ToggleButton pressed="false" text="{i18n>SHOW_ALL_MODELS}" iconFirst="true" width="230px"
-									enabled="false" visible="true" id="showAllModelsBtn"/>
+									enabled="false" visible="false" id="showAllModelsBtn"/>
 								<ToggleButton pressed="false" text="{i18n>SHOW_PERCENTAGES}" iconFirst="true" width="220px"
 									enabled="{oViewLocalDataModel>/setEnableFalsePercentages}" visible="false" press="onClickShowPercentages" id="showPercentagesBtn"/>
 								<ToolbarSpacer width="310px"/>
@@ -47,6 +46,8 @@
 								<Button text="{i18n>REQUEST_ADD_MODEL}" type="Accept" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/setEnableFalseReset}"
 									visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="onClickRequestNewModel"/>
 								<ToolbarSpacer/>
+								<Button text="{i18n>ResetSearch}" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/setResetEnabled}"
+									visible="true" iconDensityAware="false" press="resetSearch"/>
 								<SearchField id="searchVehicleList" liveChange="onLiveChange" showSearchButton="true" placeholder="{i18n>Search}">
 									<layoutData>
 										<OverflowToolbarLayoutData minWidth="200px" maxWidth="300px" shrinkable="true"/>

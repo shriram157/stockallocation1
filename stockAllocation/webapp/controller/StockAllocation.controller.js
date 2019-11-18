@@ -101,7 +101,8 @@
 					setEnableFalseReset: setEnableFalseReset,
 					etaFrom: "ETA :01 Feb 2019 To 28 Feb 2019",
 					seriesSuggestedVolume: selectedSeries.suggestedVolume,
-					fromWhichTabClickIamIn: selectedSeries.whichTabClicked
+					fromWhichTabClickIamIn: selectedSeries.whichTabClicked,
+					setResetEnabled: false
 
 				});
 
@@ -2056,16 +2057,15 @@
 			},
 
 			onClickCloseNewModelDialog: function (oEvent) {
-				// sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().setKey("");
-
-				//  sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
-				// sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().getKey();
-				//  sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().getText();
-				//  sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getKey();
-				//  sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getText();
-				//  sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getKey();
-				// sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem()
-				//	.getText();
+				sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").setSelectedKey("");
+				sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue();
+				sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").setSelectedKey();
+				// sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").setText();
+				sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").setSelectedKey();
+				// sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").setText();
+				sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").setSelectedKey();
+				// sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").setText();
+				// 
 				this._modelRequestDialog.close();
 			},
 
@@ -2186,6 +2186,7 @@
 						newAddedExteriorColorCode);
 				});
 				if (!exists) {
+					_that.getView().getModel("oViewLocalDataModel").setProperty("/setResetEnabled", false);
 					objNew.ZzsugSeqNo = '00000000';
 					objNew.Zzmodel = newAddedModel;
 					objNew.ZzprocessDt = processDate;
@@ -2236,8 +2237,14 @@
 					], true);
 					aFilters.push(filter);
 					this.byId("stockDataModelTableId").getBinding("items").filter(aFilters, "Application");
+					_that.getView().getModel("oViewLocalDataModel").setProperty("/setResetEnabled", true);
 				}
 
+			},
+
+			resetSearch: function () {
+				this.byId("stockDataModelTableId").getBinding("items").filter([], "Application");
+				this._calculateTotals();
 			},
 			onExit: function () {
 				var oTable = this.getView().byId("stockDataModelTableId");
@@ -2249,7 +2256,6 @@
 							oTable.removeItem(oTable.getItems()[k].getId().split("-")[0]);
 						}
 					}
-					// oTable.updateItems();
 				}
 			}
 		});
