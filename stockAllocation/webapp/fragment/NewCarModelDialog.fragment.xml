@@ -22,24 +22,10 @@
 								text="{GlobalJSONModel>ExteriorColorCode} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>MarketingDescriptionEXTColorEN}:${GlobalJSONModel>MarketingDescriptionEXTColorFR}}"
 					             />
 						</Select>
-						<!--<Label text="{i18n>APX}"/>-->
-						<!--<Select id="ID_APXValue" forceSelection="true" items="{GlobalJSONModel>/APXCollection}">-->
-						<!--	<core:Item key="{GlobalJSONModel>APX}" text="{GlobalJSONModel>APX}"/>-->
-						<!--</Select>-->
 						<Label text="{i18n>REQUEST_VOLUME}" labelFor="reqVolumeId" required="true"/>
 						<StepInput value="1" fieldGroupIds="requiredField" id="reqVolumeId" displayValuePrecision="0" min="0"
 							max="100" width="7.5rem" step="1" largerStep="2" valueState="None" enabled="true" 
 								change="whenUserChangesRequestedDataOnFragment" />
-						 
-				   		<!--<Input name="requestedVolume" -->
-				   		<!--         id="requestedVolumeId" valueLiveUpdate="true" -->
-				   		<!--         liveChange="removeErrorValidationMessage" -->
-				   		<!--         width="12rem" -->
-				   		<!--         enabled="true"-->
-				   		<!--         visible="true" -->
-				   		<!--         value="10"-->
-				   		<!--          />-->
-
 							 
 						<Label text=""/>
 					</f:content>

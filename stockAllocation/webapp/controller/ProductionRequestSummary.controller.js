@@ -901,9 +901,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						}
 
 						oViewCountData.push({
-							suggestedCount: item.suggest_count,
-							requestedCount: item.request_count,
-							allocatedCount: item.allocat_count,
+							suggestedCount: item.totalsuggestedCount,
+							requestedCount: item.totalRequestedCount,
+							allocatedCount: item.totalAllocatedCount,
 							totalSuggestCount: item.totalsuggestedCount,
 							totalRequestedCount: item.totalRequestedCount,
 							totalAllocatedCount: item.totalAllocatedCount,
