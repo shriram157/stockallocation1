@@ -145,28 +145,28 @@
 			},
 
 			onClickShowAll: function (evt) {
-				if(!!this.getView().getModel("stockDataModel")){
-				var oTable = this.getView().byId("stockDataModelTableId");
-				var oModelData2 = this.getView().getModel("stockDataModel").getData();
-				if (evt.getSource().getPressed() == false) {
-					console.log("pressed", evt);
-					for (var i = 0; i < oModelData2.length; i++) {
-						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
-							oModelData2[i].visibleProperty = false;
+				if (!!this.getView().getModel("stockDataModel")) {
+					var oTable = this.getView().byId("stockDataModelTableId");
+					var oModelData2 = this.getView().getModel("stockDataModel").getData();
+					if (evt.getSource().getPressed() == false) {
+						console.log("pressed", evt);
+						for (var i = 0; i < oModelData2.length; i++) {
+							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
+								oModelData2[i].visibleProperty = false;
+							}
+						}
+					} else if (evt.getSource().getPressed() == true) {
+						console.log("pressed2", evt);
+						for (var i = 0; i < oModelData2.length; i++) {
+							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
+								oModelData2[i].visibleProperty = true;
+								// document.getElementsByClassName("noheight").style.height = "2rem !important";
+							}
 						}
 					}
-				} else if (evt.getSource().getPressed() == true) {
-					console.log("pressed2", evt);
-					for (var i = 0; i < oModelData2.length; i++) {
-						if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
-							oModelData2[i].visibleProperty = true;
-							// document.getElementsByClassName("noheight").style.height = "2rem !important";
-						}
-					}
-				}
 
-				this.getView().getModel("stockDataModel").updateBindings(true);
-				this._calculateTotals();
+					this.getView().getModel("stockDataModel").updateBindings(true);
+					// this._calculateTotals();
 				}
 			},
 
@@ -2155,46 +2155,59 @@
 				var temp = this.oGlobalJSONModel.getData().colorData;
 
 				var oModelStock = this.getView().getModel("stockDataModel");
-				this.oModelStockData = this.getView().getModel("stockDataModel").getData();
-
-				objNew.ZzsugSeqNo = '00000000';
-				objNew.Zzmodel = newAddedModel;
-				objNew.ZzprocessDt = processDate;
-				objNew.Zzsuffix = newAddedSuffix;
-				objNew.Zzmoyr = this.yearModel;
-				objNew.Zzextcol = newAddedExteriorColorCode;
-				objNew.Zzintcol = this.InteriorColorCode;
-				objNew.ZzdealerCode = this.dealerCode;
-				objNew.ZzrequestQty = newAddedQty.toString();
-				objNew.Zzseries = this.series;
-				objNew.ZzseriesDescEn = this.seriesDescription;
-				// var res = temp.find(({
-				// 	ExteriorColorCode
-				// }) => ExteriorColorCode == newAddedExteriorColorCode);
-				for (var i = 0; i < temp.length; i++) {
-					if (temp[i] != undefined && temp[i] !== null) {
-						temp[i].ExteriorColorCode = newAddedExteriorColorCode;
-						this.InteriorColorCode = temp[i].InteriorColorCode;
-					}
-				}
-				this.oModelStockData.push({
-					model: newAddedModel,
-					ZsrcWerks: objNew.ZsrcWerks,
-					zzsug_seq_no: objNew.zzsug_seq_no,
-					zzprocess_dt: processDate,
-					modelCodeDescription: newAddedModelAndDescription,
-					zzsuffix: newAddedSuffix,
-					zzmoyr: this.yearModel,
-					suffix_desc: newAddedSuffixAndDescription,
-					zzextcol: newAddedExteriorColorCode,
-					requested_Volume: newAddedQty,
-					colour_Trim: newAddedExteriorColorCodeAndDescription,
-					current: "0",
-					zzintcol: this.InteriorColorCode,
-					visibleProperty: true,
-					zzseries: this.series
+				var alreadyExists = oModelStock.filter(function (k) {
+					if (k.model === newAddedModel && k.suffix === newAddedSuffix && k.zzextcol === newAddedExteriorColorCode)
+						return k;
 				});
-				this.getSourcePlant(objNew);
+				var exists = Object.keys(oModelStock).some(function (k) {
+					return (oModelStock[k].model === newAddedModel && oModelStock[k].suffix === newAddedSuffix && oModelStock[k].zzextcol ===
+						newAddedExteriorColorCode);
+				});
+				if (!exists) {
+					this.oModelStockData = this.getView().getModel("stockDataModel").getData();
+
+					objNew.ZzsugSeqNo = '00000000';
+					objNew.Zzmodel = newAddedModel;
+					objNew.ZzprocessDt = processDate;
+					objNew.Zzsuffix = newAddedSuffix;
+					objNew.Zzmoyr = this.yearModel;
+					objNew.Zzextcol = newAddedExteriorColorCode;
+					objNew.Zzintcol = this.InteriorColorCode;
+					objNew.ZzdealerCode = this.dealerCode;
+					objNew.ZzrequestQty = newAddedQty.toString();
+					objNew.Zzseries = this.series;
+					objNew.ZzseriesDescEn = this.seriesDescription;
+					// var res = temp.find(({
+					// 	ExteriorColorCode
+					// }) => ExteriorColorCode == newAddedExteriorColorCode);
+					for (var i = 0; i < temp.length; i++) {
+						if (temp[i] != undefined && temp[i] !== null) {
+							temp[i].ExteriorColorCode = newAddedExteriorColorCode;
+							this.InteriorColorCode = temp[i].InteriorColorCode;
+						}
+					}
+					this.oModelStockData.push({
+						model: newAddedModel,
+						ZsrcWerks: objNew.ZsrcWerks,
+						zzsug_seq_no: objNew.zzsug_seq_no,
+						zzprocess_dt: processDate,
+						modelCodeDescription: newAddedModelAndDescription,
+						zzsuffix: newAddedSuffix,
+						zzmoyr: this.yearModel,
+						suffix_desc: newAddedSuffixAndDescription,
+						zzextcol: newAddedExteriorColorCode,
+						requested_Volume: newAddedQty,
+						colour_Trim: newAddedExteriorColorCodeAndDescription,
+						current: "0",
+						zzintcol: this.InteriorColorCode,
+						visibleProperty: true,
+						zzseries: this.series
+					});
+					this.getSourcePlant(objNew);
+				} else {
+					MessageBox.error(newAddedModel+"configuration already exists");
+					//alreadyExists
+				}
 
 			},
 			onExit: function () {
