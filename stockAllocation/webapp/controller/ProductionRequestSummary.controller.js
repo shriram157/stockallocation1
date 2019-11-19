@@ -900,13 +900,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							item.totalUnfilledcount = "0";
 						}
 						
-						suggestedCount=item.totalsuggestedCount;
-						requestedCount=item.totalRequestedCount;
-						allocatedCount=item.totalAllocatedCount;
+						// suggestedCount=item.totalsuggestedCount;
+						// requestedCount=item.totalRequestedCount;
+						// allocatedCount=item.totalAllocatedCount;
 						oViewCountData.push({
-							suggestedCount: item.totalsuggestedCount,
-							requestedCount: item.totalRequestedCount,
-							allocatedCount: item.totalAllocatedCount,
+							suggestedCount: item.suggest_count,
+							requestedCount: item.request_count,
+							allocatedCount: item.allocat_count,
 							totalSuggestCount: item.totalsuggestedCount,
 							totalRequestedCount: item.totalRequestedCount,
 							totalAllocatedCount: item.totalAllocatedCount,
@@ -1208,9 +1208,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var oCountModel = this.getView().getModel("countViewModel");
 			if (oCountModel) {
-				oCountModel.setProperty("/suggestedCount", suggestedCount);
-				oCountModel.setProperty("/requestedCount", requestedCount);
-				oCountModel.setProperty("/allocatedCount", allocatedCount);
+				oCountModel.setProperty("/suggestedCount", suggestedModelLength);
+				oCountModel.setProperty("/requestedCount", requestedModelLength);
+				oCountModel.setProperty("/allocatedCount", allocatedModelLength);
 
 				oCountModel.updateBindings(true);
 			}
