@@ -774,18 +774,19 @@
 						};
 					});
 
-					groups.forEach(function (element) {
-						if (item.model == element.model) {
-							index = element.current.length + index + count;
-							console.log("index", index);
-							oTable.insertItem(oItem, index);
-							that.dynamicIndices.push(index);
-							count = 1;
-							// index = index + 1;
-							console.log("index", index);
-							console.log("table data", oTable.getBinding("items").oList);
-						}
-					});
+					// groups.forEach(function (element) {
+					// 	if (item.model == element.model) {
+					// 		index = element.current.length + index + count;
+					// 		console.log("index", index);
+					// 		oTable.insertItem(oItem, index);
+					// 		that.dynamicIndices.push(index);
+					// 		count = 1;
+					// 		// index = index + 1;
+					// 		console.log("index", index);
+					// 		console.log("table data", oTable.getBinding("items").oList);
+					// 		oTable.getBinding("items").refresh();
+					// 	}
+					// });
 				}
 
 				for (var i = 0; i < oModelData2.length; i++) {
@@ -2117,10 +2118,12 @@
 						that._modelRequestDialog.close();
 						sap.ui.getCore().setModel(that.getView().getModel("stockDataModel"), "stockDataModel");
 						sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
-						setTimeout(function(){ 
-							that._loadTheData();}, 
-						2000);
-						
+						// setTimeout(function(){ 
+						that._loadTheData();
+						//
+						// }, 
+						// 2000);
+
 					}),
 					error: function (err) {
 						// console.log("Error in fetching source plant", err);
