@@ -330,13 +330,11 @@
 			},
 
 			_onButtonPressSave: function (oEvent) {
-
 				var that = this;
 				var promise = new Promise(function (resolve, reject) {
 					// sap.ui.core.BusyIndicator.show(0);
 					that.onOpenDialog();
 					setTimeout(function () {
-
 						resolve(that);
 					}, 1);
 
@@ -1259,17 +1257,9 @@
 			},
 
 			_setTheLogo: function (oEvent) {
-
-				// if (userDetails[0].UserType == 'Dealer') {
-
 				var isDivisionSent = window.location.search.match(/Division=([^&]*)/i);
 				if (isDivisionSent) {
 					this.sDivision = window.location.search.match(/Division=([^&]*)/i)[1];
-
-					// if (this.sDivision == aDataBP[0].Division) {
-
-					// 	this.getView().byId("messageStripError").setProperty("visible", false);
-
 					if (this.sDivision == '10') // set the toyoto logo
 					{
 						var currentImageSource = this.getView().byId("idLexusLogo");
@@ -1278,24 +1268,12 @@
 					} else { // set the lexus logo
 						var currentImageSource = this.getView().byId("idLexusLogo");
 						currentImageSource.setProperty("src", "images/i_lexus_black_full.png");
-
-						// }
 					}
 				}
 
 			},
 
 			_loadTheData: function (oEvent) {
-				// //debugger;
-				// ////oTable.updateItems();
-				// console.log("table", oTable.getItems());
-				////oTable.getItems().splice(that.dynamicIndices[5])
-
-				// if(sap.ui.getCore().getModel("suggestedDataModel")){
-				// 	var firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
-				// }
-				// console.log("firstScreenData",firstScreenData);
-
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
 						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" + "and zzmoyr eq '" + this.yearModel +
@@ -2136,21 +2114,13 @@
 							.value();
 
 						oModelStock.updateBindings(true);
-
-						// var oTable = that.getView().byId("stockDataModelTableId");
-						// // console.log("table", oTable);
-						// if (that.dynamicIndices) {
-						// 	// console.log("this.dynamicIndices", this.dynamicIndices);
-						// 	for (var k = 0; k < that.dynamicIndices.length; k++) {
-						// 		oTable.removeItem(oTable.getItems()[that.dynamicIndices[k]]);
-						// 	}
-						// 	that.dynamicIndices = [];
-						// }
-						// //oTable.updateItems();
 						that._modelRequestDialog.close();
 						sap.ui.getCore().setModel(that.getView().getModel("stockDataModel"), "stockDataModel");
 						sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
-						that._loadTheData();
+						setTimeout(function(){ 
+							that._loadTheData();}, 
+						2000);
+						
 					}),
 					error: function (err) {
 						// console.log("Error in fetching source plant", err);
@@ -2167,8 +2137,7 @@
 				var newAddedSuffix = sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getKey();
 				var newAddedSuffixAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getText();
 				var newAddedExteriorColorCode = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getKey();
-				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem()
-					.getText();
+				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getText();
 				var temp = this.oGlobalJSONModel.getData().colorData;
 				var tempOBj = [newAddedModel, newAddedModelAndDescription, newAddedSuffixAndDescription, newAddedExteriorColorCodeAndDescription];
 
