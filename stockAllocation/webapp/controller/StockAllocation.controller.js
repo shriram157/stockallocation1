@@ -221,8 +221,10 @@
 
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
-						tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
-						requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
+						if (oStockModelData[i].model != "") {
+							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
+							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
+						}
 					}
 
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
@@ -349,7 +351,7 @@
 			},
 
 			_onButtonPressSave1: function (oEvent) {
-				
+
 				var that = this;
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				that.oTable = this.getView().byId("stockDataModelTableId");
@@ -361,7 +363,7 @@
 					}
 				}
 				this.getView().getModel("stockDataModel").updateBindings(true);
-				
+
 				this.SaveButtonClicked = true;
 				var oSuggestUpdateModel = that.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
 
@@ -640,7 +642,7 @@
 					for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
 						console.log("index", i);
 						oModelData2.splice(this.dynamicIndices[i], 1);
-						
+
 						if (!!that.oTable.getItems()[this.dynamicIndices[i]]) {
 							var cells = that.oTable.getItems()[this.dynamicIndices[i]].getCells();
 							for (var j = 0; j < cells.length; j++) {
@@ -652,7 +654,6 @@
 						}
 					}
 				}
-				console.log("modeldata filtered", oModelData2);
 				this.getView().getModel("stockDataModel").updateBindings(true);
 
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
@@ -833,9 +834,8 @@
 					});
 					that._dynamicSubTotal(groups, item, that.obj);
 				}
-
 				for (var i = 0; i < oModelData2.length; i++) {
-					if (oModelData2[i].current != 0) {
+					if (oModelData2[i].model != "") {
 						var duringPercentage = oModelData2[i].current.includes("%");
 						if (oModelData2[i].visibleProperty == true && duringPercentage == false) {
 							// if ( oModelData2[i].visibleProperty == true ) {
@@ -859,7 +859,9 @@
 				}
 				//  requested volume is not based on suggested stock. 
 				for (var i = 0; i < oModelData2.length; i++) {
-					requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+					if (oModelData2[i].model != "") {
+						requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+					}
 				}
 
 				if (this.duringPercentage == true) {
@@ -884,7 +886,7 @@
 
 					for (var i = 0; i < oModelData2.length; i++) {
 
-						if (includeZero == true) {
+						if (includeZero == true && oModelData2[i].model != "") {
 							//if ( oModelData2[i].suggested < "0" ) {
 							currentTotal = +oModelData2[i].current + +currentTotal;
 							currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
@@ -905,7 +907,7 @@
 							//}
 						} else {
 							// take only excluding the ones with zero quantities. 
-							if (oModelData2[i].suggested > "0") {
+							if (oModelData2[i].suggested > "0" && oModelData2[i].model != "") {
 								currentTotal = +oModelData2[i].current + +currentTotal;
 								currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
 
@@ -971,6 +973,7 @@
 					oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
 					oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
 				}
+				// }
 				oInitalTotalStock.updateBindings(true);
 			},
 
@@ -987,7 +990,7 @@
 						console.log(that.getView().getModel("stockDataModel").getData());
 						// console.log(oTable.getItems()[that.index].getCells()[11]);
 						that.getView().getModel("stockDataModel").updateBindings(true);
-						 oTable.getBinding("items").refresh(true);
+						oTable.getBinding("items").refresh(true);
 						that.dynamicIndices.push(that.index);
 						that.count = 1;
 
@@ -1097,32 +1100,32 @@
 
 				for (var i = 0; i < oModelData2.length; i++) {
 					// if (oModelData2[i].visibleProperty == true){
+					if (oModelData2[i].model != "") {
+						if (+oModelData2[i].current > 0) {
+							oModelProp[i].current = this._calculatePercentage(+oModelData2[i].current, +oInitialTotalStockModel["0"].currentTotal) + "%";
 
-					if (+oModelData2[i].current > 0) {
-						oModelProp[i].current = this._calculatePercentage(+oModelData2[i].current, +oInitialTotalStockModel["0"].currentTotal) + "%";
+						}
+						if (+oModelData2[i].suggested > 0) {
+							oModelProp[i].suggested = this._calculatePercentage(+oModelData2[i].suggested, +oInitialTotalStockModel["0"].suggestedTotal) +
+								"%";
+						}
+
+						if (+oModelData2[i].allocated > 0) {
+							oModelProp[i].allocated = this._calculatePercentage(+oModelData2[i].allocated, +oInitialTotalStockModel["0"].allocatedTotal) +
+								"%";
+						}
+
+						if (+oModelData2[i].difference < 0) {
+
+							oModelProp[i].difference = this._calculatePercentage(+oModelData2[i].difference, +oInitialTotalStockModel["0"].requestedVolumeTotal) +
+								"%";
+
+						} else {
+							oModelProp[i].difference = this._calculatePercentage(+oModelData2[i].difference, +oInitialTotalStockModel["0"].requestedVolumeTotal) +
+								"%";
+						}
 
 					}
-					if (+oModelData2[i].suggested > 0) {
-						oModelProp[i].suggested = this._calculatePercentage(+oModelData2[i].suggested, +oInitialTotalStockModel["0"].suggestedTotal) +
-							"%";
-					}
-
-					if (+oModelData2[i].allocated > 0) {
-						oModelProp[i].allocated = this._calculatePercentage(+oModelData2[i].allocated, +oInitialTotalStockModel["0"].allocatedTotal) +
-							"%";
-					}
-
-					if (+oModelData2[i].difference < 0) {
-
-						oModelProp[i].difference = this._calculatePercentage(+oModelData2[i].difference, +oInitialTotalStockModel["0"].requestedVolumeTotal) +
-							"%";
-
-					} else {
-						oModelProp[i].difference = this._calculatePercentage(+oModelData2[i].difference, +oInitialTotalStockModel["0"].requestedVolumeTotal) +
-							"%";
-					}
-
-					// }
 				}
 				oModelData.updateBindings(true);
 
@@ -1160,7 +1163,7 @@
 
 				$.each(oModelData2, function (i, item) {
 
-					if (includeZero == false) {
+					if (includeZero == false && oModelData2[i].model != "") {
 
 						if (item.suggested > "0") {
 
@@ -1174,7 +1177,6 @@
 
 						}
 					} else {
-
 						currentTotal = currentTotal + +item.current;
 						// currentDSTotal = currentDSTotal + +item.zzcur_ds;
 						suggestedTotal = suggestedTotal + +item.suggested;
@@ -1183,51 +1185,43 @@
 						requestedVolumeTotal = requestedVolumeTotal + +item.requested_Volume;
 						// requestedVolumeTotal = requestedVolumeTotal + +item.zzrequest_qty;
 						allocatedTotal = allocatedTotal + +item.allocated;
-
 					}
 				});
-
-				// } else {
-				// var oInitialTotalStockModel = this.getView().getModel("initialStockTotalModel").getData();	
-
-				// }
-
-				//current: currentDSTotal   
-				//current_Ds         currentDSTotal
 
 				for (var i = 0; i < oModelData2.length; i++) {
 					// if (oModelData2[i].visibleProperty == true){
 
 					//if (+oModelData2[i].suggested > 0 ){
+					if (oModelData2[i].model != "") {
 
-					if (+oModelData2[i].current > 0) {
-						oModelProp[i].current = this._calculatePercentage(+oModelData2[i].current, currentTotal) + "%";
-						// oModelProp[i].current_Ds = this._calculatePercentage(+oModelData2[i].current_Ds, +oInitialTotalStockModel["0"].currentDSTotal) + "%";
+						if (+oModelData2[i].current > 0) {
+							oModelProp[i].current = this._calculatePercentage(+oModelData2[i].current, currentTotal) + "%";
+							// oModelProp[i].current_Ds = this._calculatePercentage(+oModelData2[i].current_Ds, +oInitialTotalStockModel["0"].currentDSTotal) + "%";
+						}
+						if (+oModelData2[i].suggested > 0) {
+							oModelProp[i].suggested = this._calculatePercentage(+oModelData2[i].suggested, suggestedTotal) + "%";
+						}
+						// oModelProp[i].suggested_Ds = this._calculatePercentage(+oModelData2[i].suggested_Ds, +oInitialTotalStockModel["0"].suggestedDSTotal) +
+						// 	"%";
+						// oModelProp[i].requested_Volume = this._calculatePercentage(+oModelData2[i].requested_Volume, requestedVolumeTotal) + "%";
+						if (+oModelData2[i].allocated > 0) {
+							oModelProp[i].allocated = this._calculatePercentage(+oModelData2[i].allocated, allocatedTotal) + "%";
+						}
+						// oModelProp[i].pendingAllocation = this._calculatePercentage(+oModelData2[i].pendingAllocation, +oInitialTotalStockModel["0"].pendingAllocationTotal) +
+						// 	"%";
+						// oModelProp[i].unfilled_Allocation = this._calculatePercentage(+oModelData2[i].unfilled_Allocation, +oInitialTotalStockModel["0"].unfilledAllocationTotal) +
+						// 	"%";
+						// if (+oModelData2[i].difference < 0) {
+
+						oModelProp[i].difference = this._calculatePercentage(+oModelData2[i].difference, requestedVolumeTotal) +
+							"%";
+
+						// } else {
+						// 	oModelProp[i].difference = this._calculatePercentage(+oModelData2[i].difference, requestedVolumeTotal) +
+						// 		"%";
+						// }
+
 					}
-					if (+oModelData2[i].suggested > 0) {
-						oModelProp[i].suggested = this._calculatePercentage(+oModelData2[i].suggested, suggestedTotal) + "%";
-					}
-					// oModelProp[i].suggested_Ds = this._calculatePercentage(+oModelData2[i].suggested_Ds, +oInitialTotalStockModel["0"].suggestedDSTotal) +
-					// 	"%";
-					// oModelProp[i].requested_Volume = this._calculatePercentage(+oModelData2[i].requested_Volume, requestedVolumeTotal) + "%";
-					if (+oModelData2[i].allocated > 0) {
-						oModelProp[i].allocated = this._calculatePercentage(+oModelData2[i].allocated, allocatedTotal) + "%";
-					}
-					// oModelProp[i].pendingAllocation = this._calculatePercentage(+oModelData2[i].pendingAllocation, +oInitialTotalStockModel["0"].pendingAllocationTotal) +
-					// 	"%";
-					// oModelProp[i].unfilled_Allocation = this._calculatePercentage(+oModelData2[i].unfilled_Allocation, +oInitialTotalStockModel["0"].unfilledAllocationTotal) +
-					// 	"%";
-					// if (+oModelData2[i].difference < 0) {
-
-					oModelProp[i].difference = this._calculatePercentage(+oModelData2[i].difference, requestedVolumeTotal) +
-						"%";
-
-					// } else {
-					// 	oModelProp[i].difference = this._calculatePercentage(+oModelData2[i].difference, requestedVolumeTotal) +
-					// 		"%";
-					// }
-
-					//}
 				}
 				oModelData3.updateBindings(true);
 
@@ -1261,21 +1255,20 @@
 					oModelDataFromBkupData = oModelDataFromBkup.getData();
 
 				for (var i = 0; i < oModelData2.length; i++) {
+					if (oModelData2[i].model != "") {
+						for (var j = 0; j < oModelDataFromBkupData.length; j++) {
+							if (oModelProp[i].colour_Trim == oModelDataFromBkupData[j].colour_Trim &&
+								oModelProp[i].zzsuffix == oModelDataFromBkupData[j].zzsuffix &&
+								oModelProp[i].zzsug_seq_no == oModelDataFromBkupData[j].zzsug_seq_no) {
 
-					for (var j = 0; j < oModelDataFromBkupData.length; j++) {
-						if (oModelProp[i].colour_Trim == oModelDataFromBkupData[j].colour_Trim &&
-							oModelProp[i].zzsuffix == oModelDataFromBkupData[j].zzsuffix &&
-							oModelProp[i].zzsug_seq_no == oModelDataFromBkupData[j].zzsug_seq_no) {
-
-							oModelProp[i].current = oModelDataFromBkupData[j].current;
-							oModelProp[i].suggested = oModelDataFromBkupData[j].suggested;
-							oModelProp[i].allocated = oModelDataFromBkupData[j].allocated;
-							oModelProp[i].difference = oModelDataFromBkupData[j].difference;
-							break;
+								oModelProp[i].current = oModelDataFromBkupData[j].current;
+								oModelProp[i].suggested = oModelDataFromBkupData[j].suggested;
+								oModelProp[i].allocated = oModelDataFromBkupData[j].allocated;
+								oModelProp[i].difference = oModelDataFromBkupData[j].difference;
+								break;
+							}
 						}
-
 					}
-
 				}
 				oModelData.updateBindings("true");
 
