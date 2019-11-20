@@ -349,7 +349,19 @@
 			},
 
 			_onButtonPressSave1: function (oEvent) {
+				
 				var that = this;
+				var oModelData2 = this.getView().getModel("stockDataModel").getData();
+				that.oTable = this.getView().byId("stockDataModelTableId");
+				that.data = oModelData2;
+				if (!!this.dynamicIndices && this.dynamicIndices.length > 0) {
+					for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
+						console.log("index", i);
+						oModelData2.splice(this.dynamicIndices[i], 1);
+					}
+				}
+				this.getView().getModel("stockDataModel").updateBindings(true);
+				
 				this.SaveButtonClicked = true;
 				var oSuggestUpdateModel = that.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
 
