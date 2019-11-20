@@ -156,7 +156,7 @@
 								oModelData2[i].visibleProperty = false;
 							}
 						}
-						this._calculateTotals();
+						// this._calculateTotals();
 					} else if (evt.getSource().getPressed() == true) {
 						console.log("pressed2", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
@@ -165,7 +165,7 @@
 								// document.getElementsByClassName("noheight").style.height = "2rem !important";
 							}
 						}
-						this._calculateTotals();
+						// this._calculateTotals();
 					}
 
 					this.getView().getModel("stockDataModel").updateBindings(true);
@@ -618,22 +618,31 @@
 			},
 
 			_calculateTotals: function (includeZero) {
-				var oTable = this.getView().byId("stockDataModelTableId");
-				if (oTable.getItems().length > 1) {
-					// console.log("this.dynamicIndices", this.dynamicIndices);
-					for (var k = 0; k < oTable.getItems().length; k++) {
-						if (oTable.getItems()[0].getId().split("-")[0] != oTable.getItems()[k].getId().split("-")[0]) {
-							oTable.removeItem(oTable.getItems()[k].getId().split("-")[0]);
-							// minuscount++;
+				var that = this;
+				this.index = 0;
+				this.count = 0;
+				var oModelData2 = this.getView().getModel("stockDataModel").getData();
+				that.oTable = this.getView().byId("stockDataModelTableId");
+				that.data = oModelData2;
+				if (!!this.dynamicIndices && this.dynamicIndices.length > 0) {
+					for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
+						console.log("index", i);
+						oModelData2.splice(this.dynamicIndices[i], 1);
+						
+						if (!!that.oTable.getItems()[this.dynamicIndices[i]]) {
+							var cells = that.oTable.getItems()[this.dynamicIndices[i]].getCells();
+							for (var j = 0; j < cells.length; j++) {
+								cells[j].removeStyleClass("setOrangeFont");
+								cells[j].mProperties.step = 1;
+								cells[j].mProperties.editable = true;
+								cells[j].mProperties.enabled = true;
+							}
 						}
 					}
-					// oTable.updateItems();
-					console.log("oTable.getItems()", oTable.getItems());
 				}
-				var oModelData2 = this.getView().getModel("stockDataModel").getData();
-				var that = this;
-				var index = 0,
-					count = 0;
+				console.log("modeldata filtered", oModelData2);
+				this.getView().getModel("stockDataModel").updateBindings(true);
+
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
 				var currentTotal = 0,
@@ -697,8 +706,9 @@
 				});
 
 				function addRow(item) {
+
 					// console.log("resGrouped", resGrouped);
-					var oItem = new sap.m.ColumnListItem({
+					that.oItem = new sap.m.ColumnListItem({
 						cells: [
 							new sap.m.Text({
 								text: ""
@@ -751,10 +761,46 @@
 							})
 						]
 					});
-					var cells = oItem.getCells();
+					var cells = that.oItem.getCells();
 					for (var i = 0; i < cells.length; i++) {
 						cells[i].addStyleClass("setOrangeFont");
 					}
+
+					that.obj = {
+						"allocated": "",
+						"allocated_Ds": "",
+						"colour_Trim": "",
+						"current": item.currentTotal,
+						"currentU_DS": item.currentUDSTotal,
+						"current_CP": item.currentCPTotal,
+						"current_CTS": item.currentCTSTotal,
+						"current_Ds": item.currentDSTotal,
+						"dealer_code": "",
+						"difference": item.differenceTotal,
+						"model": "",
+						"modelCodeDescription": "",
+						"pendingAllocation": "",
+						"requested_Ds": item.requestedDSTotal,
+						"requested_Volume": item.requestedVolumeTotal,
+						"suffix": "",
+						"suffix_desc": "",
+						"suggested": item.suggestedTotal,
+						"suggested_Ds": item.suggestedDSTotal,
+						"unfilled_Allocation": "",
+						"visibleProperty": true,
+						"zsrc_werks": "",
+						"zzend_date": "",
+						"zzextcol": "",
+						"zzint_alc_qty": "",
+						"zzintcol": "",
+						"zzmoyr": "",
+						"zzordertype": "",
+						"zzprocess_dt": "",
+						"zzprod_month": "",
+						"zzsuffix": "",
+						"zzsug_seq_no": "",
+						"zzzadddata1": ""
+					};
 
 					var tempIndex = [],
 						output = [];
@@ -773,41 +819,30 @@
 							current: group_to_values[key]
 						};
 					});
-
-					// groups.forEach(function (element) {
-					// 	if (item.model == element.model) {
-					// 		index = element.current.length + index + count;
-					// 		console.log("index", index);
-					// 		oTable.insertItem(oItem, index);
-					// 		that.dynamicIndices.push(index);
-					// 		count = 1;
-					// 		// index = index + 1;
-					// 		console.log("index", index);
-					// 		console.log("table data", oTable.getBinding("items").oList);
-					// 		oTable.getBinding("items").refresh();
-					// 	}
-					// });
+					that._dynamicSubTotal(groups, item, that.obj);
 				}
 
 				for (var i = 0; i < oModelData2.length; i++) {
-					var duringPercentage = oModelData2[i].current.includes("%");
-					if (oModelData2[i].visibleProperty == true && duringPercentage == false) {
-						// if ( oModelData2[i].visibleProperty == true ) {
-						currentTotal = +oModelData2[i].current + +currentTotal;
-						currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
-						currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
-						currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
-						currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
+					if (oModelData2[i].current != 0) {
+						var duringPercentage = oModelData2[i].current.includes("%");
+						if (oModelData2[i].visibleProperty == true && duringPercentage == false) {
+							// if ( oModelData2[i].visibleProperty == true ) {
+							currentTotal = +oModelData2[i].current + +currentTotal;
+							currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
+							currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
+							currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
+							currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
 
-						suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
-						suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
-						// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
-						requestedDSTotal = +oModelData2[i].requested_Ds + +requestedDSTotal;
-						allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
-						allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
-						pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
-						unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
-						differenceTotal = +oModelData2[i].difference + +differenceTotal;
+							suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
+							suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
+							// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+							requestedDSTotal = +oModelData2[i].requested_Ds + +requestedDSTotal;
+							allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
+							allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
+							pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
+							unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
+							differenceTotal = +oModelData2[i].difference + +differenceTotal;
+						}
 					}
 				}
 				//  requested volume is not based on suggested stock. 
@@ -927,19 +962,39 @@
 				oInitalTotalStock.updateBindings(true);
 			},
 
-			_showSuggestedModels: function (oEvt) {
-				// var oTable = this.getView().byId("stockDataModelTableId");
-				// console.log("table", oTable);
-				// if (this.dynamicIndices) {
-				// 	// console.log("this.dynamicIndices", this.dynamicIndices);
-				// 	for (var k = 0; k < this.dynamicIndices.length; k++) {
-				// 		//oTable.getItems()
-				// 		oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
-				// 		////oTable.updateItems();
-				// 	}
-				// }
-				// this.dynamicIndices = [];
+			_dynamicSubTotal: function (groups, item, obj) {
+				var that = this;
+				// that.count = 0;
+				var oTable = this.getView().byId("stockDataModelTableId");
+				groups.forEach(function (element) {
+					if (item.model == element.model) {
+						that.index = element.current.length + that.index + that.count;
+						console.log("index", that.index);
+						// oTable.insertItem(that.oItem, that.index);
+						that.getView().getModel("stockDataModel").getData().splice(that.index, 0, obj);
+						console.log(that.getView().getModel("stockDataModel").getData());
+						// console.log(oTable.getItems()[that.index].getCells()[11]);
+						that.getView().getModel("stockDataModel").updateBindings(true);
+						 oTable.getBinding("items").refresh(true);
+						that.dynamicIndices.push(that.index);
+						that.count = 1;
 
+						// var oModelLocalData = that.getView().getModel("oViewLocalDataModel");
+						debugger;
+						if (!!oTable.getItems()[that.index]) {
+							var cells = oTable.getItems()[that.index].getCells();
+							for (var i = 0; i < cells.length; i++) {
+								cells[i].addStyleClass("setOrangeFont");
+								cells[i].mProperties.step = 0;
+								cells[i].mProperties.editable = false;
+								cells[i].mProperties.enabled = false;
+							}
+						}
+					}
+				});
+			},
+
+			_showSuggestedModels: function (oEvt) {
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -954,9 +1009,7 @@
 						oModelData2[i].visibleProperty = false;
 					}
 				}
-				// if(this.dynamicIndices.length<1){
 				this._calculateTotals(includeZero);
-				// }
 
 				var showSuggestPercentagesText = this._oResourceBundle.getText("SHOW_PERCENTAGES"),
 					showAllPercentagesText = this._oResourceBundle.getText("SHOW_ALL_VALUES");
@@ -977,17 +1030,6 @@
 			},
 
 			_showAllModels: function (oEvt) {
-				// var oTable = this.getView().byId("stockDataModelTableId");
-				// console.log("table", oTable);
-				// if (this.dynamicIndices) {
-				// 	console.log("this.dynamicIndices", this.dynamicIndices);
-				// 	for (var k = 0; k < this.dynamicIndices.length - 1; k++) {
-				// 		//oTable.getItems()[this.dynamicIndices[1]]
-				// 		oTable.removeItem(oTable.getItems()[this.dynamicIndices[k]]);
-				// 		////oTable.updateItems();
-				// 	}
-				// 	// this.dynamicIndices=[];
-				// }
 				var oModelData = this.getView().getModel("stockDataModel").getData();
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -2058,10 +2100,15 @@
 					url: uri,
 					type: "GET",
 					success: function (oData) {
-						// console.log("Source Plant", oData.d.results[0].SourcePlant);
-						objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
-						that.oModelStockData[that.oModelStockData.length - 1].ZsrcWerks = oData.d.results[0].SourcePlant;
-						that.getSeqNumber(objNew);
+						if (oData.d.results.length > 0) {
+							// console.log("Source Plant", oData.d.results[0].SourcePlant);
+							objNew.ZsrcWerks = oData.d.results[0].SourcePlant;
+							that.oModelStockData[that.oModelStockData.length - 1].ZsrcWerks = oData.d.results[0].SourcePlant;
+							that.getSeqNumber(objNew);
+						} else {
+							that.onClickCloseNewModelDialog();
+							MessageBox.error(that._oResourceBundle.getText("NO_DATA"));
+						}
 					},
 					error: function (oErr) {
 						// console.log("Error in fetching source plant", oErr);
@@ -2115,6 +2162,11 @@
 							.value();
 
 						oModelStock.updateBindings(true);
+						sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").setSelectedKey("");
+						sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").setSelectedKey("");
+						sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").setSelectedKey("");
+						sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue("");
+
 						that._modelRequestDialog.close();
 						sap.ui.getCore().setModel(that.getView().getModel("stockDataModel"), "stockDataModel");
 						sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);

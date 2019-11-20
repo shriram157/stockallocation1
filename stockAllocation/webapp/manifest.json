@@ -5,7 +5,6 @@
 		"id": "suggestOrder",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
-
 		"applicationVersion": {
 			"version": "2.0.0"
 		},
@@ -42,7 +41,6 @@
 					"localUri": "localService/ZSD_SUGGEST_ORDER_UPDATE_SRV/metadata.xml"
 				}
 			}
-
 		},
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
@@ -160,16 +158,14 @@
 		},
 		"resources": {
 			"js": [{
-					"uri": "lib/moment-with-locales.js"
-				}, {
-					"uri": "lib/moment-timezone-with-data.js"
-				}, {
-					"uri": "lib/underscore.js"
-				}, {
-					"uri": "lib/changeFabicon.js"
-				}
-
-			],
+				"uri": "lib/moment-with-locales.js"
+			}, {
+				"uri": "lib/moment-timezone-with-data.js"
+			}, {
+				"uri": "lib/underscore.js"
+			}, {
+				"uri": "lib/changeFabicon.js"
+			}],
 			"css": [{
 				"uri": "css/style.css"
 			}]
@@ -183,9 +179,7 @@
 				"clearTarget": false,
 				"controlAggregation": "pages",
 				"bypassed": {
-					"target": [
-						"ProductionRequestSummary"
-					]
+					"target": ["ProductionRequestSummary"]
 				}
 			},
 			"targets": {
@@ -235,45 +229,31 @@
 			"routes": [{
 				"pattern": "ProductionRequestSummary/:context:",
 				"name": "ProductionRequestSummary",
-				"target": [
-					"ProductionRequestSummary"
-				]
+				"target": ["ProductionRequestSummary"]
 			}, {
 				"pattern": "",
 				"name": "default",
-				"target": [
-					"ProductionRequestSummary"
-				]
+				"target": ["ProductionRequestSummary"]
 			}, {
 				"pattern": "StockAllocation/:context:",
 				"name": "StockAllocation",
-				"target": [
-					"StockAllocation"
-				]
+				"target": ["StockAllocation"]
 			}, {
 				"pattern": "RundownSummary/:context:",
 				"name": "RundownSummary",
-				"target": [
-					"RundownSummary"
-				]
+				"target": ["RundownSummary"]
 			}, {
 				"pattern": "SalesDetails/:context:",
 				"name": "SalesDetails",
-				"target": [
-					"SalesDetails"
-				]
+				"target": ["SalesDetails"]
 			}, {
 				"pattern": "SeriesSummary/:context:",
 				"name": "SeriesSummary",
-				"target": [
-					"SeriesSummary"
-				]
+				"target": ["SeriesSummary"]
 			}, {
 				"pattern": "SalesPlanSummary/:context:",
 				"name": "SalesPlanSummary",
-				"target": [
-					"SalesPlanSummary"
-				]
+				"target": ["SalesPlanSummary"]
 			}]
 		}
 	}

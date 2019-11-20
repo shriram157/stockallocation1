@@ -7,7 +7,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	var suggestedCount, requestedCount, allocatedCount;
 	return BaseController.extend("suggestOrder.controller.ProductionRequestSummary", {
 		handleRouteMatched: function (oEvent) {
-			window.location.reload();
+			// window.location.reload();
 			
 			var sAppId = "App5bb4c41429720e1dcc397810";
 

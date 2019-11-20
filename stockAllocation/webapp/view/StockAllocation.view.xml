@@ -1,7 +1,7 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" controllerName="suggestOrder.controller.StockAllocation"
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<html:style>
-		.setOrangeFont{ color:#E78C07!important; //# }
+		.setOrangeFont{ color:#E78C07!important;  //# }
 		.pageHeight{height:100%;}
 	</html:style>
 	<Page showHeader="true" title="{i18n>STOCK_ALLOCATION}" showFooter="true" showNavButton="true" navButtonPress="_onPageNavButtonPress"

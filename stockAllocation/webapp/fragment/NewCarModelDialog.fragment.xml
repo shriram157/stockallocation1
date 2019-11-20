@@ -6,17 +6,17 @@
 					emptySpanM="0" columnsL="1" columnsM="1" class="styleForms">
 					<f:content>
 						<core:Title text="{oViewLocalDataModel>/series}"/>
-						<Label text="{i18n>Model}"/>
+						<Label text="{i18n>MODEL}"/>
 						<Select id="ID_modelDesc" forceSelection="true" items="{GlobalJSONModel>/modelData}" change="onModelSelectionChange" fieldGroupIds="requiredField">
 							<core:Item key="{GlobalJSONModel>Model}"
 								text="{GlobalJSONModel>Model} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>ENModelDesc}:${GlobalJSONModel>FRModelDesc}}"/>
 						</Select>
-						<Label text="{i18n>Suffix}"/>
+						<Label text="{i18n>SUFFIX}"/>
 						<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange" fieldGroupIds="requiredField">
 							<core:Item key="{GlobalJSONModel>Suffix}"
 								text="{GlobalJSONModel>Suffix} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>SuffixDescriptionEN}:${GlobalJSONModel>SuffixDescriptionFR}} / {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>mrktg_int_desc_en}:${GlobalJSONModel>mrktg_int_desc_fr}}"/>
 						</Select>
-						<Label text="{i18n>Colour}"/>
+						<Label text="{i18n>COLOUR_TRIM}"/>
 						<Select id="ID_ExteriorColorCode" forceSelection="true" items="{GlobalJSONModel>/colorData}" change="onColorSelectionDoneEnableAddButton"  >
 							<core:Item key="{GlobalJSONModel>ExteriorColorCode}"
 								text="{GlobalJSONModel>ExteriorColorCode} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>MarketingDescriptionEXTColorEN}:${GlobalJSONModel>MarketingDescriptionEXTColorFR}}"
