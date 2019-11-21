@@ -671,9 +671,11 @@
 					allocatedDSTotal = 0,
 					pendingAllocationTotal = 0,
 					unfilledAllocationTotal = 0,
-					differenceTotal = 0;
+					differenceTotal = 0,
+					count=0;
 
 				var result = [];
+				// var count;
 				var resGrouped = oModelData2.reduce(function (res, value) {
 					if (!res[value.model]) {
 						res[value.model] = {
@@ -691,7 +693,8 @@
 							allocatedDSTotal: 0,
 							pendingAllocationTotal: 0,
 							unfilledAllocationTotal: 0,
-							differenceTotal: 0
+							differenceTotal: 0,
+							count:0
 						};
 						result.push(res[value.model]);
 					}
@@ -709,12 +712,14 @@
 					res[value.model].unfilledAllocationTotal = +res[value.model].unfilledAllocationTotal + +value.unfilled_Allocation;
 					res[value.model].differenceTotal = +res[value.model].differenceTotal + +value.difference;
 					res[value.model].requestedVolumeTotal = +res[value.model].requestedVolumeTotal + +value.requested_Volume;
+					res[value.model].count = res[value.model].count + 1;
 
 					return res;
 				}, {});
 				this.dynamicIndices = [];
 
 				$.each(resGrouped, function (i, item) {
+					item.currentDSTotal = (item.currentDSTotal/item.count);
 					addRow(item);
 				});
 
@@ -752,7 +757,7 @@
 								text: item.currentCTSTotal
 							}),
 							new sap.m.Text({
-								text:""           // item.currentDSTotal
+								text:item.currentDSTotal
 							}),
 							new sap.m.Text({
 								text: item.currentUDSTotal
@@ -793,12 +798,12 @@
 						"model": "",
 						"modelCodeDescription": "",
 						"pendingAllocation": "",
-						"requested_Ds": item.requestedDSTotal,
+						"requested_Ds": "", //item.requestedDSTotal,
 						"requested_Volume": item.requestedVolumeTotal,
 						"suffix": "",
 						"suffix_desc": "",
 						"suggested": item.suggestedTotal,
-						"suggested_Ds": item.suggestedDSTotal,
+						"suggested_Ds":"", // item.suggestedDSTotal,
 						"unfilled_Allocation": "",
 						"visibleProperty": true,
 						"zsrc_werks": "",
@@ -995,7 +1000,7 @@
 						that.count = 1;
 
 						// var oModelLocalData = that.getView().getModel("oViewLocalDataModel");
-						debugger;
+						// debugger;
 						if (!!oTable.getItems()[that.index]) {
 							var cells = oTable.getItems()[that.index].getCells();
 							for (var i = 0; i < cells.length; i++) {
