@@ -125,8 +125,9 @@
 								<Text text="{i18n>CurrentStockDaysSupply}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
 									visible="true"/>
 							</header>
+							<!--{initialStockTotalModel>/0/currentDSTotal}-->
 							<footer>
-								<Text text="{initialStockTotalModel>/0/currentDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
@@ -155,8 +156,9 @@
 							<header>
 								<Text text="{i18n>SUGGESTED_DS}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
+							<!--{initialStockTotalModel>/0/suggestedDSTotal}-->
 							<footer>
-								<Text text="{initialStockTotalModel>/0/suggestedDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
+								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
 									textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
@@ -185,8 +187,9 @@
 							<header>
 								<Text text="{i18n>REQUESTED_DS}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
+							<!--{initialStockTotalModel>/0/requestedDSTotal}-->
 							<footer>
-								<Text text="{initialStockTotalModel>/0/requestedDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
+								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
 									textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>

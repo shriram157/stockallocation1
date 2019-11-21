@@ -752,7 +752,7 @@
 								text: item.currentCTSTotal
 							}),
 							new sap.m.Text({
-								text: item.currentDSTotal
+								text:""           // item.currentDSTotal
 							}),
 							new sap.m.Text({
 								text: item.currentUDSTotal
@@ -761,7 +761,7 @@
 								text: item.suggestedTotal
 							}),
 							new sap.m.Text({
-								text: item.suggestedDSTotal
+								text: ""   //item.suggestedDSTotal
 							}),
 							new sap.m.Text({
 								text: item.requestedVolumeTotal
@@ -770,7 +770,7 @@
 								text: item.differenceTotal
 							}),
 							new sap.m.Text({
-								text: item.requestedDSTotal
+								text: ""  //item.requestedDSTotal
 							})
 						]
 					});
