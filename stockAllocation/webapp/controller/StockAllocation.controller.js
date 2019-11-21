@@ -149,7 +149,7 @@
 				if (!!this.getView().getModel("stockDataModel")) {
 					var oTable = this.getView().byId("stockDataModelTableId");
 					var oModelData2 = this.getView().getModel("stockDataModel").getData();
-					if (evt.getSource().getPressed() == false) {
+					if(evt.getSource().getPressed() == false) {
 						console.log("pressed", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
@@ -169,7 +169,32 @@
 					}
 
 					this.getView().getModel("stockDataModel").updateBindings(true);
-					// this._calculateTotals();
+					this._calculateTotals();
+				}
+			},
+			onClickShowAllX: function (evt) {
+				if (!!this.getView().getModel("stockDataModel")) {
+					var oTable = this.getView().byId("stockDataModelTableId");
+					var oModelData2 = this.getView().getModel("stockDataModel").getData();
+					if (evt == false) { 
+						console.log("pressed", evt);
+						for (var i = 0; i < oModelData2.length; i++) {
+							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
+								oModelData2[i].visibleProperty = false;
+							}
+						}
+					} else if (evt == true) {
+						console.log("pressed2", evt);
+						for (var i = 0; i < oModelData2.length; i++) {
+							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
+								oModelData2[i].visibleProperty = true;
+								// document.getElementsByClassName("noheight").style.height = "2rem !important";
+							}
+						}
+						// this._calculateTotals();
+					} 
+					this.getView().getModel("stockDataModel").updateBindings(true);
+					this._calculateTotals();
 				}
 			},
 
@@ -672,7 +697,7 @@
 					pendingAllocationTotal = 0,
 					unfilledAllocationTotal = 0,
 					differenceTotal = 0,
-					count=0;
+					count = 0;
 
 				var result = [];
 				// var count;
@@ -694,7 +719,7 @@
 							pendingAllocationTotal: 0,
 							unfilledAllocationTotal: 0,
 							differenceTotal: 0,
-							count:0
+							count: 0
 						};
 						result.push(res[value.model]);
 					}
@@ -719,7 +744,7 @@
 				this.dynamicIndices = [];
 
 				$.each(resGrouped, function (i, item) {
-					item.currentDSTotal = (item.currentDSTotal/item.count);
+					item.currentDSTotal = (item.currentDSTotal / item.count);
 					addRow(item);
 				});
 
@@ -757,7 +782,7 @@
 								text: item.currentCTSTotal
 							}),
 							new sap.m.Text({
-								text:item.currentDSTotal
+								text: item.currentDSTotal
 							}),
 							new sap.m.Text({
 								text: item.currentUDSTotal
@@ -766,7 +791,7 @@
 								text: item.suggestedTotal
 							}),
 							new sap.m.Text({
-								text: ""   //item.suggestedDSTotal
+								text: "" //item.suggestedDSTotal
 							}),
 							new sap.m.Text({
 								text: item.requestedVolumeTotal
@@ -775,7 +800,7 @@
 								text: item.differenceTotal
 							}),
 							new sap.m.Text({
-								text: ""  //item.requestedDSTotal
+								text: "" //item.requestedDSTotal
 							})
 						]
 					});
@@ -803,7 +828,7 @@
 						"suffix": "",
 						"suffix_desc": "",
 						"suggested": item.suggestedTotal,
-						"suggested_Ds":"", // item.suggestedDSTotal,
+						"suggested_Ds": "", // item.suggestedDSTotal,
 						"unfilled_Allocation": "",
 						"visibleProperty": true,
 						"zsrc_werks": "",
@@ -2180,7 +2205,7 @@
 						that._modelRequestDialog.close();
 						sap.ui.getCore().setModel(that.getView().getModel("stockDataModel"), "stockDataModel");
 						sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
-						setTimeout(function(){ 
+						setTimeout(function () {
 							that._loadTheData();
 						}, 3000);
 
@@ -2259,13 +2284,14 @@
 					this.getSourcePlant(objNew);
 				} else {
 					_that.onClickCloseNewModelDialog();
+					_that.onClickShowAllX(true);
 					MessageBox.error(newAddedModel + "configuration already exists");
 					var aFilters = [];
 					var filter = new Filter([
-						// new Filter("model", sap.ui.model.FilterOperator.Contains, newAddedModel),
-						new Filter("modelCodeDescription", sap.ui.model.FilterOperator.Contains, newAddedModelAndDescription.split(" - ")[0]),
-						new Filter("suffix_desc", sap.ui.model.FilterOperator.Contains, newAddedSuffixAndDescription.split(" - ")[0]),
-						new Filter("colour_Trim", sap.ui.model.FilterOperator.Contains, newAddedExteriorColorCodeAndDescription.split(" - ")[0])
+						new Filter("model", sap.ui.model.FilterOperator.Contains, newAddedModel),
+						new Filter("zzsuffix", sap.ui.model.FilterOperator.Contains, newAddedSuffix),
+						// new Filter("suffix_desc", sap.ui.model.FilterOperator.Contains, newAddedSuffixAndDescription.split(" - ")[0]),
+						new Filter("zzextcol", sap.ui.model.FilterOperator.Contains, newAddedExteriorColorCode)
 					], true);
 					aFilters.push(filter);
 					this.byId("stockDataModelTableId").getBinding("items").filter(aFilters, "Application");
