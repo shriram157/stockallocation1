@@ -2180,11 +2180,9 @@
 						that._modelRequestDialog.close();
 						sap.ui.getCore().setModel(that.getView().getModel("stockDataModel"), "stockDataModel");
 						sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
-						// setTimeout(function(){ 
-						that._loadTheData();
-						//
-						// }, 
-						// 2000);
+						setTimeout(function(){ 
+							that._loadTheData();
+						}, 3000);
 
 					}),
 					error: function (err) {
