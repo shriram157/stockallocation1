@@ -712,8 +712,7 @@
 					res[value.model].unfilledAllocationTotal = +res[value.model].unfilledAllocationTotal + +value.unfilled_Allocation;
 					res[value.model].differenceTotal = +res[value.model].differenceTotal + +value.difference;
 					res[value.model].requestedVolumeTotal = +res[value.model].requestedVolumeTotal + +value.requested_Volume;
-					res[value.model].count = res[value.model].count + 1;
-
+					if(res[value.model].count != 0){res[value.model].count = res[value.model].count + 1;}
 					return res;
 				}, {});
 				this.dynamicIndices = [];
