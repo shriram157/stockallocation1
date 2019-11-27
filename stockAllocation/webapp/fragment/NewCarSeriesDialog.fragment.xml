@@ -6,7 +6,7 @@
 					emptySpanM="0" columnsL="1" columnsM="1" class="styleForms">
 					<f:content>
 						<Select id="ID_SeriesDesc" forceSelection="true" items="{SeriesDataModel>/results}" change="onSeriesSelectionChange" fieldGroupIds="requiredField">
-							<core:Item key="{SeriesDataModel>zzseries}" text="{SeriesDataModel>zzseries} - {SeriesDataModel>zzseries_desc_en}" />
+							<core:Item key="{SeriesDataModel>zzseries}" text="{SeriesDataModel>zzmoyr} - {SeriesDataModel>zzseries} {SeriesDataModel>zzseries_desc_en}" />
 							
 								<!--text="{SeriesDataModel>zzseries} - {=${SeriesDataModel>localLang}==='E' ? ${SeriesDataModel>zzseries_desc_en}:${SeriesDataModel>zzseries_desc_en}}"/>-->
 						</Select>

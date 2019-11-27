@@ -42,7 +42,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 
 			var oViewModel = this.getView().getModel("detailView");
-			oViewModel.setProperty("/visibleSeriesBtn", false);			
+			oViewModel.setProperty("/visibleSeriesBtn", false);
 
 			// on every route matched lets set the count. 
 
@@ -75,16 +75,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					return k;
 			});
 
-			if (alreadyExists.length>0) {
-				MessageBox.error(Data.zzseries +" & "+Data.zzmoyr+" "+ this._oResourceBundle.getText("AlreadyExists"));
+			if (alreadyExists.length > 0) {
+				MessageBox.error(Data.zzseries + " & " + Data.zzmoyr + " " + this._oResourceBundle.getText("AlreadyExists"));
 				this.onClickCloseNewSeriesDialog();
 			} else {
+				var oModelDetailViewData = this.getView().getModel('detailView').getData();
 				var oRouteConfig = new sap.ui.model.json.JSONModel();
 				sap.ui.getCore().setModel(oRouteConfig, "RouteConfig");
 				this.seriesObj.zzmoyr = Data.zzmoyr;
 				this.seriesObj.zzseries = Data.zzseries;
 				this.seriesObj.zzseries_desc_en = Data.zzseries_desc_en;
 				this.seriesObj.Language = this.sCurrentLocale;
+
+				this.seriesObj.parsedtodayDate = oModelDetailViewData.parsedtodayDate;
+				this.seriesObj.windowEndDateP = oModelDetailViewData.windowEndDateP;
+
 				// this.seriesObj.sSelectedDealer = this.sSelectedDealer;
 				if (!this.sSelectedDealerText) {
 					this.seriesObj.Business_Partner_name = "";
@@ -107,6 +112,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 
 		onClickAddNewSeriesDialog: function (oEvt) {
+			this.onClickCloseNewSeriesDialog();
 			this.oRouter.navTo("StockAllocation", {});
 		},
 
@@ -431,7 +437,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				visibleForInternalUser: true,
 				editAllowed: true,
 				enabled: true,
-				visibleSeriesBtn:false
+				visibleSeriesBtn: false
 			});
 
 			this.getView().setModel(this._oViewModel, "detailView");

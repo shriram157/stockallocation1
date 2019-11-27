@@ -10,7 +10,7 @@
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
 		var _timeout, objNew = {},
-			backupModelData, processDate, itemModel,newseriesFlag;
+			backupModelData, processDate, itemModel, newseriesFlag;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -20,7 +20,7 @@
 
 				this.resultsLossofData = false;
 				if (sap.ui.getCore().getModel("RouteConfig") && sap.ui.getCore().getModel("RouteConfig").getData()) {
-					newseriesFlag =true;
+					newseriesFlag = true;
 					var routeConfig = sap.ui.getCore().getModel("RouteConfig").getData();
 					// this.zzseries = routeConfig.zzseries;
 					// this.zzmoyr = routeConfig.zzmoyr;
@@ -34,6 +34,8 @@
 					this.Business_Partner_name = routeConfig.Business_Partner_name;
 					this.UserId = routeConfig.Dealer;
 					this.sLoggedinUserType = routeConfig.sLoggedinUserType;
+					this.parsedtodayDate = routeConfig.parsedtodayDate;
+					this.windowEndDateP = routeConfig.windowEndDateP;
 					var Language = routeConfig.Language;
 					// var Language = selectedSeries.Language;
 					var enableForDealer, setEnableFalseReset, viewInSuggestedTab;
@@ -51,6 +53,28 @@
 
 					this.modelClickFlag = false;
 
+					if ((this.parsedtodayDate >= this.windowEndDateP)) {
+						// turn of the editable fields
+						enableForDealer = false;
+						this.outSideWindowDate = true;
+						setEnableFalseReset = false;
+						this.removeSuggestedRequestedZeroQty = true;
+
+					} else {
+						this.outSideWindowDate = false;
+						if (this.sLoggedinUserIsDealer === true) {
+							setEnableFalseReset = true;
+						} else {
+							setEnableFalseReset = false;
+						}
+					}
+
+					if ((this.parsedtodayDate >= this.windowEndDateP)) {
+						viewInSuggestedTab = false;
+						this.removeSuggestedRequestedZeroQty = true;
+					}
+
+
 					this._oViewLocalData = new sap.ui.model.json.JSONModel({
 						busy: false,
 						delay: 0,
@@ -59,7 +83,7 @@
 						editAllowed: true,
 						enabled: true,
 						BusinessPartnerName: this.Business_Partner_name,
-						series: this.zzseries,
+						series: this.zzmoyr + " " + this.zzseries,
 						enableForDealer: enableForDealer,
 						viewInSuggestedTab: viewInSuggestedTab,
 						setEnableFalseReset: setEnableFalseReset,
@@ -76,7 +100,8 @@
 					this.yearModel = routeConfig.zzmoyr;
 					var Language = routeConfig.Language;
 
-				} else {newseriesFlag =false;
+				} else {
+					newseriesFlag = false;
 					var selectedSeries = sap.ui.getCore().getModel('selectedSeries').getData();
 					processDate = selectedSeries.zzprocess_dt;
 					console.log("processDate", processDate);
@@ -1433,7 +1458,7 @@
 			},
 
 			_loadTheData: function (oEvent) {
-				var that=this;
+				var that = this;
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
 						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" + "and zzmoyr eq '" + this.yearModel +
@@ -2329,7 +2354,7 @@
 				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getText();
 				var temp = this.oGlobalJSONModel.getData().colorData;
 				var tempOBj = [newAddedModel, newAddedModelAndDescription, newAddedSuffixAndDescription, newAddedExteriorColorCodeAndDescription];
-				
+
 				var oModelStock = this.getView().getModel("stockDataModel");
 				this.oModelStockData = this.getView().getModel("stockDataModel").getData();
 				// var existingModelData = oModelStock.getData();
@@ -2386,7 +2411,7 @@
 				} else {
 					_that.onClickCloseNewModelDialog();
 					_that.onClickShowAllX(true);
-					MessageBox.error(newAddedModel +" "+ _that._oResourceBundle.getText("AlreadyExists"));
+					MessageBox.error(newAddedModel + " " + _that._oResourceBundle.getText("AlreadyExists"));
 					var aFilters = [];
 					var filter = new Filter([
 						new Filter("model", sap.ui.model.FilterOperator.Contains, newAddedModel),
