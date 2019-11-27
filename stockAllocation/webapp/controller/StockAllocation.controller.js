@@ -36,6 +36,9 @@
 					this.sLoggedinUserType = routeConfig.sLoggedinUserType;
 					this.parsedtodayDate = routeConfig.parsedtodayDate;
 					this.windowEndDateP = routeConfig.windowEndDateP;
+					this.etaFromNewSeries = routeConfig.etaFromNewSeries;
+					this.etaToNewSeries = routeConfig.etaToNewSeries;
+
 					var Language = routeConfig.Language;
 					// var Language = selectedSeries.Language;
 					var enableForDealer, setEnableFalseReset, viewInSuggestedTab;
@@ -73,7 +76,6 @@
 						viewInSuggestedTab = false;
 						this.removeSuggestedRequestedZeroQty = true;
 					}
-
 
 					this._oViewLocalData = new sap.ui.model.json.JSONModel({
 						busy: false,
@@ -475,7 +477,9 @@
 					var suggestedQtyFromTCINumb = Number(sendTheDataToSAP[i].suggested);
 
 					var dealerCode = this.dealerCode;
-					var orderPrefix = this.orderPrefix.toUpperCase();
+					if (!!this.orderPrefix) {
+						var orderPrefix = this.orderPrefix.toUpperCase();
+					}
 					//  greater of suggested qty or requested qty should be moved to 		
 					var suggestedQtyFromTCI = sendTheDataToSAP[i].suggested;
 					if (suggestedQtyFromTCINumb > requestedVolumeNumb) {
@@ -555,7 +559,9 @@
 				var suggestedQtyFromTCINumb = Number(sendTheDataToSAP.suggested);
 
 				var dealerCode = this.dealerCode;
-				var orderPrefix = this.orderPrefix.toUpperCase();
+				if (!!this.orderPrefix) {
+					var orderPrefix = this.orderPrefix.toUpperCase();
+				}
 				//  greater of suggested qty or requested qty should be moved to 		
 				var suggestedQtyFromTCI = sendTheDataToSAP.suggested;
 				if (suggestedQtyFromTCINumb > requestedVolumeNumb) {
@@ -1521,6 +1527,12 @@
 						var uiForcolorTrim;
 						var dealerCode = this.dealerCode;
 						var localeG = this.sCurrentLocale;
+						if (newseriesFlag == true && this.etaFromNewSeries && this.etaToNewSeries) {
+							etaFromAndToDates.push({
+								sEtaFromData: this.etaFromNewSeries,
+								sEtaToData: this.etaToNewSeries,
+							});
+						}
 						$.each(oData.results, function (i, item) {
 
 							item.suggested_ds = Math.round(item.suggested_ds);
@@ -1558,11 +1570,13 @@
 							// 	//	sEtaToData: item.zzprod_month
 							// }); 
 
-							etaFromAndToDates.push({
-								sEtaFromData: item.zzstart_date,
-								sEtaToData: item.zzend_date,
-								//	sEtaToData: item.zzprod_month
-							}); //change by aarti
+							if (newseriesFlag == false) {
+								etaFromAndToDates.push({
+									sEtaFromData: item.zzstart_date,
+									sEtaToData: item.zzend_date,
+									//	sEtaToData: item.zzprod_month
+								}); //change by aarti
+							}
 
 							oStockAllocationData.push({
 								model: item.zzmodel,

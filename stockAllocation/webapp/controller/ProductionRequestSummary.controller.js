@@ -5,7 +5,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageToast",
 ], function (BaseController, MessageBox, Utilities, History, MessageToast) {
 	"use strict";
-	var suggestedCount, requestedCount, allocatedCount, tabClicked;
+	var suggestedCount, requestedCount, allocatedCount, tabClicked, etaFromNewSeries, etaToNewSeries;
 	return BaseController.extend("suggestOrder.controller.ProductionRequestSummary", {
 		handleRouteMatched: function (oEvent) {
 			// window.location.reload();
@@ -94,7 +94,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				this.seriesObj.zzseries = Data.zzseries;
 				this.seriesObj.zzseries_desc_en = Data.zzseries_desc_en;
 				this.seriesObj.Language = this.sCurrentLocale;
-
+				
+				this.seriesObj.etaFromNewSeries = etaFromNewSeries;
+				this.seriesObj.etaToNewSeries = etaToNewSeries;
+				
 				this.seriesObj.parsedtodayDate = oModelDetailViewData.parsedtodayDate;
 				this.seriesObj.windowEndDateP = oModelDetailViewData.windowEndDateP;
 
@@ -929,12 +932,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oGetModelCount = this.getView().getModel("ZCDS_SUGGEST_ORD_COUNT_CDS");
 
 			oGetModelCount.read("/ZCDS_SUGGEST_ORD_COUNT", {
-
 				urlParameters: {
 					"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "'and zdivision eq '" + this.sapDivision + "'"
 				},
 
 				success: function (oData) {
+					
+					etaFromNewSeries = oData.results[0].zzstart_date;
+					etaToNewSeries = oData.results[0].zzend_date;
+					
 					var oViewCountData = [];
 					var oModel = this.getView().getModel("detailView");
 					$.each(oData.results, function (i, item) {
