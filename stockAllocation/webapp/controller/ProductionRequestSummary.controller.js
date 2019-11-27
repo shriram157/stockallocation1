@@ -70,12 +70,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this.seriesObj = {};
 
 			this.oModelStockData = this.getView().getModel("suggestedDataModel").getData();
+			this.oModelStockData2 = this.getView().getModel("requestedDataModel").getData();
+			
 			var alreadyExists = this.oModelStockData.filter(function (k) {
-				if (k.modelYear === Data.zzmoyr && k.zzseries === Data.zzseries)
+				if (k.modelYear === Data.zzmoyr && k.zzseries === Data.zzseries){
 					return k;
+				}
+			});
+			var alreadyExists2 = this.oModelStockData2.filter(function (k) {
+				if (k.modelYear === Data.zzmoyr && k.zzseries === Data.zzseries){
+					return k;
+				}
 			});
 
-			if (alreadyExists.length > 0) {
+			if ((alreadyExists.length > 0)||(alreadyExists2.length > 0)) {
 				MessageBox.error(Data.zzseries + " & " + Data.zzmoyr + " " + this._oResourceBundle.getText("AlreadyExists"));
 				this.onClickCloseNewSeriesDialog();
 			} else {
