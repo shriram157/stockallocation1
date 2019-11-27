@@ -10,7 +10,7 @@
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
 		var _timeout, objNew = {},
-			backupModelData, processDate, itemModel;
+			backupModelData, processDate, itemModel,newseriesFlag;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -19,122 +19,161 @@
 				var oParams = {};
 
 				this.resultsLossofData = false;
+				if (sap.ui.getCore().getModel("RouteConfig") && sap.ui.getCore().getModel("RouteConfig").getData()) {
+					newseriesFlag =true;
+					var routeConfig = sap.ui.getCore().getModel("RouteConfig").getData();
+					// this.zzseries = routeConfig.zzseries;
+					// this.zzmoyr = routeConfig.zzmoyr;
 
-				var selectedSeries = sap.ui.getCore().getModel('selectedSeries').getData();
-				processDate = selectedSeries.zzprocess_dt;
+					this.dealerCode = routeConfig.Dealer;
+					this.zzseries = routeConfig.zzseries;
+					this.zzmoyr = routeConfig.zzmoyr;
+					processDate = routeConfig.processDate;
+					this.whichTabClicked = routeConfig.whichTabClicked;
+					this.seriesDescription = routeConfig.zzseries_desc_en;
+					this.Business_Partner_name = routeConfig.Business_Partner_name;
+					this.UserId = routeConfig.Dealer;
+					this.sLoggedinUserType = routeConfig.sLoggedinUserType;
+					var Language = routeConfig.Language;
+					// var Language = selectedSeries.Language;
+					var enableForDealer, setEnableFalseReset, viewInSuggestedTab;
 
-				// if(sap.ui.getCore().getModel("suggestedDataModel")){
-				// 	firstScreenData = sap.ui.getCore().getModel("suggestedDataModel").getData();
-				// }
-				console.log("processDate", processDate);
-
-				this.zzseries = selectedSeries.zzseries;
-				this.seriesDescription = selectedSeries.seriesDescription;
-				this.zzmoyr = selectedSeries.zzmoyr;
-				this.UserId = selectedSeries.UserId;
-
-				this.removeSuggestedRequestedZeroQty = false;
-				var modelSereiesHead = selectedSeries.series; //selectedSeries.Zzmoyr + " - " + selectedSeries.zzseries_desc_en;
-				this.orderPrefix = selectedSeries.orderPrefix;
-				var enableForDealer, setEnableFalseReset, viewInSuggestedTab;
-
-				if (selectedSeries.whichTabClicked == "requestedTab") {
-					viewInSuggestedTab = false;
-				}
-				if (selectedSeries.sLoggedinUserType == "Dealer_User") {
-					this.sLoggedinUserIsDealer = true;
-					enableForDealer = true;
-				} else {
-					this.sLoggedinUserIsDealer = false;
-					enableForDealer = false;
-				}
-
-				this.modelClickFlag = false;
-
-				if ((selectedSeries.parsedtodayDate >= selectedSeries.windowEndDateP)) {
-					// turn of the editable fields
-					enableForDealer = false;
-					this.outSideWindowDate = true;
-					setEnableFalseReset = false;
-					this.removeSuggestedRequestedZeroQty = true;
-
-				} else {
-					this.outSideWindowDate = false;
-					if (this.sLoggedinUserIsDealer === true) {
-						setEnableFalseReset = true;
-					} else {
-						setEnableFalseReset = false;
+					if (this.whichTabClicked == "requestedTab") {
+						viewInSuggestedTab = false;
 					}
+					if (this.sLoggedinUserType == "Dealer_User") {
+						this.sLoggedinUserIsDealer = true;
+						enableForDealer = true;
+					} else {
+						this.sLoggedinUserIsDealer = false;
+						enableForDealer = false;
+					}
+
+					this.modelClickFlag = false;
+
+					this._oViewLocalData = new sap.ui.model.json.JSONModel({
+						busy: false,
+						delay: 0,
+						visibleForDealer: true,
+						visibleForInternalUser: true,
+						editAllowed: true,
+						enabled: true,
+						BusinessPartnerName: this.Business_Partner_name,
+						series: this.zzseries,
+						enableForDealer: enableForDealer,
+						viewInSuggestedTab: viewInSuggestedTab,
+						setEnableFalseReset: setEnableFalseReset,
+						etaFrom: "ETA :01 Feb 2019 To 28 Feb 2019",
+						seriesSuggestedVolume: 0,
+						fromWhichTabClickIamIn: this.whichTabClicked,
+						setResetEnabled: false
+
+					});
+
+					var oModelLocalData = this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
+
+					this.series = routeConfig.zzseries;
+					this.yearModel = routeConfig.zzmoyr;
+					var Language = routeConfig.Language;
+
+				} else {newseriesFlag =false;
+					var selectedSeries = sap.ui.getCore().getModel('selectedSeries').getData();
+					processDate = selectedSeries.zzprocess_dt;
+					console.log("processDate", processDate);
+
+					this.zzseries = selectedSeries.zzseries;
+					this.seriesDescription = selectedSeries.seriesDescription;
+					this.zzmoyr = selectedSeries.zzmoyr;
+					this.UserId = selectedSeries.UserId;
+
+					this.removeSuggestedRequestedZeroQty = false;
+					var modelSereiesHead = selectedSeries.series; //selectedSeries.Zzmoyr + " - " + selectedSeries.zzseries_desc_en;
+					this.orderPrefix = selectedSeries.orderPrefix;
+					var enableForDealer, setEnableFalseReset, viewInSuggestedTab;
+
+					if (selectedSeries.whichTabClicked == "requestedTab") {
+						viewInSuggestedTab = false;
+					}
+					if (selectedSeries.sLoggedinUserType == "Dealer_User") {
+						this.sLoggedinUserIsDealer = true;
+						enableForDealer = true;
+					} else {
+						this.sLoggedinUserIsDealer = false;
+						enableForDealer = false;
+					}
+
+					this.modelClickFlag = false;
+
+					if ((selectedSeries.parsedtodayDate >= selectedSeries.windowEndDateP)) {
+						// turn of the editable fields
+						enableForDealer = false;
+						this.outSideWindowDate = true;
+						setEnableFalseReset = false;
+						this.removeSuggestedRequestedZeroQty = true;
+
+					} else {
+						this.outSideWindowDate = false;
+						if (this.sLoggedinUserIsDealer === true) {
+							setEnableFalseReset = true;
+						} else {
+							setEnableFalseReset = false;
+						}
+					}
+
+					if ((selectedSeries.parsedtodayDate >= selectedSeries.windowEndDateP) && (selectedSeries.allocationIndicator == "A")) {
+						viewInSuggestedTab = false;
+						this.removeSuggestedRequestedZeroQty = true;
+					}
+
+					if (selectedSeries.allocationIndicator == "R") {
+						viewInSuggestedTab = true;
+
+					}
+
+					if (selectedSeries.allocationIndicator == "S") {
+						viewInSuggestedTab = true;
+					}
+
+					// if it is allocated and greater than window due date,  then turn off the 
+					this.comingFromAddingaModel = false;
+					this._oViewLocalData = new sap.ui.model.json.JSONModel({
+						busy: false,
+						delay: 0,
+						visibleForDealer: true,
+						visibleForInternalUser: true,
+						editAllowed: true,
+						enabled: true,
+						BusinessPartnerName: selectedSeries.Business_Partner_name,
+						series: modelSereiesHead,
+						enableForDealer: enableForDealer,
+						viewInSuggestedTab: viewInSuggestedTab,
+						setEnableFalseReset: setEnableFalseReset,
+						etaFrom: "ETA :01 Feb 2019 To 28 Feb 2019",
+						seriesSuggestedVolume: selectedSeries.suggestedVolume,
+						fromWhichTabClickIamIn: selectedSeries.whichTabClicked,
+						setResetEnabled: false
+
+					});
+
+					var oModelLocalData = this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
+
+					// this.getView().getModel("oViewLocalDataModel").setProperty("/setEnableFalseReset", true); //local testing
+
+					// make a call to SAP and fetch the data for the 4th screen
+					this.dealerCode = selectedSeries.dealerCode;
+					this.series = selectedSeries.zzseries;
+					this.yearModel = selectedSeries.zzmoyr;
+					var Language = selectedSeries.Language;
 				}
+				this.oModel = this.getOwnerComponent().getModel("ZCDS_SUGGEST_ORD_CDS");
+				this.afterSAPDataUpdate = false;
+				this._setTheLanguage(Language); // set the language
+				// Also the logo for the second screen. 
+				this._setTheLogo();
 				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
 				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
 
 				this._getAllTheModelsFortheSeries();
-
-				if ((selectedSeries.parsedtodayDate >= selectedSeries.windowEndDateP) && (selectedSeries.allocationIndicator == "A")) {
-					viewInSuggestedTab = false;
-					this.removeSuggestedRequestedZeroQty = true;
-				}
-
-				if (selectedSeries.allocationIndicator == "R") {
-					viewInSuggestedTab = true;
-
-				}
-
-				if (selectedSeries.allocationIndicator == "S") {
-					viewInSuggestedTab = true;
-				}
-
-				// if it is allocated and greater than window due date,  then turn off the 
-				this.comingFromAddingaModel = false;
-				this._oViewLocalData = new sap.ui.model.json.JSONModel({
-					busy: false,
-					delay: 0,
-					visibleForDealer: true,
-					visibleForInternalUser: true,
-					editAllowed: true,
-					enabled: true,
-					BusinessPartnerName: selectedSeries.Business_Partner_name,
-					series: modelSereiesHead,
-					enableForDealer: enableForDealer,
-					viewInSuggestedTab: viewInSuggestedTab,
-					setEnableFalseReset: setEnableFalseReset,
-					etaFrom: "ETA :01 Feb 2019 To 28 Feb 2019",
-					seriesSuggestedVolume: selectedSeries.suggestedVolume,
-					fromWhichTabClickIamIn: selectedSeries.whichTabClicked,
-					setResetEnabled: false
-
-				});
-
-				var oModelLocalData = this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
-
-				this.getView().getModel("oViewLocalDataModel").setProperty("/setEnableFalseReset", true); //local testing
-
-				// make a call to SAP and fetch the data for the 4th screen
-				this.dealerCode = selectedSeries.dealerCode;
-				this.series = selectedSeries.zzseries;
-				this.yearModel = selectedSeries.zzmoyr;
-				var Language = selectedSeries.Language;
-
-				this._setTheLanguage(Language); // set the language
-				//	var oGetModel = this.getView().getModel("ZCDS_SUGGEST_ORD_CDS");
-
-				// Also the logo for the second screen. 
-				this._setTheLogo();
-				// this.onClickShowAll(false);
-
-				// initilize the models
-
-				this.oGlobalJSONModel = new sap.ui.model.json.JSONModel();
-				// _that.oUserModel = new JSONModel();
-				// _that.oModelYearModel = new JSONModel();
-				// _that.getView().setModel(_that.oModelYearModel, "ModelYearModel");
-				this.getView().setModel(this.oGlobalJSONModel, "GlobalJSONModel");
-
-				this.oModel = this.getOwnerComponent().getModel("ZCDS_SUGGEST_ORD_CDS");
-				this.afterSAPDataUpdate = false;
-				// var oGetModelDetailData = this.getView().getModel("ZCDS_SUGGEST_ORD_CDS");
-				// oGetModelDetailData.read("/zcds_suggest_ord", {
 				this._loadTheData(); // data to SAP screen
 
 			},
@@ -149,7 +188,7 @@
 				if (!!this.getView().getModel("stockDataModel")) {
 					var oTable = this.getView().byId("stockDataModelTableId");
 					var oModelData2 = this.getView().getModel("stockDataModel").getData();
-					if(evt.getSource().getPressed() == false) {
+					if (evt.getSource().getPressed() == false) {
 						console.log("pressed", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
@@ -176,7 +215,7 @@
 				if (!!this.getView().getModel("stockDataModel")) {
 					var oTable = this.getView().byId("stockDataModelTableId");
 					var oModelData2 = this.getView().getModel("stockDataModel").getData();
-					if (evt == false) { 
+					if (evt == false) {
 						console.log("pressed", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
@@ -192,7 +231,7 @@
 							}
 						}
 						// this._calculateTotals();
-					} 
+					}
 					this.getView().getModel("stockDataModel").updateBindings(true);
 					this._calculateTotals();
 				}
@@ -980,28 +1019,70 @@
 					// }
 
 				} else {
+					if (newseriesFlag == true) {
+						var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
+						var oTotalRecevied = new sap.ui.model.json.JSONModel();
+						oTotalRecevied.setData(this.oInitialTotalsForUI);
+						oTotalRecevied.setSizeLimit(1000);
+						this.getView().setModel(oTotalRecevied, "initialStockTotalModel");
+						var oInitialTotalStockModel = oInitalTotalStock.getData();
+						oInitialTotalStockModel.push({
+							"suggestedTotal": "0",
+							"currentDSTotal": "0",
+							"currentTotal": "0",
+							"currentCTSTotal": "0",
+							"currentCPTotal": "0",
+							"currentUDSTotal": "0",
+							"differenceTotal": "0",
+							"requestedVolumeTotal": "0",
+							"suggestedDSTotal": "0",
+							"requestedDSTotal": "0",
+							"allocatedTotal": "0",
+							"allocatedDSTotal": "0",
+							"pendingAllocationTotal": "0",
+							"unfilledAllocationTotal": "0"
+						});
 
-					var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
-					var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
-					var oInitialTotalStockModel = oInitalTotalStock.getData();
+						// oInitialTotalStockModel["0"].suggestedTotal = 0;
+						// oInitialTotalStockModel["0"].currentDSTotal = 0;
+						// oInitialTotalStockModel["0"].currentTotal = 0;
 
-					oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
-					oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
-					oInitialTotalStockModel["0"].currentTotal = currentTotal;
+						// oInitialTotalStockModel["0"].currentCTSTotal = 0;
+						// oInitialTotalStockModel["0"].currentCPTotal = 0;
+						// oInitialTotalStockModel["0"].currentUDSTotal = 0;
 
-					oInitialTotalStockModel["0"].currentCTSTotal = currentCTSTotal;
-					oInitialTotalStockModel["0"].currentCPTotal = currentCPTotal;
-					oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
+						// oInitialTotalStockModel["0"].differenceTotal = 0;
+						// oInitialTotalStockModel["0"].requestedVolumeTotal = 0;
+						// oInitialTotalStockModel["0"].suggestedDSTotal = 0;
+						// oInitialTotalStockModel["0"].requestedDSTotal = 0;
 
-					oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
-					oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
-					oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
-					oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
+						// oInitialTotalStockModel["0"].allocatedTotal = 0;
+						// oInitialTotalStockModel["0"].allocatedDSTotal = 0;
+						// oInitialTotalStockModel["0"].pendingAllocationTotal = 0;
+						// oInitialTotalStockModel["0"].unfilledAllocationTotal = 0;
+					} else {
+						var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
+						var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
+						var oInitialTotalStockModel = oInitalTotalStock.getData();
 
-					oInitialTotalStockModel["0"].allocatedTotal = allocatedTotal;
-					oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
-					oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
-					oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
+						oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
+						oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
+						oInitialTotalStockModel["0"].currentTotal = currentTotal;
+
+						oInitialTotalStockModel["0"].currentCTSTotal = currentCTSTotal;
+						oInitialTotalStockModel["0"].currentCPTotal = currentCPTotal;
+						oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
+
+						oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
+						oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
+						oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
+						oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
+
+						oInitialTotalStockModel["0"].allocatedTotal = allocatedTotal;
+						oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
+						oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
+						oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
+					}
 				}
 				// }
 				oInitalTotalStock.updateBindings(true);
@@ -1352,6 +1433,7 @@
 			},
 
 			_loadTheData: function (oEvent) {
+				var that=this;
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
 						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" + "and zzmoyr eq '" + this.yearModel +
@@ -1361,7 +1443,7 @@
 					success: function (oData) {
 						sap.ui.core.BusyIndicator.hide();
 						var oStockAllocationData = [];
-						var oInitialTotalsForUI = [];
+						that.oInitialTotalsForUI = [];
 						var oInitialTotalsForUIBkup = [];
 						var oStockBeforeReset = [];
 						var oStockAlocationBkup = [];
@@ -1370,7 +1452,7 @@
 						var currentStatus;
 						var etaFromAndToDates = [];
 
-						var oModelLocalData = this.getView().getModel("oViewLocalDataModel");
+						var oModelLocalData = that.getView().getModel("oViewLocalDataModel");
 
 						var totalRecordsReceived = oData.results.length;
 
@@ -1599,45 +1681,64 @@
 
 							if (totalRecordsReceived == i) {
 
-								oInitialTotalsForUI.push({
+								if (newseriesFlag == true) {
+									that.oInitialTotalsForUI.push({
+										"suggestedTotal": "0",
+										"currentDSTotal": "0",
+										"currentTotal": "0",
+										"currentCTSTotal": "0",
+										"currentCPTotal": "0",
+										"currentUDSTotal": "0",
+										"differenceTotal": "0",
+										"requestedVolumeTotal": "0",
+										"suggestedDSTotal": "0",
+										"requestedDSTotal": "0",
+										"allocatedTotal": "0",
+										"allocatedDSTotal": "0",
+										"pendingAllocationTotal": "0",
+										"unfilledAllocationTotal": "0"
+									});
+								} else if (newseriesFlag == false) {
+									that.oInitialTotalsForUI.push({
 
-									currentTotal: zeroSuggestioncurrentTotal,
-									currentDSTotal: zeroSuggestioncurrentDSTotal,
-									currentCTSTotal: zeroSuggestioncurrentCTSTotal,
-									currentCPTotal: zeroSuggestioncurrentCPTotal,
-									currentUDSTotal: zeroSuggestioncurrentUDSTotal,
+										currentTotal: zeroSuggestioncurrentTotal,
+										currentDSTotal: zeroSuggestioncurrentDSTotal,
+										currentCTSTotal: zeroSuggestioncurrentCTSTotal,
+										currentCPTotal: zeroSuggestioncurrentCPTotal,
+										currentUDSTotal: zeroSuggestioncurrentUDSTotal,
 
-									differenceTotal: zeroSuggestiondifferenceTotal,
-									suggestedTotal: zeroSuggestionsuggestedTotal,
-									suggestedDSTotal: zeroSuggestionsuggestedDSTotal,
-									requestedVolumeTotal: requestedVolumeTotal,
-									requestedDSTotal: zeroSuggestionrequestedDSTotal,
+										differenceTotal: zeroSuggestiondifferenceTotal,
+										suggestedTotal: zeroSuggestionsuggestedTotal,
+										suggestedDSTotal: zeroSuggestionsuggestedDSTotal,
+										requestedVolumeTotal: requestedVolumeTotal,
+										requestedDSTotal: zeroSuggestionrequestedDSTotal,
 
-									allocatedTotal: zeroSuggestionallocatedTotal,
-									allocatedDSTotal: zeroSuggestionallocatedDSTotal,
-									pendingAllocationTotal: zeroSuggestionpendingAllocationTotal,
-									unfilledAllocationTotal: zeroSuggestionunfilledAllocationTotal
+										allocatedTotal: zeroSuggestionallocatedTotal,
+										allocatedDSTotal: zeroSuggestionallocatedDSTotal,
+										pendingAllocationTotal: zeroSuggestionpendingAllocationTotal,
+										unfilledAllocationTotal: zeroSuggestionunfilledAllocationTotal
 
-								});
+									});
 
-								oInitialTotalsForUIBkup.push({
-									currentTotal: currentTotal,
-									currentDSTotal: currentDSTotal,
-									currentCTSTotal: currentCTSTotal,
-									currentCPTotal: currentCPTotal,
-									currentUDSTotal: currentUDSTotal,
-									differenceTotal: differenceTotal,
-									suggestedTotal: suggestedTotal,
-									suggestedDSTotal: suggestedDSTotal,
-									requestedDSTotal: requestedDSTotal,
-									requestedVolumeTotal: requestedVolumeTotal,
-									allocatedTotal: allocatedTotal,
-									allocatedDSTotal: allocatedDSTotal,
-									pendingAllocationTotal: pendingAllocationTotal,
-									unfilledAllocationTotal: unfilledAllocationTotal,
-									onlyForBkup: true
+									oInitialTotalsForUIBkup.push({
+										currentTotal: currentTotal,
+										currentDSTotal: currentDSTotal,
+										currentCTSTotal: currentCTSTotal,
+										currentCPTotal: currentCPTotal,
+										currentUDSTotal: currentUDSTotal,
+										differenceTotal: differenceTotal,
+										suggestedTotal: suggestedTotal,
+										suggestedDSTotal: suggestedDSTotal,
+										requestedDSTotal: requestedDSTotal,
+										requestedVolumeTotal: requestedVolumeTotal,
+										allocatedTotal: allocatedTotal,
+										allocatedDSTotal: allocatedDSTotal,
+										pendingAllocationTotal: pendingAllocationTotal,
+										unfilledAllocationTotal: unfilledAllocationTotal,
+										onlyForBkup: true
 
-								});
+									});
+								}
 
 							}
 
@@ -1727,14 +1828,14 @@
 
 						// Totals Received From SAP.
 						var oTotalRecevied = new sap.ui.model.json.JSONModel();
-						oTotalRecevied.setData(oInitialTotalsForUI);
+						oTotalRecevied.setData(this.oInitialTotalsForUI);
 						oTotalRecevied.setSizeLimit(1000);
 						this.getView().setModel(oTotalRecevied, "initialStockTotalModel");
 
 						// Bkup total Model. 
 						var oTotalReceviedBkupModel = new sap.ui.model.json.JSONModel();
 						// oTotalReceviedBkupModel.setData(oInitialTotalsForUIBkup);
-						oTotalReceviedBkupModel.setData(oInitialTotalsForUI);
+						oTotalReceviedBkupModel.setData(this.oInitialTotalsForUI);
 						oTotalReceviedBkupModel.setSizeLimit(1000);
 						this.getView().setModel(oInitialTotalsForUIBkup, "initialStockTotalModelBkup");
 
@@ -2228,7 +2329,7 @@
 				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getText();
 				var temp = this.oGlobalJSONModel.getData().colorData;
 				var tempOBj = [newAddedModel, newAddedModelAndDescription, newAddedSuffixAndDescription, newAddedExteriorColorCodeAndDescription];
-
+				
 				var oModelStock = this.getView().getModel("stockDataModel");
 				this.oModelStockData = this.getView().getModel("stockDataModel").getData();
 				// var existingModelData = oModelStock.getData();
@@ -2285,7 +2386,7 @@
 				} else {
 					_that.onClickCloseNewModelDialog();
 					_that.onClickShowAllX(true);
-					MessageBox.error(newAddedModel + "configuration already exists");
+					MessageBox.error(newAddedModel +" "+ _that._oResourceBundle.getText("AlreadyExists"));
 					var aFilters = [];
 					var filter = new Filter([
 						new Filter("model", sap.ui.model.FilterOperator.Contains, newAddedModel),

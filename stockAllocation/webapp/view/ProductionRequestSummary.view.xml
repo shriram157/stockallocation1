@@ -51,332 +51,334 @@
 						enabled="true" iconDensityAware="false">
 						<content>
 							<!--<ScrollContainer height="100%" width="100%" horizontal="false" vertical="true">-->
-								<ScrollContainer height="85%" vertical="true" focusable="true">
-									<Table sticky="ColumnHeaders" items="{ path: 'suggestedDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
-										showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
-										itemPress="_onTableItemPress" alternateRowColors="true">
-										<infoToolbar/>
-										<headerToolbar>
-											<OverflowToolbar height="54.99374771118164px" design="Solid" visible="true" enabled="true">
-												<content>
-													<Title text="{i18n>TOTAL_SUGGESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-													<Text text="(" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="{detailView>/paranthesisVisible}"/>
-													<Text text="{countViewModel>/0/totalSuggestCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text=")" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="{detailView>/paranthesisVisible}"/>
-													<ToolbarSpacer/>
-													<Button id="showAllSeriesBtn" text="{i18n>SHOW_ALL_SERIES}" type="Accept" iconFirst="true" width="auto"
-														enabled="{detailView>/noZeroRecordFound}" visible="true" iconDensityAware="false" press="onClickShowAllSeries"/>
-												</content>
-											</OverflowToolbar>
-										</headerToolbar>
-										<columns>
-											<Column width="160px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SERIES}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="85px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>ORDER_PREFIX}" width="85.99999237060547px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>TCI_VTN}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SUGGESTED_VOLUME}" width="86.99999237060547px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-										</columns>
-										<items>
-											<ColumnListItem type="Navigation" visible="{suggestedDataModel>visibleProperty}">
-												<cells>
-													<Text text="{suggestedDataModel>series}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-														visible="{suggestedDataModel>visibleProperty}"/>
-													<Input value="{suggestedDataModel>orderPrefix}" type="Text" showValueHelp="false" enabled="true" editable="{detailView>/editOrderPrefix}"
-														visible="{suggestedDataModel>visibleProperty}" width="80px" valueHelpOnly="false" maxLength="5"/>
-													<Text text="{suggestedDataModel>orderNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="{suggestedDataModel>visibleProperty}"/>
-													<Text text="{suggestedDataModel>suggestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="{suggestedDataModel>visibleProperty}"/>
-												</cells>
-											</ColumnListItem>
-										</items>
-									</Table>
-								</ScrollContainer>
-							</content>
-						</IconTabFilter>
-						<IconTabFilter id="iconTabFilterRequested" icon="sap-icon://process" iconColor="Critical" text="{i18n>REQUESTED}"
-							count="{countViewModel>/requestedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true"
-							visible="{detailView>/showRequestedTab}" iconDensityAware="false">
-							<content>
-								<ScrollContainer height="90%" vertical="true" focusable="true">
-									<Table sticky="ColumnHeaders" items="{ path: 'requestedDataModel>/' }" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
-										growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress"
-										alternateRowColors="true">
-										<infoToolbar/>
-										<headerToolbar>
-											<OverflowToolbar width="auto" height="55px" design="Solid" visible="true" enabled="true">
-												<content>
-													<Title text="{i18n>TOTAL_SUGGESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-													<Text text="(" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Text text="{countViewModel>/0/totalSuggestCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Title text="{i18n>TOTAL_REQUESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-													<Text text="(" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Text text="{countViewModel>/0/totalRequestedCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<ToolbarSpacer/>
-												</content>
-											</OverflowToolbar>
-										</headerToolbar>
-										<columns>
-											<Column width="200px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SERIES}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="80px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>ORDER_PREFIX}" width="64.98749542236328px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>ORDER_NUMBER}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SUGGESTED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>REQUESTED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="130px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SUGGESTED_VOLUME_PERCENTAGE_REQUESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin"
-														textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="130px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SUGGESTED_MIX_REQUESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-										</columns>
-										<items>
-											<ColumnListItem type="Navigation">
-												<cells>
-													<Text text="{requestedDataModel>series}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Input value="{requestedDataModel>orderPrefix}" type="Text" showValueHelp="false" enabled="true" editable="{detailView>/editOrderPrefix}"
-														visible="true" width="80px" valueHelpOnly="false" maxLength="5"/>
-													<Text text="{requestedDataModel>orderNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text="{requestedDataModel>suggestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text="{requestedDataModel>requestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text="{requestedDataModel>suggestedVolPercentRequested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
-														textDirection="Inherit" visible="true"/>
-													<Text text="{requestedDataModel>suggestedMixRequested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-												</cells>
-											</ColumnListItem>
-										</items>
-									</Table>
-								</ScrollContainer>
-							</content>
-						</IconTabFilter>
-						<IconTabFilter id="iconTabFilterAllocated" icon="sap-icon://status-completed" iconColor="Positive" text="{i18n>ALLOCATED}"
-							count="{countViewModel>/allocatedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true"
-							visible="{detailView>/showAllocatedTab}" iconDensityAware="false">
-							<content>
-								<ScrollContainer height="90%" vertical="true" focusable="true">
-									<!--<Table items="{path:'allocatedDataModel>/', sorter : { path : 'zzzadddata4' }}" -->
-									<Table sticky="ColumnHeaders" items="{ path: 'allocatedDataModel>/'}" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
-										growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress"
-										alternateRowColors="true">
-										<infoToolbar/>
-										<headerToolbar>
-											<OverflowToolbar width="auto" height="55px" design="Solid" visible="true" enabled="true">
-												<content>
-													<Title text="{i18n>TOTAL_SUGGESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-													<Text text="(" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Text text="{countViewModel>/0/totalSuggestCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Title text="{i18n>TOTAL_REQUESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-													<Text text="(" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Text text="{countViewModel>/0/totalRequestedCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Title text="{i18n>TOTAL_ALLOCATED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-													<Text text="(" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Text text="{countViewModel>/0/totalAllocatedCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Title text="{i18n>TOTAL_PENDING}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-													<Text text="(" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Text text="{countViewModel>/0/totalPendingCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Title text="{i18n>TOTAL_UNFILLED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
-													<Text text="(" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Text text="{countViewModel>/0/totalUnfilledCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text=")" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</content>
-											</OverflowToolbar>
-										</headerToolbar>
-										<columns>
-											<Column width="200px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SERIES}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="130px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>ORDER_NUMBER}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SUGGESTED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>REQUESTED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SUGGESTED_VOLUME_PERCENTAGE_REQUESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin"
-														textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>SUGGESTED_MIX_REQUESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>ALLOCATED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>PERCENT_REQUEST_VOL_ALLOCATED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>PENDING_ALLOCATION}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-											<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
-												mergeDuplicates="false">
-												<header>
-													<Text text="{i18n>UNFILLED_ALLOCATION}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-												</header>
-												<footer/>
-											</Column>
-										</columns>
-										<items>
-											<ColumnListItem type="Navigation">
-												<cells>
-													<Text text="{allocatedDataModel>series}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-													<Text text="{allocatedDataModel>orderNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text="{allocatedDataModel>suggestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text="{allocatedDataModel>requestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text="{allocatedDataModel>suggestedVolPercentRequested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
-														textDirection="Inherit" visible="true"/>
-													<Text text="{allocatedDataModel>suggestedMixRequested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text="{allocatedDataModel>allocatedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text="{allocatedDataModel>percentRequestVolAllocated}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
-														textDirection="Inherit" visible="true"/>
-													<Text text="{allocatedDataModel>pendingAllocation}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-													<Text text="{allocatedDataModel>unfilledAllocation}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-														visible="true"/>
-												</cells>
-											</ColumnListItem>
-										</items>
-									</Table>
-								</ScrollContainer>
-							</content>
-						</IconTabFilter>
-					</items>
-					<content/>
-				</IconTabBar>
-			</content>
-			<footer/>
-			<headerContent></headerContent>
-			<subHeader/>
-			<customHeader/>
-		</Page>
-	</mvc:View>
+							<ScrollContainer height="85%" vertical="true" focusable="true">
+								<Table sticky="ColumnHeaders" items="{ path: 'suggestedDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None"
+									showSeparators="All" growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin"
+									itemPress="_onTableItemPress" alternateRowColors="true">
+									<infoToolbar/>
+									<headerToolbar>
+										<OverflowToolbar height="54.99374771118164px" design="Solid" visible="true" enabled="true">
+											<content>
+												<Title text="{i18n>TOTAL_SUGGESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+												<Text text="(" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="{detailView>/paranthesisVisible}"/>
+												<Text text="{countViewModel>/0/totalSuggestCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text=")" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="{detailView>/paranthesisVisible}"/>
+												<ToolbarSpacer/>
+												<Button text="{i18n>REQUEST_ADD_SERIES}" type="Accept" iconFirst="true" width="auto" enabled="{detailView>/visibleSeriesBtn}"
+													visible="true" iconDensityAware="false" press="onClickRequestNewSeries"/>
+												<Button id="showAllSeriesBtn" text="{i18n>SHOW_ALL_SERIES}" type="Accept" iconFirst="true" width="auto"
+													enabled="{detailView>/noZeroRecordFound}" visible="true" iconDensityAware="false" press="onClickShowAllSeries"/>
+											</content>
+										</OverflowToolbar>
+									</headerToolbar>
+									<columns>
+										<Column width="160px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SERIES}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="85px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>ORDER_PREFIX}" width="85.99999237060547px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>TCI_VTN}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SUGGESTED_VOLUME}" width="86.99999237060547px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem type="Navigation" visible="{suggestedDataModel>visibleProperty}">
+											<cells>
+												<Text text="{suggestedDataModel>series}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+													visible="{suggestedDataModel>visibleProperty}"/>
+												<Input value="{suggestedDataModel>orderPrefix}" type="Text" showValueHelp="false" enabled="true" editable="{detailView>/editOrderPrefix}"
+													visible="{suggestedDataModel>visibleProperty}" width="80px" valueHelpOnly="false" maxLength="5"/>
+												<Text text="{suggestedDataModel>orderNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="{suggestedDataModel>visibleProperty}"/>
+												<Text text="{suggestedDataModel>suggestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="{suggestedDataModel>visibleProperty}"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</ScrollContainer>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter id="iconTabFilterRequested" icon="sap-icon://process" iconColor="Critical" text="{i18n>REQUESTED}"
+						count="{countViewModel>/requestedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true"
+						visible="{detailView>/showRequestedTab}" iconDensityAware="false">
+						<content>
+							<ScrollContainer height="90%" vertical="true" focusable="true">
+								<Table sticky="ColumnHeaders" items="{ path: 'requestedDataModel>/' }" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
+									growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress"
+									alternateRowColors="true">
+									<infoToolbar/>
+									<headerToolbar>
+										<OverflowToolbar width="auto" height="55px" design="Solid" visible="true" enabled="true">
+											<content>
+												<Title text="{i18n>TOTAL_SUGGESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+												<Text text="(" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Text text="{countViewModel>/0/totalSuggestCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Title text="{i18n>TOTAL_REQUESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+												<Text text="(" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Text text="{countViewModel>/0/totalRequestedCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<ToolbarSpacer/>
+											</content>
+										</OverflowToolbar>
+									</headerToolbar>
+									<columns>
+										<Column width="200px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SERIES}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="80px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>ORDER_PREFIX}" width="64.98749542236328px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>ORDER_NUMBER}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SUGGESTED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>REQUESTED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="130px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SUGGESTED_VOLUME_PERCENTAGE_REQUESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin"
+													textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="130px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SUGGESTED_MIX_REQUESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem type="Navigation">
+											<cells>
+												<Text text="{requestedDataModel>series}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Input value="{requestedDataModel>orderPrefix}" type="Text" showValueHelp="false" enabled="true" editable="{detailView>/editOrderPrefix}"
+													visible="true" width="80px" valueHelpOnly="false" maxLength="5"/>
+												<Text text="{requestedDataModel>orderNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text="{requestedDataModel>suggestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text="{requestedDataModel>requestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text="{requestedDataModel>suggestedVolPercentRequested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+													textDirection="Inherit" visible="true"/>
+												<Text text="{requestedDataModel>suggestedMixRequested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</ScrollContainer>
+						</content>
+					</IconTabFilter>
+					<IconTabFilter id="iconTabFilterAllocated" icon="sap-icon://status-completed" iconColor="Positive" text="{i18n>ALLOCATED}"
+						count="{countViewModel>/allocatedCount}" design="Vertical" showAll="false" textDirection="Inherit" enabled="true"
+						visible="{detailView>/showAllocatedTab}" iconDensityAware="false">
+						<content>
+							<ScrollContainer height="90%" vertical="true" focusable="true">
+								<!--<Table items="{path:'allocatedDataModel>/', sorter : { path : 'zzzadddata4' }}" -->
+								<Table sticky="ColumnHeaders" items="{ path: 'allocatedDataModel>/'}" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
+									growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" itemPress="_onTableItemPress"
+									alternateRowColors="true">
+									<infoToolbar/>
+									<headerToolbar>
+										<OverflowToolbar width="auto" height="55px" design="Solid" visible="true" enabled="true">
+											<content>
+												<Title text="{i18n>TOTAL_SUGGESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+												<Text text="(" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Text text="{countViewModel>/0/totalSuggestCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Title text="{i18n>TOTAL_REQUESTED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+												<Text text="(" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Text text="{countViewModel>/0/totalRequestedCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Title text="{i18n>TOTAL_ALLOCATED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+												<Text text="(" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Text text="{countViewModel>/0/totalAllocatedCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Title text="{i18n>TOTAL_PENDING}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+												<Text text="(" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Text text="{countViewModel>/0/totalPendingCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text=")" width="20px" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Title text="{i18n>TOTAL_UNFILLED}" titleStyle="H3" width="auto" textAlign="Begin" visible="true" wrapping="false"/>
+												<Text text="(" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Text text="{countViewModel>/0/totalUnfilledCount}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text=")" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</content>
+										</OverflowToolbar>
+									</headerToolbar>
+									<columns>
+										<Column width="200px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SERIES}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="130px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>ORDER_NUMBER}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SUGGESTED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>REQUESTED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SUGGESTED_VOLUME_PERCENTAGE_REQUESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin"
+													textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>SUGGESTED_MIX_REQUESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="90px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>ALLOCATED_VOLUME}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>PERCENT_REQUEST_VOL_ALLOCATED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>PENDING_ALLOCATION}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+										<Column width="auto" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+											mergeDuplicates="false">
+											<header>
+												<Text text="{i18n>UNFILLED_ALLOCATION}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+											</header>
+											<footer/>
+										</Column>
+									</columns>
+									<items>
+										<ColumnListItem type="Navigation">
+											<cells>
+												<Text text="{allocatedDataModel>series}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+												<Text text="{allocatedDataModel>orderNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text="{allocatedDataModel>suggestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text="{allocatedDataModel>requestedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text="{allocatedDataModel>suggestedVolPercentRequested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+													textDirection="Inherit" visible="true"/>
+												<Text text="{allocatedDataModel>suggestedMixRequested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text="{allocatedDataModel>allocatedVolume}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text="{allocatedDataModel>percentRequestVolAllocated}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
+													textDirection="Inherit" visible="true"/>
+												<Text text="{allocatedDataModel>pendingAllocation}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+												<Text text="{allocatedDataModel>unfilledAllocation}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</ScrollContainer>
+						</content>
+					</IconTabFilter>
+				</items>
+				<content/>
+			</IconTabBar>
+		</content>
+		<footer/>
+		<headerContent></headerContent>
+		<subHeader/>
+		<customHeader/>
+	</Page>
+</mvc:View>

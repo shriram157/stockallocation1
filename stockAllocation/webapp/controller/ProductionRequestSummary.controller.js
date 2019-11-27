@@ -1,30 +1,22 @@
 sap.ui.define(["sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"./utilities",
-	"sap/ui/core/routing/History"
-], function (BaseController, MessageBox, Utilities, History) {
+	"sap/ui/core/routing/History",
+	"sap/m/MessageToast",
+], function (BaseController, MessageBox, Utilities, History, MessageToast) {
 	"use strict";
-	var suggestedCount, requestedCount, allocatedCount;
+	var suggestedCount, requestedCount, allocatedCount, tabClicked;
 	return BaseController.extend("suggestOrder.controller.ProductionRequestSummary", {
 		handleRouteMatched: function (oEvent) {
 			// window.location.reload();
-			
+
 			var sAppId = "App5bb4c41429720e1dcc397810";
 
 			var oParams = {};
-
-			// add some conditions when do you want to call this 
-			//	if ( this.comingFromInit == false){
-
 			this.reqcomplete();
-			//		} else {
-			//set the Count because SAP cannot handle this. 
-
-			//		}
 
 			if (oEvent.mParameters.data.context) {
 				this.sContext = oEvent.mParameters.data.context;
-
 			} else {
 				if (this.getOwnerComponent().getComponentData()) {
 					var patternConvert = function (oParam) {
@@ -36,14 +28,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							}
 						}
 					};
-
 					this.sContext = patternConvert(this.getOwnerComponent().getComponentData().startupParameters);
-
 				}
 			}
 
 			var oPath;
-
 			if (this.sContext) {
 				oPath = {
 					path: "/" + this.sContext,
@@ -52,7 +41,102 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				this.getView().bindObject(oPath);
 			}
 
+			var oViewModel = this.getView().getModel("detailView");
+			oViewModel.setProperty("/visibleSeriesBtn", false);			
+
 			// on every route matched lets set the count. 
+
+		},
+
+		onClickRequestNewSeries: function () {
+			var checkSeriesData = this.getView().getModel("SeriesDataModel").getData().results.length;
+			if (checkSeriesData > 0) {
+				if (!this._seriesRequestDialog) {
+					this._seriesRequestDialog = sap.ui.xmlfragment("seriesDialog", "suggestOrder.fragment.NewCarSeriesDialog", this);
+
+					this.getView().addDependent(this._seriesRequestDialog);
+				}
+				this._seriesRequestDialog.open();
+				sap.ui.core.Fragment.byId("seriesDialog", "clickNewSeriesDialog").setVisible(false);
+
+			} else {
+				var messageForNoSeriesData = this.getView().getModel("i18n").getResourceBundle().getText("noSeriesDataReceived");
+				MessageToast.show(messageForNoSeriesData);
+			}
+		},
+
+		onSeriesSelectionChange: function (oEvt) {
+			var Data = oEvt.getParameters().selectedItem.getBindingContext("SeriesDataModel").getObject();
+			this.seriesObj = {};
+
+			this.oModelStockData = this.getView().getModel("suggestedDataModel").getData();
+			var alreadyExists = this.oModelStockData.filter(function (k) {
+				if (k.modelYear === Data.zzmoyr && k.zzseries === Data.zzseries)
+					return k;
+			});
+
+			if (alreadyExists.length>0) {
+				MessageBox.error(Data.zzseries +" & "+Data.zzmoyr+" "+ this._oResourceBundle.getText("AlreadyExists"));
+				this.onClickCloseNewSeriesDialog();
+			} else {
+				var oRouteConfig = new sap.ui.model.json.JSONModel();
+				sap.ui.getCore().setModel(oRouteConfig, "RouteConfig");
+				this.seriesObj.zzmoyr = Data.zzmoyr;
+				this.seriesObj.zzseries = Data.zzseries;
+				this.seriesObj.zzseries_desc_en = Data.zzseries_desc_en;
+				this.seriesObj.Language = this.sCurrentLocale;
+				// this.seriesObj.sSelectedDealer = this.sSelectedDealer;
+				if (!this.sSelectedDealerText) {
+					this.seriesObj.Business_Partner_name = "";
+				}
+				this.seriesObj.Business_Partner_name = this.sSelectedDealerText;
+				this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
+				this.seriesObj.Dealer = this.sSelectedDealer;
+				if (!tabClicked) {
+					this.seriesObj.tabClicked = "suggestedTab";
+				} else
+					this.seriesObj.tabClicked = tabClicked;
+				this.seriesObj.sLoggedinUserType = this.sLoggedinUserType;
+				oRouteConfig.setData(this.seriesObj);
+				oRouteConfig.updateBindings(true);
+
+				if (this.seriesObj.newAddedSeries != "") {
+					sap.ui.core.Fragment.byId("seriesDialog", "clickNewSeriesDialog").setVisible(true);
+				}
+			}
+		},
+
+		onClickAddNewSeriesDialog: function (oEvt) {
+			this.oRouter.navTo("StockAllocation", {});
+		},
+
+		onClickCloseNewSeriesDialog: function (oEvent) {
+			sap.ui.core.Fragment.byId("seriesDialog", "ID_SeriesDesc").setSelectedKey("");
+			this._seriesRequestDialog.close();
+		},
+
+		getAllSeries: function () {
+			var that = this;
+			var oSeriesModel = new sap.ui.model.json.JSONModel();
+			this.getView().setModel(oSeriesModel, "SeriesDataModel");
+			var oSuggestUpdateModel = this.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
+			///node/ZSD_SUGGEST_ORDER_UPDATE_SRV/ZC_ALLOCAT_CFG(p_orderable='Y')/Set
+			oSuggestUpdateModel.read("/ZC_ALLOCAT_CFG(p_orderable='Y')/Set", {
+				success: $.proxy(function (data, response) {
+					console.log("seriesData", data);
+					data.results.unshift({
+						"p_orderable": "",
+						"zzmoyr": "",
+						"zzorder_ind": "",
+						"zzseries": "",
+						"zzseries_desc_en": ""
+					})
+					that.getView().getModel("SeriesDataModel").setData(data);
+				}),
+				error: function (err) {
+					console.log("err", err);
+				}
+			});
 
 		},
 		//  All my custom Modules - Begin///////////////////////////////////////////////////////////////////////////////////////
@@ -74,16 +158,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 
 		_showSuggestedQuantity: function () {
+			var oViewModel = this.getView().getModel("detailView");
+			oViewModel.setProperty("/visibleSeriesBtn", false);
 			var oModelData2 = this.getView().getModel("suggestedDataModel").getData();
 
 			for (var i = 0; i < oModelData2.length; i++) {
-
-				//	visibleProperty
-
 				if (oModelData2[i].suggestedVolume <= 0) {
 					oModelData2[i].visibleProperty = false;
 				}
-
 			}
 
 			var oSuggestModel = new sap.ui.model.json.JSONModel();
@@ -94,6 +176,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		},
 
 		_showAllSeries: function () {
+			var oViewModel = this.getView().getModel("detailView");
+			oViewModel.setProperty("/visibleSeriesBtn", true);
+			//visibleSeriesBtn
 			var oModelData = this.getView().getModel("suggestedDataModel").getData();
 
 			for (var i = 0; i < oModelData.length; i++) {
@@ -183,14 +268,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			if (checkForSuggestedString > 0) {
 				whichTabClicked = "suggestedTab";
+				tabClicked = "suggestedTab";
 				var oBindingContext = oEvent.getParameter("listItem").getBindingContext('suggestedDataModel');
 			}
 			if (checkForRequested > 0) {
 				whichTabClicked = "requestedTab";
+				tabClicked = "requestedTab";
 				var oBindingContext = oEvent.getParameter("listItem").getBindingContext('requestedDataModel');
 			}
 			if (checkForAllocated > 0) {
 				whichTabClicked = "allocatedTab";
+				tabClicked = "allocatedTab";
 				var oBindingContext = oEvent.getParameter("listItem").getBindingContext('allocatedDataModel');
 			}
 
@@ -342,8 +430,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				visibleForDealer: true,
 				visibleForInternalUser: true,
 				editAllowed: true,
-				enabled: true
-
+				enabled: true,
+				visibleSeriesBtn:false
 			});
 
 			this.getView().setModel(this._oViewModel, "detailView");
@@ -430,6 +518,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			});
 
+			this.getAllSeries();
+
 			// lets handle the route matched here. 
 
 			// ===============================================================================
@@ -496,31 +586,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						}
 					});
 
-					// BpDealer.push({
-					// 	"BusinessPartnerKey": "2400042120",
-					// 	"BusinessPartner": "2400042120", //.substring(5, BpLength),
-					// 	"BusinessPartnerName": "For local testing only", //item.OrganizationBPName1 //item.BusinessPartnerFullName
-					// 	"Division": "10",
-					// 	"BusinessPartnerType": "10",
-					// 	"searchTermReceivedDealerName": "42120"
-					// });
-					// 						BpDealer.push({
-					// 	"BusinessPartnerKey": "2400042193",
-					// 	"BusinessPartner": "2400042193", //.substring(5, BpLength),
-					// 	"BusinessPartnerName": "For local testing only", //item.OrganizationBPName1 //item.BusinessPartnerFullName
-					// 	"Division": "10",
-					// 	"BusinessPartnerType": "10",
-					// 	"searchTermReceivedDealerName": "42193"
-					// });
-					// 						BpDealer.push({
-					// 	"BusinessPartnerKey": "2400042120",
-					// 	"BusinessPartner": "2400042120", //.substring(5, BpLength),
-					// 	"BusinessPartnerName": "For local testing only", //item.OrganizationBPName1 //item.BusinessPartnerFullName
-					// 	"Division": "10",
-					// 	"BusinessPartnerType": "10",
-					// 	"searchTermReceivedDealerName": "42120"
-					// });
-
 					if (BpDealer.length == 0) {
 						sap.m.MessageBox.error(
 							"The Dealer data not received,  check the URL Division, Logged in ID, clear the Browser Cache, Pick the Right ID and Retry"
@@ -562,13 +627,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		reqcomplete: function () {
 
-			// call the oData service
-			// =======================================================================
-
-			//	var oSuggestOrderModel = this.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_SRV");
-			//	var oGetModel = this.getModel("ZSD_SUGGEST_ORDER_SRV");  //ZCDS_SUGGEST_ORD_SUM_CDS
-			// var oGetModel = this.getView().getModel("ZCDS_SUGGEST_ORD_CDS");
-			// this.getModel("LocalDataModel").setProperty("/VehicleDetails", data.results[0]);
 			if (!this.sSelectedDealer) {
 				var oModelDetailview = this.getView().getModel("detailView");
 				var oDataFromModel = oModelDetailview.getData();
@@ -610,7 +668,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						// Suggested Data
 						oViewSuggestData.push({
-							seriesDescription:seriesDescription,
+							seriesDescription: seriesDescription,
 							// series: item.zzmoyr + "-" + item.zzseries_desc_en,
 							series: item.zzmoyr + "-" + seriesDescription, //item.zzseries_desc_en,
 							orderPrefix: item.zzprefix,
@@ -626,9 +684,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							modelYear: item.zzmoyr
 
 						});
-						// requested Data	
-						// calculate the suggestedVolPercentRequested
-						// console.log("oViewSuggestData", oViewSuggestData);
 
 						if (+item.total_request_qty && +item.total_suggest_qty) {
 							var suggestedVolPercentRequested = ((+item.total_request_qty / +item.total_suggest_qty) * 100);
@@ -667,16 +722,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							percentRequestVolAllocated = 0;
 						}
 
-						// calculate the suggestedMixRequested
-						//   	var suggestedMixRequested = ((+item.total_request_qty/+item.total_suggest_qty) *100 );
-
-						// if (item.total_suggest_qty > 0 ) {
-
-						// }
-						// countForMixCalc
-
 						oViewRequestedData.push({
-							seriesDescription:seriesDescription,
+							seriesDescription: seriesDescription,
 							// series: item.zzmoyr + "-" + item.zzseries_desc_en,
 							series: item.zzmoyr + "-" + seriesDescription,
 							orderPrefix: item.zzprefix, //order_Number,
@@ -695,13 +742,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 						});
 
-						// console.log("oViewRequestedData", oViewRequestedData);
-
 						//Allocated Data
 						orderNumber = item.zzprefix + " - " + order_Number;
 
 						oViewAllocatedData.push({
-							seriesDescription:seriesDescription,
+							seriesDescription: seriesDescription,
 							// series: item.zzmoyr + "-" + item.zzseries_desc_en,
 							series: item.zzmoyr + "-" + seriesDescription,
 							zzseries: item.zzseries,
@@ -815,11 +860,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							oModel.setProperty("/showAllocatedTab", true);
 							oModel.setProperty("/showRequestedTab", true);
 
-							// var oModel = this.getView().getModel("detailView");
-							// oModel.setProperty("/showAllocatedTab", false);
-							// 	oModel.setProperty("/showRequestedTab", true);
-							// oModel.setProperty("/showSuggestionTab", true);
-
 						}
 
 						if (allocationInidcator == "") {
@@ -858,18 +898,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oAllocatedModel.setData(oViewAllocatedData);
 					this.getView().setModel(oAllocatedModel, "allocatedDataModel");
 
-					// //set the Count because SAP cannot handle this. 
-					// this._updateTheCount();
-
-					// date to the ui. 
-					// var oModel = this.getView().getModel("detailView");
-
-					// var sDateForBanner = oModel.getProperty("/dateForBanner");
-					// var sDateForTime = oModel.getProperty("/timeForBanner");
-
-					// var tempDueDate = 'Due on ' + sDateForBanner + ' at ' + sDateForTime + '(EST)';
-					// oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 
-
 					var oModelCalled = this.getView().getModel('suggestedDataModel');
 					oModelCalled.attachRequestCompleted(this._callTheCountService());
 
@@ -899,10 +927,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						if (item.totalUnfilledcount == 0) {
 							item.totalUnfilledcount = "0";
 						}
-						
-						// suggestedCount=item.totalsuggestedCount;
-						// requestedCount=item.totalRequestedCount;
-						// allocatedCount=item.totalAllocatedCount;
 						oViewCountData.push({
 							suggestedCount: item.suggest_count,
 							requestedCount: item.request_count,
@@ -971,13 +995,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 					}
 
-					// Dû le 29/04/2019 à 14h30 (HNE)
-
-					// if (sDateForBanner) {
-					// 	var tempDueDate = WordDueOn + sDateForBanner + ' at ' + sDateForTime + "(EST)";
-					// 	oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 
-					// }
-
 					//  when the current date is between window open date and window close date then enable the suggested and Requested and disable the allocated. 
 					var startDateofTheWindow = oModel.getProperty("/startDateofWindow");
 					var endDateofTheWindow = oModel.getProperty("/endDateofTheWindow");
@@ -987,9 +1004,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var windowEndDateWithTime = oModel.getProperty("/dateForValidation");
 					var windowEndDateP = Date.parse(windowEndDateWithTime);
 
-					// var torontoTime = new Date().toLocaleString("en-US", {
-					// 	timeZone: "America/New_York"
-					// });
 					var torontoTime = new Date();
 					/*global  moment:true*/
 					var extractTimeZone = moment(torontoTime);

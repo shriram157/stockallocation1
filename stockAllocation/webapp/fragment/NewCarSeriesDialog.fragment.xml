@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" id="newCarSeries">
+	<Dialog title="{i18n>REQUEST_ADD_SERIES}" id="newSeriesRequestDialog">
+		<l:Grid defaultSpan="L12 M12 S12" width="auto" id="idGrid" hSpacing="0">
+			<l:content>
+				<f:SimpleForm id="formContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
+					emptySpanM="0" columnsL="1" columnsM="1" class="styleForms">
+					<f:content>
+						<Select id="ID_SeriesDesc" forceSelection="true" items="{SeriesDataModel>/results}" change="onSeriesSelectionChange" fieldGroupIds="requiredField">
+							<core:Item key="{SeriesDataModel>zzseries}" text="{SeriesDataModel>zzseries} - {SeriesDataModel>zzseries_desc_en}" />
+							
+								<!--text="{SeriesDataModel>zzseries} - {=${SeriesDataModel>localLang}==='E' ? ${SeriesDataModel>zzseries_desc_en}:${SeriesDataModel>zzseries_desc_en}}"/>-->
+						</Select>
+					
+					</f:content>
+				</f:SimpleForm>
+			</l:content>
+		</l:Grid>
+		<buttons>
+			<Button text="{i18n>ADD_SERIES}" press="onClickAddNewSeriesDialog" type="Accept" id="clickNewSeriesDialog" visible="false"/>
+			<Button text="{i18n>CLOSE}" press="onClickCloseNewSeriesDialog" type="Reject"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>
