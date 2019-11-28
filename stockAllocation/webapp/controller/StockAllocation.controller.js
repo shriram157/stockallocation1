@@ -1949,8 +1949,10 @@
 							//changes done by Vivek Saraogi
 							if (etaToDateMonth > 12) {
 								etaToDateMonth = etaToDateMonth - 12;
+								var etaToDateYear = +highestEtaTo.substr(0, 4) + + 1;
+							} else {
+								var etaToDateYear = highestEtaTo.substr(0, 4);
 							}
-							var etaToDateYear = highestEtaTo.substr(0, 4);
 						}
 						var dummyDate = "01";
 						var fromCompleteDate = etaFromDateMonth + "/" + dummyDate + "/" + etaFromDateYear;
