@@ -10,7 +10,7 @@
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
 		var _timeout, objNew = {},
-			backupModelData, processDate, itemModel, newseriesFlag;
+			backupModelData, processDate, itemModel, newseriesFlag, tempObj2, IntCol2, callNewModelCount=0;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -101,6 +101,25 @@
 					this.series = routeConfig.zzseries;
 					this.yearModel = routeConfig.zzmoyr;
 					var Language = routeConfig.Language;
+					var newAddedQty = 0;
+					var newAddedModel = routeConfig.zzmodel;
+					var newAddedModelAndDescription = "";
+					var newAddedSuffix = routeConfig.zzsuffix;
+					var newAddedSuffixAndDescription = "";
+					var newAddedExteriorColorCode = routeConfig.zzextcol;
+					var newAddedExteriorColorCodeAndDescription = "";
+					IntCol2 = routeConfig.zzintcol;
+
+					//var temp = this.oGlobalJSONModel.getData().colorData;
+					tempObj2 = [{
+						"newAddedQty": newAddedQty,
+						"newAddedModel": newAddedModel,
+						"newAddedModelAndDescription": newAddedModelAndDescription,
+						"newAddedSuffix": newAddedSuffix,
+						"newAddedSuffixAndDescription": newAddedSuffixAndDescription,
+						"newAddedExteriorColorCode": newAddedExteriorColorCode,
+						"newAddedExteriorColorCodeAndDescription": newAddedExteriorColorCodeAndDescription
+					}];
 
 				} else {
 					newseriesFlag = false;
@@ -1465,6 +1484,7 @@
 
 			_loadTheData: function (oEvent) {
 				var that = this;
+				// that.callNewModel = true;
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
 						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" + "and zzmoyr eq '" + this.yearModel +
@@ -1949,7 +1969,7 @@
 							//changes done by Vivek Saraogi
 							if (etaToDateMonth > 12) {
 								etaToDateMonth = etaToDateMonth - 12;
-								var etaToDateYear = +highestEtaTo.substr(0, 4) + + 1;
+								var etaToDateYear = +highestEtaTo.substr(0, 4) + +1;
 							} else {
 								var etaToDateYear = highestEtaTo.substr(0, 4);
 							}
@@ -1997,6 +2017,11 @@
 						oTable.refreshItems();
 						oTable.getModel("stockDataModel").updateBindings();
 						this._calculateTotals();
+						debugger;
+						if (newseriesFlag == true && callNewModelCount===0) {
+							this.newModelData(tempObj2, IntCol2);
+							callNewModelCount=1;
+						}
 					}.bind(this),
 					error: function (response) {
 						sap.ui.core.BusyIndicator.hide();
@@ -2283,7 +2308,9 @@
 							that.oModelStockData[that.oModelStockData.length - 1].ZsrcWerks = oData.d.results[0].SourcePlant;
 							that.getSeqNumber(objNew);
 						} else {
-							that.onClickCloseNewModelDialog();
+							if (!newseriesFlag) {
+								that.onClickCloseNewModelDialog();
+							}
 							MessageBox.error(that._oResourceBundle.getText("NO_DATA"));
 						}
 					},
@@ -2327,7 +2354,12 @@
 
 						var oInitalTotalStock = that.getView().getModel("initialStockTotalModel");
 						var oInitialTotalStockModel = oInitalTotalStock.getData();
-						var newAddedQty = sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
+						var newAddedQty = 0;
+						if (!newseriesFlag) {
+							newAddedQty = sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
+						} else {
+							newAddedQty = 0;
+						}
 						oInitialTotalStockModel["0"].requestedVolumeTotal = oInitialTotalStockModel["0"].requestedVolumeTotal + newAddedQty;
 						oInitalTotalStock.updateBindings(true);
 						// sort the data. 
@@ -2339,14 +2371,16 @@
 							.value();
 
 						oModelStock.updateBindings(true);
-						sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").setSelectedKey("");
-						sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").setSelectedKey("");
-						sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").setSelectedKey("");
-						sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue("");
+						if (!newseriesFlag) {
+							sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").setSelectedKey("");
+							sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").setSelectedKey("");
+							sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").setSelectedKey("");
+							sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue("");
+							sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
+							that._modelRequestDialog.close();
+						}
 
-						that._modelRequestDialog.close();
 						sap.ui.getCore().setModel(that.getView().getModel("stockDataModel"), "stockDataModel");
-						sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(0);
 						setTimeout(function () {
 							that._loadTheData();
 						}, 3000);
@@ -2359,6 +2393,7 @@
 			},
 
 			onClickAddNewModelDialog: function (oEvt) {
+				newseriesFlag=false;
 				//to get source plant Z_VEHICLE_MASTER_SRV/zc_c_vehicle?$top=2
 
 				var newAddedQty = sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
@@ -2368,56 +2403,71 @@
 				var newAddedSuffixAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_marktgIntDesc").getSelectedItem().getText();
 				var newAddedExteriorColorCode = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getKey();
 				var newAddedExteriorColorCodeAndDescription = sap.ui.core.Fragment.byId("modelDialog", "ID_ExteriorColorCode").getSelectedItem().getText();
-				var temp = this.oGlobalJSONModel.getData().colorData;
-				var tempOBj = [newAddedModel, newAddedModelAndDescription, newAddedSuffixAndDescription, newAddedExteriorColorCodeAndDescription];
 
+				var tempOBj = [{
+					"newAddedQty": newAddedQty,
+					"newAddedModel": newAddedModel,
+					"newAddedModelAndDescription": newAddedModelAndDescription,
+					"newAddedSuffix": newAddedSuffix,
+					"newAddedSuffixAndDescription": newAddedSuffixAndDescription,
+					"newAddedExteriorColorCode": newAddedExteriorColorCode,
+					"newAddedExteriorColorCodeAndDescription": newAddedExteriorColorCodeAndDescription
+				}];
+				this.newModelData(tempOBj, "");
+			},
+
+			newModelData: function (tempOBj, intcol) {
 				var oModelStock = this.getView().getModel("stockDataModel");
 				this.oModelStockData = this.getView().getModel("stockDataModel").getData();
 				// var existingModelData = oModelStock.getData();
 				var alreadyExists = this.oModelStockData.filter(function (k) {
-					if (k.model === newAddedModel && k.suffix === newAddedSuffix && k.zzextcol === newAddedExteriorColorCode)
+					if (k.model === tempOBj[0].newAddedModel && k.suffix === tempOBj[0].newAddedSuffix && k.zzextcol === tempOBj[0].newAddedExteriorColorCode)
 						return k;
 				});
 				var _that = this;
 				var exists = Object.keys(_that.oModelStockData).some(function (k) {
-					return (_that.oModelStockData[k].model === newAddedModel && _that.oModelStockData[k].suffix === newAddedSuffix && _that.oModelStockData[
-							k].zzextcol ===
-						newAddedExteriorColorCode);
+					return (_that.oModelStockData[k].model === tempOBj[0].newAddedModel && _that.oModelStockData[k].suffix === tempOBj[0].newAddedSuffix &&
+						_that.oModelStockData[k].zzextcol === tempOBj[0].newAddedExteriorColorCode);
 				});
+				var temp = this.oGlobalJSONModel.getData().colorData;
 				if (!exists) {
 					_that.getView().getModel("oViewLocalDataModel").setProperty("/setResetEnabled", false);
 					objNew.ZzsugSeqNo = '00000000';
-					objNew.Zzmodel = newAddedModel;
+					objNew.Zzmodel = tempOBj[0].newAddedModel;
 					objNew.ZzprocessDt = processDate;
-					objNew.Zzsuffix = newAddedSuffix;
+					objNew.Zzsuffix = tempOBj[0].newAddedSuffix;
 					objNew.Zzmoyr = this.yearModel;
-					objNew.Zzextcol = newAddedExteriorColorCode;
+					objNew.Zzextcol = tempOBj[0].newAddedExteriorColorCode;
 					objNew.Zzintcol = this.InteriorColorCode;
 					objNew.ZzdealerCode = this.dealerCode;
-					objNew.ZzrequestQty = newAddedQty.toString();
+					objNew.ZzrequestQty = tempOBj[0].newAddedQty.toString();
 					objNew.Zzseries = this.series;
 					objNew.ZzseriesDescEn = this.seriesDescription;
 					// var res = temp.find(({
 					// 	ExteriorColorCode
 					// }) => ExteriorColorCode == newAddedExteriorColorCode);
-					for (var i = 0; i < temp.length; i++) {
-						if (temp[i] != undefined && temp[i] !== null) {
-							temp[i].ExteriorColorCode = newAddedExteriorColorCode;
-							this.InteriorColorCode = temp[i].InteriorColorCode;
+					if (!!temp) {
+						for (var i = 0; i < temp.length; i++) {
+							if (temp[i] != undefined && temp[i] !== null) {
+								temp[i].ExteriorColorCode = tempOBj[0].newAddedExteriorColorCode;
+								this.InteriorColorCode = temp[i].InteriorColorCode;
+							}
 						}
+					} else {
+						this.InteriorColorCode = intcol;
 					}
 					this.oModelStockData.push({
-						model: newAddedModel,
+						model: tempOBj[0].newAddedModel,
 						ZsrcWerks: objNew.ZsrcWerks,
 						zzsug_seq_no: objNew.zzsug_seq_no,
 						zzprocess_dt: processDate,
-						modelCodeDescription: newAddedModelAndDescription,
-						zzsuffix: newAddedSuffix,
+						modelCodeDescription: tempOBj[0].newAddedModelAndDescription,
+						zzsuffix: tempOBj[0].newAddedSuffix,
 						zzmoyr: this.yearModel,
-						suffix_desc: newAddedSuffixAndDescription,
-						zzextcol: newAddedExteriorColorCode,
-						requested_Volume: newAddedQty,
-						colour_Trim: newAddedExteriorColorCodeAndDescription,
+						suffix_desc: tempOBj[0].newAddedSuffixAndDescription,
+						zzextcol: tempOBj[0].newAddedExteriorColorCode,
+						requested_Volume: tempOBj[0].newAddedQty,
+						colour_Trim: tempOBj[0].newAddedExteriorColorCodeAndDescription,
 						current: "0",
 						zzintcol: this.InteriorColorCode,
 						visibleProperty: true,
@@ -2425,21 +2475,22 @@
 					});
 					this.getSourcePlant(objNew);
 				} else {
-					_that.onClickCloseNewModelDialog();
+					if (!newseriesFlag) {
+						_that.onClickCloseNewModelDialog();
+						MessageBox.error(tempOBj[0].newAddedModel + " " + _that._oResourceBundle.getText("AlreadyExists"));
+					}
 					_that.onClickShowAllX(true);
-					MessageBox.error(newAddedModel + " " + _that._oResourceBundle.getText("AlreadyExists"));
 					var aFilters = [];
 					var filter = new Filter([
-						new Filter("model", sap.ui.model.FilterOperator.Contains, newAddedModel),
-						new Filter("zzsuffix", sap.ui.model.FilterOperator.Contains, newAddedSuffix),
+						new Filter("model", sap.ui.model.FilterOperator.Contains, tempOBj[0].newAddedModel),
+						new Filter("zzsuffix", sap.ui.model.FilterOperator.Contains, tempOBj[0].newAddedSuffix),
 						// new Filter("suffix_desc", sap.ui.model.FilterOperator.Contains, newAddedSuffixAndDescription.split(" - ")[0]),
-						new Filter("zzextcol", sap.ui.model.FilterOperator.Contains, newAddedExteriorColorCode)
+						new Filter("zzextcol", sap.ui.model.FilterOperator.Contains, tempOBj[0].newAddedExteriorColorCode)
 					], true);
 					aFilters.push(filter);
 					this.byId("stockDataModelTableId").getBinding("items").filter(aFilters, "Application");
 					_that.getView().getModel("oViewLocalDataModel").setProperty("/setResetEnabled", true);
 				}
-
 			},
 
 			resetSearch: function () {
