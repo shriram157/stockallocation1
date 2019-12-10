@@ -67,10 +67,11 @@
 												<Text text=")" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 													visible="{detailView>/paranthesisVisible}"/>
 												<ToolbarSpacer/>
-												<Button text="{i18n>REQUEST_ADD_SERIES}" type="Accept" iconFirst="true" width="auto" enabled="{detailView>/visibleSeriesBtn}"
+												<Button text="{i18n>REQUEST_ADD_SERIES}" type="Accept" iconFirst="true" width="auto" enabled="true"
 													visible="true" iconDensityAware="false" press="onClickRequestNewSeries"/>
-												<Button id="showAllSeriesBtn" text="{i18n>SHOW_ALL_SERIES}" type="Accept" iconFirst="true" width="auto"
-													enabled="{detailView>/noZeroRecordFound}" visible="true" iconDensityAware="false" press="onClickShowAllSeries"/>
+													<!--{detailView>/visibleSeriesBtn}-->
+												<!--<Button id="showAllSeriesBtn" text="{i18n>SHOW_ALL_SERIES}" type="Accept" iconFirst="true" width="auto"-->
+												<!--	enabled="{detailView>/noZeroRecordFound}" visible="true" iconDensityAware="false" press="onClickShowAllSeries"/>-->
 											</content>
 										</OverflowToolbar>
 									</headerToolbar>

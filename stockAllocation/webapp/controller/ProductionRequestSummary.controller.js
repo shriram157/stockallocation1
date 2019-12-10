@@ -373,12 +373,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var showSuggestSeriesText = this._oResourceBundle.getText("SHOW_SUGGEST_SERIES"),
 				showAllSeriesText = this._oResourceBundle.getText("SHOW_ALL_SERIES");
 
-			var currentText = this.getView().byId("showAllSeriesBtn").getText();
+			var currentText = showAllSeriesText; //this.getView().byId("showAllSeriesBtn").getText();
 			if (currentText == showSuggestSeriesText) {
-				this.getView().byId("showAllSeriesBtn").setProperty("text", showAllSeriesText);
+				// this.getView().byId("showAllSeriesBtn").setProperty("text", showAllSeriesText);
 				this._showSuggestedQuantity();
 			} else {
-				this.getView().byId("showAllSeriesBtn").setProperty("text", showSuggestSeriesText);
+				// this.getView().byId("showAllSeriesBtn").setProperty("text", showSuggestSeriesText);
 				this._showAllSeries();
 			}
 
@@ -1016,7 +1016,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var showSuggestSeriesText = this._oResourceBundle.getText("SHOW_SUGGEST_SERIES"),
 						showAllSeriesText = this._oResourceBundle.getText("SHOW_ALL_SERIES");
 
-					var currentText = this.getView().byId("showAllSeriesBtn").getText();
+					var currentText = showAllSeriesText; //this.getView().byId("showAllSeriesBtn").getText();
 					var atleastOneRecordwithZeroExist = false;
 					if (currentText == showAllSeriesText) {
 

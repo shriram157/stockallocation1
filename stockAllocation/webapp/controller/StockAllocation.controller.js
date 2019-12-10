@@ -17,7 +17,7 @@
 				var sAppId = "App5bb4c41429720e1dcc397810";
 
 				var oParams = {};
-
+				callNewModelCount=0;
 				this.resultsLossofData = false;
 				if (sap.ui.getCore().getModel("RouteConfig") && sap.ui.getCore().getModel("RouteConfig").getData()) {
 					newseriesFlag = true;
@@ -2017,7 +2017,7 @@
 						oTable.refreshItems();
 						oTable.getModel("stockDataModel").updateBindings();
 						this._calculateTotals();
-						debugger;
+						//debugger;
 						if (newseriesFlag == true && callNewModelCount===0) {
 							this.newModelData(tempObj2, IntCol2);
 							callNewModelCount=1;
@@ -2354,12 +2354,13 @@
 
 						var oInitalTotalStock = that.getView().getModel("initialStockTotalModel");
 						var oInitialTotalStockModel = oInitalTotalStock.getData();
-						var newAddedQty = 0;
-						if (!newseriesFlag) {
+						var newAddedQty;
+						if (newAddedQty) {
 							newAddedQty = sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
-						} else {
-							newAddedQty = 0;
-						}
+						} 
+						// else {
+						// 	newAddedQty = 0;
+						// }
 						oInitialTotalStockModel["0"].requestedVolumeTotal = oInitialTotalStockModel["0"].requestedVolumeTotal + newAddedQty;
 						oInitalTotalStock.updateBindings(true);
 						// sort the data. 
@@ -2498,6 +2499,7 @@
 				this._calculateTotals();
 			},
 			onExit: function () {
+				callNewModelCount=0;
 				var oTable = this.getView().byId("stockDataModelTableId");
 				if (oTable.getItems().length > 1) {
 					this.dynamicIndices = [];
