@@ -14,6 +14,7 @@
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
+				sap.ui.core.BusyIndicator.show();
 				var sAppId = "App5bb4c41429720e1dcc397810";
 
 				var oParams = {};

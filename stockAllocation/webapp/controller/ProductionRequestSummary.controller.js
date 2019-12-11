@@ -234,9 +234,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		onColorSelectionDoneEnableAddButton: function (oEvent) {
 			RouteObj.ExtCol = oEvent.getParameters("selectedItem").selectedItem.getKey();
 			var ColorData = oEvent.getParameters().selectedItem.getBindingContext("ModelDataModel").getObject();
-			RouteObj.ExtCol =ColorData.ExteriorColorCode;
-			RouteObj.IntCol =ColorData.InteriorColorCode;
-			
+			RouteObj.ExtCol = ColorData.ExteriorColorCode;
+			RouteObj.IntCol = ColorData.InteriorColorCode;
+
 			var oModelDetailViewData = this.getView().getModel('detailView').getData();
 			var oRouteConfig = new sap.ui.model.json.JSONModel();
 			sap.ui.getCore().setModel(oRouteConfig, "RouteConfig");
@@ -472,18 +472,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		// All my custom modules - End	-//////////////////////////////////////////////////////////////////////////////////////////////	
 
 		_onTableItemPress: function (oEvent) {
-
+			if(sap.ui.getCore().getModel("RouteConfig")){
+				sap.ui.getCore().getModel("RouteConfig").setData();
+			}
 			var oBindingContextPath = oEvent.getParameter("listItem").getBindingContextPath();
-
-			//pass the selected series to the next init event of 
-
-			//          var selectedSeries = {
-			//    selectedSeries :  selectedSeries
-			//};
-
-			//this.reqObj.selectedPO = this.selectedPO.purchaseOrderID;
-			// sap.ui.getCore().setModel(new sap.ui.model.json.JSONModel(selectedSeries), 'selectedSeries');
-			// this.reqObj.selectedPO = this.selectedPO.purchaseOrderID;
 
 			// get the details on which icontab is selected. 
 
@@ -605,7 +597,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 		_onTableItemPress1: function (oEvent) {
-
+			if(sap.ui.getCore().getModel("RouteConfig")){
+				sap.ui.getCore().getModel("RouteConfig").setData();
+			}
 			var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
 
 			return new Promise(function (fnResolve) {
@@ -618,7 +612,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 		_onTableItemPress2: function (oEvent) {
-
+			
+			if(sap.ui.getCore().getModel("RouteConfig")){
+				sap.ui.getCore().getModel("RouteConfig").setData();
+			}
 			var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
 
 			return new Promise(function (fnResolve) {
@@ -1549,12 +1546,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 
 		},
-
 		formatColor: function (color) {
 			// check if the date is past the due date then do a different color. 
 
 			return color ? color : "Error";
 		},
-
+		onExit: function () {
+			RouteObj = {};
+		}
 	}); // very end
 }, /* bExport= */ true);
