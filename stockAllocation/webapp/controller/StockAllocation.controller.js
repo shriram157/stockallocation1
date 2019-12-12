@@ -748,28 +748,42 @@
 
 			_calculateTotals: function (includeZero) {
 				var that = this;
+				this.flagCheck = false;
 				this.index = 0;
 				this.count = 0;
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				that.oTable = this.getView().byId("stockDataModelTableId");
-				that.data = oModelData2;
-				if (!!this.dynamicIndices && this.dynamicIndices.length > 0) {
-					for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
-						console.log("index", i);
-						oModelData2.splice(this.dynamicIndices[i], 1);
 
-						if (!!that.oTable.getItems()[this.dynamicIndices[i]]) {
-							var cells = that.oTable.getItems()[this.dynamicIndices[i]].getCells();
-							for (var j = 0; j < cells.length; j++) {
-								cells[j].removeStyleClass("setOrangeFont");
-								cells[j].mProperties.step = 1;
-								cells[j].mProperties.editable = true;
-								cells[j].mProperties.enabled = true;
+				// if (that.oTable.getItems().length > 1) {
+					// console.log("this.dynamicIndices", this.dynamicIndices);
+					for (var k = 0; k < that.oTable.getItems().length; k++) {
+						if (that.oTable.getItems()[0].getId().split("-")[0] != that.oTable.getItems()[k].getId().split("-")[0]) {
+							this.flagCheck = true;
+							that.data = oModelData2;
+							if (!!this.dynamicIndices && this.dynamicIndices.length > 0) {
+								for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
+									console.log("index", i);
+									oModelData2.splice(this.dynamicIndices[i], 1);
+
+									if (!!that.oTable.getItems()[this.dynamicIndices[i]]) {
+										var cells = that.oTable.getItems()[this.dynamicIndices[i]].getCells();
+										for (var j = 0; j < cells.length; j++) {
+											cells[j].removeStyleClass("setOrangeFont");
+											cells[j].mProperties.step = 1;
+											cells[j].mProperties.editable = true;
+											cells[j].mProperties.enabled = true;
+										}
+									}
+								}
 							}
+						} else {
+							this.flagCheck = false;
 						}
 					}
-				}
-				this.getView().getModel("stockDataModel").updateBindings(true);
+					// oTable.updateItems();
+					console.log("oTable.getItems()", that.oTable.getItems());
+					this.getView().getModel("stockDataModel").updateBindings(true);
+				// }
 
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -942,7 +956,7 @@
 
 					var group_to_values = tabData.reduce(function (obj, item) {
 						obj[item.model] = obj[item.model] || [];
-						obj[item.model].push(item);
+						obj[item.model].push(item.current);
 						return obj;
 					}, Object.create(null));
 
