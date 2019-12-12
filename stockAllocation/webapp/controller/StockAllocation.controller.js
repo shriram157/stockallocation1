@@ -10,7 +10,7 @@
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
 		var _timeout, objNew = {},
-			backupModelData, processDate, itemModel, newseriesFlag, tempObj2, IntCol2, callNewModelCount=0;
+			backupModelData, processDate, itemModel, newseriesFlag, tempObj2, IntCol2, callNewModelCount = 0;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -18,7 +18,7 @@
 				var sAppId = "App5bb4c41429720e1dcc397810";
 
 				var oParams = {};
-				callNewModelCount=0;
+				callNewModelCount = 0;
 				this.resultsLossofData = false;
 				if (sap.ui.getCore().getModel("RouteConfig") && sap.ui.getCore().getModel("RouteConfig").getData()) {
 					newseriesFlag = true;
@@ -942,9 +942,20 @@
 
 					var group_to_values = tabData.reduce(function (obj, item) {
 						obj[item.model] = obj[item.model] || [];
-						obj[item.model].push(item.current);
+						obj[item.model].push(item);
 						return obj;
-					}, {});
+					}, Object.create(null));
+
+					// var result = tabData.reduce(function (r, a) {
+					// 	r[a.model] = r[a.model] || [];
+					// 	r[a.model].push(a);
+					// 	return r;
+					// }, Object.create(null));
+
+					// var result = tabData.reduce(function (h, obj) {
+					// 	h[obj.model] = (h[obj.model] || []).concat(obj.current);
+					// 	return h;
+					// }, Object.create(null));
 
 					var groups = Object.keys(group_to_values).map(function (key) {
 						return {
@@ -2019,9 +2030,9 @@
 						oTable.getModel("stockDataModel").updateBindings();
 						this._calculateTotals();
 						//debugger;
-						if (newseriesFlag == true && callNewModelCount===0) {
+						if (newseriesFlag == true && callNewModelCount === 0) {
 							this.newModelData(tempObj2, IntCol2);
-							callNewModelCount=1;
+							callNewModelCount = 1;
 						}
 					}.bind(this),
 					error: function (response) {
@@ -2358,7 +2369,7 @@
 						var newAddedQty;
 						if (newAddedQty) {
 							newAddedQty = sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
-						} 
+						}
 						// else {
 						// 	newAddedQty = 0;
 						// }
@@ -2395,7 +2406,7 @@
 			},
 
 			onClickAddNewModelDialog: function (oEvt) {
-				newseriesFlag=false;
+				newseriesFlag = false;
 				//to get source plant Z_VEHICLE_MASTER_SRV/zc_c_vehicle?$top=2
 
 				var newAddedQty = sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").getValue();
@@ -2500,7 +2511,7 @@
 				this._calculateTotals();
 			},
 			onExit: function () {
-				callNewModelCount=0;
+				callNewModelCount = 0;
 				var oTable = this.getView().byId("stockDataModelTableId");
 				if (oTable.getItems().length > 1) {
 					this.dynamicIndices = [];
