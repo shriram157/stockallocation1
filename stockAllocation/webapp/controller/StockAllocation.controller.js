@@ -248,12 +248,9 @@
 						for (var i = 0; i < oModelData2.length; i++) {
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 								oModelData2[i].visibleProperty = true;
-								// document.getElementsByClassName("noheight").style.height = "2rem !important";
 							}
 						}
-						// this._calculateTotals();
 					}
-
 					this.getView().getModel("stockDataModel").updateBindings(true);
 					this._calculateTotals();
 				}
@@ -263,21 +260,20 @@
 					var oTable = this.getView().byId("stockDataModelTableId");
 					var oModelData2 = this.getView().getModel("stockDataModel").getData();
 					if (evt == false) {
-						console.log("pressed", evt);
+						// console.log("pressed", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 								oModelData2[i].visibleProperty = false;
 							}
 						}
 					} else if (evt == true) {
-						console.log("pressed2", evt);
+						// console.log("pressed2", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 								oModelData2[i].visibleProperty = true;
 								// document.getElementsByClassName("noheight").style.height = "2rem !important";
 							}
 						}
-						// this._calculateTotals();
 					}
 					this.getView().getModel("stockDataModel").updateBindings(true);
 					this._calculateTotals();
@@ -754,15 +750,10 @@
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				that.oTable = this.getView().byId("stockDataModelTableId");
 
-				// if (that.oTable.getItems().length > 1) {
-				// console.log("this.dynamicIndices", this.dynamicIndices);
 				for (var k = 0; k < oModelData2.length; k++) {
 					if (oModelData2[k].model == "") {
 						this.flagCheck = true;
-					} 
-					// else {
-					// 	this.flagCheck = false;
-					// }
+					}
 				}
 				//debugger;
 				if (this.flagCheck) {
@@ -771,7 +762,6 @@
 						for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
 							console.log("index", i);
 							oModelData2.splice(this.dynamicIndices[i], 1);
-
 							if (!!that.oTable.getItems()[this.dynamicIndices[i]]) {
 								var cells = that.oTable.getItems()[this.dynamicIndices[i]].getCells();
 								for (var j = 0; j < cells.length; j++) {
@@ -783,11 +773,21 @@
 							}
 						}
 					}
+				} else {
+					var temp = that.oTable.getItems();
+					temp.forEach(function (element) {
+						var m = element.getCells();
+						m.forEach(function (element2) {
+							element2.removeStyleClass("setOrangeFont");
+							element2.mProperties.step = 1;
+							element2.mProperties.editable = true;
+							element2.mProperties.enabled = true;
+						});
+					});
 				}
 				// oTable.updateItems();
 				console.log("oTable.getItems()", that.oTable.getItems());
 				this.getView().getModel("stockDataModel").updateBindings(true);
-				// }
 
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 				var oInitialTotalStockModel = oInitalTotalStock.getData();
