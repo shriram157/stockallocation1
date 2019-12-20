@@ -6,40 +6,26 @@
 					emptySpanM="0" columnsL="1" columnsM="1" class="styleForms">
 					<f:content>
 						<core:Title text="{oViewLocalDataModel>/series}"/>
-						<Label text="{i18n>Model}"/>
+						<Label text="{i18n>MODEL}"/>
 						<Select id="ID_modelDesc" forceSelection="true" items="{GlobalJSONModel>/modelData}" change="onModelSelectionChange" fieldGroupIds="requiredField">
 							<core:Item key="{GlobalJSONModel>Model}"
 								text="{GlobalJSONModel>Model} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>ENModelDesc}:${GlobalJSONModel>FRModelDesc}}"/>
 						</Select>
-						<Label text="{i18n>Suffix}"/>
+						<Label text="{i18n>SUFFIX}"/>
 						<Select id="ID_marktgIntDesc" forceSelection="true" items="{GlobalJSONModel>/suffixData}" change="onSuffixChange" fieldGroupIds="requiredField">
 							<core:Item key="{GlobalJSONModel>Suffix}"
 								text="{GlobalJSONModel>Suffix} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>SuffixDescriptionEN}:${GlobalJSONModel>SuffixDescriptionFR}} / {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>mrktg_int_desc_en}:${GlobalJSONModel>mrktg_int_desc_fr}}"/>
 						</Select>
-						<Label text="{i18n>Colour}"/>
+						<Label text="{i18n>COLOUR_TRIM}"/>
 						<Select id="ID_ExteriorColorCode" forceSelection="true" items="{GlobalJSONModel>/colorData}" change="onColorSelectionDoneEnableAddButton"  >
 							<core:Item key="{GlobalJSONModel>ExteriorColorCode}"
 								text="{GlobalJSONModel>ExteriorColorCode} - {=${GlobalJSONModel>localLang}==='E' ? ${GlobalJSONModel>MarketingDescriptionEXTColorEN}:${GlobalJSONModel>MarketingDescriptionEXTColorFR}}"
 					             />
 						</Select>
-						<!--<Label text="{i18n>APX}"/>-->
-						<!--<Select id="ID_APXValue" forceSelection="true" items="{GlobalJSONModel>/APXCollection}">-->
-						<!--	<core:Item key="{GlobalJSONModel>APX}" text="{GlobalJSONModel>APX}"/>-->
-						<!--</Select>-->
 						<Label text="{i18n>REQUEST_VOLUME}" labelFor="reqVolumeId" required="true"/>
 						<StepInput value="1" fieldGroupIds="requiredField" id="reqVolumeId" displayValuePrecision="0" min="0"
 							max="100" width="7.5rem" step="1" largerStep="2" valueState="None" enabled="true" 
 								change="whenUserChangesRequestedDataOnFragment" />
-						 
-				   		<!--<Input name="requestedVolume" -->
-				   		<!--         id="requestedVolumeId" valueLiveUpdate="true" -->
-				   		<!--         liveChange="removeErrorValidationMessage" -->
-				   		<!--         width="12rem" -->
-				   		<!--         enabled="true"-->
-				   		<!--         visible="true" -->
-				   		<!--         value="10"-->
-				   		<!--          />-->
-
 							 
 						<Label text=""/>
 					</f:content>
