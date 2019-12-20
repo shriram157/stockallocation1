@@ -10,6 +10,7 @@
 	], function (BaseController, MessageBox, Utilities, History, MessageToast, BusyIndicator, Sorter, Filter) {
 		"use strict";
 		var _timeout, objNew = {},
+			btnSavePressed,
 			backupModelData, processDate, itemModel, newseriesFlag, tempObj2, IntCol2, callNewModelCount = 0;
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
@@ -20,6 +21,7 @@
 				var oParams = {};
 				callNewModelCount = 0;
 				this.resultsLossofData = false;
+				btnSavePressed = false;
 				if (sap.ui.getCore().getModel("RouteConfig") && sap.ui.getCore().getModel("RouteConfig").getData()) {
 					newseriesFlag = true;
 					var routeConfig = sap.ui.getCore().getModel("RouteConfig").getData();
@@ -348,17 +350,38 @@
 
 			_onPageNavButtonPress: function (oEvent) {
 
-				var oBindingContext = oEvent.getSource().getBindingContext();
+				if (newseriesFlag && !btnSavePressed) {
+					var that=this;
+					MessageBox.confirm(
+						that._oResourceBundle.getText("NO_SERIESDATA_SAVED"), { //Are you Sure you want to Reset ?
+							// styleClass: oComponent.getContentDensityClass(),
+							onClose: function (oAction) {
+								if (oAction === sap.m.MessageBox.Action.OK) {
+									var oBindingContext = oEvent.getSource().getBindingContext();
+									return new Promise(function (fnResolve) {
+										that.doNavigate("ProductionRequestSummary", oBindingContext, fnResolve, "");
+									}.bind(that)).catch(function (err) {
+										if (err !== undefined) {
+											MessageBox.error(err.message);
+										}
+									});
+								}
+							}
+						}
+					);
+					// MessageBox.information(this._oResourceBundle.getText("NO_SERIESDATA_SAVED"));
+				}
+				// else {
+				// var oBindingContext = oEvent.getSource().getBindingContext();
+				// return new Promise(function (fnResolve) {
 
-				return new Promise(function (fnResolve) {
-
-					this.doNavigate("ProductionRequestSummary", oBindingContext, fnResolve, "");
-				}.bind(this)).catch(function (err) {
-					if (err !== undefined) {
-						MessageBox.error(err.message);
-					}
-				});
-
+				// 	this.doNavigate("ProductionRequestSummary", oBindingContext, fnResolve, "");
+				// }.bind(this)).catch(function (err) {
+				// 	if (err !== undefined) {
+				// 		MessageBox.error(err.message);
+				// 	}
+				// });
+				// }
 			},
 			doNavigate: function (sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
 
@@ -439,6 +462,7 @@
 			},
 
 			_onButtonPressSave: function (oEvent) {
+				btnSavePressed = true;
 				var that = this;
 				var promise = new Promise(function (resolve, reject) {
 					// sap.ui.core.BusyIndicator.show(0);
@@ -813,6 +837,7 @@
 					if (!res[value.model]) {
 						res[value.model] = {
 							model: value.model,
+							modelDesc: value.modelCodeDescription,
 							currentTotal: 0,
 							currentDSTotal: 0,
 							currentCTSTotal: 0,
@@ -832,7 +857,7 @@
 						result.push(res[value.model]);
 					}
 					res[value.model].currentTotal = +res[value.model].currentTotal + +value.current;
-					res[value.model].currentDSTotal = +res[value.model].currentDSTotal + +value.current_Ds;
+					res[value.model].currentDSTotal = + +value.current_Ds; //+res[value.model].currentDSTotal + +value.current_Ds;
 					res[value.model].currentCTSTotal = +res[value.model].currentCTSTotal + +value.current_CTS;
 					res[value.model].currentCPTotal = +res[value.model].currentCPTotal + +value.current_CP;
 					res[value.model].currentUDSTotal = +res[value.model].currentUDSTotal + +value.currentU_DS;
@@ -845,14 +870,14 @@
 					res[value.model].unfilledAllocationTotal = +res[value.model].unfilledAllocationTotal + +value.unfilled_Allocation;
 					res[value.model].differenceTotal = +res[value.model].differenceTotal + +value.difference;
 					res[value.model].requestedVolumeTotal = +res[value.model].requestedVolumeTotal + +value.requested_Volume;
-					res[value.model].count = res[value.model].count + 1;
+					// res[value.model].count = res[value.model].count + 1;
 
 					return res;
 				}, {});
 				this.dynamicIndices = [];
 
 				$.each(resGrouped, function (i, item) {
-					item.currentDSTotal = (item.currentDSTotal / item.count);
+					// item.currentDSTotal = (item.currentDSTotal / item.count);
 					addRow(item);
 				});
 
@@ -862,7 +887,7 @@
 					that.oItem = new sap.m.ColumnListItem({
 						cells: [
 							new sap.m.Text({
-								text: ""
+								text: item.modelDesc
 							}),
 							new sap.m.Text({
 								text: ""
@@ -929,7 +954,7 @@
 						"dealer_code": "",
 						"difference": item.differenceTotal,
 						"model": "",
-						"modelCodeDescription": "",
+						"modelCodeDescription": "-" + item.modelDesc,
 						"pendingAllocation": "",
 						"requested_Ds": "", //item.requestedDSTotal,
 						"requested_Volume": item.requestedVolumeTotal,
@@ -964,17 +989,6 @@
 						return obj;
 					}, Object.create(null));
 
-					// var result = tabData.reduce(function (r, a) {
-					// 	r[a.model] = r[a.model] || [];
-					// 	r[a.model].push(a);
-					// 	return r;
-					// }, Object.create(null));
-
-					// var result = tabData.reduce(function (h, obj) {
-					// 	h[obj.model] = (h[obj.model] || []).concat(obj.current);
-					// 	return h;
-					// }, Object.create(null));
-
 					var groups = Object.keys(group_to_values).map(function (key) {
 						return {
 							model: key,
@@ -983,6 +997,7 @@
 					});
 					that._dynamicSubTotal(groups, item, that.obj);
 				}
+
 				for (var i = 0; i < oModelData2.length; i++) {
 					if (oModelData2[i].model != "") {
 						var duringPercentage = oModelData2[i].current.includes("%");
@@ -1034,7 +1049,6 @@
 						differenceTotal = 0;
 
 					for (var i = 0; i < oModelData2.length; i++) {
-
 						if (includeZero == true && oModelData2[i].model != "") {
 							//if ( oModelData2[i].suggested < "0" ) {
 							currentTotal = +oModelData2[i].current + +currentTotal;
@@ -1059,7 +1073,6 @@
 							if (oModelData2[i].suggested > "0" && oModelData2[i].model != "") {
 								currentTotal = +oModelData2[i].current + +currentTotal;
 								currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
-
 								currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
 								currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
 								currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
@@ -1074,7 +1087,6 @@
 								unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
 								differenceTotal = +oModelData2[i].difference + +differenceTotal;
 							}
-
 						}
 					}
 
@@ -1095,8 +1107,6 @@
 					oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
 					oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
 					oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
-
-					// }
 
 				} else {
 					if (newseriesFlag == true) {
