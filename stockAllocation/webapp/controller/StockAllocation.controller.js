@@ -351,7 +351,7 @@
 			_onPageNavButtonPress: function (oEvent) {
 
 				if (newseriesFlag && !btnSavePressed) {
-					var that=this;
+					var that = this;
 					MessageBox.confirm(
 						that._oResourceBundle.getText("NO_SERIESDATA_SAVED"), { //Are you Sure you want to Reset ?
 							// styleClass: oComponent.getContentDensityClass(),
@@ -370,18 +370,16 @@
 						}
 					);
 					// MessageBox.information(this._oResourceBundle.getText("NO_SERIESDATA_SAVED"));
+				} else {
+					var oBindingContext = oEvent.getSource().getBindingContext();
+					return new Promise(function (fnResolve) {
+						this.doNavigate("ProductionRequestSummary", oBindingContext, fnResolve, "");
+					}.bind(this)).catch(function (err) {
+						if (err !== undefined) {
+							MessageBox.error(err.message);
+						}
+					});
 				}
-				// else {
-				// var oBindingContext = oEvent.getSource().getBindingContext();
-				// return new Promise(function (fnResolve) {
-
-				// 	this.doNavigate("ProductionRequestSummary", oBindingContext, fnResolve, "");
-				// }.bind(this)).catch(function (err) {
-				// 	if (err !== undefined) {
-				// 		MessageBox.error(err.message);
-				// 	}
-				// });
-				// }
 			},
 			doNavigate: function (sRouteName, oBindingContext, fnPromiseResolve, sViaRelation) {
 
