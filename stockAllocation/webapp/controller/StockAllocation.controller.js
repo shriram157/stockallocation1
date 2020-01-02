@@ -343,6 +343,8 @@
 					updationRequestedVolume["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.updateBindings(true);
 				}
+				
+				this._calculateTotals();
 
 				// when before click navigates to previous screen the popup might need to be thrown. 
 
@@ -860,8 +862,10 @@
 					res[value.model].currentCPTotal = +res[value.model].currentCPTotal + +value.current_CP;
 					res[value.model].currentUDSTotal = +res[value.model].currentUDSTotal + +value.currentU_DS;
 					res[value.model].suggestedTotal = +res[value.model].suggestedTotal + +value.suggested;
-					res[value.model].suggestedDSTotal = +res[value.model].suggestedDSTotal + +value.suggested_Ds;
-					res[value.model].requestedDSTotal = +res[value.model].requestedDSTotal + +value.requested_Ds;
+					// res[value.model].suggestedDSTotal = +res[value.model].suggestedDSTotal + +value.suggested_Ds;
+					res[value.model].suggestedDSTotal = + value.current_Ds + +value.currentU_DS * res[value.model].suggestedTotal;
+					// console.log("suggested"+res[value.model].suggestedTotal);
+					
 					res[value.model].allocatedTotal = +res[value.model].allocatedTotal + +value.allocated;
 					res[value.model].allocatedDSTotal = +res[value.model].allocatedDSTotal + +value.allocated_Ds;
 					res[value.model].pendingAllocationTotal = +res[value.model].pendingAllocationTotal + +value.pendingAllocation;
@@ -869,6 +873,8 @@
 					res[value.model].differenceTotal = +res[value.model].differenceTotal + +value.difference;
 					res[value.model].requestedVolumeTotal = +res[value.model].requestedVolumeTotal + +value.requested_Volume;
 					// res[value.model].count = res[value.model].count + 1;
+					
+					res[value.model].requestedDSTotal = + value.current_Ds + +value.currentU_DS * res[value.model].requestedVolumeTotal;//+res[value.model].requestedDSTotal + +value.requested_Ds;
 
 					return res;
 				}, {});
@@ -954,12 +960,12 @@
 						"model": "",
 						"modelCodeDescription": "-" + item.modelDesc,
 						"pendingAllocation": "",
-						"requested_Ds": "", //item.requestedDSTotal,
+						"requested_Ds": item.requestedDSTotal,
 						"requested_Volume": item.requestedVolumeTotal,
 						"suffix": "",
 						"suffix_desc": "",
 						"suggested": item.suggestedTotal,
-						"suggested_Ds": "", // item.suggestedDSTotal,
+						"suggested_Ds": item.suggestedDSTotal,
 						"unfilled_Allocation": "",
 						"visibleProperty": true,
 						"zsrc_werks": "",
