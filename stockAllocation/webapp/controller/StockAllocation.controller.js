@@ -343,6 +343,8 @@
 					updationRequestedVolume["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.updateBindings(true);
 				}
+				
+				this._calculateTotals();
 
 				// when before click navigates to previous screen the popup might need to be thrown. 
 
@@ -954,12 +956,12 @@
 						"model": "",
 						"modelCodeDescription": "-" + item.modelDesc,
 						"pendingAllocation": "",
-						"requested_Ds": "", //item.requestedDSTotal,
+						"requested_Ds": item.requestedDSTotal,
 						"requested_Volume": item.requestedVolumeTotal,
 						"suffix": "",
 						"suffix_desc": "",
 						"suggested": item.suggestedTotal,
-						"suggested_Ds": "", // item.suggestedDSTotal,
+						"suggested_Ds": item.suggestedDSTotal,
 						"unfilled_Allocation": "",
 						"visibleProperty": true,
 						"zsrc_werks": "",
