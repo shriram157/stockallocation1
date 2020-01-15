@@ -294,10 +294,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		onSeriesSelectionChange: function (oEvt) {
 			var Data = oEvt.getParameters().selectedItem.getBindingContext("SeriesDataModel").getObject();
-			RouteObj.Year = Data.zzmoyr;
-			RouteObj.Series = Data.zzseries;
-			RouteObj.SeriesDesc = Data.zzseries_desc_en;
-			this.getAllModels(Data.zzmoyr, Data.zzseries);
+			RouteObj.Year = Data.moyr;
+			RouteObj.Series = Data.series;
+			RouteObj.SeriesDesc = Data.series_desc_en;
+			this.getAllModels(Data.moyr, Data.series);
 			this.seriesObj = {};
 
 			this.oModelStockData = this.getView().getModel("suggestedDataModel").getData();
@@ -354,11 +354,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					console.log("seriesData", data);
 					data.results.unshift({
 						"p_orderable": "",
-						"zzmoyr": "",
+						"moyr": "",
 						"zzorder_ind": "",
-						"zzseries": "",
-						"zzseries_desc_en": ""
-					})
+						"series": "",
+						"series_desc_en": ""
+					});
 					that.getView().getModel("SeriesDataModel").setData(data);
 				}),
 				error: function (err) {
