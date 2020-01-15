@@ -347,8 +347,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oSeriesModel = new sap.ui.model.json.JSONModel();
 			this.getView().setModel(oSeriesModel, "SeriesDataModel");
 			var oSuggestUpdateModel = this.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
+			///ZC_ALLOCAT_CFG(p_orderable='Y',p_div='"+this.sapDivision+"')/Set", 
 			///node/ZSD_SUGGEST_ORDER_UPDATE_SRV/ZC_ALLOCAT_CFG(p_orderable='Y')/Set
-			oSuggestUpdateModel.read("/ZC_ALLOCAT_CFG(p_orderable='Y')/Set", {
+			oSuggestUpdateModel.read("/ZC_ALLOCAT_CFG(p_orderable='Y',p_div='"+this.sapDivision+"')/Set", {
 				success: $.proxy(function (data, response) {
 					console.log("seriesData", data);
 					data.results.unshift({
