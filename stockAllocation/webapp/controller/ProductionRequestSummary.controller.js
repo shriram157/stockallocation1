@@ -354,11 +354,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					console.log("seriesData", data);
 					data.results.unshift({
 						"p_orderable": "",
-						"zzmoyr": "",
+						"moyr": "",
 						"zzorder_ind": "",
-						"zzseries": "",
-						"zzseries_desc_en": ""
-					})
+						"series": "",
+						"series_desc_en": ""
+					});
 					that.getView().getModel("SeriesDataModel").setData(data);
 				}),
 				error: function (err) {

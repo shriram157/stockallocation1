@@ -8,7 +8,7 @@
 						<Label text="{i18n>SERIES}"/>
 						<Select id="ID_SeriesDesc" forceSelection="true" items="{SeriesDataModel>/results}" change="onSeriesSelectionChange"
 							fieldGroupIds="requiredField">
-							<core:Item key="{SeriesDataModel>zzseries}" text="{SeriesDataModel>zzmoyr} - {SeriesDataModel>zzseries} {SeriesDataModel>zzseries_desc_en}"/>
+							<core:Item key="{SeriesDataModel>series}" text="{SeriesDataModel>moyr} - {SeriesDataModel>series} {SeriesDataModel>series_desc_en}"/>
 						</Select>
 						<Label text="{i18n>MODEL}"/>
 						<Select id="ID_modelDesc" forceSelection="true" items="{ModelDataModel>/modelData}" change="onModelSelectionChange"
