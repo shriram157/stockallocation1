@@ -2366,10 +2366,10 @@
 
 			getSeqNumber: function (objNew) {
 				var that = this;
-				var service = that.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/";
-				that.oIBPModel = new sap.ui.model.odata.ODataModel(service, true); //this.getOwnerComponent().getModel("ZIBP_VMS_SUGGEST_ORD_ETL_SRV");
+				var service = that.nodeJsUrl + "/ZSD_SUGGEST_ORDER_UPDATE_SRV/";
+				that.oIBPModel = new sap.ui.model.odata.ODataModel(service, true); //this.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
 				that._oToken = this.oIBPModel.getHeaders()['x-csrf-token'];
-				var uri = this.nodeJsUrl + "/ZIBP_VMS_SUGGEST_ORD_ETL_SRV/SuggestOrderSet('00000000')";
+				var uri = this.nodeJsUrl + "/ZSD_SUGGEST_ORDER_UPDATE_SRV/SuggestOrderSet('00000000')";
 				$.ajax({
 					type: "GET",
 					headers: {
