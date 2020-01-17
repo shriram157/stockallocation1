@@ -133,7 +133,7 @@
 					this.zzseries = selectedSeries.zzseries;
 					this.seriesDescription = selectedSeries.seriesDescription;
 					this.zzmoyr = selectedSeries.zzmoyr;
-					this.UserId = selectedSeries.UserId;
+					this.UserId = selectedSeries.dealerCode;
 
 					this.removeSuggestedRequestedZeroQty = false;
 					var modelSereiesHead = selectedSeries.series; //selectedSeries.Zzmoyr + " - " + selectedSeries.zzseries_desc_en;
