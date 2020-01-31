@@ -1004,8 +1004,8 @@
 
 				for (var i = 0; i < oModelData2.length; i++) {
 					if (oModelData2[i].model != "") {
-						var duringPercentage = oModelData2[i].current.includes("%");
-						if (oModelData2[i].visibleProperty == true && duringPercentage == false) {
+						this.duringPercentage = oModelData2[i].current.includes("%");
+						if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
 							// if ( oModelData2[i].visibleProperty == true ) {
 							currentTotal = +oModelData2[i].current + +currentTotal;
 							currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
@@ -1154,29 +1154,31 @@
 						// oInitialTotalStockModel["0"].allocatedDSTotal = 0;
 						// oInitialTotalStockModel["0"].pendingAllocationTotal = 0;
 						// oInitialTotalStockModel["0"].unfilledAllocationTotal = 0;
-					} else {
-						var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
-						var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
-						var oInitialTotalStockModel = oInitalTotalStock.getData();
+					} 
+					
+					// else {
+					// 	var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
+					// 	var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
+					// 	var oInitialTotalStockModel = oInitalTotalStock.getData();
 
-						oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
-						oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
-						oInitialTotalStockModel["0"].currentTotal = currentTotal;
+					// 	oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
+					// 	oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
+					// 	oInitialTotalStockModel["0"].currentTotal = currentTotal;
 
-						oInitialTotalStockModel["0"].currentCTSTotal = currentCTSTotal;
-						oInitialTotalStockModel["0"].currentCPTotal = currentCPTotal;
-						oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
+					// 	oInitialTotalStockModel["0"].currentCTSTotal = currentCTSTotal;
+					// 	oInitialTotalStockModel["0"].currentCPTotal = currentCPTotal;
+					// 	oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
 
-						oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
-						oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
-						oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
-						oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
+					// 	oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
+					// 	oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
+					// 	oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
+					// 	oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
 
-						oInitialTotalStockModel["0"].allocatedTotal = allocatedTotal;
-						oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
-						oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
-						oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
-					}
+					// 	oInitialTotalStockModel["0"].allocatedTotal = allocatedTotal;
+					// 	oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
+					// 	oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
+					// 	oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
+					// }
 				}
 				// }
 				oInitalTotalStock.updateBindings(true);
