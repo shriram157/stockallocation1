@@ -1002,8 +1002,8 @@
 							that._dynamicSubTotal(groups, item, that.obj);
 						}
 
-						for (var i = 0; i < oModelData2.length; i++) {
-							// if (oModelData2[i].model != "") {
+						for (var i = 0; i < oModelData2.length-1; i++) {
+							if (oModelData2[i].model != "") {
 								this.duringPercentage = oModelData2[i].current.includes("%");
 								if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
 									// if ( oModelData2[i].visibleProperty == true ) {
@@ -1023,7 +1023,7 @@
 									unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
 									differenceTotal = +oModelData2[i].difference + +differenceTotal;
 								}
-							// }
+							}
 						}
 						//  requested volume is not based on suggested stock. 
 						for (var i = 0; i < oModelData2.length; i++) {
