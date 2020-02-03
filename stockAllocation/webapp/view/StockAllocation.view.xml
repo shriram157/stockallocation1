@@ -68,14 +68,14 @@
 							</header>
 							<footer></footer>
 						</Column>
-						<Column width="155px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="185px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>SUFFIX}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer></footer>
 						</Column>
-						<Column width="185px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="155px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>COLOUR_TRIM}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -83,13 +83,13 @@
 							<footer></footer>
 						</Column>
 						<!--Its for totals-->
-						<Column width="25px" hAlign="End" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<Column width="50px" hAlign="End" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
 							<footer>
 								<Text text="{i18n>TOTALS} " width="auto" maxLines="1" wrapping="false" textAlign="End" textDirection="Inherit" visible="true"
 									class="setOrangeFont"/>
 							</footer>
 						</Column>
-						<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="65px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>CurrentInventory}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -99,7 +99,7 @@
 									class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="65px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>CurrentPipeline}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -131,7 +131,7 @@
 									class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false" visible="false">
 							<header>
 								<Text text="{i18n>UnitDaySupply}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -141,7 +141,7 @@
 									textDirection="Inherit" class="setOrangeFont" visible="false"/>
 							</footer>
 						</Column>
-						<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>SUGGESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -172,7 +172,7 @@
 									class="setOrangeFont" textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>DIFFERENCE}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
