@@ -1113,7 +1113,7 @@
 							oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
 
 						}
-
+						// else
 						if (newseriesFlag == true) {
 							var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
 							var oTotalRecevied = new sap.ui.model.json.JSONModel();
@@ -1180,7 +1180,7 @@
 						// 	oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
 						// 	oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
 						// }
-					}
+					// }
 					// }
 				oInitalTotalStock.updateBindings(true);
 			},
