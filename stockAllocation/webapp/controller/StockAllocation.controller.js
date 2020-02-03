@@ -1157,31 +1157,31 @@
 							// oInitialTotalStockModel["0"].unfilledAllocationTotal = 0;
 						}
 
-						// else {
-						// 	var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
-						// 	var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
-						// 	var oInitialTotalStockModel = oInitalTotalStock.getData();
+						else {
+							var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
+							var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
+							var oInitialTotalStockModel = oInitalTotalStock.getData();
 
-						// 	oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
-						// 	oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
-						// 	oInitialTotalStockModel["0"].currentTotal = currentTotal;
+							oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
+							oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
+							oInitialTotalStockModel["0"].currentTotal = currentTotal;
 
-						// 	oInitialTotalStockModel["0"].currentCTSTotal = currentCTSTotal;
-						// 	oInitialTotalStockModel["0"].currentCPTotal = currentCPTotal;
-						// 	oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
+							oInitialTotalStockModel["0"].currentCTSTotal = currentCTSTotal;
+							oInitialTotalStockModel["0"].currentCPTotal = currentCPTotal;
+							oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
 
-						// 	oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
-						// 	oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
-						// 	oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
-						// 	oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
+							oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
+							oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
+							oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
+							oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
 
-						// 	oInitialTotalStockModel["0"].allocatedTotal = allocatedTotal;
-						// 	oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
-						// 	oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
-						// 	oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
-						// }
-					// }
+							oInitialTotalStockModel["0"].allocatedTotal = allocatedTotal;
+							oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
+							oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
+							oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
+						}
 					}
+					// }
 				oInitalTotalStock.updateBindings(true);
 			},
 
