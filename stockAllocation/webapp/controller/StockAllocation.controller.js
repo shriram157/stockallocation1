@@ -1003,7 +1003,7 @@
 						}
 
 						for (var i = 0; i < oModelData2.length; i++) {
-							if (oModelData2[i].model != "") {
+							// if (oModelData2[i].model != "") {
 								this.duringPercentage = oModelData2[i].current.includes("%");
 								if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
 									// if ( oModelData2[i].visibleProperty == true ) {
@@ -1023,7 +1023,7 @@
 									unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
 									differenceTotal = +oModelData2[i].difference + +differenceTotal;
 								}
-							}
+							// }
 						}
 						//  requested volume is not based on suggested stock. 
 						for (var i = 0; i < oModelData2.length; i++) {
@@ -1113,7 +1113,7 @@
 							oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
 
 						}
-						// else
+						else {
 						if (newseriesFlag == true) {
 							var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
 							var oTotalRecevied = new sap.ui.model.json.JSONModel();
@@ -1181,7 +1181,7 @@
 						// 	oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
 						// }
 					// }
-					// }
+					}
 				oInitalTotalStock.updateBindings(true);
 			},
 
