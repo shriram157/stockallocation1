@@ -787,9 +787,10 @@
 							console.log("index", i);
 							oModelData2.splice(this.dynamicIndices[i], 1);
 							if (!!that.oTable.getItems()[this.dynamicIndices[i]]) {
+								that.oTable.getItems()[this.dynamicIndices[i]].removeStyleClass("grayBG");
 								var cells = that.oTable.getItems()[this.dynamicIndices[i]].getCells();
 								for (var j = 0; j < cells.length; j++) {
-									cells[j].removeStyleClass("setOrangeFont");
+									cells[j].removeStyleClass("boldFont");
 									cells[j].mProperties.step = 1;
 									cells[j].mProperties.editable = true;
 									cells[j].mProperties.enabled = true;
@@ -800,9 +801,10 @@
 				} else {
 					var temp = that.oTable.getItems();
 					temp.forEach(function (element) {
+						element.removeStyleClass("grayBG");
 						var m = element.getCells();
 						m.forEach(function (element2) {
-							element2.removeStyleClass("setOrangeFont");
+							element2.removeStyleClass("boldFont");
 							element2.mProperties.step = 1;
 							element2.mProperties.editable = true;
 							element2.mProperties.enabled = true;
@@ -907,7 +909,7 @@
 								textAlign: "End",
 								textDirection: "Inherit",
 								visible: true,
-								class: "setOrangeFont"
+								class: "boldFont"
 							}),
 							new sap.m.Text({
 								text: item.currentTotal
@@ -943,7 +945,7 @@
 					});
 					var cells = that.oItem.getCells();
 					for (var i = 0; i < cells.length; i++) {
-						cells[i].addStyleClass("setOrangeFont");
+						cells[i].addStyleClass("boldFont");
 					}
 
 					that.obj = {
@@ -1178,6 +1180,12 @@
 								// }
 							}
 						}
+						
+						for (var x = 0; x < oModelData2.length - 1; x++) {
+							if (oModelData2[i].model != "") {
+								requestedVolumeTotal = +oModelData2[x].requested_Volume + +requestedVolumeTotal;
+							}
+						}
 
 						oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
 						oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
@@ -1188,7 +1196,7 @@
 						oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
 
 						oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
-						oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
+						// oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
 						oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
 						oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
 
@@ -1222,9 +1230,10 @@
 						// var oModelLocalData = that.getView().getModel("oViewLocalDataModel");
 						// debugger;
 						if (!!oTable.getItems()[that.index]) {
+							oTable.getItems()[that.index].addStyleClass("grayBG");
 							var cells = oTable.getItems()[that.index].getCells();
 							for (var i = 0; i < cells.length; i++) {
-								cells[i].addStyleClass("setOrangeFont");
+								cells[i].addStyleClass("boldFont");
 								cells[i].mProperties.step = 0;
 								cells[i].mProperties.editable = false;
 								cells[i].mProperties.enabled = false;
