@@ -177,7 +177,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						"SuffixDescriptionFR": backupModelData[i].suffix_desc_fr,
 						"mrktg_int_desc_en": backupModelData[i].int_trim_desc_en,
 						"mrktg_int_desc_fr": backupModelData[i].int_trim_desc_fr,
-						"localLang": _that.Language
+						"localLang": _that.sCurrentLocale
 					});
 					_that._oDataModel.updateBindings(true);
 
@@ -188,14 +188,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			if (_that._oDataModel.getData().suffixData[0].zzsuffix !== "Please Select") {
 				_that._oDataModel.getData().suffixData.unshift({
 					"Model": "",
-					"localLang": "",
+					"Modelyear": "",
+					"Suffix": _that._oResourceBundle.getText("PleaseSelect"),
 					"int_c": "",
-					"mrktg_int_desc_en": "",
-					"mrktg_int_desc_fr": "",
 					"SuffixDescriptionEN": "",
 					"SuffixDescriptionFR": "",
-					"Modelyear": "",
-					"Suffix": _that._oResourceBundle.getText("PleaseSelect")
+					"mrktg_int_desc_en": "",
+					"mrktg_int_desc_fr": "",
+					"localLang": ""
 				});
 			}
 			_that._oDataModel.updateBindings(true);
@@ -214,7 +214,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						"ExteriorColorCode": item.zzextcol,
 						"MarketingDescriptionEXTColorEN": item.mktg_desc_en,
 						"MarketingDescriptionEXTColorFR": item.mktg_desc_fr,
-						"localLang": _that.Language,
+						"localLang": _that.sCurrentLocale,
 						"InteriorColorCode": item.zzintcol
 					};
 					// console.log("oData.d.results", obj);

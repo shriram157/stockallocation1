@@ -4,7 +4,17 @@
 
 }
 
+.grayBG {
+	background: #80808096 !important;
+    color: #000 !important;
+}
+
+.boldFont{
+	font-weight:bold !important;
+}
+
 .pageHeight{height: 100% !important;}
 
 .noDisplay{display:none;}
-.setOrangeFont.noDisplay{display:block !important;}
+.setOrangeFont{font-size: 1rem !important;}
+.setOrangeFont.noDisplay{display:block !important; }

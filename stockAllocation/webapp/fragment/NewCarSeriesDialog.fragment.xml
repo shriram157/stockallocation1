@@ -14,18 +14,18 @@
 						<Select id="ID_modelDesc" forceSelection="true" items="{ModelDataModel>/modelData}" change="onModelSelectionChange"
 							fieldGroupIds="requiredField">
 							<core:Item key="{ModelDataModel>Model}"
-								text="{ModelDataModel>Model} - {=${ModelDataModel>localLang}==='E' ? ${ModelDataModel>ENModelDesc}:${ModelDataModel>FRModelDesc}}"/>
+								text="{ModelDataModel>Model} - {=${ModelDataModel>localLang}==='EN' ? ${ModelDataModel>ENModelDesc}:${ModelDataModel>FRModelDesc}}"/>
 						</Select>
 						<Label text="{i18n>SUFFIX}"/>
 						<Select id="ID_marktgIntDesc" forceSelection="true" items="{ModelDataModel>/suffixData}" change="onSuffixChange"
 							fieldGroupIds="requiredField">
 							<core:Item key="{ModelDataModel>Suffix}"
-								text="{ModelDataModel>Suffix} - {=${ModelDataModel>localLang}==='E' ? ${ModelDataModel>SuffixDescriptionEN}:${ModelDataModel>SuffixDescriptionFR}} / {=${ModelDataModel>localLang}==='E' ? ${ModelDataModel>mrktg_int_desc_en}:${ModelDataModel>mrktg_int_desc_fr}}"/>
+								text="{ModelDataModel>Suffix} - {=${ModelDataModel>localLang}==='EN' ? ${ModelDataModel>SuffixDescriptionEN}:${ModelDataModel>SuffixDescriptionFR}} / {=${ModelDataModel>localLang}==='EN' ? ${ModelDataModel>mrktg_int_desc_en}:${ModelDataModel>mrktg_int_desc_fr}}"/>
 						</Select>
 						<Label text="{i18n>COLOUR_TRIM}"/>
 						<Select id="ID_ExteriorColorCode" forceSelection="true" items="{ModelDataModel>/colorData}" change="onColorSelectionDoneEnableAddButton">
 							<core:Item key="{ModelDataModel>ExteriorColorCode}"
-								text="{ModelDataModel>ExteriorColorCode} - {=${ModelDataModel>localLang}==='E' ? ${ModelDataModel>MarketingDescriptionEXTColorEN}:${ModelDataModel>MarketingDescriptionEXTColorFR}}"/>
+								text="{ModelDataModel>ExteriorColorCode} - {=${ModelDataModel>localLang}==='EN' ? ${ModelDataModel>MarketingDescriptionEXTColorEN}:${ModelDataModel>MarketingDescriptionEXTColorFR}}"/>
 						</Select>
 					</f:content>
 				</f:SimpleForm>
