@@ -1004,7 +1004,7 @@
 					that._dynamicSubTotal(groups, item, that.obj);
 				}
 
-				for (var i = 0; i < oModelData2.length - 1; i++) {
+				for (var i = 0; i < oModelData2.length; i++) {
 					if (oModelData2[i].model != "") {
 						this.duringPercentage = oModelData2[i].current.includes("%");
 						if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
@@ -1028,7 +1028,7 @@
 					}
 				}
 				//  requested volume is not based on suggested stock. 
-				for (var i = 0; i < oModelData2.length - 1; i++) {
+				for (var i = 0; i < oModelData2.length; i++) {
 					if (oModelData2[i].model != "") {
 						requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
 					}
@@ -1054,7 +1054,7 @@
 						unfilledAllocationTotal = 0,
 						differenceTotal = 0;
 
-					for (var i = 0; i < oModelData2.length - 1; i++) {
+					for (var i = 0; i < oModelData2.length; i++) {
 						if (includeZero == true && oModelData2[i].model != "") {
 							//if ( oModelData2[i].suggested < "0" ) {
 							currentTotal = +oModelData2[i].current + +currentTotal;
@@ -1157,7 +1157,7 @@
 							pendingAllocationTotal = 0,
 							unfilledAllocationTotal = 0,
 							differenceTotal = 0;
-						for (var i = 0; i < oModelData2.length - 1; i++) {
+						for (var i = 0; i < oModelData2.length; i++) {
 							if (oModelData2[i].model != "") {
 								// this.duringPercentage = oModelData2[i].current.includes("%");
 								// if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
@@ -1181,7 +1181,7 @@
 							}
 						}
 						
-						for (var x = 0; x < oModelData2.length - 1; x++) {
+						for (var x = 0; x < oModelData2.length; x++) {
 							if (oModelData2[i].model != "") {
 								requestedVolumeTotal = +oModelData2[x].requested_Volume + +requestedVolumeTotal;
 							}
