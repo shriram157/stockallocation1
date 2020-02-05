@@ -128,7 +128,7 @@
 					newseriesFlag = false;
 					var selectedSeries = sap.ui.getCore().getModel('selectedSeries').getData();
 					processDate = selectedSeries.zzprocess_dt;
-					console.log("processDate", processDate);
+					// console.log("processDate", processDate);
 
 					this.zzseries = selectedSeries.zzseries;
 					this.seriesDescription = selectedSeries.seriesDescription;
@@ -228,7 +228,7 @@
 			},
 
 			onAfterRendering: function () {
-				console.log("rendering");
+				// console.log("rendering");
 				this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
 
 			},
@@ -238,7 +238,7 @@
 					var oTable = this.getView().byId("stockDataModelTableId");
 					var oModelData2 = this.getView().getModel("stockDataModel").getData();
 					if (evt.getSource().getPressed() == false) {
-						console.log("pressed", evt);
+						// console.log("pressed", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 								oModelData2[i].visibleProperty = false;
@@ -246,7 +246,7 @@
 						}
 						// this._calculateTotals();
 					} else if (evt.getSource().getPressed() == true) {
-						console.log("pressed2", evt);
+						// console.log("pressed2", evt);
 						for (var i = 0; i < oModelData2.length; i++) {
 							if ((oModelData2[i].suggested <= 0) && (oModelData2[i].requested_Volume <= "0")) {
 								oModelData2[i].visibleProperty = true;
@@ -300,7 +300,7 @@
 
 				var oldS4Value = parseInt(oldS4Entry[0].requested_Volume);
 
-				console.log("oldS4Value", oldS4Value);
+				// console.log("oldS4Value", oldS4Value);
 
 				var oldValue = oEvt.getSource()._sOldValue;
 				var tempRequestedTotal = 0;
@@ -489,7 +489,7 @@
 				that.data = oModelData2;
 				if (!!this.dynamicIndices && this.dynamicIndices.length > 0) {
 					for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
-						console.log("index", i);
+						// console.log("index", i);
 						oModelData2.splice(this.dynamicIndices[i], 1);
 					}
 				}
@@ -784,7 +784,7 @@
 					that.data = oModelData2;
 					if (!!this.dynamicIndices && this.dynamicIndices.length > 0) {
 						for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
-							console.log("index", i);
+							// console.log("index", i);
 							oModelData2.splice(this.dynamicIndices[i], 1);
 							if (!!that.oTable.getItems()[this.dynamicIndices[i]]) {
 								that.oTable.getItems()[this.dynamicIndices[i]].removeStyleClass("grayBG");
@@ -812,7 +812,7 @@
 					});
 				}
 				// oTable.updateItems();
-				console.log("oTable.getItems()", that.oTable.getItems());
+				// console.log("oTable.getItems()", that.oTable.getItems());
 				this.getView().getModel("stockDataModel").updateBindings(true);
 
 				var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
@@ -1004,7 +1004,7 @@
 					that._dynamicSubTotal(groups, item, that.obj);
 				}
 
-				for (var i = 0; i < oModelData2.length; i++) {
+				for (var i = 1; i < oModelData2.length; i++) {
 					if (oModelData2[i].model != "") {
 						this.duringPercentage = oModelData2[i].current.includes("%");
 						if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
@@ -1054,7 +1054,7 @@
 						unfilledAllocationTotal = 0,
 						differenceTotal = 0;
 
-					for (var i = 0; i < oModelData2.length; i++) {
+					for (var i = 1; i < oModelData2.length; i++) {
 						if (includeZero == true && oModelData2[i].model != "") {
 							//if ( oModelData2[i].suggested < "0" ) {
 							currentTotal = +oModelData2[i].current + +currentTotal;
@@ -1157,7 +1157,7 @@
 							pendingAllocationTotal = 0,
 							unfilledAllocationTotal = 0,
 							differenceTotal = 0;
-						for (var i = 0; i < oModelData2.length; i++) {
+						for (var i = 1; i < oModelData2.length; i++) {
 							if (oModelData2[i].model != "") {
 								// this.duringPercentage = oModelData2[i].current.includes("%");
 								// if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
@@ -1182,9 +1182,9 @@
 						}
 						
 						for (var x = 0; x < oModelData2.length; x++) {
-							if (oModelData2[i].model != "") {
+							// if (oModelData2[i].model != "") {
 								requestedVolumeTotal = +oModelData2[x].requested_Volume + +requestedVolumeTotal;
-							}
+							// }
 						}
 
 						oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
@@ -1217,10 +1217,10 @@
 				groups.forEach(function (element) {
 					if (item.model == element.model) {
 						that.index = element.current.length + that.index + that.count;
-						console.log("index", that.index);
+						// console.log("index", that.index);
 						// oTable.insertItem(that.oItem, that.index);
 						that.getView().getModel("stockDataModel").getData().splice(that.index, 0, obj);
-						console.log(that.getView().getModel("stockDataModel").getData());
+						// console.log(that.getView().getModel("stockDataModel").getData());
 						// console.log(oTable.getItems()[that.index].getCells()[11]);
 						that.getView().getModel("stockDataModel").updateBindings(true);
 						oTable.getBinding("items").refresh(true);
@@ -2576,7 +2576,7 @@
 				var oTable = this.getView().byId("stockDataModelTableId");
 				if (oTable.getItems().length > 1) {
 					this.dynamicIndices = [];
-					console.log("this.dynamicIndices", this.dynamicIndices);
+					// console.log("this.dynamicIndices", this.dynamicIndices);
 					for (var k = 0; k < oTable.getItems().length; k++) {
 						if (oTable.getItems()[0].getId().split("-")[0] != oTable.getItems()[k].getId().split("-")[0]) {
 							oTable.removeItem(oTable.getItems()[k].getId().split("-")[0]);
