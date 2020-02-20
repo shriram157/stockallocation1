@@ -283,14 +283,16 @@
 			},
 
 			whenUserChangesRequestedData: function (oEvt) {
+				this.flagThreShold = false;
 				// the total might need to be updated. 
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
 				// requestedVolumeTotal
 				var currentValue = oEvt.getSource().getProperty("value");
-				// console.log("currentValue", currentValue);
+
 				var backupData = this.getView().getModel("stockDataModelBkup").getData();
 				// console.log("backupData", backupData);
 				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
+				this.currentRequestVolume = currentData.requested_Volume
 				var currentSeqNumber = currentData.zzsug_seq_no;
 				// console.log("currentSeqNumber", currentSeqNumber);
 				var oldS4Entry = backupData.filter(function (val) {
@@ -331,17 +333,40 @@
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
 						if (oStockModelData[i].model != "") {
+							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
 						}
+
+						if (oStockModelData[i].model === "") {
+							this.reqThreShold = parseInt(oStockModelData[i].reqThreshold);
+							this.subtotal = oStockModelData[i].requested_Volume;
+						}
+
+						if (tempRequestedTotal > this.reqThreShold) {
+							this.flagThreShold = true;
+							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
+							this.currentRequestVolume = this.currentRequestVolume - 1;
+							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
+							tempRequestedTotal = tempRequestedTotal - 1;
+							// this.currentStockVolume=this.currentStockVolume-1;
+							this.getView().getModel("stockDataModel").updateBindings(true);
+						}
 					}
 
+					if (this.flagThreShold == true) {
+						MessageBox.error("You have crossed the threshold");
+					}
+					//else{
+					// debugger;
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.oData["0"].requestedDSTotal = requestedDSTotal;
 					var updationRequestedVolume = oTotalModelData.getProperty("/");
 
 					updationRequestedVolume["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.updateBindings(true);
+					// }
+
 				}
 
 				this._calculateTotals();
@@ -831,6 +856,7 @@
 					pendingAllocationTotal = 0,
 					unfilledAllocationTotal = 0,
 					differenceTotal = 0,
+					salesDataTotal = 0,
 					count = 0;
 
 				var result = [];
@@ -840,6 +866,7 @@
 						res[value.model] = {
 							model: value.model,
 							modelDesc: value.modelCodeDescription,
+							allowedTolerance: value.allowedTolerance,
 							currentTotal: 0,
 							currentDSTotal: 0,
 							currentCTSTotal: 0,
@@ -854,10 +881,12 @@
 							pendingAllocationTotal: 0,
 							unfilledAllocationTotal: 0,
 							differenceTotal: 0,
-							count: 0
+							count: 0,
+							salesDataTotal: 0
 						};
 						result.push(res[value.model]);
 					}
+					res[value.model].salesDataTotal = +res[value.model].salesDataTotal + +value.salesdata;
 					res[value.model].currentTotal = +res[value.model].currentTotal + +value.current;
 					res[value.model].currentDSTotal = + +value.current_Ds; //+res[value.model].currentDSTotal + +value.current_Ds;
 					res[value.model].currentCTSTotal = +res[value.model].currentCTSTotal + +value.current_CTS;
@@ -981,7 +1010,9 @@
 						"zzprod_month": "",
 						"zzsuffix": "",
 						"zzsug_seq_no": "",
-						"zzzadddata1": ""
+						"zzzadddata1": "",
+						"reqThreshold": item.allowedTolerance + item.suggestedTotal,
+						"salesdata": item.salesDataTotal
 					};
 
 					var tempIndex = [],
@@ -1014,7 +1045,7 @@
 							currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
 							currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
 							currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
-
+							salesDataTotal = +oModelData2[i].salesdata + +salesDataTotal;
 							suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 							suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
 							// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
@@ -1052,7 +1083,8 @@
 						allocatedDSTotal = 0,
 						pendingAllocationTotal = 0,
 						unfilledAllocationTotal = 0,
-						differenceTotal = 0;
+						differenceTotal = 0,
+						salesDataTotal = 0;
 
 					for (var i = 1; i < oModelData2.length; i++) {
 						if (includeZero == true && oModelData2[i].model != "") {
@@ -1063,6 +1095,8 @@
 							currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
 							currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
 							currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
+
+							salesDataTotal = +oModelData2[i].salesdata + +salesDataTotal;
 
 							suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 							suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
@@ -1082,6 +1116,8 @@
 								currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
 								currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
 								currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
+
+								salesDataTotal = +oModelData2[i].salesdata + +salesDataTotal;
 
 								suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 								suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
@@ -1114,6 +1150,8 @@
 					oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
 					oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
 
+					oInitialTotalStockModel["0"].salesDataTotal = salesDataTotal;
+
 				} else {
 					if (newseriesFlag == true) {
 						var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
@@ -1136,7 +1174,8 @@
 							"allocatedTotal": "0",
 							"allocatedDSTotal": "0",
 							"pendingAllocationTotal": "0",
-							"unfilledAllocationTotal": "0"
+							"unfilledAllocationTotal": "0",
+							"salesDataTotal":"0"
 						});
 					} else {
 						var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
@@ -1156,8 +1195,9 @@
 							allocatedDSTotal = 0,
 							pendingAllocationTotal = 0,
 							unfilledAllocationTotal = 0,
-							differenceTotal = 0;
-						for (var i = 1; i < oModelData2.length; i++) {
+							differenceTotal = 0,
+							salesDataTotal=0;
+						for (var i = 0; i < oModelData2.length; i++) {
 							if (oModelData2[i].model != "") {
 								// this.duringPercentage = oModelData2[i].current.includes("%");
 								// if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
@@ -1167,6 +1207,7 @@
 								currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
 								currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
 								currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
+								salesDataTotal = +oModelData2[i].salesdata + +salesDataTotal;
 
 								suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
 								suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
@@ -1180,10 +1221,10 @@
 								// }
 							}
 						}
-						
+
 						for (var x = 0; x < oModelData2.length; x++) {
 							// if (oModelData2[i].model != "") {
-								requestedVolumeTotal = +oModelData2[x].requested_Volume + +requestedVolumeTotal;
+							requestedVolumeTotal = +oModelData2[x].requested_Volume + +requestedVolumeTotal;
 							// }
 						}
 
@@ -1204,6 +1245,7 @@
 						oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
 						oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
 						oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
+						oInitialTotalStockModel["0"].salesDataTotal = salesDataTotal;
 					}
 				}
 				// }
@@ -1599,7 +1641,8 @@
 							pendingAllocationTotal = 0,
 							unfilledAllocationTotal = 0,
 							differenceTotal = 0,
-							requestedDSTotal = 0;
+							requestedDSTotal = 0,
+							salesDataTotal = 0;
 
 						var zeroSuggestioncurrentTotal = 0,
 							zeroSuggestioncurrentDSTotal = 0,
@@ -1608,6 +1651,7 @@
 							zeroSuggestioncurrentUDSTotal = 0,
 
 							zeroSuggestionsuggestedTotal = 0,
+							zeroSuggestionsalesDataTotal = 0,
 							zeroSuggestiondifferenceTotal = 0,
 							zeroSuggestionsuggestedDSTotal = 0,
 							zeroSuggestionrequestedVolumeTotal = 0,
@@ -1709,7 +1753,10 @@
 								zzend_date: item.zzend_date,
 								zzsuffix: item.zzsuffix,
 								zzzadddata1: item.zzzadddata1, // this is used for Sort
-								zzint_alc_qty: item.zzint_alc_qty
+								zzint_alc_qty: item.zzint_alc_qty,
+								reqThreshold: "",
+								allowedTolerance: 1,
+								salesdata: 1
 
 							});
 
@@ -1747,7 +1794,9 @@
 								zzordertype: item.zzordertype,
 								zzsuffix: item.zzsuffix,
 								zzzadddata1: item.zzzadddata1, // this is used for Sort
-								zzint_alc_qty: item.zzint_alc_qty
+								zzint_alc_qty: item.zzint_alc_qty,
+								allowedTolerance: 1,
+								salesdata: 1
 
 							});
 
@@ -1785,6 +1834,7 @@
 							suggestedDSTotal = suggestedDSTotal + +item.suggested_ds;
 
 							requestedDSTotal = requestedDSTotal + +item.requested_Ds;
+							salesDataTotal = salesDataTotal + +item.salesdata;
 
 							requestedVolumeTotal = requestedVolumeTotal + +item.zzrequest_qty;
 							allocatedTotal = allocatedTotal + +item.zzallocated_qty;
@@ -1799,6 +1849,7 @@
 								zeroSuggestioncurrentCPTotal = zeroSuggestioncurrentCPTotal + +item.zzcur_pipeline;
 								zeroSuggestioncurrentUDSTotal = zeroSuggestioncurrentUDSTotal + +item.zzunit_ds;
 
+								zeroSuggestionsalesDataTotal = zeroSuggestionsalesDataTotal + +item.salesdata;
 								zeroSuggestionsuggestedTotal = zeroSuggestionsuggestedTotal + +item.zzsuggest_qty;
 								zeroSuggestiondifferenceTotal = zeroSuggestiondifferenceTotal + +item.diff_sugg_req;
 								zeroSuggestionsuggestedDSTotal = zeroSuggestionsuggestedDSTotal + +item.suggested_ds;
@@ -1828,7 +1879,8 @@
 										"allocatedTotal": "0",
 										"allocatedDSTotal": "0",
 										"pendingAllocationTotal": "0",
-										"unfilledAllocationTotal": "0"
+										"unfilledAllocationTotal": "0",
+										"salesDataTotal": "0"
 									});
 								} else if (newseriesFlag == false) {
 									that.oInitialTotalsForUI.push({
@@ -1848,7 +1900,8 @@
 										allocatedTotal: zeroSuggestionallocatedTotal,
 										allocatedDSTotal: zeroSuggestionallocatedDSTotal,
 										pendingAllocationTotal: zeroSuggestionpendingAllocationTotal,
-										unfilledAllocationTotal: zeroSuggestionunfilledAllocationTotal
+										unfilledAllocationTotal: zeroSuggestionunfilledAllocationTotal,
+										salesDataTotal: zeroSuggestionsalesDataTotal
 
 									});
 
@@ -1867,6 +1920,7 @@
 										allocatedDSTotal: allocatedDSTotal,
 										pendingAllocationTotal: pendingAllocationTotal,
 										unfilledAllocationTotal: unfilledAllocationTotal,
+										salesDataTotal: salesDataTotal,
 										onlyForBkup: true
 
 									});
