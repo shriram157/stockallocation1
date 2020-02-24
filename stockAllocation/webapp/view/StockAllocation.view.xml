@@ -119,7 +119,7 @@
 									textDirection="Inherit" class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="120px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>CurrentStockDaysSupply}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
@@ -139,6 +139,16 @@
 							<footer>
 								<Text text="{initialStockTotalModel>/0/currentUDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
 									textDirection="Inherit" class="setOrangeFont" visible="false"/>
+							</footer>
+						</Column>
+						<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+							visible="true" mergeDuplicates="false">
+							<header>
+								<Text text="{i18n>SALESDATA}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							</header>
+							<footer>
+								<Text text="{initialStockTotalModel>/0/salesDataTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+									class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
 						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
@@ -170,6 +180,16 @@
 							<footer>
 								<Text text="{initialStockTotalModel>/0/requestedVolumeTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
 									class="setOrangeFont" textDirection="Inherit" visible="true"/>
+							</footer>
+						</Column>
+						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false">
+							<header>
+								<Text text="{i18n>ThreShold}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							</header>
+							<footer>
+								<!--<Text text="{initialStockTotalModel>/0/differenceTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"-->
+								<!--	textDirection="Inherit" visible="true"/>-->
 							</footer>
 						</Column>
 						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
@@ -256,6 +276,8 @@
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text visible="false" text="{stockDataModel>currentU_DS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
 									textDirection="Inherit" class="noheight"/>
+								<Text text="{stockDataModel>salesdata}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>suggested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>suggested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
@@ -263,6 +285,7 @@
 								<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="5.5rem" step="1" largerStep="2"
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
+								<Text text="{stockDataModel>reqThreshold}" class="noheight"/>
 								<!--enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"-->
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
