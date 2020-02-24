@@ -2,15 +2,14 @@ ID: suggestOrder
 _schema-version: '3.1'
 description: Stock allocation consolidated app
 version: 2.0.0
-
 modules:
- - name: suggestOrder_Node
-   type: nodejs
-   path: suggestOrder_Node
-   parameters:
+  - name: suggestOrder_Node
+    type: nodejs
+    path: suggestOrder_Node
+    parameters:
       disk-quota: 512M
       memory: 256M
-   properties:
+    properties:
       NODE_TLS_REJECT_UNAUTHORIZED: 0
       OPTIMIZE_MEMORY: true
       UPS_NAME: SUGGEST_ORDER_APIM_CUPS
@@ -19,35 +18,34 @@ modules:
       XS_LOG_NETWORK: true
       XS_LOG_REFERER: true
       XS_LOG_USER: true
-   provides:
-    - name: suggestOrder_Node_api
-      properties:
-         url: ${default-url}
-   requires:
-    - name: cflogging_suggestOrder
-    - name: uaa_suggestOrder
-    - name: cf-drain
-    - name: SUGGEST_ORDER_APIM_CUPS
-
- - name: stockAllocation
-   type: html5
-   path: stockAllocation
-   parameters:
+    provides:
+      - name: suggestOrder_Node_api
+        properties:
+          url: '${default-url}'
+    requires:
+      - name: cflogging_suggestOrder
+      - name: uaa_suggestOrder
+      - name: cf-drain
+      - name: SUGGEST_ORDER_APIM_CUPS
+  - name: stockAllocation
+    type: html5
+    path: stockAllocation
+    parameters:
       disk-quota: 512M
       memory: 256M
-   properties:
-      CORS: >
-         [
-           {
-             "allowedOrigin": [
-               {
-                 "host": "*"
-               }
-             ],
-             "allowedCredentials": true,
-             "uriPattern": "^/custom/do/logout"
-           }
-         ]
+    properties:
+      CORS: |
+        [
+          {
+            "allowedOrigin": [
+              {
+                "host": "*"
+              }
+            ],
+            "allowedCredentials": true,
+            "uriPattern": "^/custom/do/logout"
+          }
+        ]
       OPTIMIZE_MEMORY: true
       SESSION_TIMEOUT: 60
       XS_APP_LOG_LEVEL: info
@@ -55,48 +53,43 @@ modules:
       XS_LOG_NETWORK: true
       XS_LOG_REFERER: true
       XS_LOG_USER: true
-   build-parameters:
+    build-parameters:
       builder: grunt
       build-result: dist
-   requires:
-    - name: cflogging_suggestOrder
-    - name: uaa_suggestOrder
-    - name: cf-drain
-    - name: suggestOrder_Node_api
-      group: destinations
-      properties:
-         name: suggestOrder-node-backend
-         url: ~{url}
-         forwardAuthToken: true
-         timeout: 60000
-    - name: conn_suggestOrder
-
+    requires:
+      - name: cflogging_suggestOrder
+      - name: uaa_suggestOrder
+      - name: cf-drain
+      - name: suggestOrder_Node_api
+        group: destinations
+        properties:
+          name: suggestOrder-node-backend
+          url: '~{url}'
+          forwardAuthToken: true
+          timeout: 60000
+      - name: conn_suggestOrder
 resources:
- - name: cflogging_suggestOrder
-   type: org.cloudfoundry.managed-service
-   parameters:
+  - name: cflogging_suggestOrder
+    type: org.cloudfoundry.managed-service
+    parameters:
       service: application-logs
       service-plan: lite
-
- - name: uaa_suggestOrder
-   type: org.cloudfoundry.managed-service
-   parameters:
+  - name: uaa_suggestOrder
+    type: org.cloudfoundry.managed-service
+    parameters:
       service: xsuaa
       service-plan: application
       path: ./xs-security.json
-
- - name: cf-drain
-   type: org.cloudfoundry.existing-service
-   parameters:
+  - name: cf-drain
+    type: org.cloudfoundry.existing-service
+    parameters:
       service-name: cf-drain
-
- - name: SUGGEST_ORDER_APIM_CUPS
-   type: org.cloudfoundry.existing-service
-   parameters:
+  - name: SUGGEST_ORDER_APIM_CUPS
+    type: org.cloudfoundry.existing-service
+    parameters:
       service-name: SUGGEST_ORDER_APIM_CUPS
-
- - name: conn_suggestOrder
-   parameters:
+  - name: conn_suggestOrder
+    parameters:
       service-plan: lite
       service: connectivity
-   type: org.cloudfoundry.managed-service
+    type: org.cloudfoundry.managed-service
