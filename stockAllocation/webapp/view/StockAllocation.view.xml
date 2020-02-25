@@ -182,16 +182,16 @@
 									class="setOrangeFont" textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-							mergeDuplicates="false">
-							<header>
-								<Text text="{i18n>ThreShold}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-							</header>
-							<footer>
+						<!--<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"-->
+						<!--	mergeDuplicates="false">-->
+						<!--	<header>-->
+						<!--		<Text text="{i18n>ThreShold}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+						<!--	</header>-->
+						<!--	<footer>-->
 								<!--<Text text="{initialStockTotalModel>/0/differenceTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"-->
 								<!--	textDirection="Inherit" visible="true"/>-->
-							</footer>
-						</Column>
+						<!--	</footer>-->
+						<!--</Column>-->
 						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
@@ -285,7 +285,7 @@
 								<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="5.5rem" step="1" largerStep="2"
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<Text text="{stockDataModel>reqThreshold}" class="noheight"/>
+								<!--<Text text="{stockDataModel>reqThreshold}" class="noheight"/>-->
 								<!--enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"-->
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>

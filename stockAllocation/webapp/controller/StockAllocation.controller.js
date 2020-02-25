@@ -345,15 +345,15 @@
 							this.subtotal = oStockModelData[i].requested_Volume;
 						}
 
-						if (tempRequestedTotal > this.reqThreShold) {
-							this.flagThreShold = true;
-							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
-							this.currentRequestVolume = this.currentRequestVolume - 1;
-							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
-							tempRequestedTotal = tempRequestedTotal - 1;
-							// this.currentStockVolume=this.currentStockVolume-1;
-							this.getView().getModel("stockDataModel").updateBindings(true);
-						}
+						// if (tempRequestedTotal > this.reqThreShold) {
+						// 	this.flagThreShold = true;
+						// 	// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
+						// 	this.currentRequestVolume = this.currentRequestVolume - 1;
+						// 	oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
+						// 	tempRequestedTotal = tempRequestedTotal - 1;
+						// 	// this.currentStockVolume=this.currentStockVolume-1;
+						// 	this.getView().getModel("stockDataModel").updateBindings(true);
+						// }
 					}
 
 					if (this.flagThreShold == true) {
@@ -1014,6 +1014,7 @@
 						"zzsug_seq_no": "",
 						"zzzadddata1": "",
 						"reqThreshold": item.allowedTolerance + item.suggestedTotal,
+						"allowedTolerance":"",
 						"salesdata": item.salesDataTotal
 					};
 
