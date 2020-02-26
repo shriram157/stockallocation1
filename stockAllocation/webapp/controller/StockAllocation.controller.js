@@ -12,7 +12,7 @@
 		var _timeout, objNew = {},
 			btnSavePressed,
 			backupModelData, processDate, itemModel, newseriesFlag, tempObj2, IntCol2, callNewModelCount = 0,
-			salesNetData;
+			salesNetData={};
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -345,15 +345,15 @@
 							this.subtotal = oStockModelData[i].requested_Volume;
 						}
 
-						// if (tempRequestedTotal > this.reqThreShold) {
-						// 	this.flagThreShold = true;
-						// 	// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
-						// 	this.currentRequestVolume = this.currentRequestVolume - 1;
-						// 	oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
-						// 	tempRequestedTotal = tempRequestedTotal - 1;
-						// 	// this.currentStockVolume=this.currentStockVolume-1;
-						// 	this.getView().getModel("stockDataModel").updateBindings(true);
-						// }
+						if (tempRequestedTotal > this.reqThreShold) {
+							this.flagThreShold = true;
+							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
+							this.currentRequestVolume = this.currentRequestVolume - 1;
+							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
+							tempRequestedTotal = tempRequestedTotal - 1;
+							// this.currentStockVolume=this.currentStockVolume-1;
+							this.getView().getModel("stockDataModel").updateBindings(true);
+						}
 					}
 
 					if (this.flagThreShold == true) {
@@ -1014,7 +1014,7 @@
 						"zzsug_seq_no": "",
 						"zzzadddata1": "",
 						"reqThreshold": item.allowedTolerance + item.suggestedTotal,
-						"allowedTolerance":"",
+						"allowedTolerance": "",
 						"salesdata": item.salesDataTotal
 					};
 
@@ -1724,8 +1724,13 @@
 								url: uri,
 								type: "GET",
 								success: function (oData) {
-									salesNetData = oData.d;
-									// console.log("salesdata", salesNetData);
+									if (oData.d.NetSales !== "0") {
+										salesNetData.NetSales = parseInt(oData.d.NetSales);
+									} else {
+										// var messageForNoSalesData = that.getView().getModel("i18n").getResourceBundle().getText("NOSALESHISTORYFOUND");
+										// MessageToast.show(messageForNoSalesData);
+										salesNetData.NetSales="0";
+									}
 									that.counter = 0;
 								},
 								error: function (oError) {
@@ -1780,7 +1785,7 @@
 									zzint_alc_qty: item.zzint_alc_qty,
 									reqThreshold: "",
 									allowedTolerance: 1,
-									salesdata: parseInt(salesNetData.NetSales)
+									salesdata: salesNetData.NetSales
 
 								});
 
@@ -1820,7 +1825,7 @@
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
 									allowedTolerance: 1,
-									salesdata: parseInt(salesNetData.NetSales)
+									salesdata: salesNetData.NetSales
 
 								});
 
@@ -1956,7 +1961,7 @@
 
 						});
 						// if (that.counter == 0) {
-							function runScript2() {
+						function runScript2() {
 							// console.log("running 2 as flag runninDataLoadScriptflag is true")
 							oStockAllocationData = _.chain(oStockAllocationData)
 								.sortBy("zzextcol")
