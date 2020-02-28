@@ -12,7 +12,7 @@
 		var _timeout, objNew = {},
 			btnSavePressed,
 			backupModelData, processDate, itemModel, newseriesFlag, tempObj2, IntCol2, callNewModelCount = 0,
-			salesNetData={};
+			salesNetData = {};
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -1013,7 +1013,7 @@
 						"zzsuffix": "",
 						"zzsug_seq_no": "",
 						"zzzadddata1": "",
-						"reqThreshold":"0", //item.allowedTolerance + item.suggestedTotal,
+						"reqThreshold": "0", //item.allowedTolerance + item.suggestedTotal,
 						"allowedTolerance": "",
 						"salesdata": item.salesDataTotal
 					};
@@ -1240,7 +1240,7 @@
 						oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
 
 						oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
-						// oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
+						oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
 						oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
 						oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
 
@@ -1252,6 +1252,7 @@
 					}
 				}
 				// }
+				console.log("oInitalTotalStock",oInitalTotalStock);
 				oInitalTotalStock.updateBindings(true);
 			},
 
@@ -1729,7 +1730,7 @@
 									} else {
 										// var messageForNoSalesData = that.getView().getModel("i18n").getResourceBundle().getText("NOSALESHISTORYFOUND");
 										// MessageToast.show(messageForNoSalesData);
-										salesNetData.NetSales="0";
+										salesNetData.NetSales = "0";
 									}
 									that.counter = 0;
 								},
@@ -1738,7 +1739,9 @@
 								},
 								complete: function () {
 									runScriptFordataLoad();
-									runScript2();
+									setTimeout(function () {
+										runScript2();
+									}, 3000);
 								}
 							});
 
