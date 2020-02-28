@@ -1069,7 +1069,7 @@
 				}
 
 				if (this.duringPercentage == true) {
-					var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
+					var oModelDataOld = this.getView().getModel("stockDataModelBkup").getData();
 					var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 					var oInitialTotalStockModel = oInitalTotalStock.getData();
 					var currentTotal = 0,
@@ -1089,50 +1089,55 @@
 						differenceTotal = 0,
 						salesDataTotal = 0;
 
-					for (var i = 1; i < oModelData2.length; i++) {
-						if (includeZero == true && oModelData2[i].model != "") {
+					for (var i = 1; i < oModelDataOld.length; i++) {
+						if (includeZero == true && oModelDataOld[i].model != "") {
 							//if ( oModelData2[i].suggested < "0" ) {
-							currentTotal = +oModelData2[i].current + +currentTotal;
-							currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
+							currentTotal = +oModelDataOld[i].current + +currentTotal;
+							currentDSTotal = +oModelDataOld[i].current_Ds + +currentDSTotal;
 
-							currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
-							currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
-							currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
+							currentCTSTotal = +oModelDataOld[i].current_CTS + +currentCTSTotal;
+							currentCPTotal = +oModelDataOld[i].current_CP + +currentCPTotal;
+							currentUDSTotal = +oModelDataOld[i].currentU_DS + +currentUDSTotal;
 
-							salesDataTotal = +oModelData2[i].salesdata + +salesDataTotal;
+							salesDataTotal = +oModelDataOld[i].salesdata + +salesDataTotal;
 
-							suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
-							suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
+							suggestedTotal = +oModelDataOld[i].suggested + +suggestedTotal;
+							suggestedDSTotal = +oModelDataOld[i].suggested_Ds + +suggestedDSTotal;
 							// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
-							requestedDSTotal = +oModelData2[i].requested_Ds + +requestedDSTotal;
-							allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
-							allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
-							pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
-							unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
-							differenceTotal = +oModelData2[i].difference + +differenceTotal;
+							requestedDSTotal = +oModelDataOld[i].requested_Ds + +requestedDSTotal;
+							allocatedTotal = +oModelDataOld[i].allocated + +allocatedTotal;
+							allocatedDSTotal = +oModelDataOld[i].allocated_Ds + +allocatedDSTotal;
+							pendingAllocationTotal = +oModelDataOld[i].pendingAllocation + +pendingAllocationTotal;
+							unfilledAllocationTotal = +oModelDataOld[i].unfilled_Allocation + +unfilledAllocationTotal;
+							differenceTotal = +oModelDataOld[i].difference + +differenceTotal;
 							//}
 						} else {
 							// take only excluding the ones with zero quantities. 
-							if (oModelData2[i].suggested > "0" && oModelData2[i].model != "") {
-								currentTotal = +oModelData2[i].current + +currentTotal;
-								currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
-								currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
-								currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
-								currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
+							if (oModelData2[i].suggested > "0" && oModelDataOld[i].model != "") {
+								currentTotal = +oModelDataOld[i].current + +currentTotal;
+								currentDSTotal = +oModelDataOld[i].current_Ds + +currentDSTotal;
+								currentCTSTotal = +oModelDataOld[i].current_CTS + +currentCTSTotal;
+								currentCPTotal = +oModelDataOld[i].current_CP + +currentCPTotal;
+								currentUDSTotal = +oModelDataOld[i].currentU_DS + +currentUDSTotal;
 
-								salesDataTotal = +oModelData2[i].salesdata + +salesDataTotal;
+								salesDataTotal = +oModelDataOld[i].salesdata + +salesDataTotal;
 
-								suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
-								suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
+								suggestedTotal = +oModelDataOld[i].suggested + +suggestedTotal;
+								suggestedDSTotal = +oModelDataOld[i].suggested_Ds + +suggestedDSTotal;
 								// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
-								requestedDSTotal = +oModelData2[i].requested_Ds + +requestedDSTotal;
-								allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
-								allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
-								pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
-								unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
-								differenceTotal = +oModelData2[i].difference + +differenceTotal;
+								requestedDSTotal = +oModelDataOld[i].requested_Ds + +requestedDSTotal;
+								allocatedTotal = +oModelDataOld[i].allocated + +allocatedTotal;
+								allocatedDSTotal = +oModelDataOld[i].allocated_Ds + +allocatedDSTotal;
+								pendingAllocationTotal = +oModelDataOld[i].pendingAllocation + +pendingAllocationTotal;
+								unfilledAllocationTotal = +oModelDataOld[i].unfilled_Allocation + +unfilledAllocationTotal;
+								differenceTotal = +oModelDataOld[i].difference + +differenceTotal;
 							}
 						}
+					}
+					for (var x = 0; x < oModelDataOld.length; x++) {
+						// if (oModelData2[i].model != "") {
+						requestedVolumeTotal = +oModelDataOld[x].requested_Volume + +requestedVolumeTotal;
+						// }
 					}
 
 					oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
@@ -1157,7 +1162,7 @@
 
 				} else {
 					if (newseriesFlag == true) {
-						var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
+						var oModelDataOld = this.getView().getModel("stockDataModelBkup").getData();
 						var oTotalRecevied = new sap.ui.model.json.JSONModel();
 						oTotalRecevied.setData(this.oInitialTotalsForUI);
 						oTotalRecevied.setSizeLimit(1000);
@@ -1181,7 +1186,7 @@
 							"salesDataTotal": "0"
 						});
 					} else {
-						var oModelData2 = this.getView().getModel("stockDataModelBkup").getData();
+						var oModelDataOld = this.getView().getModel("stockDataModelBkup").getData();
 						var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 						var oInitialTotalStockModel = oInitalTotalStock.getData();
 						var currentTotal = 0,
@@ -1200,34 +1205,34 @@
 							unfilledAllocationTotal = 0,
 							differenceTotal = 0,
 							salesDataTotal = 0;
-						for (var i = 0; i < oModelData2.length; i++) {
-							if (oModelData2[i].model != "") {
+						for (var i = 0; i < oModelDataOld.length; i++) {
+							if (oModelDataOld[i].model != "") {
 								// this.duringPercentage = oModelData2[i].current.includes("%");
 								// if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
 								// if ( oModelData2[i].visibleProperty == true ) {
-								currentTotal = +oModelData2[i].current + +currentTotal;
-								currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
-								currentCTSTotal = +oModelData2[i].current_CTS + +currentCTSTotal;
-								currentCPTotal = +oModelData2[i].current_CP + +currentCPTotal;
-								currentUDSTotal = +oModelData2[i].currentU_DS + +currentUDSTotal;
-								salesDataTotal = +oModelData2[i].salesdata + +salesDataTotal;
+								currentTotal = +oModelDataOld[i].current + +currentTotal;
+								currentDSTotal = +oModelDataOld[i].current_Ds + +currentDSTotal;
+								currentCTSTotal = +oModelDataOld[i].current_CTS + +currentCTSTotal;
+								currentCPTotal = +oModelDataOld[i].current_CP + +currentCPTotal;
+								currentUDSTotal = +oModelDataOld[i].currentU_DS + +currentUDSTotal;
+								salesDataTotal = +oModelDataOld[i].salesdata + +salesDataTotal;
 
-								suggestedTotal = +oModelData2[i].suggested + +suggestedTotal;
-								suggestedDSTotal = +oModelData2[i].suggested_Ds + +suggestedDSTotal;
+								suggestedTotal = +oModelDataOld[i].suggested + +suggestedTotal;
+								suggestedDSTotal = +oModelDataOld[i].suggested_Ds + +suggestedDSTotal;
 								// requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
-								requestedDSTotal = +oModelData2[i].requested_Ds + +requestedDSTotal;
-								allocatedTotal = +oModelData2[i].allocated + +allocatedTotal;
-								allocatedDSTotal = +oModelData2[i].allocated_Ds + +allocatedDSTotal;
-								pendingAllocationTotal = +oModelData2[i].pendingAllocation + +pendingAllocationTotal;
-								unfilledAllocationTotal = +oModelData2[i].unfilled_Allocation + +unfilledAllocationTotal;
-								differenceTotal = +oModelData2[i].difference + +differenceTotal;
+								requestedDSTotal = +oModelDataOld[i].requested_Ds + +requestedDSTotal;
+								allocatedTotal = +oModelDataOld[i].allocated + +allocatedTotal;
+								allocatedDSTotal = +oModelDataOld[i].allocated_Ds + +allocatedDSTotal;
+								pendingAllocationTotal = +oModelDataOld[i].pendingAllocation + +pendingAllocationTotal;
+								unfilledAllocationTotal = +oModelDataOld[i].unfilled_Allocation + +unfilledAllocationTotal;
+								differenceTotal = +oModelDataOld[i].difference + +differenceTotal;
 								// }
 							}
 						}
 
-						for (var x = 0; x < oModelData2.length; x++) {
+						for (var x = 0; x < oModelDataOld.length; x++) {
 							// if (oModelData2[i].model != "") {
-							requestedVolumeTotal = +oModelData2[x].requested_Volume + +requestedVolumeTotal;
+							requestedVolumeTotal = +oModelDataOld[x].requested_Volume + +requestedVolumeTotal;
 							// }
 						}
 
@@ -1252,7 +1257,7 @@
 					}
 				}
 				// }
-				console.log("oInitalTotalStock",oInitalTotalStock);
+				console.log("oInitalTotalStock", oInitalTotalStock);
 				oInitalTotalStock.updateBindings(true);
 			},
 
