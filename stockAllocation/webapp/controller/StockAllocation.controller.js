@@ -1762,7 +1762,7 @@
 										salesNetData[x].Model == item.zzmodel &&
 										salesNetData[x].Zzextcol == item.zzextcol) {
 										item.NetSales = salesNetData[x].NetSales;
-										debugger;
+										// debugger;
 									}
 								}
 								
