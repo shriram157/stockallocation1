@@ -1622,8 +1622,8 @@
 				// that.callNewModel = true;
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
-						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" + "and zzmoyr eq '" + this.yearModel +
-							"'"
+						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" 
+						//+ "and zzmoyr eq '" + this.yearModel +"'"
 					},
 					success: function (oData) {
 										
@@ -1631,7 +1631,7 @@
 							// that.defaultLightBusyDialog.close();
 							$.each(oData.results, function (i, item) {
 								var query = "(Model='" + item.zzmodel + "',Kunnr='" + that.dealerCode + "',Zzextcol='" + item.zzextcol + "',Zzseries='" +
-									that.series + "',Zzsuffix='" + item.zzsuffix + "',Zzmoyr='" + item.zzmoyr + "')";
+									that.series + "',Zzsuffix='" + item.zzsuffix + "')";//" + item.zzmoyr + "
 								var uri = that.nodeJsUrl + "/ZVMS_STOCK_ALLOC_SALES_DATA_SRV/SalesDataSet" + query;
 								$.ajax({
 									dataType: "json",
@@ -1646,8 +1646,8 @@
 												"Kunnr": oData.d.Kunnr,
 												"Zzextcol": oData.d.Zzextcol,
 												"Zzseries": oData.d.Zzseries,
-												"Zzsuffix": oData.d.Zzsuffix,
-												"Zzmoyr": oData.d.Zzmoyr
+												"Zzsuffix": oData.d.Zzsuffix
+												// "Zzmoyr": oData.d.Zzmoyr
 											});
 										// } else {
 										// 	salesNetData.push({
