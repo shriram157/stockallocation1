@@ -1,7 +1,7 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:l="sap.ui.layout" controllerName="suggestOrder.controller.StockAllocation"
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<html:style>
-		.setOrangeFont{ color:#E78C07!important;  //# }
+		.setOrangeFont{ color:#E78C07!important;}
 		.pageHeight{height:100%;}
 	</html:style>
 	<Page showHeader="true" title="{i18n>STOCK_ALLOCATION}" showFooter="true" showNavButton="true" navButtonPress="_onPageNavButtonPress"
@@ -188,17 +188,17 @@
 						<!--		<Text text="{i18n>ThreShold}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
 						<!--	</header>-->
 						<!--	<footer>-->
-						<!--		<Text text="{initialStockTotalModel>/0/differenceTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"-->
-						<!--			textDirection="Inherit" visible="true"/>-->
+								<!--<Text text="{initialStockTotalModel>/0/differenceTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"-->
+								<!--	textDirection="Inherit" visible="true"/>-->
 						<!--	</footer>-->
 						<!--</Column>-->
-						<!--<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"-->
-						<!--	mergeDuplicates="false">-->
-						<!--	<header>-->
-						<!--		<Text text="" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
-						<!--	</header>-->
-						<!--	<footer></footer>-->
-						<!--</Column>-->
+						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false">
+							<header>
+								<Text text="Dealer Config" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							</header>
+							<footer></footer>
+						</Column>
 						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
@@ -292,8 +292,10 @@
 								<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="5.5rem" step="1" largerStep="2"
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<!--<Text text="{stockDataModel>reqThreshold}" class="noheight"/>-->
-								<!--<CheckBox selected="true" valueState="Information" />-->
+								<!--{path : 'tripDetails>breakDe', type : 'sap.ui.model.type.Boolean' }"-->
+								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{oViewLocalDataModel>/checkBoxEnabled}"/>
+								<!--, type : 'sap.ui.model.type.Boolean', formatter: '.formatBoolean'-->
+								<!--{path:'VehicleDetailsJSON>Dealer', formatter:'.formatDealer'}" valueState="Information" -->
 								<!--enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"-->
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>

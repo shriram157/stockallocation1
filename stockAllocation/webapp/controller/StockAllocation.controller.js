@@ -12,7 +12,7 @@
 		var _timeout, objNew = {},
 			btnSavePressed,
 			backupModelData, processDate, itemModel, newseriesFlag, tempObj2, IntCol2, callNewModelCount = 0,
-			salesNetData = [];
+			salesNetData = [], checkOBJ={};
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -96,8 +96,9 @@
 						etaFrom: "ETA :01 Feb 2019 To 28 Feb 2019",
 						seriesSuggestedVolume: 0,
 						fromWhichTabClickIamIn: this.whichTabClicked,
-						setResetEnabled: false
-
+						setResetEnabled: false,
+						checkBoxEnabled: false,
+						// checkBoxFlag: true
 					});
 
 					var oModelLocalData = this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
@@ -201,7 +202,9 @@
 						etaFrom: "ETA :01 Feb 2019 To 28 Feb 2019",
 						seriesSuggestedVolume: selectedSeries.suggestedVolume,
 						fromWhichTabClickIamIn: selectedSeries.whichTabClicked,
-						setResetEnabled: false
+						setResetEnabled: false,
+						checkBoxEnabled: false,
+						// checkBoxFlag: true
 
 					});
 
@@ -240,6 +243,24 @@
 				// console.log("rendering");
 				this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
 
+			},
+
+			onCheck: function (oCheck) {
+				// debugger;
+				//objNew.ZzuiFlag 
+				if (oCheck.getParameter("selected") == true) {
+					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y";
+				}
+				else{
+					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "N";
+				}
+				this.getView().getModel("stockDataModel").updateBindings(true);
+			},
+
+			formatBoolean: function (oEvent) {
+				// debugger;
+				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
+				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 			},
 
 			onClickShowAll: function (evt) {
@@ -294,6 +315,8 @@
 			whenUserChangesRequestedData: function (oEvt) {
 				this.flagThreShold = false;
 				// the total might need to be updated. 
+				//checkBoxEnabled
+				//var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
 				// requestedVolumeTotal
 				var currentValue = oEvt.getSource().getProperty("value");
@@ -301,7 +324,7 @@
 				var backupData = this.getView().getModel("stockDataModelBkup").getData();
 				// console.log("backupData", backupData);
 				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
-				this.currentRequestVolume = currentData.requested_Volume
+				this.currentRequestVolume = currentData.requested_Volume;
 				var currentSeqNumber = currentData.zzsug_seq_no;
 				// console.log("currentSeqNumber", currentSeqNumber);
 				var oldS4Entry = backupData.filter(function (val) {
@@ -316,22 +339,27 @@
 				var oldValue = oEvt.getSource()._sOldValue;
 				var tempRequestedTotal = 0;
 				var requestedDSTotal = 0;
+				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 
 				if (currentValue > oldS4Value) {
+					oDetailModel.setProperty("/checkBoxEnabled", false);
 					var additionalQty = currentValue - oldS4Value;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * additionalQty);
 				} else if (currentValue < oldS4Value) {
+					oDetailModel.setProperty("/checkBoxEnabled", true);
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 
 					var rejectedQty = oldS4Value - currentValue;
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
 				} else if (currentValue == 0) {
+					oDetailModel.setProperty("/checkBoxEnabled", false);
 					var reversedQty = 0;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * reversedQty);
 				}
+				oDetailModel.updateBindings(true);
 
 				// this.getView().getModel("stockDataModel").updateBindings(true);
 
@@ -363,9 +391,9 @@
 						// }
 					}
 
-					// if (this.flagThreShold == true) {
-					// 	MessageBox.error("You have crossed the threshold");
-					// }
+					if (this.flagThreShold == true) {
+						MessageBox.error("You have crossed the threshold");
+					}
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.oData["0"].requestedDSTotal = requestedDSTotal;
 					var updationRequestedVolume = oTotalModelData.getProperty("/");
@@ -584,7 +612,8 @@
 						// zzseries :sendTheDataToSAP[i].zzseries,
 						// ZZseries: sendTheDataToSAP[i].zzseries,
 						// ZzintAlcQty: initialAllocatedQty,
-						ZcreatedBy: this.UserId
+						ZcreatedBy: this.UserId,
+						ZzuiFlag: sendTheDataToSAP[i].ZzuiFlag
 					});
 
 				}
@@ -623,6 +652,7 @@
 				this.afterSAPDataUpdate = true;
 				this.resultsLossofData = false; // the data is saved,  so no message
 				this._loadSalesData2();
+				var that=this;
 				setTimeout(function () {
 					that._loadTheData();
 				}, 3000);
@@ -876,7 +906,7 @@
 						res[value.model] = {
 							model: value.model,
 							modelDesc: value.modelCodeDescription,
-							// allowedTolerance: value.allowedTolerance,
+							allowedTolerance: value.allowedTolerance,
 							currentTotal: 0,
 							currentDSTotal: 0,
 							currentCTSTotal: 0,
@@ -1021,8 +1051,8 @@
 						"zzsuffix": "",
 						"zzsug_seq_no": "",
 						"zzzadddata1": "",
-						// "reqThreshold": "0", //item.allowedTolerance + item.suggestedTotal,
-						// "allowedTolerance": "",
+						"reqThreshold": "0", //item.allowedTolerance + item.suggestedTotal,
+						"allowedTolerance": "",
 						"salesdata": item.salesDataTotal
 					};
 
@@ -1575,7 +1605,6 @@
 
 					var requestedVolume = item.requested_Volume.toString();
 					oItemSet.push({
-
 						ZzsugSeqNo: item.zzsug_seq_no,
 						ZzprocessDt: item.zzprocess_dt,
 						Zzmodel: item.model,
@@ -1590,8 +1619,8 @@
 						ZzetaMonth: item.zzend_date,
 						zzdel_review: "Y",
 						ZzrequestQty: requestedVolume,
-						zzint_alc_qty: item.zzint_alc_qty
-
+						zzint_alc_qty: item.zzint_alc_qty,
+						ZzuiFlag: item.ZzuiFlag
 					});
 				});
 
@@ -1622,16 +1651,16 @@
 				// that.callNewModel = true;
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
-						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" 
-						//+ "and zzmoyr eq '" + this.yearModel +"'"
+						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'"
+							//+ "and zzmoyr eq '" + this.yearModel +"'"
 					},
 					success: function (oData) {
-										
+
 						if (oData.results.length > 0) {
 							// that.defaultLightBusyDialog.close();
 							$.each(oData.results, function (i, item) {
 								var query = "(Model='" + item.zzmodel + "',Kunnr='" + that.dealerCode + "',Zzextcol='" + item.zzextcol + "',Zzseries='" +
-									that.series + "',Zzsuffix='" + item.zzsuffix + "')";//" + item.zzmoyr + "
+									that.series + "',Zzsuffix='" + item.zzsuffix + "')"; //" + item.zzmoyr + "
 								var uri = that.nodeJsUrl + "/ZVMS_STOCK_ALLOC_SALES_DATA_SRV/SalesDataSet" + query;
 								$.ajax({
 									dataType: "json",
@@ -1640,15 +1669,15 @@
 									success: function (oData) {
 										// that.defaultLightBusyDialog.close();
 										// if (oData.d.NetSales !== "0") {
-											salesNetData.push({
-												"NetSales": parseInt(oData.d.NetSales),
-												"Model": oData.d.Model,
-												"Kunnr": oData.d.Kunnr,
-												"Zzextcol": oData.d.Zzextcol,
-												"Zzseries": oData.d.Zzseries,
-												"Zzsuffix": oData.d.Zzsuffix
+										salesNetData.push({
+											"NetSales": parseInt(oData.d.NetSales),
+											"Model": oData.d.Model,
+											"Kunnr": oData.d.Kunnr,
+											"Zzextcol": oData.d.Zzextcol,
+											"Zzseries": oData.d.Zzseries,
+											"Zzsuffix": oData.d.Zzsuffix
 												// "Zzmoyr": oData.d.Zzmoyr
-											});
+										});
 										// } else {
 										// 	salesNetData.push({
 										// 		"NetSales": 0,
@@ -1668,8 +1697,10 @@
 									}
 								});
 							});
+						} else {
+							that.defaultLightBusyDialog.close();
+							sap.ui.core.BusyIndicator.hide();
 						}
-						else{that.defaultLightBusyDialog.close();sap.ui.core.BusyIndicator.hide();}
 					}.bind(this),
 					error: function (response) {
 						this.defaultLightBusyDialog.close();
@@ -1756,7 +1787,6 @@
 							}
 
 							$.each(oData.results, function (i, item) {
-								
 								for (var x = 0; x < salesNetData.length; x++) {
 									if (salesNetData[x].Zzsuffix == item.zzsuffix &&
 										salesNetData[x].Model == item.zzmodel &&
@@ -1765,6 +1795,19 @@
 										// debugger;
 									}
 								}
+								// item.ZzuiFlag = "Y";
+								var oDetailModel = that.getView().getModel("oViewLocalDataModel");
+								oDetailModel.setProperty("/checkBoxEnabled", true);
+								if (item.zzui_flag == "Y") {
+									checkOBJ.checkBoxFlag =true;
+									oDetailModel.setProperty("/checkBoxEnabled", true);
+									// oDetailModel.getData().checkBoxFlag = true;
+								} else {
+									checkOBJ.checkBoxFlag = false;
+									oDetailModel.setProperty("/checkBoxEnabled", true);
+									// oDetailModel.getData().checkBoxFlag = true;
+								}
+								oDetailModel.updateBindings(true);
 								
 								// setTimeout(function(){
 								item.suggested_ds = Math.round(item.suggested_ds);
@@ -1842,9 +1885,11 @@
 									zzsuffix: item.zzsuffix,
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
-									// reqThreshold: "",
-									// allowedTolerance: 1,
-									salesdata: item.NetSales
+									reqThreshold: "",
+									allowedTolerance: 1,
+									salesdata: item.NetSales,
+									ZzuiFlag: item.ZzuiFlag,
+									checkBoxFlag: checkOBJ.checkBoxFlag
 
 								});
 
@@ -1884,7 +1929,9 @@
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
 									// allowedTolerance: 1,
-									salesdata: item.NetSales
+									salesdata: item.NetSales,
+									ZzuiFlag: item.ZzuiFlag,
+									checkBoxFlag: checkOBJ.checkBoxFlag
 
 								});
 
@@ -1908,7 +1955,9 @@
 									zzsuffix: item.zzsuffix,
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
-									salesdata: item.NetSales
+									salesdata: item.NetSales,
+									ZzuiFlag: item.ZzuiFlag,
+									checkBoxFlag: checkOBJ.checkBoxFlag
 								});
 
 								currentTotal = currentTotal + +item.zzcur_stock;
@@ -2019,6 +2068,8 @@
 								// }, 2000);
 
 							});
+							
+							console.log(that.getView().getModel("oViewLocalDataModel"));
 							// if (that.counter == 0) {
 							// function runScript2() {
 							// console.log("running 2 as flag runninDataLoadScriptflag is true")
@@ -2233,7 +2284,10 @@
 								that.newModelData(tempObj2, IntCol2);
 								callNewModelCount = 1;
 							}
-						}else{that.defaultLightBusyDialog.close();sap.ui.core.BusyIndicator.hide();}
+						} else {
+							that.defaultLightBusyDialog.close();
+							sap.ui.core.BusyIndicator.hide();
+						}
 					}.bind(this),
 					error: function (response) {
 						this.defaultLightBusyDialog.close();
@@ -2714,6 +2768,9 @@
 				this._calculateTotals();
 			},
 			onExit: function () {
+				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
+				oDetailModel.setProperty("/checkBoxEnabled", false);
+				// oDetailModel.setProperty("/checkBoxFlag", false);
 				salesNetData = {};
 				callNewModelCount = 0;
 				var oTable = this.getView().byId("stockDataModelTableId");
