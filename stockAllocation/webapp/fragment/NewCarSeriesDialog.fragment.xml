@@ -5,12 +5,28 @@
 				<f:SimpleForm id="formContent" editable="true" layout="ResponsiveGridLayout" labelSpanM="12" adjustLabelSpan="false" emptySpanL="0"
 					emptySpanM="0" columnsL="1" columnsM="1" class="styleForms">
 					<f:content>
-						<Select id="ID_SeriesDesc" forceSelection="true" items="{SeriesDataModel>/results}" change="onSeriesSelectionChange" fieldGroupIds="requiredField">
-							<core:Item key="{SeriesDataModel>zzseries}" text="{SeriesDataModel>zzmoyr} - {SeriesDataModel>zzseries} {SeriesDataModel>zzseries_desc_en}" />
-							
-								<!--text="{SeriesDataModel>zzseries} - {=${SeriesDataModel>localLang}==='E' ? ${SeriesDataModel>zzseries_desc_en}:${SeriesDataModel>zzseries_desc_en}}"/>-->
+						<Label text="{i18n>SERIES}"/>
+						<Select id="ID_SeriesDesc" forceSelection="true" items="{SeriesDataModel>/results}" change="onSeriesSelectionChange"
+							fieldGroupIds="requiredField">
+							<core:Item key="{SeriesDataModel>series}" text="{SeriesDataModel>moyr} - {SeriesDataModel>series} {SeriesDataModel>series_desc_en}"/>
 						</Select>
-					
+						<Label text="{i18n>MODEL}"/>
+						<Select id="ID_modelDesc" forceSelection="true" items="{ModelDataModel>/modelData}" change="onModelSelectionChange"
+							fieldGroupIds="requiredField">
+							<core:Item key="{ModelDataModel>Model}"
+								text="{ModelDataModel>Model} - {=${ModelDataModel>localLang}==='EN' ? ${ModelDataModel>ENModelDesc}:${ModelDataModel>FRModelDesc}}"/>
+						</Select>
+						<Label text="{i18n>SUFFIX}"/>
+						<Select id="ID_marktgIntDesc" forceSelection="true" items="{ModelDataModel>/suffixData}" change="onSuffixChange"
+							fieldGroupIds="requiredField">
+							<core:Item key="{ModelDataModel>Suffix}"
+								text="{ModelDataModel>Suffix} - {=${ModelDataModel>localLang}==='EN' ? ${ModelDataModel>SuffixDescriptionEN}:${ModelDataModel>SuffixDescriptionFR}} / {=${ModelDataModel>localLang}==='EN' ? ${ModelDataModel>mrktg_int_desc_en}:${ModelDataModel>mrktg_int_desc_fr}}"/>
+						</Select>
+						<Label text="{i18n>COLOUR_TRIM}"/>
+						<Select id="ID_ExteriorColorCode" forceSelection="true" items="{ModelDataModel>/colorData}" change="onColorSelectionDoneEnableAddButton">
+							<core:Item key="{ModelDataModel>ExteriorColorCode}"
+								text="{ModelDataModel>ExteriorColorCode} - {=${ModelDataModel>localLang}==='EN' ? ${ModelDataModel>MarketingDescriptionEXTColorEN}:${ModelDataModel>MarketingDescriptionEXTColorFR}}"/>
+						</Select>
 					</f:content>
 				</f:SimpleForm>
 			</l:content>

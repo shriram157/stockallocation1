@@ -1,0 +1,18 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZVMS_STOCK_ALLOC_SALES_DATA_SRV" xml:lang="en"
+			sap:schema-version="1">
+			<EntityType Name="SalesData" sap:content-version="1">
+				<Key><PropertyRef Name="Model"/><PropertyRef Name="Kunnr"/><PropertyRef Name="Zzextcol"/><PropertyRef Name="Zzseries"/><PropertyRef Name="Zzsuffix"/><PropertyRef Name="Zzmoyr"/></Key><Property Name="NetSales" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="0" sap:unicode="false" sap:label="NET_SALES"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Model" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Vehicle Model" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Kunnr" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Customer" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Zzextcol" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Exterior colour code"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Zzseries" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="TCI Series" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Zzsuffix" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Suffix" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Zzmoyr" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Model year" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityContainer Name="ZVMS_STOCK_ALLOC_SALES_DATA_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="SalesDataSet" EntityType="ZVMS_STOCK_ALLOC_SALES_DATA_SRV.SalesData" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/></EntityContainer><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZVMS_STOCK_ALLOC_SALES_DATA_SRV/$metadata"/><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZVMS_STOCK_ALLOC_SALES_DATA_SRV/$metadata"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
