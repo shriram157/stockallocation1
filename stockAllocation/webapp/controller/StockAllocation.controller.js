@@ -1808,7 +1808,7 @@
 									// oDetailModel.setProperty("/checkBoxEnabled", false);
 									// oDetailModel.getData().checkBoxFlag = true;
 								}
-								oDetailModel.updateBindings(true);
+								// oDetailModel.updateBindings(true);
 								
 								// setTimeout(function(){
 								item.suggested_ds = Math.round(item.suggested_ds);
