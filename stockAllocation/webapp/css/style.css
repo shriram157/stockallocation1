@@ -1,11 +1,23 @@
-.myRightAlignmentClass  {   width: auto;    text-align: right;}
-.grayBG {	background: #80808096 !important;    color: #000 !important;}
+.myRightAlignmentClass  {
+   width: auto;
+    text-align: right;
 
-/*.noDisplay{display:none !important;}*/
-.boldFont{	font-weight:bold !important;}
-/*.boldFont.noDisplay {    display: block !important;}*/
-.boldFont.sapMStepInput{display:none !important;}
-.boldFont.sapMCb {    display: none !important;}
+}
+
+.grayBG {
+	background: #80808096 !important;
+    color: #000 !important;
+}
+
+.noDisplay{display:none;}
+.boldFont{
+	font-weight:bold !important;
+}
+
+.boldFont.noDisplay {
+    display: block !important;
+}
 .pageHeight{height: 100% !important;}
+
 .setOrangeFont{font-size: 1rem !important;}
-/*.setOrangeFont.noDisplay{display:block !important; }*/
+.setOrangeFont.noDisplay{display:block !important; }
