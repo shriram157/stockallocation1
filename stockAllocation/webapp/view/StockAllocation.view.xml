@@ -182,6 +182,7 @@
 									class="setOrangeFont" textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
+						
 						<!--<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"-->
 						<!--	mergeDuplicates="false">-->
 						<!--	<header>-->
