@@ -324,8 +324,8 @@
 				var backupData = this.getView().getModel("stockDataModelBkup").getData();
 				// console.log("backupData", backupData);
 				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
-				this.currentRequestVolume = currentData.requested_Volume;
-				this.checkBoxEnabled =currentData.checkBoxEnabled;
+				// this.currentRequestVolume = currentData.requested_Volume;
+				// this.checkBoxEnabled =currentData.checkBoxEnabled;
 				var currentSeqNumber = currentData.zzsug_seq_no;
 				// console.log("currentSeqNumber", currentSeqNumber);
 				var oldS4Entry = backupData.filter(function (val) {
@@ -343,24 +343,25 @@
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 
 				if (currentValue > oldS4Value) {
-					this.checkBoxEnabled = false;
 					var additionalQty = currentValue - oldS4Value;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * additionalQty);
+					currentData.checkBoxEnabled = false;
 				} else if (currentValue < oldS4Value) {
-					this.checkBoxEnabled =true;
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 
 					var rejectedQty = oldS4Value - currentValue;
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
+					currentData.checkBoxEnabled = true;
 				} else if (currentValue == 0) {
-					this.checkBoxEnabled = false;
+					// this.checkBoxEnabled = false;
 					var reversedQty = 0;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * reversedQty);
+					currentData.checkBoxEnabled = false;
 				}
-				oDetailModel.updateBindings(true);
+				// oDetailModel.updateBindings(true);
 				this.getView().getModel("stockDataModel").updateBindings(true);
 
 				if (currentValue != oldValue) {
