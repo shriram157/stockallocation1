@@ -182,6 +182,7 @@
 									class="setOrangeFont" textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
+						
 						<!--<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"-->
 						<!--	mergeDuplicates="false">-->
 						<!--	<header>-->
@@ -192,13 +193,13 @@
 								<!--	textDirection="Inherit" visible="true"/>-->
 						<!--	</footer>-->
 						<!--</Column>-->
-						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-							mergeDuplicates="false">
-							<header>
-								<Text text="Dealer Config" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-							</header>
-							<footer></footer>
-						</Column>
+						<!--<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"-->
+						<!--	mergeDuplicates="false">-->
+						<!--	<header>-->
+						<!--		<Text text="Dealer Config" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+						<!--	</header>-->
+						<!--	<footer></footer>-->
+						<!--</Column>-->
 						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
@@ -293,7 +294,7 @@
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<!--{path : 'tripDetails>breakDe', type : 'sap.ui.model.type.Boolean' }"-->
-								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>
+								<!--<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>-->
 								<!--, type : 'sap.ui.model.type.Boolean', formatter: '.formatBoolean'-->
 								<!--{path:'VehicleDetailsJSON>Dealer', formatter:'.formatDealer'}" valueState="Information" -->
 								<!--enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"-->
