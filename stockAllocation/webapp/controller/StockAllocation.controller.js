@@ -1799,12 +1799,12 @@
 								var oDetailModel = that.getView().getModel("oViewLocalDataModel");
 								oDetailModel.setProperty("/checkBoxEnabled", true);
 								if (item.zzui_flag == "Y") {
-									checkOBJ.checkBoxFlag =true;
+									checkOBJ.checkBoxFlag = true;
 									oDetailModel.setProperty("/checkBoxEnabled", true);
 									// oDetailModel.getData().checkBoxFlag = true;
 								} else {
 									checkOBJ.checkBoxFlag = false;
-									oDetailModel.setProperty("/checkBoxEnabled", true);
+									oDetailModel.setProperty("/checkBoxEnabled", false);
 									// oDetailModel.getData().checkBoxFlag = true;
 								}
 								oDetailModel.updateBindings(true);
