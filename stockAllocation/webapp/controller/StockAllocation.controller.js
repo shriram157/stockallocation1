@@ -325,6 +325,7 @@
 				// console.log("backupData", backupData);
 				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
 				this.currentRequestVolume = currentData.requested_Volume;
+				this.checkBoxEnabled =currentData.checkBoxEnabled;
 				var currentSeqNumber = currentData.zzsug_seq_no;
 				// console.log("currentSeqNumber", currentSeqNumber);
 				var oldS4Entry = backupData.filter(function (val) {
@@ -342,26 +343,25 @@
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 
 				if (currentValue > oldS4Value) {
-					oDetailModel.setProperty("/checkBoxEnabled", false);
+					this.checkBoxEnabled = false;
 					var additionalQty = currentValue - oldS4Value;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * additionalQty);
 				} else if (currentValue < oldS4Value) {
-					oDetailModel.setProperty("/checkBoxEnabled", true);
+					this.checkBoxEnabled =true;
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 
 					var rejectedQty = oldS4Value - currentValue;
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
 				} else if (currentValue == 0) {
-					oDetailModel.setProperty("/checkBoxEnabled", false);
+					this.checkBoxEnabled = false;
 					var reversedQty = 0;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * reversedQty);
 				}
 				oDetailModel.updateBindings(true);
-
-				// this.getView().getModel("stockDataModel").updateBindings(true);
+				this.getView().getModel("stockDataModel").updateBindings(true);
 
 				if (currentValue != oldValue) {
 					// trigger the flag to show a loss of data. 
@@ -1796,15 +1796,16 @@
 									}
 								}
 								// item.ZzuiFlag = "Y";
-								var oDetailModel = that.getView().getModel("oViewLocalDataModel");
-								oDetailModel.setProperty("/checkBoxEnabled", true);
+								// var oDetailModel = that.getView().getModel("oViewLocalDataModel");
+								// oDetailModel.setProperty("/checkBoxEnabled", true);
 								if (item.zzui_flag == "Y") {
 									checkOBJ.checkBoxFlag = true;
-									oDetailModel.setProperty("/checkBoxEnabled", true);
+									checkOBJ.checkBoxEnabled=true;
 									// oDetailModel.getData().checkBoxFlag = true;
 								} else {
 									checkOBJ.checkBoxFlag = false;
-									oDetailModel.setProperty("/checkBoxEnabled", false);
+									checkOBJ.checkBoxEnabled=false;
+									// oDetailModel.setProperty("/checkBoxEnabled", false);
 									// oDetailModel.getData().checkBoxFlag = true;
 								}
 								oDetailModel.updateBindings(true);
@@ -1889,8 +1890,8 @@
 									allowedTolerance: 1,
 									salesdata: item.NetSales,
 									ZzuiFlag: item.ZzuiFlag,
-									checkBoxFlag: checkOBJ.checkBoxFlag
-
+									checkBoxFlag: checkOBJ.checkBoxFlag,
+									checkBoxEnabled:checkOBJ.checkBoxEnabled
 								});
 
 								oStockAlocationBkup.push({
@@ -1931,8 +1932,8 @@
 									// allowedTolerance: 1,
 									salesdata: item.NetSales,
 									ZzuiFlag: item.ZzuiFlag,
-									checkBoxFlag: checkOBJ.checkBoxFlag
-
+									checkBoxFlag: checkOBJ.checkBoxFlag,
+									checkBoxEnabled:checkOBJ.checkBoxEnabled
 								});
 
 								oStockBeforeReset.push({
@@ -1957,7 +1958,8 @@
 									zzint_alc_qty: item.zzint_alc_qty,
 									salesdata: item.NetSales,
 									ZzuiFlag: item.ZzuiFlag,
-									checkBoxFlag: checkOBJ.checkBoxFlag
+									checkBoxFlag: checkOBJ.checkBoxFlag,
+									checkBoxEnabled:checkOBJ.checkBoxEnabled
 								});
 
 								currentTotal = currentTotal + +item.zzcur_stock;
@@ -2768,8 +2770,8 @@
 				this._calculateTotals();
 			},
 			onExit: function () {
-				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
-				oDetailModel.setProperty("/checkBoxEnabled", false);
+				// var oDetailModel = this.getView().getModel("oViewLocalDataModel");
+				// oDetailModel.setProperty("/checkBoxEnabled", false);
 				// oDetailModel.setProperty("/checkBoxFlag", false);
 				salesNetData = {};
 				callNewModelCount = 0;
