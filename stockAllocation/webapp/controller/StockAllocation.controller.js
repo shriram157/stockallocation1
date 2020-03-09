@@ -1889,7 +1889,7 @@
 									reqThreshold: "",
 									allowedTolerance: 1,
 									salesdata: item.NetSales,
-									ZzuiFlag: item.ZzuiFlag,
+									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
 									checkBoxEnabled:checkOBJ.checkBoxEnabled
 								});
@@ -1931,7 +1931,7 @@
 									zzint_alc_qty: item.zzint_alc_qty,
 									// allowedTolerance: 1,
 									salesdata: item.NetSales,
-									ZzuiFlag: item.ZzuiFlag,
+									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
 									checkBoxEnabled:checkOBJ.checkBoxEnabled
 								});
@@ -1957,7 +1957,7 @@
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
 									salesdata: item.NetSales,
-									ZzuiFlag: item.ZzuiFlag,
+									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
 									checkBoxEnabled:checkOBJ.checkBoxEnabled
 								});
@@ -2091,6 +2091,7 @@
 							var oStockData = new sap.ui.model.json.JSONModel();
 							oStockData.setData(oStockAllocationData);
 							oStockData.setSizeLimit(1000);
+							console.log("oStockData",oStockData);
 							that.getView().setModel(oStockData, "stockDataModel");
 							// By default lets show the suggested only and by clicking on show all models then we expland the screen. 
 

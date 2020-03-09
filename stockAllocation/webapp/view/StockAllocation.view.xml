@@ -288,19 +288,19 @@
 								<Text text="{stockDataModel>suggested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>suggested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}" class="noheight noDisplay"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="5.5rem" step="1" largerStep="2"
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<!--{path : 'tripDetails>breakDe', type : 'sap.ui.model.type.Boolean' }"-->
-								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{oViewLocalDataModel>/checkBoxEnabled}"/>
+								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>
 								<!--, type : 'sap.ui.model.type.Boolean', formatter: '.formatBoolean'-->
 								<!--{path:'VehicleDetailsJSON>Dealer', formatter:'.formatDealer'}" valueState="Information" -->
 								<!--enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"-->
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>requested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}" class="noheight noDisplay"/>
+									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>allocated}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>allocated_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
