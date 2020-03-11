@@ -12,7 +12,8 @@
 		var _timeout, objNew = {},
 			btnSavePressed,
 			backupModelData, processDate, itemModel, newseriesFlag, tempObj2, IntCol2, callNewModelCount = 0,
-			salesNetData = [], checkOBJ={};
+			salesNetData = [],
+			checkOBJ = {};
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -250,8 +251,7 @@
 				//objNew.ZzuiFlag 
 				if (oCheck.getParameter("selected") == true) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y";
-				}
-				else{
+				} else {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "N";
 				}
 				this.getView().getModel("stockDataModel").updateBindings(true);
@@ -653,7 +653,7 @@
 				this.afterSAPDataUpdate = true;
 				this.resultsLossofData = false; // the data is saved,  so no message
 				this._loadSalesData2();
-				var that=this;
+				var that = this;
 				setTimeout(function () {
 					that._loadTheData();
 				}, 3000);
@@ -927,6 +927,9 @@
 						};
 						result.push(res[value.model]);
 					}
+					if (value.salesdata === undefined) {
+						value.salesdata = 0;
+					}
 					res[value.model].salesDataTotal = +res[value.model].salesDataTotal + +value.salesdata;
 					res[value.model].currentTotal = +res[value.model].currentTotal + +value.current;
 					res[value.model].currentDSTotal = + +value.current_Ds; //+res[value.model].currentDSTotal + +value.current_Ds;
@@ -1081,6 +1084,9 @@
 					if (oModelData2[i].model != "") {
 						this.duringPercentage = oModelData2[i].current.includes("%");
 						if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
+							if (oModelData2[i].salesdata === undefined) {
+								oModelData2[i].salesdata = 0;
+							}
 							// if ( oModelData2[i].visibleProperty == true ) {
 							currentTotal = +oModelData2[i].current + +currentTotal;
 							currentDSTotal = +oModelData2[i].current_Ds + +currentDSTotal;
@@ -1131,6 +1137,9 @@
 					for (var i = 1; i < oModelDataOld.length; i++) {
 						if (includeZero == true && oModelDataOld[i].model != "") {
 							//if ( oModelData2[i].suggested < "0" ) {
+							if (oModelDataOld[i].salesdata === undefined) {
+								oModelDataOld[i].salesdata = 0;
+							}
 							currentTotal = +oModelDataOld[i].current + +currentTotal;
 							currentDSTotal = +oModelDataOld[i].current_Ds + +currentDSTotal;
 
@@ -1153,6 +1162,9 @@
 						} else {
 							// take only excluding the ones with zero quantities. 
 							if (oModelData2[i].suggested > "0" && oModelDataOld[i].model != "") {
+								if (oModelData2[i].salesdata === undefined) {
+									oModelData2[i].salesdata = 0;
+								}
 								currentTotal = +oModelDataOld[i].current + +currentTotal;
 								currentDSTotal = +oModelDataOld[i].current_Ds + +currentDSTotal;
 								currentCTSTotal = +oModelDataOld[i].current_CTS + +currentCTSTotal;
@@ -1249,6 +1261,9 @@
 								// this.duringPercentage = oModelData2[i].current.includes("%");
 								// if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
 								// if ( oModelData2[i].visibleProperty == true ) {
+								if (oModelDataOld[i].salesdata === undefined) {
+									oModelDataOld[i].salesdata = 0;
+								}
 								currentTotal = +oModelDataOld[i].current + +currentTotal;
 								currentDSTotal = +oModelDataOld[i].current_Ds + +currentDSTotal;
 								currentCTSTotal = +oModelDataOld[i].current_CTS + +currentCTSTotal;
@@ -1801,16 +1816,16 @@
 								// oDetailModel.setProperty("/checkBoxEnabled", true);
 								if (item.zzui_flag == "Y") {
 									checkOBJ.checkBoxFlag = true;
-									checkOBJ.checkBoxEnabled=true;
+									checkOBJ.checkBoxEnabled = true;
 									// oDetailModel.getData().checkBoxFlag = true;
 								} else {
 									checkOBJ.checkBoxFlag = false;
-									checkOBJ.checkBoxEnabled=false;
+									checkOBJ.checkBoxEnabled = false;
 									// oDetailModel.setProperty("/checkBoxEnabled", false);
 									// oDetailModel.getData().checkBoxFlag = true;
 								}
 								// oDetailModel.updateBindings(true);
-								
+
 								// setTimeout(function(){
 								item.suggested_ds = Math.round(item.suggested_ds);
 								item.requested_ds = Math.round(item.requested_ds);
@@ -1892,7 +1907,7 @@
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
-									checkBoxEnabled:checkOBJ.checkBoxEnabled
+									checkBoxEnabled: checkOBJ.checkBoxEnabled
 								});
 
 								oStockAlocationBkup.push({
@@ -1934,7 +1949,7 @@
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
-									checkBoxEnabled:checkOBJ.checkBoxEnabled
+									checkBoxEnabled: checkOBJ.checkBoxEnabled
 								});
 
 								oStockBeforeReset.push({
@@ -1960,7 +1975,7 @@
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
-									checkBoxEnabled:checkOBJ.checkBoxEnabled
+									checkBoxEnabled: checkOBJ.checkBoxEnabled
 								});
 
 								currentTotal = currentTotal + +item.zzcur_stock;
@@ -2071,7 +2086,7 @@
 								// }, 2000);
 
 							});
-							
+
 							console.log(that.getView().getModel("oViewLocalDataModel"));
 							// if (that.counter == 0) {
 							// function runScript2() {
@@ -2092,7 +2107,7 @@
 							var oStockData = new sap.ui.model.json.JSONModel();
 							oStockData.setData(oStockAllocationData);
 							oStockData.setSizeLimit(1000);
-							console.log("oStockData",oStockData);
+							console.log("oStockData", oStockData);
 							that.getView().setModel(oStockData, "stockDataModel");
 							// By default lets show the suggested only and by clicking on show all models then we expland the screen. 
 
