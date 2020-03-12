@@ -189,17 +189,15 @@
 						<!--		<Text text="{i18n>ThreShold}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
 						<!--	</header>-->
 						<!--	<footer>-->
-								<!--<Text text="{initialStockTotalModel>/0/differenceTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"-->
-								<!--	textDirection="Inherit" visible="true"/>-->
 						<!--	</footer>-->
 						<!--</Column>-->
-						<!--<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"-->
-						<!--	mergeDuplicates="false">-->
-						<!--	<header>-->
-						<!--		<Text text="Dealer Config" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
-						<!--	</header>-->
-						<!--	<footer></footer>-->
-						<!--</Column>-->
+						<Column width="75px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false">
+							<header>
+								<Text text="Dealer Config" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							</header>
+							<footer></footer>
+						</Column>
 						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
@@ -293,11 +291,8 @@
 								<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="5.5rem" step="1" largerStep="2"
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<!--{path : 'tripDetails>breakDe', type : 'sap.ui.model.type.Boolean' }"-->
-								<!--<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>-->
-								<!--, type : 'sap.ui.model.type.Boolean', formatter: '.formatBoolean'-->
-								<!--{path:'VehicleDetailsJSON>Dealer', formatter:'.formatDealer'}" valueState="Information" -->
-								<!--enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"-->
+								<!--<Text text="{stockDataModel>reqThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"-->
+								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>requested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"

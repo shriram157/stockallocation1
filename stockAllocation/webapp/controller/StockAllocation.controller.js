@@ -341,25 +341,32 @@
 				var tempRequestedTotal = 0;
 				var requestedDSTotal = 0;
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
+				
+				if(currentData.requested_Volume<Number(currentData.suggested)){
+					currentData.checkBoxEnabled = true;
+				}
+				else{
+					currentData.checkBoxEnabled = false;
+				}
 
 				if (currentValue > oldS4Value) {
 					var additionalQty = currentValue - oldS4Value;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * additionalQty);
-					currentData.checkBoxEnabled = false;
+					
 				} else if (currentValue < oldS4Value) {
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 
 					var rejectedQty = oldS4Value - currentValue;
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
-					currentData.checkBoxEnabled = true;
+					// currentData.checkBoxEnabled = true;
 				} else if (currentValue == 0) {
 					// this.checkBoxEnabled = false;
 					var reversedQty = 0;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * reversedQty);
-					currentData.checkBoxEnabled = false;
+					// currentData.checkBoxEnabled = false;
 				}
 				// oDetailModel.updateBindings(true);
 				this.getView().getModel("stockDataModel").updateBindings(true);
@@ -376,20 +383,20 @@
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
 						}
 
-						// if (oStockModelData[i].model === "") {
-						// 	this.reqThreShold = parseInt(oStockModelData[i].reqThreshold);
-						// 	this.subtotal = oStockModelData[i].requested_Volume;
-						// }
+						if (oStockModelData[i].model === "") {
+							this.reqThreShold = parseInt(oStockModelData[i].reqThreshold);
+							this.subtotal = oStockModelData[i].requested_Volume;
+						}
 
-						// if (tempRequestedTotal > this.reqThreShold) {
-						// 	this.flagThreShold = true;
-						// 	// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
-						// 	this.currentRequestVolume = this.currentRequestVolume - 1;
-						// 	oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
-						// 	tempRequestedTotal = tempRequestedTotal - 1;
-						// 	// this.currentStockVolume=this.currentStockVolume-1;
-						// 	this.getView().getModel("stockDataModel").updateBindings(true);
-						// }
+						if (tempRequestedTotal > this.reqThreShold) {
+							this.flagThreShold = true;
+							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
+							this.currentRequestVolume = this.currentRequestVolume - 1;
+							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
+							tempRequestedTotal = tempRequestedTotal - 1;
+							// this.currentStockVolume=this.currentStockVolume-1;
+							this.getView().getModel("stockDataModel").updateBindings(true);
+						}
 					}
 
 					if (this.flagThreShold == true) {
@@ -1055,7 +1062,7 @@
 						"zzsuffix": "",
 						"zzsug_seq_no": "",
 						"zzzadddata1": "",
-						"reqThreshold": "0", //item.allowedTolerance + item.suggestedTotal,
+						"reqThreshold": item.allowedTolerance + item.suggestedTotal,
 						"allowedTolerance": "",
 						"salesdata": item.salesDataTotal
 					};
@@ -1808,25 +1815,22 @@
 										salesNetData[x].Model == item.zzmodel &&
 										salesNetData[x].Zzextcol == item.zzextcol) {
 										item.NetSales = salesNetData[x].NetSales;
-										// debugger;
 									}
 								}
-								// item.ZzuiFlag = "Y";
-								// var oDetailModel = that.getView().getModel("oViewLocalDataModel");
-								// oDetailModel.setProperty("/checkBoxEnabled", true);
 								if (item.zzui_flag == "Y") {
 									checkOBJ.checkBoxFlag = true;
 									checkOBJ.checkBoxEnabled = true;
-									// oDetailModel.getData().checkBoxFlag = true;
 								} else {
 									checkOBJ.checkBoxFlag = false;
 									checkOBJ.checkBoxEnabled = false;
-									// oDetailModel.setProperty("/checkBoxEnabled", false);
-									// oDetailModel.getData().checkBoxFlag = true;
 								}
-								// oDetailModel.updateBindings(true);
 
-								// setTimeout(function(){
+								if((Number(item.zzrequest_qty))<(Number(item.zzsuggest_qty))){
+									checkOBJ.checkBoxEnabled = true;
+								}
+								else{
+									checkOBJ.checkBoxEnabled = false;
+								}
 								item.suggested_ds = Math.round(item.suggested_ds);
 								item.requested_ds = Math.round(item.requested_ds);
 								item.allocated_ds = Math.round(item.allocated_ds);
@@ -1903,7 +1907,7 @@
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
 									reqThreshold: "",
-									allowedTolerance: 1,
+									allowedTolerance: item.allowedTolerance,
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
@@ -1945,7 +1949,7 @@
 									zzsuffix: item.zzsuffix,
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
-									// allowedTolerance: 1,
+									allowedTolerance:  item.allowedTolerance,
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
@@ -1975,7 +1979,8 @@
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
-									checkBoxEnabled: checkOBJ.checkBoxEnabled
+									checkBoxEnabled: checkOBJ.checkBoxEnabled,
+									allowedTolerance: item.allowedTolerance
 								});
 
 								currentTotal = currentTotal + +item.zzcur_stock;
