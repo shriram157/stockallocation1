@@ -1866,6 +1866,10 @@
 										//	sEtaToData: item.zzprod_month
 									}); //change by aarti
 								}
+								
+								if(item.allowedTolerance===undefined){
+									item.allowedTolerance =0;
+								}
 
 								oStockAllocationData.push({
 									model: item.zzmodel,

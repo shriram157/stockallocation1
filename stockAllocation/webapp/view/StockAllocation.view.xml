@@ -183,14 +183,14 @@
 							</footer>
 						</Column>
 						
-						<!--<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"-->
-						<!--	mergeDuplicates="false">-->
-						<!--	<header>-->
-						<!--		<Text text="{i18n>ThreShold}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
-						<!--	</header>-->
-						<!--	<footer>-->
-						<!--	</footer>-->
-						<!--</Column>-->
+						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false">
+							<header>
+								<Text text="{i18n>ThreShold}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							</header>
+							<footer>
+							</footer>
+						</Column>
 						<Column width="75px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
@@ -291,7 +291,7 @@
 								<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="5.5rem" step="1" largerStep="2"
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<!--<Text text="{stockDataModel>reqThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"-->
+								<Text text="{stockDataModel>reqThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"  class="noheight"/>
 								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
