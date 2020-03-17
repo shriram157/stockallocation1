@@ -4,7 +4,8 @@
 /*.noDisplay{display:none !important;}*/
 .boldFont{	font-weight:bold !important;}
 /*.boldFont.noDisplay {    display: block !important;}*/
-.boldFont.sapMStepInput{display:none !important;}
+/*.boldFont.sapMStepInput{display:none !important;}*/
+.boldFont .sapMInputBaseInner {  font-weight: 900;}
 .boldFont.sapMCb {    display: none !important;}
 .pageHeight{height: 100% !important;}
 .setOrangeFont{font-size: 1rem !important;}

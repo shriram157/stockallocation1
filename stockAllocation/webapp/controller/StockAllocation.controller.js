@@ -341,11 +341,10 @@
 				var tempRequestedTotal = 0;
 				var requestedDSTotal = 0;
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
-				
-				if(currentData.requested_Volume<Number(currentData.suggested)){
+
+				if (currentData.requested_Volume < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
-				}
-				else{
+				} else {
 					currentData.checkBoxEnabled = false;
 				}
 
@@ -353,7 +352,7 @@
 					var additionalQty = currentValue - oldS4Value;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * additionalQty);
-					
+
 				} else if (currentValue < oldS4Value) {
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 
@@ -914,7 +913,7 @@
 						res[value.model] = {
 							model: value.model,
 							modelDesc: value.modelCodeDescription,
-							allowedTolerance: value.allowedTolerance,
+							allowedtolerance: value.allowedtolerance,
 							currentTotal: 0,
 							currentDSTotal: 0,
 							currentCTSTotal: 0,
@@ -1062,8 +1061,8 @@
 						"zzsuffix": "",
 						"zzsug_seq_no": "",
 						"zzzadddata1": "",
-						"reqThreshold": item.allowedTolerance + item.suggestedTotal,
-						"allowedTolerance": "",
+						"reqThreshold": item.allowedtolerance + item.suggestedTotal,
+						"allowedtolerance": "",
 						"salesdata": item.salesDataTotal
 					};
 
@@ -1817,18 +1816,19 @@
 										item.NetSales = salesNetData[x].NetSales;
 									}
 								}
-								if (item.zzui_flag == "Y") {
+								// if (item.zzui_flag == "Y") {
+								// 	checkOBJ.checkBoxFlag = true;
+								// 	checkOBJ.checkBoxEnabled = true;
+								// } else {
+								// 	checkOBJ.checkBoxFlag = false;
+								// 	checkOBJ.checkBoxEnabled = false;
+								// }
+
+								if ((item.zzui_flag == "Y") || (Number(item.zzrequest_qty)) < (Number(item.zzsuggest_qty))) {
 									checkOBJ.checkBoxFlag = true;
 									checkOBJ.checkBoxEnabled = true;
 								} else {
 									checkOBJ.checkBoxFlag = false;
-									checkOBJ.checkBoxEnabled = false;
-								}
-
-								if((Number(item.zzrequest_qty))<(Number(item.zzsuggest_qty))){
-									checkOBJ.checkBoxEnabled = true;
-								}
-								else{
 									checkOBJ.checkBoxEnabled = false;
 								}
 								item.suggested_ds = Math.round(item.suggested_ds);
@@ -1866,9 +1866,9 @@
 										//	sEtaToData: item.zzprod_month
 									}); //change by aarti
 								}
-								
-								if(item.allowedTolerance===undefined){
-									item.allowedTolerance =0;
+
+								if (item.allowedtolerance === undefined) {
+									item.allowedtolerance = 0;
 								}
 
 								oStockAllocationData.push({
@@ -1911,7 +1911,7 @@
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
 									reqThreshold: "",
-									allowedTolerance: item.allowedTolerance,
+									allowedtolerance: item.allowedtolerance,
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
@@ -1953,7 +1953,7 @@
 									zzsuffix: item.zzsuffix,
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
-									allowedTolerance:  item.allowedTolerance,
+									allowedtolerance: item.allowedtolerance,
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
@@ -1984,7 +1984,7 @@
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
 									checkBoxEnabled: checkOBJ.checkBoxEnabled,
-									allowedTolerance: item.allowedTolerance
+									allowedtolerance: item.allowedtolerance
 								});
 
 								currentTotal = currentTotal + +item.zzcur_stock;
