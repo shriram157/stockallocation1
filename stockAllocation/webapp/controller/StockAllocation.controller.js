@@ -1911,7 +1911,7 @@
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
 									reqThreshold: "",
-									allowedtolerance: item.allowedtolerance,
+									allowedtolerance: Number(item.allowedtolerance),
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
@@ -1953,7 +1953,7 @@
 									zzsuffix: item.zzsuffix,
 									zzzadddata1: item.zzzadddata1, // this is used for Sort
 									zzint_alc_qty: item.zzint_alc_qty,
-									allowedtolerance: item.allowedtolerance,
+									allowedtolerance: Number(item.allowedtolerance),
 									salesdata: item.NetSales,
 									zzui_flag: item.zzui_flag,
 									checkBoxFlag: checkOBJ.checkBoxFlag,
