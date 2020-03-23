@@ -344,8 +344,10 @@
 
 				if (currentData.requested_Volume < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
+					currentData.checkBoxFlag = true;
 				} else {
 					currentData.checkBoxEnabled = false;
+					currentData.checkBoxFlag = false;
 				}
 
 				if (currentValue > oldS4Value) {
