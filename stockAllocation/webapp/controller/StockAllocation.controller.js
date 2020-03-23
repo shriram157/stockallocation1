@@ -379,6 +379,9 @@
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
 						if (oStockModelData[i].model != "") {
+							if(oStockModelData[i].requested_Volume == "0"){
+								oStockModelData[i].requested_Volume= 0;
+							}
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
@@ -392,11 +395,11 @@
 						if (tempRequestedTotal > this.reqThreShold) {
 							this.flagThreShold = true;
 							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
-							this.currentRequestVolume = this.currentRequestVolume - 1;
+							this.currentRequestVolume = this.currentStockVolume - 1;
 							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
 							tempRequestedTotal = tempRequestedTotal - 1;
 							// this.currentStockVolume=this.currentStockVolume-1;
-							this.getView().getModel("stockDataModel").updateBindings(true);
+							// this.getView().getModel("stockDataModel").updateBindings(true);
 						}
 					}
 
