@@ -396,7 +396,7 @@
 							this.flagThreShold = true;
 							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
 							this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
-							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
+							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume-1 ;
 							tempRequestedTotal = tempRequestedTotal - 1;
 							// this.currentStockVolume=this.currentStockVolume-1;
 							this.getView().getModel("stockDataModel").updateBindings(true);
