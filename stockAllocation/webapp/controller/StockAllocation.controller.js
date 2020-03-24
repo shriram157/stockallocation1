@@ -370,7 +370,7 @@
 					// currentData.checkBoxEnabled = false;
 				}
 				// oDetailModel.updateBindings(true);
-				this.getView().getModel("stockDataModel").updateBindings(true);
+				// this.getView().getModel("stockDataModel").updateBindings(true);
 
 				if (currentValue != oldValue) {
 					// trigger the flag to show a loss of data. 
@@ -379,9 +379,9 @@
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
 						if (oStockModelData[i].model != "") {
-							if(oStockModelData[i].requested_Volume == "0"){
-								oStockModelData[i].requested_Volume= 0;
-							}
+							// if(oStockModelData[i].requested_Volume == "0"){
+							// 	oStockModelData[i].requested_Volume= "0";
+							// }
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
@@ -395,11 +395,11 @@
 						if (tempRequestedTotal > this.reqThreShold) {
 							this.flagThreShold = true;
 							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
-							this.currentRequestVolume = this.currentStockVolume - 1;
+							this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
 							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = this.currentRequestVolume;
 							tempRequestedTotal = tempRequestedTotal - 1;
 							// this.currentStockVolume=this.currentStockVolume-1;
-							// this.getView().getModel("stockDataModel").updateBindings(true);
+							this.getView().getModel("stockDataModel").updateBindings(true);
 						}
 					}
 
@@ -412,6 +412,7 @@
 
 					updationRequestedVolume["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.updateBindings(true);
+					// this.getView().getModel("initialStockTotalModel").updateBindings(true);
 					// }
 
 				}
@@ -1119,10 +1120,30 @@
 				}
 				//  requested volume is not based on suggested stock. 
 				for (var i = 0; i < oModelData2.length; i++) {
+					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
 					if (oModelData2[i].model != "") {
 						requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
 					}
 				}
+				oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
+				oInitialTotalStockModel["0"].currentDSTotal = currentDSTotal;
+				oInitialTotalStockModel["0"].currentTotal = currentTotal;
+
+				oInitialTotalStockModel["0"].currentCTSTotal = currentCTSTotal;
+				oInitialTotalStockModel["0"].currentCPTotal = currentCPTotal;
+				oInitialTotalStockModel["0"].currentUDSTotal = currentUDSTotal;
+
+				oInitialTotalStockModel["0"].differenceTotal = differenceTotal;
+				oInitialTotalStockModel["0"].requestedVolumeTotal = requestedVolumeTotal;
+				oInitialTotalStockModel["0"].suggestedDSTotal = suggestedDSTotal;
+				oInitialTotalStockModel["0"].requestedDSTotal = requestedDSTotal;
+
+				oInitialTotalStockModel["0"].allocatedTotal = allocatedTotal;
+				oInitialTotalStockModel["0"].allocatedDSTotal = allocatedDSTotal;
+				oInitialTotalStockModel["0"].pendingAllocationTotal = pendingAllocationTotal;
+				oInitialTotalStockModel["0"].unfilledAllocationTotal = unfilledAllocationTotal;
+
+				oInitialTotalStockModel["0"].salesDataTotal = salesDataTotal;
 
 				if (this.duringPercentage == true) {
 					var oModelDataOld = this.getView().getModel("stockDataModelBkup").getData();
@@ -1198,6 +1219,7 @@
 					}
 					for (var x = 0; x < oModelDataOld.length; x++) {
 						// if (oModelData2[i].model != "") {
+						oModelDataOld[x].requested_Volume = oModelDataOld[x].requested_Volume.toString();
 						requestedVolumeTotal = +oModelDataOld[x].requested_Volume + +requestedVolumeTotal;
 						// }
 					}
@@ -1222,7 +1244,9 @@
 
 					oInitialTotalStockModel["0"].salesDataTotal = salesDataTotal;
 
-				} else {
+				}
+				// else {
+				else {
 					if (newseriesFlag == true) {
 						var oModelDataOld = this.getView().getModel("stockDataModelBkup").getData();
 						var oTotalRecevied = new sap.ui.model.json.JSONModel();
@@ -1247,7 +1271,7 @@
 							"unfilledAllocationTotal": "0",
 							"salesDataTotal": "0"
 						});
-					} else {
+
 						var oModelDataOld = this.getView().getModel("stockDataModelBkup").getData();
 						var oInitalTotalStock = this.getView().getModel("initialStockTotalModel");
 						var oInitialTotalStockModel = oInitalTotalStock.getData();
@@ -1296,7 +1320,8 @@
 						}
 
 						for (var x = 0; x < oModelDataOld.length; x++) {
-							// if (oModelData2[i].model != "") {
+							// if (oModelDataOld[i].model != "") {
+							oModelDataOld[x].requested_Volume = oModelDataOld[x].requested_Volume.toString();
 							requestedVolumeTotal = +oModelDataOld[x].requested_Volume + +requestedVolumeTotal;
 							// }
 						}
