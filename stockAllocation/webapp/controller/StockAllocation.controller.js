@@ -385,25 +385,25 @@
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
-						}
-
-						if (oStockModelData[i].model === "") {
+						} else if (oStockModelData[i].model === "" && (oStockModelData[i].reqThreshold != 0 || oStockModelData[i].reqThreshold !== "0")) {
 							this.reqThreShold = parseInt(oStockModelData[i].reqThreshold);
 							this.subtotal = oStockModelData[i].requested_Volume;
 						}
 
 						if (tempRequestedTotal > this.reqThreShold) {
 							this.flagThreShold = true;
-							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
 							this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
-							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume-1 ;
+							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+								"stockDataModel").getObject().requested_Volume - 1;
 							tempRequestedTotal = tempRequestedTotal - 1;
 							// this.currentStockVolume=this.currentStockVolume-1;
 							this.getView().getModel("stockDataModel").updateBindings(true);
+							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
 						}
 					}
 
 					if (this.flagThreShold == true) {
+
 						MessageBox.error("You have crossed the threshold");
 					}
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
