@@ -369,49 +369,48 @@
 					var tempRequestedTotal = 0;
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
+							if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
+								this.currentStockVolume = oStockModelData[i].requested_Volume;
+								tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
+								requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
+								this.tempModel = oStockModelData[i].model;
+							} else if (oStockModelData[i].model === "" && oStockModelData[i].reqThreshold != "" &&
+								this.tempModel == currentData.model) {
+								localScope.reqThreShold = Number(oStockModelData[i].reqThreshold);
+								this.subtotal = oStockModelData[i].requested_Volume;
+								if (tempRequestedTotal > localScope.reqThreShold && this.tempModel == currentData.model) {
+									this.flagThreShold = true;
+									for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
+										if (this.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == currentData.model) {
+											this.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(true);
+											this.oTable.getItems()[x].getCells()[12]._getIncrementButton().addStyleClass("disableBtn");
+										}
+									}
+									// if (Number(this.currentStockVolume) != 0) {
+									this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
+									oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+										"stockDataModel").getObject().requested_Volume - 1;
+									tempRequestedTotal = tempRequestedTotal - 1;
+									// } else {
+									// 	this.currentRequestVolume = Number(this.currentStockVolume).toString();
+									// 	// oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+									// 	// 	"stockDataModel").getObject().requested_Volume;
+									// 	// tempRequestedTotal = tempRequestedTotal - 1;
+									// }
+									// this.currentStockVolume=this.currentStockVolume-1;
+									this.getView().getModel("stockDataModel").updateBindings(true);
 
-						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
-							this.currentStockVolume = oStockModelData[i].requested_Volume;
-							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
-							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
-							this.tempModel = oStockModelData[i].model;
-						} else if (oStockModelData[i].model === "" && (oStockModelData[i].reqThreshold != "" && oStockModelData[i].reqThreshold != 0) &&
-							this.tempModel == currentData.model) {
-							localScope.reqThreShold = Number(oStockModelData[i].reqThreshold);
-							this.subtotal = oStockModelData[i].requested_Volume;
-							if (tempRequestedTotal > localScope.reqThreShold && this.tempModel == currentData.model) {
-								this.flagThreShold = true;
-								for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
-									if (this.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == currentData.model) {
-										this.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(true);
-										this.oTable.getItems()[x].getCells()[12]._getIncrementButton().addStyleClass("disableBtn");
+								} else {
+									for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
+										if (this.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == currentData.model) {
+											this.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(false);
+											this.oTable.getItems()[x].getCells()[12]._getIncrementButton().removeStyleClass("disableBtn");
+										}
 									}
 								}
-								// if (Number(this.currentStockVolume) != 0) {
-								this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
-								oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-									"stockDataModel").getObject().requested_Volume - 1;
-								tempRequestedTotal = tempRequestedTotal - 1;
-								// } else {
-								// 	this.currentRequestVolume = Number(this.currentStockVolume).toString();
-								// 	// oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-								// 	// 	"stockDataModel").getObject().requested_Volume;
-								// 	// tempRequestedTotal = tempRequestedTotal - 1;
-								// }
-								// this.currentStockVolume=this.currentStockVolume-1;
-								this.getView().getModel("stockDataModel").updateBindings(true);
 
-							} else {
-								for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
-									if (this.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == currentData.model) {
-										this.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(false);
-										this.oTable.getItems()[x].getCells()[12]._getIncrementButton().removeStyleClass("disableBtn");
-									}
-								}
 							}
-
-						}
-
+						// }
 					}
 
 					if (this.flagThreShold == true) {
