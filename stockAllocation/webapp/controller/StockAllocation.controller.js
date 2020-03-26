@@ -398,7 +398,7 @@
 						this.flagThreShold = true;
 					}
 
-					if (this.flagThreShold == true && (tempRequestedTotal > this.reqThreShold + 1)) {
+					if (this.flagThreShold == true && (tempRequestedTotal >= this.reqThreShold + 1)) {
 						this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
 						oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
 							"stockDataModel").getObject().requested_Volume - 1;
