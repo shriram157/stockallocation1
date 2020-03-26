@@ -396,18 +396,25 @@
 
 						}
 						if (tempRequestedTotal > this.reqThreShold) {
-							this.flagThreShold = true;
+							this.flagThreShold = true; {
+								if (Number(this.currentStockVolume) != 0) {
+									this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
+									oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+										"stockDataModel").getObject().requested_Volume - 1;
+									tempRequestedTotal = tempRequestedTotal - 1;
+								} else {
+									this.currentRequestVolume = Number(this.currentStockVolume).toString();
+									// oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+									// 	"stockDataModel").getObject().requested_Volume;
+									// tempRequestedTotal = tempRequestedTotal - 1;
+								}
+								// this.currentStockVolume=this.currentStockVolume-1;
+								this.getView().getModel("stockDataModel").updateBindings(true);
+							}
 						}
-					}
 
-					if (this.flagThreShold == true && (tempRequestedTotal >= this.reqThreShold + 1)) {
-						this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
-						oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-							"stockDataModel").getObject().requested_Volume - 1;
-						tempRequestedTotal = tempRequestedTotal - 1;
-						// this.currentStockVolume=this.currentStockVolume-1;
-						this.getView().getModel("stockDataModel").updateBindings(true);
-						MessageBox.error("You have crossed the threshold");
+						if (this.flagThreShold == true)
+							MessageBox.error("You have crossed the threshold");
 					}
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.oData["0"].requestedDSTotal = requestedDSTotal;
