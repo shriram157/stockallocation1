@@ -369,8 +369,6 @@
 					var tempRequestedTotal = 0;
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
-						
-						
 
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
@@ -390,10 +388,10 @@
 									}
 								}
 								// if (Number(this.currentStockVolume) != 0) {
-								// 	this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
-								// 	oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-								// 		"stockDataModel").getObject().requested_Volume - 1;
-								// 	tempRequestedTotal = tempRequestedTotal - 1;
+								this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
+								oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+									"stockDataModel").getObject().requested_Volume - 1;
+								tempRequestedTotal = tempRequestedTotal - 1;
 								// } else {
 								// 	this.currentRequestVolume = Number(this.currentStockVolume).toString();
 								// 	// oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
@@ -403,8 +401,7 @@
 								// this.currentStockVolume=this.currentStockVolume-1;
 								this.getView().getModel("stockDataModel").updateBindings(true);
 
-							}
-							else{
+							} else {
 								for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
 									if (this.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == currentData.model) {
 										this.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(false);
