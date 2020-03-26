@@ -387,8 +387,7 @@
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
 							this.tempModel = oStockModelData[i].model;
-						} else if (oStockModelData[i].model === "" && (oStockModelData[i].reqThreshold != "" || oStockModelData[i].reqThreshold != 0 ||
-								oStockModelData[i].reqThreshold !== "0") && this.tempModel == currentData.model) {
+						} else if (oStockModelData[i].model === "" && (oStockModelData[i].reqThreshold != "" && oStockModelData[i].reqThreshold != 0) && this.tempModel == currentData.model) {
 							this.reqThreShold = parseInt(oStockModelData[i].reqThreshold);
 							this.subtotal = oStockModelData[i].requested_Volume;
 							if (tempRequestedTotal > this.reqThreShold && this.tempModel == currentData.model) {
