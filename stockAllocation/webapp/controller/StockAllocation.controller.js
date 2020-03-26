@@ -412,9 +412,10 @@
 								this.getView().getModel("stockDataModel").updateBindings(true);
 							}
 						}
+					}
 
-						if (this.flagThreShold == true)
-							MessageBox.error("You have crossed the threshold");
+					if (this.flagThreShold == true) {
+						MessageBox.error("You have crossed the threshold");
 					}
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.oData["0"].requestedDSTotal = requestedDSTotal;
