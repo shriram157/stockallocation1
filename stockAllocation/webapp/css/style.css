@@ -10,3 +10,6 @@
 .pageHeight{height: 100% !important;}
 .setOrangeFont{font-size: 1rem !important;}
 /*.setOrangeFont.noDisplay{display:block !important; }*/
+.disableBtn{
+	opacity:0.2;
+}

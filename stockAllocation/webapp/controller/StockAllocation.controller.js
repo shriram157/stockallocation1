@@ -13,7 +13,9 @@
 			btnSavePressed,
 			backupModelData, processDate, itemModel, newseriesFlag, tempObj2, IntCol2, callNewModelCount = 0,
 			salesNetData = [],
+			localScope,
 			checkOBJ = {};
+
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
@@ -314,33 +316,25 @@
 
 			whenUserChangesRequestedData: function (oEvt) {
 				this.flagThreShold = false;
-				// the total might need to be updated. 
-				//checkBoxEnabled
-				//var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
-				// requestedVolumeTotal
+
 				var currentValue = oEvt.getSource().getProperty("value");
 
 				var backupData = this.getView().getModel("stockDataModelBkup").getData();
-				// console.log("backupData", backupData);
+
 				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
 				oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
 					"stockDataModel").getObject().requested_Volume.toString();
-				// this.currentRequestVolume = currentData.requested_Volume;
-				// this.checkBoxEnabled =currentData.checkBoxEnabled;
 				var currentSeqNumber = currentData.zzsug_seq_no;
-				// console.log("currentSeqNumber", currentSeqNumber);
+
 				var oldS4Entry = backupData.filter(function (val) {
 					if (val.zzsug_seq_no == currentSeqNumber)
 						return val;
 				});
 
 				var oldS4Value = parseInt(oldS4Entry[0].requested_Volume);
-
-				// console.log("oldS4Value", oldS4Value);
-
 				var oldValue = oEvt.getSource()._sOldValue;
-				var tempRequestedTotal = 0;
+
 				var requestedDSTotal = 0;
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 
@@ -356,56 +350,67 @@
 					var additionalQty = currentValue - oldS4Value;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * additionalQty);
-
 				} else if (currentValue < oldS4Value) {
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
-
 					var rejectedQty = oldS4Value - currentValue;
 					// Requested Days of Supply = Suggested Days of Supply - (Unit Days of Supply * Qty rejected by the dealer)
 					currentData.requested_Ds = currentData.suggested_Ds - (parseInt(currentData.currentU_DS) * rejectedQty);
-					// currentData.checkBoxEnabled = true;
 				} else if (currentValue == 0) {
-					// this.checkBoxEnabled = false;
 					var reversedQty = 0;
 					// Requested Days of Supply = Suggested Days of Supply + (Unit Days of Supply * Additional qty requested)
 					currentData.requested_Ds = currentData.suggested_Ds + (parseInt(currentData.currentU_DS) * reversedQty);
-					// currentData.checkBoxEnabled = false;
 				}
-				// oDetailModel.updateBindings(true);
-				// this.getView().getModel("stockDataModel").updateBindings(true);
 
 				if (currentValue != oldValue) {
 					// trigger the flag to show a loss of data. 
 					this.resultsLossofData = true;
-
+					localScope = this;
+					// localScope.reqThreShold = 0;
+					var tempRequestedTotal = 0;
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
+						
+						
 
-						// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume.toString();
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
 							this.tempModel = oStockModelData[i].model;
-						} else if (oStockModelData[i].model === "" && (oStockModelData[i].reqThreshold != "" && oStockModelData[i].reqThreshold != 0) && this.tempModel == currentData.model) {
-							this.reqThreShold = parseInt(oStockModelData[i].reqThreshold);
+						} else if (oStockModelData[i].model === "" && (oStockModelData[i].reqThreshold != "" && oStockModelData[i].reqThreshold != 0) &&
+							this.tempModel == currentData.model) {
+							localScope.reqThreShold = Number(oStockModelData[i].reqThreshold);
 							this.subtotal = oStockModelData[i].requested_Volume;
-							if (tempRequestedTotal > this.reqThreShold && this.tempModel == currentData.model) {
+							if (tempRequestedTotal > localScope.reqThreShold && this.tempModel == currentData.model) {
 								this.flagThreShold = true;
-								if (Number(this.currentStockVolume) != 0) {
-									this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
-									oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-										"stockDataModel").getObject().requested_Volume - 1;
-									tempRequestedTotal = tempRequestedTotal - 1;
-								} else {
-									this.currentRequestVolume = Number(this.currentStockVolume).toString();
-									// oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-									// 	"stockDataModel").getObject().requested_Volume;
-									// tempRequestedTotal = tempRequestedTotal - 1;
+								for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
+									if (this.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == currentData.model) {
+										this.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(true);
+										this.oTable.getItems()[x].getCells()[12]._getIncrementButton().addStyleClass("disableBtn");
+									}
 								}
+								// if (Number(this.currentStockVolume) != 0) {
+								// 	this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
+								// 	oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+								// 		"stockDataModel").getObject().requested_Volume - 1;
+								// 	tempRequestedTotal = tempRequestedTotal - 1;
+								// } else {
+								// 	this.currentRequestVolume = Number(this.currentStockVolume).toString();
+								// 	// oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+								// 	// 	"stockDataModel").getObject().requested_Volume;
+								// 	// tempRequestedTotal = tempRequestedTotal - 1;
+								// }
 								// this.currentStockVolume=this.currentStockVolume-1;
 								this.getView().getModel("stockDataModel").updateBindings(true);
 
+							}
+							else{
+								for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
+									if (this.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == currentData.model) {
+										this.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(false);
+										this.oTable.getItems()[x].getCells()[12]._getIncrementButton().removeStyleClass("disableBtn");
+									}
+								}
 							}
 
 						}
