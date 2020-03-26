@@ -392,18 +392,17 @@
 
 						if (tempRequestedTotal > this.reqThreShold) {
 							this.flagThreShold = true;
-							this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
-							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-								"stockDataModel").getObject().requested_Volume - 1;
-							tempRequestedTotal = tempRequestedTotal - 1;
-							// this.currentStockVolume=this.currentStockVolume-1;
-							this.getView().getModel("stockDataModel").updateBindings(true);
 							// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume - 1;
 						}
 					}
 
 					if (this.flagThreShold == true) {
-
+					this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
+							oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+								"stockDataModel").getObject().requested_Volume - 1;
+							tempRequestedTotal = tempRequestedTotal - 1;
+							// this.currentStockVolume=this.currentStockVolume-1;
+							this.getView().getModel("stockDataModel").updateBindings(true);
 						MessageBox.error("You have crossed the threshold");
 					}
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
