@@ -11,5 +11,5 @@
 .setOrangeFont{font-size: 1rem !important;}
 /*.setOrangeFont.noDisplay{display:block !important; }*/
 .disableBtn{
-	opacity:0.2;
+	opacity:0.75;
 }
