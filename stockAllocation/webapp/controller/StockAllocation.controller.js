@@ -396,21 +396,21 @@
 
 						}
 						if (tempRequestedTotal > this.reqThreShold) {
-							this.flagThreShold = true; {
-								if (Number(this.currentStockVolume) != 0) {
-									this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
-									oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-										"stockDataModel").getObject().requested_Volume - 1;
-									tempRequestedTotal = tempRequestedTotal - 1;
-								} else {
-									this.currentRequestVolume = Number(this.currentStockVolume).toString();
-									// oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-									// 	"stockDataModel").getObject().requested_Volume;
-									// tempRequestedTotal = tempRequestedTotal - 1;
-								}
-								// this.currentStockVolume=this.currentStockVolume-1;
-								this.getView().getModel("stockDataModel").updateBindings(true);
+							this.flagThreShold = true;
+							if (Number(this.currentStockVolume) != 0) {
+								this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
+								oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+									"stockDataModel").getObject().requested_Volume - 1;
+								tempRequestedTotal = tempRequestedTotal - 1;
+							} else {
+								this.currentRequestVolume = Number(this.currentStockVolume).toString();
+								// oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+								// 	"stockDataModel").getObject().requested_Volume;
+								// tempRequestedTotal = tempRequestedTotal - 1;
 							}
+							// this.currentStockVolume=this.currentStockVolume-1;
+							this.getView().getModel("stockDataModel").updateBindings(true);
+
 						}
 					}
 
