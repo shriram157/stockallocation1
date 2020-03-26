@@ -324,6 +324,8 @@
 				var backupData = this.getView().getModel("stockDataModelBkup").getData();
 				// console.log("backupData", backupData);
 				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
+				oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
+					"stockDataModel").getObject().requested_Volume.toString();
 				// this.currentRequestVolume = currentData.requested_Volume;
 				// this.checkBoxEnabled =currentData.checkBoxEnabled;
 				var currentSeqNumber = currentData.zzsug_seq_no;
@@ -378,6 +380,7 @@
 
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
+						// oStockModelData[i].requested_Volume = oStockModelData[i].requested_Volume.toString();
 						if (oStockModelData[i].model != "") {
 							// if(oStockModelData[i].requested_Volume == "0"){
 							// 	oStockModelData[i].requested_Volume= "0";
@@ -392,10 +395,9 @@
 							this.subtotal = oStockModelData[i].requested_Volume;
 
 						}
-
-					}
-					if (tempRequestedTotal > this.reqThreShold) {
-						this.flagThreShold = true;
+						if (tempRequestedTotal > this.reqThreShold) {
+							this.flagThreShold = true;
+						}
 					}
 
 					if (this.flagThreShold == true && (tempRequestedTotal >= this.reqThreShold + 1)) {
