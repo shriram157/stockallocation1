@@ -374,47 +374,9 @@
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
 							this.tempModel = oStockModelData[i].model;
-						} else if (currentData.model) {
-							console.log("currentData",currentData.model);
-							if (oStockModelData[i].model === "" && oStockModelData[i].reqThreshold != "") {
-								localScope.reqThreShold = Number(oStockModelData[i].reqThreshold);
-								this.subtotal = oStockModelData[i].requested_Volume;
-							}
 						}
-						// }
+						localScope.getThreShold(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
 					}
-
-					if (tempRequestedTotal > localScope.reqThreShold && this.tempModel == currentData.model) {
-						this.flagThreShold = true;
-						for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
-							if (this.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == currentData.model) {
-								this.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(true);
-								this.oTable.getItems()[x].getCells()[12]._getIncrementButton().addStyleClass("disableBtn");
-							}
-						}
-						// if (Number(this.currentStockVolume) != 0) {
-						this.currentRequestVolume = (Number(this.currentStockVolume) - 1).toString();
-						oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-							"stockDataModel").getObject().requested_Volume - 1;
-						tempRequestedTotal = tempRequestedTotal - 1;
-						// } else {
-						// 	this.currentRequestVolume = Number(this.currentStockVolume).toString();
-						// 	// oEvt.getSource().getBindingContext("stockDataModel").getObject().requested_Volume = oEvt.getSource().getBindingContext(
-						// 	// 	"stockDataModel").getObject().requested_Volume;
-						// 	// tempRequestedTotal = tempRequestedTotal - 1;
-						// }
-						// this.currentStockVolume=this.currentStockVolume-1;
-						this.getView().getModel("stockDataModel").updateBindings(true);
-
-					} else {
-						for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
-							if (this.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == currentData.model) {
-								this.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(false);
-								this.oTable.getItems()[x].getCells()[12]._getIncrementButton().removeStyleClass("disableBtn");
-							}
-						}
-					}
-
 					if (this.flagThreShold == true) {
 						MessageBox.error("You have crossed the threshold");
 						localScope.reqThreShold = 0;
@@ -434,6 +396,37 @@
 
 				// when before click navigates to previous screen the popup might need to be thrown. 
 
+			},
+
+			getThreShold: function (_data, _current, _dataModel, _currentThreShold) {
+				if (_data.model == "" && _current.model === _data.modelCodeDescription.replace("--", " ").split(" ")[1] && _data.reqThreshold != "") {
+					console.log("currentData", _data.model);
+					localScope.reqThreShold = Number(_data.reqThreshold);
+					localScope.subtotal = _data.requested_Volume;
+					console.log("reqThreShold", localScope.reqThreShold);
+
+					if (_currentThreShold > localScope.reqThreShold) {
+						localScope.flagThreShold = true;
+						for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
+							if (localScope.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == _current.model) {
+								localScope.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(true);
+								localScope.oTable.getItems()[x].getCells()[12]._getIncrementButton().addStyleClass("disableBtn");
+							}
+						}
+						localScope.currentRequestVolume = (Number(localScope.currentStockVolume) - 1).toString();
+						_current.requested_Volume = _current.requested_Volume - 1;
+						_currentThreShold = _currentThreShold - 1;
+						localScope.getView().getModel("stockDataModel").updateBindings(true);
+
+					} else {
+						for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
+							if (localScope.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == _current.model) {
+								localScope.oTable.getItems()[x].getCells()[12]._getIncrementButton().setBlocked(false);
+								localScope.oTable.getItems()[x].getCells()[12]._getIncrementButton().removeStyleClass("disableBtn");
+							}
+						}
+					}
+				}
 			},
 
 			_onPageNavButtonPress: function (oEvent) {
