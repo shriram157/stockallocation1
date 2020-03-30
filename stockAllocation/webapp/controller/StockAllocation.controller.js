@@ -374,7 +374,7 @@
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
 							this.tempModel = oStockModelData[i].model;
-						} else if (this.tempModel === currentData.model) {
+						} else if (currentData.model) {
 							console.log("currentData",currentData.model);
 							if (oStockModelData[i].model === "" && oStockModelData[i].reqThreshold != "") {
 								localScope.reqThreShold = Number(oStockModelData[i].reqThreshold);
