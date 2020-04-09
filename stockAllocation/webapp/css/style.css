@@ -13,3 +13,9 @@
 .disableBtn{
 	opacity:0.75;
 }
+
+.fixedHeader{
+	position: fixed !important;
+    top: 8rem;
+    width: 98% !important;
+}

@@ -32,7 +32,7 @@
 					id="stockDataModelTableId">
 					<infoToolbar/>
 					<headerToolbar>
-						<OverflowToolbar width="auto" height="55px" design="Transparent" visible="true" enabled="true">
+						<OverflowToolbar width="auto" height="55px" design="Transparent" visible="true" enabled="true" class="fixedHeader">
 							<content>
 								<ToggleButton pressed="true" text="{i18n>SHOW_ALL}" iconFirst="true" press="onClickShowAll"/>
 								<ToggleButton pressed="false" text="{i18n>SHOW_ALL_MODELS}" iconFirst="true" width="230px"
