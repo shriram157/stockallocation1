@@ -8,6 +8,11 @@
 .boldFont .sapMInputBaseInner {  font-weight: 900;}
 .boldFont.sapMCb {    display: none !important;}
 .pageHeight{height: 100% !important;}
+
+.pageHeight .sapMScrollCont.sapMScrollContVH{
+	margin-top: 3.5rem;
+}
+
 .setOrangeFont{font-size: 1rem !important;}
 /*.setOrangeFont.noDisplay{display:block !important; }*/
 .disableBtn{
@@ -17,5 +22,25 @@
 .fixedHeader{
 	position: fixed !important;
     top: 8rem;
-    width: 98% !important;
+    width: 96% !important;
+}
+
+.styleHeader2 {
+    height: 4.5rem !important;
+    line-height: 1.5rem !important;
+    background: #fafafa;
+}
+
+.styleHeader2 .sapMBarLeft{
+	height: 4.5rem !important;
+}
+
+.styleHeader2 .sapMBarRight{
+	height: 4.5rem !important;
+    line-height: 1rem !important;
+}
+
+.styleHeader2 .sapMBarRight h2, .styleHeader2 .sapMBarRight div{
+	float: left;
+    width: 90%;
 }
