@@ -1771,6 +1771,22 @@
 				this.runninDataLoadScriptflag = false;
 				var that = this;
 				// that.callNewModel = true;
+				this.thresholdModel = this.getOwnerComponent().getModel("ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV");
+				// this.thresholdModel.read("/zcds_suggest_ord", {
+				// 	urlParameters: {
+				// 		"$filter": "zzdealer_code eq '2400053184' and zzmoyr eq '2020'"
+				// 	},
+
+				// 	//"$filter": "zzdealer_code eq'" + this.dealerCode + "' and zzmoyr eq '" + this.yearModel +"'"	
+				// 	success: function (thresholdData) {
+				// console.log("thresholdData",thresholdData);
+				// 	}.bind(this),
+				// 	error: function (response) {
+				// 		this.defaultLightBusyDialog.close();
+				// 		// sap.ui.core.BusyIndicator.hide();
+				// 	}
+				// });
+					
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
 						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" + "and zzmoyr eq '" + this.yearModel +
