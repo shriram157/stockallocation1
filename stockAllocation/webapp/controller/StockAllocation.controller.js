@@ -399,7 +399,8 @@
 			},
 
 			getThreShold: function (_data, _current, _dataModel, _currentThreShold) {
-				if (_data.model == "" && _current.model === _data.modelCodeDescription.replace("--", " ").split(" ")[1] && _data.reqThreshold != "") {
+				if (_data.model == "" && _current.model === _data.modelCodeDescription.replace("--", " ").split(" ")[1] && _data.reqThreshold !=
+					"") {
 					console.log("currentData", _data.model);
 					localScope.reqThreShold = Number(_data.reqThreshold);
 					localScope.subtotal = _data.requested_Volume;
@@ -1772,21 +1773,22 @@
 				var that = this;
 				// that.callNewModel = true;
 				this.thresholdModel = this.getOwnerComponent().getModel("ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV");
-				// this.thresholdModel.read("/zcds_suggest_ord", {
-				// 	urlParameters: {
-				// 		"$filter": "zzdealer_code eq '2400053184' and zzmoyr eq '2020'"
-				// 	},
+				this.thresholdModel.read("/ZCDS_SUGGST_ORD_QTY_TOL", {
+					urlParameters: {
+						"$filter": "zzdealer_code eq '2400053184' and zzmoyr eq '2020'"
+					},
 
-				// 	//"$filter": "zzdealer_code eq'" + this.dealerCode + "' and zzmoyr eq '" + this.yearModel +"'"	
-				// 	success: function (thresholdData) {
-				// console.log("thresholdData",thresholdData);
-				// 	}.bind(this),
-				// 	error: function (response) {
-				// 		this.defaultLightBusyDialog.close();
-				// 		// sap.ui.core.BusyIndicator.hide();
-				// 	}
-				// });
-					
+					//"$filter": "zzdealer_code eq'" + this.dealerCode + "' and zzmoyr eq '" + this.yearModel +"'"	
+					success: function (thresholdData) {
+						// console.log("thresholdData", thresholdData.results);
+						that.threSholdData = thresholdData.results;
+					}.bind(this),
+					error: function (response) {
+						this.defaultLightBusyDialog.close();
+						// sap.ui.core.BusyIndicator.hide();
+					}
+				});
+
 				this.oModel.read("/zcds_suggest_ord", {
 					urlParameters: {
 						"$filter": "zzdealer_code eq'" + this.dealerCode + "'and zzseries eq '" + this.series + "'" + "and zzmoyr eq '" + this.yearModel +
@@ -1868,13 +1870,23 @@
 										item.NetSales = salesNetData[x].NetSales;
 									}
 								}
-								// if (item.zzui_flag == "Y") {
-								// 	checkOBJ.checkBoxFlag = true;
-								// 	checkOBJ.checkBoxEnabled = true;
-								// } else {
-								// 	checkOBJ.checkBoxFlag = false;
-								// 	checkOBJ.checkBoxEnabled = false;
+								// for (var x = 0; x < salesNetData.length; x++) {
+								// 	if (salesNetData[x].Zzsuffix == item.zzsuffix &&
+								// 		salesNetData[x].Model == item.zzmodel &&
+								// 		salesNetData[x].Zzextcol == item.zzextcol) {
+								// 		item.NetSales = salesNetData[x].NetSales;
+								// 	}
 								// }
+								that.threSholdData.filter(function (item2) {
+									if (item.zzmodel == item2.zzmodel && item.zzmoyr == item2.zzmoyr) {
+										item.allowedtolerance = item2.allowedtolerance;
+									}
+								});
+								// zzdealer_code
+								// zzmoyr
+								// zzmodel
+								// zzsuggest_qty
+								// allowedtolerance
 
 								if ((item.zzui_flag == "Y") || (Number(item.zzrequest_qty)) < (Number(item.zzsuggest_qty))) {
 									checkOBJ.checkBoxFlag = true;
