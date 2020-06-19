@@ -1775,7 +1775,7 @@
 				this.thresholdModel = this.getOwnerComponent().getModel("ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV");
 				this.thresholdModel.read("/ZCDS_SUGGST_ORD_QTY_TOL", {
 					urlParameters: {
-						"$filter": "zzdealer_code eq '2400053184' and zzmoyr eq '2020'"
+						"$filter": "zzdealer_code eq'" + this.dealerCode + "' and zzmoyr eq '" + this.yearModel +"'"
 					},
 
 					//"$filter": "zzdealer_code eq'" + this.dealerCode + "' and zzmoyr eq '" + this.yearModel +"'"	
