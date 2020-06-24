@@ -236,9 +236,10 @@
 								<Text text="{i18n>ALLOCATED_DS}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer>
-								<Text text="{initialStockTotalModel>/0/allocatedDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
+								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
 									textDirection="Inherit" visible="false"/>
 							</footer>
+							<!--{initialStockTotalModel>/0/allocatedDSTotal}-->
 						</Column>
 						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
 							visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
