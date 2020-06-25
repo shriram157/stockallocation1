@@ -1304,7 +1304,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			}
 
-			if ((oModelData.parsedtodayDate > oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {
+			if ((oModelData.parsedtodayDate < oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {
 
 				oModel.setProperty("/showAllocatedTab", false);
 
