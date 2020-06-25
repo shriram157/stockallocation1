@@ -1304,17 +1304,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			}
 
-			if ((oModelData.parsedtodayDate < oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {
+			if ((oModelData.parsedtodayDate > oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {
 
 				oModel.setProperty("/showAllocatedTab", false);
 
-			} else {
+			} 
+			// else {
 				// if ((oModelData.parsedtodayDate <= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {	
 				// 			oModel.setProperty("/showAllocatedTab", true);
 				// 					oModel.setProperty("/showSuggestionTab", false);
 				// 					oModel.setProperty("/showRequestedTab", false);
 				// }			
-			}
+			// }
 
 			if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "S") {
 				oModel.setProperty("/showSuggestionTab", false);
