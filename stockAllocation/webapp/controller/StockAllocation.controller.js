@@ -1041,7 +1041,7 @@
 					}
 
 					that.obj = {
-						"allocated": "",
+						"allocated": item.allocatedTotal,
 						"allocatedDSSubttlOnly": item.allocatedDSTotal,
 						"colour_Trim": "",
 						"current": item.currentTotal,
