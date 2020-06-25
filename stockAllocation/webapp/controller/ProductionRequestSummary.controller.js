@@ -1242,7 +1242,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 					var parsedtodayDate = Date.parse(currentDate);
 
-					if ((parsedtodayDate <= windowEndDateP && parsedtodayDate >= windowStartDateP)) {
+					if (parsedtodayDate < windowEndDateP) {  //&& parsedtodayDate >= windowStartDateP
 						// in this period we have to show suggestion and Requested.  Turn off the Allocated. 
 						oModel.setProperty("/showAllocatedTab", false);
 					}
@@ -1304,7 +1304,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			}
 
-			if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {
+			if ((oModelData.parsedtodayDate > oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {
 
 				oModel.setProperty("/showAllocatedTab", false);
 
