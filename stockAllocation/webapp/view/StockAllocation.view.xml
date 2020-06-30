@@ -22,13 +22,15 @@
 			<Bar class="sapUiSmallPaddingBeginEnd styleHeader2">
 				<contentLeft width="50%" class="styleHeader2Left">
 					<Title text="{oViewLocalDataModel>/BusinessPartnerName}" titleStyle="H2" textAlign="Left" visible="true" wrapping="false"
-						class="sapUiTinyMargin"></Title>
+						class="sapUiTinyMargin" level="H2"></Title>
+					<!--<Text text="{ path: '/date', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' } }"/> {i18n>ProcessDateTxt}:-->
+					<Title	text=" { path: ' {oViewLocalDataModel>/processDate}', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"
+						titleStyle="H6" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"></Title>
 				</contentLeft>
 				<contentRight width="50%" class="styleHeader2Right">
-					<Title text="{oViewLocalDataModel>/series}" titleStyle="H2" textAlign="End" visible="true" wrapping="true"
-						class="sapUiTinyMargin" level="H2"></Title>
-					<Title text="{oViewLocalDataModel>/etaFrom}" titleStyle="H6" textAlign="End" visible="true" wrapping="false"
-						class="sapUiTinyMargin"></Title>
+					<Title text="{oViewLocalDataModel>/series}" titleStyle="H2" textAlign="End" visible="true" wrapping="true" class="sapUiTinyMargin"
+						level="H2"></Title>
+					<Title text="{oViewLocalDataModel>/etaFrom}" titleStyle="H6" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"></Title>
 				</contentRight>
 			</Bar>
 			<ScrollContainer height="85%" vertical="true" focusable="true">
@@ -124,7 +126,7 @@
 									textDirection="Inherit" class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="12rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>CurrentStockDaysSupply}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
@@ -176,10 +178,10 @@
 								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont" textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false">
 							<header>
-								<Text text="{i18n>REQUEST_VOLUME}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-									visible="true"/>
+								<Text text="{i18n>REQUEST_VOLUME}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer>
 								<Text text="{initialStockTotalModel>/0/requestedVolumeTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
@@ -236,8 +238,7 @@
 								<Text text="{i18n>ALLOCATED_DS}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer>
-								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
-									textDirection="Inherit" visible="false"/>
+								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont" textDirection="Inherit" visible="false"/>
 							</footer>
 							<!--{initialStockTotalModel>/0/allocatedDSTotal}-->
 						</Column>

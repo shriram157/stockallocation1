@@ -101,6 +101,7 @@
 						fromWhichTabClickIamIn: this.whichTabClicked,
 						setResetEnabled: false,
 						checkBoxEnabled: false,
+						processDate:processDate
 						// checkBoxFlag: true
 					});
 
@@ -207,6 +208,7 @@
 						fromWhichTabClickIamIn: selectedSeries.whichTabClicked,
 						setResetEnabled: false,
 						checkBoxEnabled: false,
+						processDate:processDate
 						// checkBoxFlag: true
 
 					});
@@ -390,6 +392,14 @@
 					// this.getView().getModel("initialStockTotalModel").updateBindings(true);
 					// }
 
+				}
+				if (currentValue < oldValue) {
+					oEvt.getSource()._getInput().addStyleClass("DecrementRed");
+					oEvt.getSource()._getInput().removeStyleClass("IncrementGreen");
+				}
+				else if (currentValue > oldValue) {
+					oEvt.getSource()._getInput().addStyleClass("IncrementGreen");
+					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 				}
 
 				this._calculateTotals();
