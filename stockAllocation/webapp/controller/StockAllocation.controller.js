@@ -397,10 +397,10 @@
 					// }
 
 				}
-				if (currentValue < oldS4Value) {
+				if (currentValue < Number(currentData.suggested)) {
 					oEvt.getSource()._getInput().addStyleClass("DecrementRed");
 					oEvt.getSource()._getInput().removeStyleClass("IncrementGreen");
-				} else if (currentValue > oldS4Value) {
+				} else if (currentValue > Number(currentData.suggested)) {
 					oEvt.getSource()._getInput().addStyleClass("IncrementGreen");
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 				}
