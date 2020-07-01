@@ -194,7 +194,7 @@
 					var oDateFormat = sap.ui.core.format.DateFormat.getInstance({pattern: "dd MMMM yyyy"}); 
 					
 
-					processDate = oDateFormat.format(new Date(processDate));
+					var processDateDisplay = oDateFormat.format(new Date(processDate));
 					this._oViewLocalData = new sap.ui.model.json.JSONModel({
 						busy: false,
 						delay: 0,
@@ -212,7 +212,7 @@
 						fromWhichTabClickIamIn: selectedSeries.whichTabClicked,
 						setResetEnabled: false,
 						checkBoxEnabled: false,
-						processDate: processDate
+						processDateDisplay: processDateDisplay
 							// checkBoxFlag: true
 
 					});

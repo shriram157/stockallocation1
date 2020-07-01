@@ -24,7 +24,7 @@
 					<Title text="{oViewLocalDataModel>/BusinessPartnerName}" titleStyle="H2" textAlign="Left" visible="true" wrapping="false"
 						class="sapUiTinyMargin" level="H2"></Title>
 					<!--<Text text="{ path: '/date', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' } }"/> {i18n>ProcessDateTxt}:-->
-					<Title	text=" {i18n>ProcessDateTxt}: {oViewLocalDataModel>/processDate}" titleStyle="H6" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"></Title>
+					<Title	text=" {i18n>ProcessDateTxt}: {oViewLocalDataModel>/processDateDisplay}" titleStyle="H6" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"></Title>
 				</contentLeft>
 				<contentRight width="50%" class="styleHeader2Right">
 					<Title text="{oViewLocalDataModel>/series}" titleStyle="H2" textAlign="End" visible="true" wrapping="true" class="sapUiTinyMargin"
