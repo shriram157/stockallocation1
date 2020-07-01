@@ -101,8 +101,8 @@
 						fromWhichTabClickIamIn: this.whichTabClicked,
 						setResetEnabled: false,
 						checkBoxEnabled: false,
-						processDate:processDate
-						// checkBoxFlag: true
+						processDate: processDate
+							// checkBoxFlag: true
 					});
 
 					var oModelLocalData = this.getView().setModel(this._oViewLocalData, "oViewLocalDataModel");
@@ -190,7 +190,11 @@
 					}
 
 					// if it is allocated and greater than window due date,  then turn off the 
-					this.comingFromAddingaModel = false;
+					jQuery.sap.require("sap.ui.core.format.DateFormat");
+					var oDateFormat = sap.ui.core.format.DateFormat.getInstance({pattern: "dd MMMM yyyy"}); 
+					
+
+					processDate = oDateFormat.format(new Date(processDate));
 					this._oViewLocalData = new sap.ui.model.json.JSONModel({
 						busy: false,
 						delay: 0,
@@ -208,8 +212,8 @@
 						fromWhichTabClickIamIn: selectedSeries.whichTabClicked,
 						setResetEnabled: false,
 						checkBoxEnabled: false,
-						processDate:processDate
-						// checkBoxFlag: true
+						processDate: processDate
+							// checkBoxFlag: true
 
 					});
 
@@ -393,11 +397,10 @@
 					// }
 
 				}
-				if (currentValue < oldValue) {
+				if (currentValue < oldS4Value) {
 					oEvt.getSource()._getInput().addStyleClass("DecrementRed");
 					oEvt.getSource()._getInput().removeStyleClass("IncrementGreen");
-				}
-				else if (currentValue > oldValue) {
+				} else if (currentValue > oldS4Value) {
 					oEvt.getSource()._getInput().addStyleClass("IncrementGreen");
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 				}
@@ -1936,7 +1939,7 @@
 
 											current: item.zzcur_stock,
 											current_CP: item.zzcur_pipeline,
-											currentDSSubttlOnly:"",
+											currentDSSubttlOnly: "",
 											current_Ds: item.zzcur_ds,
 											current_CTS: +item.zzcur_pipeline + +item.zzcur_stock,
 											currentU_DS: item.zzunit_ds,
@@ -1944,14 +1947,14 @@
 											suggested: item.zzsuggest_qty,
 											// Current Days of Supply + (Unit Days of Supply * Vehicles suggested by IBP at Model-Dealer Level.
 											//+item.zzcur_ds++(+item.zzunit_ds+*zzsuggest_qty)
-											suggestedDSSubttlOnly:"",
+											suggestedDSSubttlOnly: "",
 											suggested_Ds: +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty), //item.suggested_ds,  
 											requested_Volume: item.zzrequest_qty,
 											difference: item.diff_sugg_req,
-											requestedDSSubttlOnly:"",
+											requestedDSSubttlOnly: "",
 											requested_Ds: +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty), //item.requested_ds,
 											allocated: item.zzallocated_qty,
-											allocatedDSSubttlOnly:"",
+											allocatedDSSubttlOnly: "",
 											allocated_Ds: item.allocated_ds,
 											pendingAllocation: item.pending_allocation,
 											visibleProperty: true,
@@ -1988,20 +1991,20 @@
 
 											current: item.zzcur_stock,
 											current_CP: item.zzcur_pipeline,
-											currentDSSubttlOnly:"",
+											currentDSSubttlOnly: "",
 											current_Ds: item.zzcur_ds,
 											current_CTS: +item.zzcur_pipeline + +item.zzcur_stock,
 											currentU_DS: item.zzunit_ds,
 
 											suggested: item.zzsuggest_qty,
-											suggestedDSSubttlOnly:"",
+											suggestedDSSubttlOnly: "",
 											suggested_Ds: +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty), //item.suggested_ds,
 											requested_Volume: item.zzrequest_qty,
 											difference: item.diff_sugg_req,
-											requestedDSSubttlOnly:"",
+											requestedDSSubttlOnly: "",
 											requested_Ds: +item.zzcur_ds + parseInt(item.zzunit_ds) * parseInt(item.zzsuggest_qty) + +item.zzunit_ds, //item.requested_ds,
 											allocated: item.zzallocated_qty,
-											allocatedDSSubttlOnly:"",
+											allocatedDSSubttlOnly: "",
 											allocated_Ds: item.allocated_ds,
 											pendingAllocation: item.pending_allocation,
 											unfilled_Allocation: item.unfilled__allocation,
@@ -2256,7 +2259,7 @@
 
 									// for the totals subtract from the total					
 									var oModel = that.getView().getModel("initialStockTotalModel");
-									
+
 									var oViewLocalModel = that.getView().getModel("oViewLocalDataModel");
 
 									if (currentStatus == "S") {

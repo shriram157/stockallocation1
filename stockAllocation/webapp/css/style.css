@@ -14,7 +14,10 @@
 .styleHeader2 .sapMBarLeft, .styleHeader2 .sapMBarRight{	height: 4.5rem !important;    line-height: 1rem !important;}
 /*.styleHeader2 .sapMBarRight h2{	float: left;    width: 50%;}*/
 .styleHeader2 .sapMBarLeft h2{	float: left;  width: 100%; line-height: 1.5rem !important;}
-.styleHeader2 .sapMBarLeft div{	float: left;    width: 55%;}
+.styleHeader2 .sapMBarLeft div{	float: left; }
 .styleHeader2 .sapMBarRight h2, .styleHeader2 .sapMBarRight div{	float: left;    width: 90%;}
-.DecrementRed .sapMInputBaseInner { color: red; font-weight: bolder;}
-.IncrementGreen .sapMInputBaseInner { color: green; font-weight: bolder;}
+.DecrementRed .sapMInputBaseInner { color: #FF0000; font-weight: bolder;}
+.IncrementGreen .sapMInputBaseInner { color: #00FF7F; font-weight: bolder;}
+.styleBorder { border-left: 1px solid; border-right: 1px solid;}
+.styleLeftBorder { border-left: 1px solid;}
+.styleRightBorder { border-right: 1px solid;}

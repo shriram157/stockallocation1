@@ -24,8 +24,7 @@
 					<Title text="{oViewLocalDataModel>/BusinessPartnerName}" titleStyle="H2" textAlign="Left" visible="true" wrapping="false"
 						class="sapUiTinyMargin" level="H2"></Title>
 					<!--<Text text="{ path: '/date', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' } }"/> {i18n>ProcessDateTxt}:-->
-					<Title	text=" { path: ' {oViewLocalDataModel>/processDate}', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' }}"
-						titleStyle="H6" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"></Title>
+					<Title	text=" {i18n>ProcessDateTxt}: {oViewLocalDataModel>/processDate}" titleStyle="H6" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"></Title>
 				</contentLeft>
 				<contentRight width="50%" class="styleHeader2Right">
 					<Title text="{oViewLocalDataModel>/series}" titleStyle="H2" textAlign="End" visible="true" wrapping="true" class="sapUiTinyMargin"
@@ -82,8 +81,8 @@
 							</header>
 							<footer></footer>
 						</Column>
-						<Column width="8rem" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-							mergeDuplicates="false">
+						<Column width="10rem" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false" styleClass="styleRightBorder">
 							<header>
 								<Text text="{i18n>COLOUR_TRIM}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
@@ -148,7 +147,7 @@
 							</footer>
 						</Column>
 						<Column width="3rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" visible="true"
-							mergeDuplicates="false">
+							mergeDuplicates="false" styleClass="styleBorder">
 							<header>
 								<Text tooltip="Past 6 Month Retail Sales" text="{i18n>SALESDATA}" width="auto" maxLines="3" wrapping="true" textAlign="Begin"
 									textDirection="Inherit" visible="true"/>
@@ -179,7 +178,7 @@
 							</footer>
 						</Column>
 						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-							mergeDuplicates="false">
+							mergeDuplicates="false" styleClass="styleLeftBorder">
 							<header>
 								<Text text="{i18n>REQUEST_VOLUME}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
