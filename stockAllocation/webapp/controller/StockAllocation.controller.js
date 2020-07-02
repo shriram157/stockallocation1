@@ -398,11 +398,11 @@
 
 				}
 				if (currentValue < Number(currentData.suggested)) {
+					oEvt.getSource()._getInput().removeStyleClass("IncrementBlue");
 					oEvt.getSource()._getInput().addStyleClass("DecrementRed");
-					oEvt.getSource()._getInput().removeStyleClass("IncrementGreen");
 				} else if (currentValue > Number(currentData.suggested)) {
-					oEvt.getSource()._getInput().addStyleClass("IncrementGreen");
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
+					oEvt.getSource()._getInput().addStyleClass("IncrementBlue");
 				}
 
 				this._calculateTotals();

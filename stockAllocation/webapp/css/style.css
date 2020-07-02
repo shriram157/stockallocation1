@@ -17,7 +17,7 @@
 .styleHeader2 .sapMBarLeft div{	float: left; }
 .styleHeader2 .sapMBarRight h2, .styleHeader2 .sapMBarRight div{	float: left;    width: 90%;}
 .DecrementRed .sapMInputBaseInner { color: #FF0000; font-weight: bolder;}
-.IncrementGreen .sapMInputBaseInner { color: #00FF7F; font-weight: bolder;}
+.IncrementBlue .sapMInputBaseInner { color: #00FF7F; font-weight: bolder;}
 .styleBorder { border-left: 1px solid; border-right: 1px solid;}
 .styleLeftBorder { border-left: 1px solid;}
 .styleRightBorder { border-right: 1px solid;}
