@@ -398,11 +398,18 @@
 
 				}
 				if (currentValue < Number(currentData.suggested)) {
+					oEvt.getSource()._getInput().removeStyleClass("EqualGreen");
 					oEvt.getSource()._getInput().removeStyleClass("IncrementBlue");
 					oEvt.getSource()._getInput().addStyleClass("DecrementRed");
 				} else if (currentValue > Number(currentData.suggested)) {
+					oEvt.getSource()._getInput().removeStyleClass("EqualGreen");
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 					oEvt.getSource()._getInput().addStyleClass("IncrementBlue");
+				}
+				else if (currentValue > Number(currentData.suggested)){
+					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
+					oEvt.getSource()._getInput().removeStyleClass("IncrementBlue");
+					oEvt.getSource()._getInput().addStyleClass("EqualGreen");
 				}
 
 				this._calculateTotals();
