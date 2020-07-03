@@ -191,8 +191,9 @@
 
 					// if it is allocated and greater than window due date,  then turn off the 
 					jQuery.sap.require("sap.ui.core.format.DateFormat");
-					var oDateFormat = sap.ui.core.format.DateFormat.getInstance({pattern: "dd MMMM yyyy"}); 
-					
+					var oDateFormat = sap.ui.core.format.DateFormat.getInstance({
+						pattern: "dd MMMM yyyy"
+					});
 
 					var processDateDisplay = oDateFormat.format(new Date(processDate));
 					this._oViewLocalData = new sap.ui.model.json.JSONModel({
@@ -323,6 +324,7 @@
 			whenUserChangesRequestedData: function (oEvt) {
 				this.flagThreShold = false;
 				localScope = this;
+				localScope.evt = oEvt;
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
 
 				var currentValue = oEvt.getSource().getProperty("value");
@@ -405,8 +407,7 @@
 					oEvt.getSource()._getInput().removeStyleClass("EqualGreen");
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 					oEvt.getSource()._getInput().addStyleClass("IncrementBlue");
-				}
-				else if (currentValue == Number(currentData.suggested)){
+				} else if (currentValue == Number(currentData.suggested)) {
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 					oEvt.getSource()._getInput().removeStyleClass("IncrementBlue");
 					oEvt.getSource()._getInput().addStyleClass("EqualGreen");
@@ -1377,6 +1378,41 @@
 				// console.log(that.getView().getModel("stockDataModel"));
 				// console.log("oInitalTotalStock", oInitalTotalStock);
 				oInitalTotalStock.updateBindings(true);
+				// if (eventQty) {
+				// 	if (request1 < Number(suggest1.suggested)) {
+				// 		eventQty.getSource()._getInput().removeStyleClass("EqualGreen");
+				// 		eventQty.getSource()._getInput().removeStyleClass("IncrementBlue");
+				// 		eventQty.getSource()._getInput().addStyleClass("DecrementRed");
+				// 	} else if (request1 > Number(suggest1.suggested)) {
+				// 		eventQty.getSource()._getInput().removeStyleClass("EqualGreen");
+				// 		eventQty.getSource()._getInput().removeStyleClass("DecrementRed");
+				// 		eventQty.getSource()._getInput().addStyleClass("IncrementBlue");
+				// 	} else if (request1 == Number(suggest1.suggested)) {
+				// 		eventQty.getSource()._getInput().removeStyleClass("DecrementRed");
+				// 		eventQty.getSource()._getInput().removeStyleClass("IncrementBlue");
+				// 		eventQty.getSource()._getInput().addStyleClass("EqualGreen");
+				// 	}
+				// } else {
+				for (var i = 0; i < oModelData2.length; i++) {
+					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
+					if (oModelData2[i].model != "") {
+						if (oModelData2[i].zzrequest_qty < Number(oModelData2[i].zzsuggest_qty)) {
+							
+							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualGreen");
+							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("IncrementBlue");
+							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("DecrementRed");
+						} else if (oModelData2[i].zzrequest_qty > Number(oModelData2[i].zzsuggest_qty)) {
+							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualGreen");
+							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("DecrementRed");
+							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("IncrementBlue");
+						} else if (oModelData2[i].zzrequest_qty == Number(oModelData2[i].zzsuggest_qty)) {
+							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("DecrementRed");
+							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("IncrementBlue");
+							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("EqualGreen");
+						}
+					}
+				}
+				// }
 			},
 
 			_dynamicSubTotal: function (groups, item, obj) {
@@ -2374,6 +2410,19 @@
 										"stockDataModel");
 									oTable.refreshItems();
 									oTable.getModel("stockDataModel").updateBindings();
+									// if (item.zzrequest_qty < Number(item.zzsuggest_qty)) {
+									// 	this.getView().byId("stepInputQty")._getInput().removeStyleClass("EqualGreen");
+									// 	this.getView().byId("stepInputQty")._getInput().removeStyleClass("IncrementBlue");
+									// 	this.getView().byId("stepInputQty")._getInput().addStyleClass("DecrementRed");
+									// } else if (item.zzrequest_qty > Number(item.zzsuggest_qty)) {
+									// 	this.getView().byId("stepInputQty")._getInput().removeStyleClass("EqualGreen");
+									// 	this.getView().byId("stepInputQty")._getInput().removeStyleClass("DecrementRed");
+									// 	this.getView().byId("stepInputQty")._getInput().addStyleClass("IncrementBlue");
+									// } else if (item.zzrequest_qty == Number(item.zzsuggest_qty)) {
+									// 	this.getView().byId("stepInputQty")._getInput().removeStyleClass("DecrementRed");
+									// 	this.getView().byId("stepInputQty")._getInput().removeStyleClass("IncrementBlue");
+									// 	this.getView().byId("stepInputQty")._getInput().addStyleClass("EqualGreen");
+									// }
 									that._calculateTotals();
 									//debugger;
 									if (newseriesFlag == true && callNewModelCount === 0) {
