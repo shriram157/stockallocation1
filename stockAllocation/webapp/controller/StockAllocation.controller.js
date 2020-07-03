@@ -1396,16 +1396,15 @@
 				for (var i = 0; i < oModelData2.length; i++) {
 					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
 					if (oModelData2[i].model != "") {
-						if (oModelData2[i].zzrequest_qty < Number(oModelData2[i].zzsuggest_qty)) {
-							
+						if (Number(oModelData2[i].requested_Volume) < Number(oModelData2[i].suggested)) {
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualGreen");
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("IncrementBlue");
 							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("DecrementRed");
-						} else if (oModelData2[i].zzrequest_qty > Number(oModelData2[i].zzsuggest_qty)) {
+						} else if (Number(oModelData2[i].requested_Volume) > Number(oModelData2[i].suggested)) {
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualGreen");
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("DecrementRed");
 							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("IncrementBlue");
-						} else if (oModelData2[i].zzrequest_qty == Number(oModelData2[i].zzsuggest_qty)) {
+						} else if (Number(oModelData2[i].requested_Volume) == Number(oModelData2[i].suggested)) {
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("DecrementRed");
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("IncrementBlue");
 							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("EqualGreen");
