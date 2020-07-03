@@ -406,7 +406,7 @@
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 					oEvt.getSource()._getInput().addStyleClass("IncrementBlue");
 				}
-				else if (currentValue > Number(currentData.suggested)){
+				else if (currentValue == Number(currentData.suggested)){
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 					oEvt.getSource()._getInput().removeStyleClass("IncrementBlue");
 					oEvt.getSource()._getInput().addStyleClass("EqualGreen");
