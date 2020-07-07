@@ -400,17 +400,17 @@
 
 				}
 				if (currentValue < Number(currentData.suggested)) {
-					oEvt.getSource()._getInput().removeStyleClass("EqualGreen");
+					oEvt.getSource()._getInput().removeStyleClass("EqualWhite");
 					oEvt.getSource()._getInput().removeStyleClass("IncrementBlue");
 					oEvt.getSource()._getInput().addStyleClass("DecrementRed");
 				} else if (currentValue > Number(currentData.suggested)) {
-					oEvt.getSource()._getInput().removeStyleClass("EqualGreen");
+					oEvt.getSource()._getInput().removeStyleClass("EqualWhite");
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 					oEvt.getSource()._getInput().addStyleClass("IncrementBlue");
 				} else if (currentValue == Number(currentData.suggested)) {
 					oEvt.getSource()._getInput().removeStyleClass("DecrementRed");
 					oEvt.getSource()._getInput().removeStyleClass("IncrementBlue");
-					oEvt.getSource()._getInput().addStyleClass("EqualGreen");
+					oEvt.getSource()._getInput().addStyleClass("EqualWhite");
 				}
 
 				this._calculateTotals();
@@ -1397,17 +1397,17 @@
 					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
 					if (oModelData2[i].model != "") {
 						if (Number(oModelData2[i].requested_Volume) < Number(oModelData2[i].suggested)) {
-							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualGreen");
+							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualWhite");
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("IncrementBlue");
 							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("DecrementRed");
 						} else if (Number(oModelData2[i].requested_Volume) > Number(oModelData2[i].suggested)) {
-							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualGreen");
+							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualWhite");
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("DecrementRed");
 							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("IncrementBlue");
 						} else if (Number(oModelData2[i].requested_Volume) == Number(oModelData2[i].suggested)) {
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("DecrementRed");
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("IncrementBlue");
-							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("EqualGreen");
+							that.oTable.getItems()[i].getCells()[12]._getInput().addStyleClass("EqualWhite");
 						}
 					}
 				}

@@ -19,6 +19,7 @@
 .DecrementRed .sapMInputBaseInner {background: #FF0000; font-weight: bolder; color: #fff;}
 .IncrementBlue .sapMInputBaseInner {color: #fff; font-weight: bolder; background: #0000ff;} 
 .EqualGreen .sapMInputBaseInner {color: #fff; font-weight: bolder; background: #2b7c2b;} 
+.EqualWhite .sapMInputBaseInner {color: #000000; font-weight: bolder; background: #FFFFFF;} 
 .styleBorder { border-left: 1px solid; border-right: 1px solid;}
 .styleLeftBorder { border-left: 1px solid;}
 .styleRightBorder { border-right: 1px solid;}
