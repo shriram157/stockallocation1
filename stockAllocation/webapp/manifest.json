@@ -40,6 +40,14 @@
 					"odataVersion": "2.0",
 					"localUri": "localService/ZSD_SUGGEST_ORDER_UPDATE_SRV/metadata.xml"
 				}
+			},
+			"ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV": {
+				"uri": "/node/ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV/metadata.xml"
+				}
 			}
 		},
 		"title": "{{appTitle}}",
@@ -153,6 +161,22 @@
 					}
 				},
 				"dataSource": "ZSD_SUGGEST_ORDER_UPDATE_SRV",
+				"preload": false
+			},
+			"ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV": {
+				"uri": "/node/ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV/",
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request",
+					"json": true,
+					"useBatch": false,
+					"headers": {
+						"X-Requested-With": "XMLHttpRequest"
+					}
+				},
+				"dataSource": "ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV",
 				"preload": false
 			}
 		},

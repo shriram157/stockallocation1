@@ -1,11 +1,25 @@
 .myRightAlignmentClass  {   width: auto;    text-align: right;}
 .grayBG {	background: #80808096 !important;    color: #000 !important;}
-
-/*.noDisplay{display:none !important;}*/
 .boldFont{	font-weight:bold !important;}
-/*.boldFont.noDisplay {    display: block !important;}*/
-.boldFont.sapMStepInput{display:none !important;}
+.sapMStepInput .sapMInputBaseInner {text-align: center !important;}
+.boldFont .sapMInputBaseInner {  font-weight: 900;}
 .boldFont.sapMCb {    display: none !important;}
 .pageHeight{height: 100% !important;}
+.pageHeight .sapMScrollCont.sapMScrollContVH{	margin-top: 3.5rem;}
 .setOrangeFont{font-size: 1rem !important;}
-/*.setOrangeFont.noDisplay{display:block !important; }*/
+.disableBtn{opacity:0.75;}
+.fixedHeader{position: fixed !important;    top: 8rem;    width: 96% !important;}
+.styleHeader2 {    height: 4.5rem !important;    line-height: 1.5rem !important;    background: #fafafa;}
+/*.styleHeader2 .sapMBarLeft{	height: 4.5rem !important;}*/
+.styleHeader2 .sapMBarLeft, .styleHeader2 .sapMBarRight{	height: 4.5rem !important;    line-height: 1rem !important;}
+/*.styleHeader2 .sapMBarRight h2{	float: left;    width: 50%;}*/
+.styleHeader2 .sapMBarLeft h2{	float: left;  width: 100%; line-height: 1.5rem !important;}
+.styleHeader2 .sapMBarLeft div{	float: left; }
+.styleHeader2 .sapMBarRight h2, .styleHeader2 .sapMBarRight div{	float: left;    width: 90%;}
+.DecrementRed .sapMInputBaseInner {background: #FF0000; font-weight: bolder; color: #fff;}
+.IncrementBlue .sapMInputBaseInner {color: #fff; font-weight: bolder; background: #0000ff;} 
+.EqualGreen .sapMInputBaseInner {color: #fff; font-weight: bolder; background: #2b7c2b;} 
+.EqualWhite .sapMInputBaseInner {color: #000000; font-weight: bolder; background: #FFFFFF;} 
+.styleBorder { border-left: 1px solid; border-right: 1px solid;}
+.styleLeftBorder { border-left: 1px solid;}
+.styleRightBorder { border-right: 1px solid;}
