@@ -1,8 +1,7 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:l="sap.ui.layout" controllerName="suggestOrder.controller.StockAllocation"
-	xmlns:html="http://www.w3.org/1999/xhtml">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	controllerName="suggestOrder.controller.StockAllocation" xmlns:html="http://www.w3.org/1999/xhtml">
 	<html:style>
-		.setOrangeFont{ color:#E78C07!important;}
-		.pageHeight{height:100%;}
+		.setOrangeFont{ color:#E78C07!important;} .pageHeight{height:100%;}
 	</html:style>
 	<Page showHeader="true" title="{i18n>STOCK_ALLOCATION}" showFooter="true" showNavButton="true" navButtonPress="_onPageNavButtonPress"
 		class="sapUiSizeCompact pageHeight" enableScrolling="false">
@@ -20,23 +19,30 @@
 			</Bar>
 		</customHeader>
 		<content>
-			<Title text="{oViewLocalDataModel>/BusinessPartnerName}" titleStyle="H2" width="50%" textAlign="Left" visible="true" wrapping="false"
-				class="sapUiTinyMargin"></Title>
-			<Title text="{oViewLocalDataModel>/series}" titleStyle="H2" width="99%" textAlign="End" visible="true" wrapping="true"
-				class="sapUiTinyMargin" level="H2"></Title>
-			<Title text="{oViewLocalDataModel>/etaFrom}" titleStyle="H6" width="99%" textAlign="End" visible="true" wrapping="false"
-				class="sapUiTinyMargin"></Title>
+			<Bar class="sapUiSmallPaddingBeginEnd styleHeader2">
+				<contentLeft width="50%" class="styleHeader2Left">
+					<Title text="{oViewLocalDataModel>/BusinessPartnerName}" titleStyle="H2" textAlign="Left" visible="true" wrapping="false"
+						class="sapUiTinyMargin" level="H2"></Title>
+					<!--<Text text="{ path: '/date', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' } }"/> {i18n>ProcessDateTxt}:-->
+					<Title	text=" {i18n>ProcessDataTxt}: {oViewLocalDataModel>/processDateDisplay}" titleStyle="H6" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"></Title>
+				</contentLeft>
+				<contentRight width="50%" class="styleHeader2Right">
+					<Title text="{oViewLocalDataModel>/series}" titleStyle="H2" textAlign="End" visible="true" wrapping="true" class="sapUiTinyMargin"
+						level="H2"></Title>
+					<Title text="{oViewLocalDataModel>/etaFrom}" titleStyle="H6" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"></Title>
+				</contentRight>
+			</Bar>
 			<ScrollContainer height="85%" vertical="true" focusable="true">
 				<Table sticky="ColumnHeaders" items="{ path: 'stockDataModel>/' }" width="auto" noDataText="{i18n>NO_DATA}" mode="None" showSeparators="All"
 					growing="false" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" alternateRowColors="true"
 					id="stockDataModelTableId">
 					<infoToolbar/>
 					<headerToolbar>
-						<OverflowToolbar width="auto" height="55px" design="Transparent" visible="true" enabled="true">
+						<OverflowToolbar width="auto" height="55px" design="Transparent" visible="true" enabled="true" class="fixedHeader">
 							<content>
 								<ToggleButton pressed="true" text="{i18n>SHOW_ALL}" iconFirst="true" press="onClickShowAll"/>
-								<ToggleButton pressed="false" text="{i18n>SHOW_ALL_MODELS}" iconFirst="true" width="230px"
-									enabled="false" visible="false" id="showAllModelsBtn"/>
+								<ToggleButton pressed="false" text="{i18n>SHOW_ALL_MODELS}" iconFirst="true" width="230px" enabled="false" visible="false"
+									id="showAllModelsBtn"/>
 								<ToggleButton pressed="false" text="{i18n>SHOW_PERCENTAGES}" iconFirst="true" width="220px"
 									enabled="{oViewLocalDataModel>/setEnableFalsePercentages}" visible="false" press="onClickShowPercentages" id="showPercentagesBtn"/>
 								<ToolbarSpacer width="310px"/>
@@ -46,8 +52,8 @@
 								<Button text="{i18n>REQUEST_ADD_MODEL}" type="Accept" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/setEnableFalseReset}"
 									visible="{oViewLocalDataModel>/setEnableFalseReset}" iconDensityAware="false" press="onClickRequestNewModel"/>
 								<ToolbarSpacer/>
-								<Button text="{i18n>ResetSearch}" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/setResetEnabled}"
-									visible="true" iconDensityAware="false" press="resetSearch"/>
+								<Button text="{i18n>ResetSearch}" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/setResetEnabled}" visible="true"
+									iconDensityAware="false" press="resetSearch"/>
 								<SearchField id="searchVehicleList" liveChange="onLiveChange" showSearchButton="true" placeholder="{i18n>Search}">
 									<layoutData>
 										<OverflowToolbarLayoutData minWidth="200px" maxWidth="300px" shrinkable="true"/>
@@ -61,35 +67,35 @@
 						</OverflowToolbar>
 					</headerToolbar>
 					<columns>
-						<Column width="200px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="10rem" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="true">
 							<header>
 								<Text text="{i18n>MODEL}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer></footer>
 						</Column>
-						<Column width="185px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="12rem" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>SUFFIX}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer></footer>
 						</Column>
-						<Column width="175px" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
-							mergeDuplicates="false">
+						<Column width="10rem" hAlign="Begin" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false" styleClass="styleRightBorder">
 							<header>
 								<Text text="{i18n>COLOUR_TRIM}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer></footer>
 						</Column>
 						<!--Its for totals-->
-						<Column width="50px" hAlign="End" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<Column width="3rem" hAlign="End" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
 							<footer>
 								<Text text="{i18n>TOTALS} " width="auto" maxLines="1" wrapping="false" textAlign="End" textDirection="Inherit" visible="true"
 									class="setOrangeFont"/>
 							</footer>
 						</Column>
-						<Column width="65px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="4rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>CurrentInventory}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -99,7 +105,7 @@
 									class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="65px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="4rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>CurrentPipeline}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -109,7 +115,7 @@
 									class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>CurrentTotalStock}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -119,7 +125,7 @@
 									textDirection="Inherit" class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="120px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>CurrentStockDaysSupply}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
@@ -127,11 +133,10 @@
 							</header>
 							<!--{initialStockTotalModel>/0/currentDSTotal}-->
 							<footer>
-								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									class="setOrangeFont" visible="true"/>
+								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false" visible="false">
 							<header>
 								<Text text="{i18n>UnitDaySupply}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -141,17 +146,18 @@
 									textDirection="Inherit" class="setOrangeFont" visible="false"/>
 							</footer>
 						</Column>
-						<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
-							visible="true" mergeDuplicates="false">
+						<Column width="3rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" visible="true"
+							mergeDuplicates="false" styleClass="styleBorder">
 							<header>
-								<Text tooltip="Past 6 Month Retail Sales"  text="{i18n>SALESDATA}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<Text tooltip="Past 6 Month Retail Sales" text="{i18n>SALESDATA}" width="auto" maxLines="3" wrapping="true" textAlign="Begin"
+									textDirection="Inherit" visible="true"/>
 							</header>
 							<footer>
 								<Text text="{initialStockTotalModel>/0/salesDataTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>SUGGESTED}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -161,109 +167,103 @@
 									class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="65px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="5rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>SUGGESTED_DS}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<!--{initialStockTotalModel>/0/suggestedDSTotal}-->
 							<footer>
-								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
-									textDirection="Inherit" visible="true"/>
+								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont" textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="125px" hAlign="Center" vAlign="Top" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false" styleClass="styleLeftBorder">
 							<header>
-								<Text text="{i18n>REQUEST_VOLUME}" width="83.95000457763672px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit"
-									visible="true"/>
+								<Text text="{i18n>REQUEST_VOLUME}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer>
 								<Text text="{initialStockTotalModel>/0/requestedVolumeTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
 									class="setOrangeFont" textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
-						
-						<!--<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"-->
-						<!--	mergeDuplicates="false">-->
-						<!--	<header>-->
-						<!--		<Text text="{i18n>ThreShold}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
-						<!--	</header>-->
-						<!--	<footer>-->
-								<!--<Text text="{initialStockTotalModel>/0/differenceTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"-->
-								<!--	textDirection="Inherit" visible="true"/>-->
-						<!--	</footer>-->
-						<!--</Column>-->
-						<!--<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"-->
-						<!--	mergeDuplicates="false">-->
-						<!--	<header>-->
-						<!--		<Text text="Dealer Config" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
-						<!--	</header>-->
-						<!--	<footer></footer>-->
-						<!--</Column>-->
-						<Column width="100px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+						<Column width="5rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
-								<Text text="{i18n>DIFFERENCE}" width="66px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<Text text="{i18n>ThreShold}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							</header>
+							<footer></footer>
+						</Column>
+						<Column width="7rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false">
+							<header>
+								<Text text="{i18n>DealerConfig}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+							</header>
+							<footer></footer>
+						</Column>
+						<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="false" popinDisplay="Inline"
+							mergeDuplicates="false">
+							<header>
+								<Text text="{i18n>DIFFERENCE}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer>
 								<Text text="{initialStockTotalModel>/0/differenceTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
 									textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="60px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+						<Column width="5rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
 							mergeDuplicates="false">
 							<header>
 								<Text text="{i18n>REQUESTED_DS}" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<!--{initialStockTotalModel>/0/requestedDSTotal}-->
 							<footer>
-								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
-									textDirection="Inherit" visible="true"/>
+								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont" textDirection="Inherit" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="65px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+						<Column width="5rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
 							visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
 							<header>
-								<Text text="{i18n>ALLOCATED}" width="69px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<Text text="{i18n>ALLOCATED}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer>
 								<Text text="{initialStockTotalModel>/0/allocatedTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									class="setOrangeFont" visible="true"/>
 							</footer>
 						</Column>
-						<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+						<Column width="5rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
 							visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
 							<header>
-								<Text text="{i18n>ALLOCATED_DS}" width="73px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+								<Text text="{i18n>ALLOCATED_DS}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
 							</header>
 							<footer>
-								<Text text="{initialStockTotalModel>/0/allocatedDSTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont"
-									textDirection="Inherit" visible="false"/>
+								<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" class="setOrangeFont" textDirection="Inherit" visible="false"/>
 							</footer>
+							<!--{initialStockTotalModel>/0/allocatedDSTotal}-->
 						</Column>
-						<Column width="70px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
-							visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
-							<header>
-								<Text text="{i18n>PENDING_ALLOCATION}" width="73px" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-							</header>
-							<footer>
-								<Text text="{initialStockTotalModel>/0/pendingAllocationTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
-									class="setOrangeFont" textDirection="Inherit" visible="true"/>
-							</footer>
-						</Column>
-						<Column width="76px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
-							visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">
-							<header>
-								<Text text="{i18n>UNFILLED_ALLOCATION}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
-							</header>
-							<footer>
-								<Text text="{initialStockTotalModel>/0/unfilledAllocationTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
-									class="setOrangeFont" textDirection="Inherit" visible="true"/>
-							</footer>
-						</Column>
+						<!--<Column width="6rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"-->
+						<!--	visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">-->
+						<!--	<header>-->
+						<!--		<Text text="{i18n>PENDING_ALLOCATION}" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+						<!--	</header>-->
+						<!--	<footer>-->
+						<!--		<Text text="{initialStockTotalModel>/0/pendingAllocationTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"-->
+						<!--			class="setOrangeFont" textDirection="Inherit" visible="true"/>-->
+						<!--	</footer>-->
+						<!--</Column>-->
+						<!--<Column width="5rem" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"-->
+						<!--	visible="{oViewLocalDataModel>/viewInSuggestedTab}" mergeDuplicates="false">-->
+						<!--	<header>-->
+						<!--		<Text text="{i18n>UNFILLED_ALLOCATION}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>-->
+						<!--	</header>-->
+						<!--	<footer>-->
+						<!--		<Text text="{initialStockTotalModel>/0/unfilledAllocationTotal}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"-->
+						<!--			class="setOrangeFont" textDirection="Inherit" visible="true"/>-->
+						<!--	</footer>-->
+						<!--</Column>-->
 					</columns>
 					<items>
-						<ColumnListItem  class="noheight" visible="{stockDataModel>visibleProperty}">
+						<ColumnListItem class="noheight" visible="{stockDataModel>visibleProperty}">
 							<cells visible="{stockDataModel>visibleProperty}">
 								<Text text="{stockDataModel>modelCodeDescription}" width="auto" maxLines="3" wrapping="true" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
@@ -280,7 +280,7 @@
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>current_CTS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<Text text="{stockDataModel>current_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								<Text text="{stockDataModel>currentDSSubttlOnly}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text visible="false" text="{stockDataModel>currentU_DS}" width="auto" maxLines="1" wrapping="false" textAlign="Begin"
 									textDirection="Inherit" class="noheight"/>
@@ -288,28 +288,26 @@
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>suggested}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<Text text="{stockDataModel>suggested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								<Text text="{stockDataModel>suggestedDSSubttlOnly}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="5.5rem" step="1" largerStep="2"
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<!--{path : 'tripDetails>breakDe', type : 'sap.ui.model.type.Boolean' }"-->
-								<!--<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>-->
-								<!--, type : 'sap.ui.model.type.Boolean', formatter: '.formatBoolean'-->
-								<!--{path:'VehicleDetailsJSON>Dealer', formatter:'.formatDealer'}" valueState="Information" -->
-								<!--enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"-->
+								<Text text="{stockDataModel>reqThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+									class="noheight"/>
+								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<Text text="{stockDataModel>requested_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								<Text text="{stockDataModel>requestedDSSubttlOnly}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>allocated}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<Text text="{stockDataModel>allocated_Ds}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="false" class="noheight"/>
-								<Text text="{stockDataModel>pendingAllocation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+								<Text text="{stockDataModel>allocatedDSSubttlOnly}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<Text text="{stockDataModel>unfilled_Allocation}" width="auto" maxLines="2" wrapping="false" textAlign="Begin" textDirection="Inherit"
-									visible="{stockDataModel>visibleProperty}" class="noheight"/>
+								<!--<Text text="{stockDataModel>pendingAllocation}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"-->
+								<!--	visible="{stockDataModel>visibleProperty}" class="noheight"/>-->
+								<!--<Text text="{stockDataModel>unfilled_Allocation}" width="auto" maxLines="2" wrapping="false" textAlign="Begin" textDirection="Inherit"-->
+								<!--	visible="{stockDataModel>visibleProperty}" class="noheight"/>-->
 							</cells>
 						</ColumnListItem>
 					</items>
