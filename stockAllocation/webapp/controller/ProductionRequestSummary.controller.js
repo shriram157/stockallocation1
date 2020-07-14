@@ -648,7 +648,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		onInit: function () {
 
 			// initialize  local models and data calls
-
+			this.userDiv=window.location.search.match(/Division=([^&]*)/i)[1];
+			if(this.userDiv=="10"){
 			this._oViewModel = new sap.ui.model.json.JSONModel({
 				busy: false,
 				delay: 0,
@@ -656,8 +657,27 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				visibleForInternalUser: true,
 				editAllowed: true,
 				enabled: true,
-				visibleSeriesBtn: false
+				visibleSeriesBtn: false,
+				userLanguage:window.location.search.match(/language=([^&]*)/i)[1].toLocaleUpperCase(),
+				sopurlEN:"https://infostream.toyota.ca/tci/myportal/dealers/toyota/sales/Resources/reference%20guide/!ut/p/z1/lZLLUsIwFIZfxQ3Lzjm9WpbYGa0XrEALbTZMGtISLQmUAPL2Rl3hyC2rZOY7Z_5LgEAORNKtqKkWStLGvAsSTBPsRnEcYpKkmY2D5Lk_it58-27swuQQwChEHISP7sN96juY2EAumccjp4fn5sdAgCyZmEERBgHDynYsWjHH8rzSsbrM8y2f2l1e8sAuS_ebZlIv9RwKzcSUyw5qtVeadnBNG77uYMvXatOy32vFWy4Zv6k3YsbPmH29wCw5RP6J6wc4lcfJDUZDYUTeHlMxxAAmW8F3kEnVLkzDoysDjBGezvk0v8Zp-1G_NpupnltCVgryv2kaSryvVqRnKlFS808N-fWdLBdZtgjdvfUxDHdpNW-2L70vNPlLqw!!/?1dmy&urile=wcm%3apath%3a%2Ftci_en%2Ftoyota%2Fsales%2Fresources%2Freference%2Bguide%2Fstock%2Ballocation%2Buser%2Bguide",
+				sopurlFR:"https://infostream.toyota.ca/tci/myportal/dealers/toyota/sales/Resources/reference%20guide/!ut/p/z1/lZJJU8IwFMe_ihw4dt7rajnWzmhdsLIUaC5MGhKIQgIlgHx7o55wZMspmfm9N_8lQGAERNGtnFIjtaJz-y5JNM6xlWZZjHneL1zs5M_tXvoWuncDH4aHAKYxYid-9B_u-6GHuQvkknk8chI8Nz8AAmTJ5ATKOIoYCtdzqGCeEwSV57RYEDohdVu84pFbVf43zZRZmhmUhskxV000eq8NbeKazvm6iTVf603Nfq-C11wxfjPdyAk_Y_b1ArPkEPknrh_gVB4nN1gNpRV5e0xFFyMYbiXfQaF0vbAN964MMEN4OufT_hqvbqftqd1MzcyRSmgY_U3TUvJ9tSKJrUQrwz8NjK7vpCdqWC6KYhH7e-ejG-_6YjbfvogkaTS-ACwF72Q!/?1dmy&urile=wcm%3apath%3a%2Ftci_fr%2Ftoyota%2Fsales%2Fresources%2Freference%2Bguide%2Fstock%2Ballocation%2Buser%2Bguide",
 			});
+			}
+			else if(this.userDiv=="20"){
+			this._oViewModel = new sap.ui.model.json.JSONModel({
+				busy: false,
+				delay: 0,
+				visibleForDealer: true,
+				visibleForInternalUser: true,
+				editAllowed: true,
+				enabled: true,
+				visibleSeriesBtn: false,
+				userLanguage:window.location.search.match(/language=([^&]*)/i)[1].toLocaleUpperCase(),
+				userDiv:window.location.search.match(/Division=([^&]*)/i)[1],
+				sopurlEN:"https://infostream.toyota.ca/tci/myportal/dealers/lexus/sales/Resources/!ut/p/z1/rZLLbsIwEEV_hS5YRuM8McsIqQpFVcojhXiDjGODSx7gOED_vm6QKlEVaKV6Y1s-o7lzr4HAAkhJD3JNtaxKmpt7SoJljPqDKMIojmeJjcbx6Hk6ePH7YejBvAXQlRUiIL-p_wLwYxSgMR6Okr43cVBi36t_BQJkx2QGKV6hTLBeZgkUCMvzfduiPkWW41CGA3vlYsf-pFmpd3oDqWZyKVQX5fzU1F1U05ybTfG6ahQ7HwVXvGS8s25kxg2iK7bt0DyvWGtQp6m5Oj9-H-RCqT0ZuveNIJfID1a0wC2vbzRpNaRGZO-6ChfmB8mPkJSVKkz60z-aGyF4ujen-VHybb8noQmiKjU_aVj8bxJToWBXJEmB3XdrO8HHmdjkh_XDB50LwtI!/dz/d5/L0lHSkovd0RNQUxrQUVnQSEhLzROVkUvZW4!/",
+				sopurlFR:"https://infostream.toyota.ca/tci/myportal/dealers/lexus/sales/Resources/!ut/p/z1/lZJPb4JAEMW_SnvwSGYQhOVITBqsaagoVfZiVlxwW1iQP2q_fVeaNLGpUveyO8lvMu-9HaCwAirZQaSsEYVkmaojaq19dMaeR9D3F6GOM3_6Mh-_jhzXNWHZAXjluAj0P_0_AHnyLJyRyTR0zGCIod7X_wYUaBmLLUTDLSOEmbo2QoaaaWCskcThmjVMDJvhxuYbdqZj2ZTNDqImFmsuB5jxU1sPsGYZV1fF66Kt4u9nwisuY_6QtmLLf2u9EKMHE6PfK71E_nDbAbfivDGk0xApkfZ1FQYsD4IfIZRFlasPnt-Zn4fw3OdTLY143--pq7IuZMNPDazuDnueVFDmYZgT41P7CMhxkeyyQ_r4BfnwTbw!/?1dmy&urile=wcm%3apath%3a%2Ftci_fr%2Flexus%2Fsales%2Fresources%2Freference%2Bguide%2Fstock%2Ballocation%2Buser%2Bguide"
+			});
+			}
 
 			this.getView().setModel(this._oViewModel, "detailView");
 
