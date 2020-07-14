@@ -23,5 +23,5 @@
 .styleBorder { border-left: 1px solid; border-right: 1px solid;}
 .styleLeftBorder { border-left: 1px solid;}
 .styleRightBorder { border-right: 1px solid;}
-.sapMBarRight {text-align: left;}
+.sapMBarRight {text-align: left; margin-right: 1%;}
 .urlStyle {text-decoration: underline; font-size: large;}
