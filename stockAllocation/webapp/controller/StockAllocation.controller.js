@@ -399,6 +399,8 @@
 					// }
 
 				}
+				
+				oEvt.getSource()._getInput().setEditable(false);
 				if (currentValue < Number(currentData.suggested)) {
 					oEvt.getSource()._getInput().removeStyleClass("EqualWhite");
 					oEvt.getSource()._getInput().removeStyleClass("IncrementBlue");
@@ -1394,8 +1396,10 @@
 				// 	}
 				// } else {
 				for (var i = 0; i < oModelData2.length; i++) {
+					that.oTable.getItems()[i].getCells()[12]._getInput().setEditable(false);
 					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
 					if (oModelData2[i].model != "") {
+						
 						if (Number(oModelData2[i].requested_Volume) < Number(oModelData2[i].suggested)) {
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualWhite");
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("IncrementBlue");
