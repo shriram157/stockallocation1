@@ -347,12 +347,14 @@
 				var requestedDSTotal = 0;
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 
-				if (currentData.requested_Volume < Number(currentData.suggested)) {
+				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
+					currentData.zzui_flag="Y";
 				} else {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
+					currentData.zzui_flag="N";
 				}
 
 				if (currentValue > oldS4Value) {
@@ -635,7 +637,7 @@
 					}
 					var requestedVolume = requestedVolumeNumb.toString();
 					// var initialAllocatedQty = initialAllocatedQty.toString();
-
+					//Dealer flag changes 
 					tempArrayToHoldData.push({
 						ZzsugSeqNo: sendTheDataToSAP[i].zzsug_seq_no,
 						ZzprocessDt: sendTheDataToSAP[i].zzprocess_dt,
@@ -644,7 +646,7 @@
 						Zzsuffix: sendTheDataToSAP[i].zzsuffix,
 						Zzextcol: sendTheDataToSAP[i].zzextcol,
 						Zzintcol: sendTheDataToSAP[i].zzintcol,
-						ZsrcWerks: sendTheDataToSAP[i].ZsrcWerks,
+						ZsrcWerks: sendTheDataToSAP[i].zsrc_werks,
 						Zzordertype: sendTheDataToSAP[i].zzordertype,
 						ZzdealerCode: dealerCode,
 						// ZzprodMonth: sendTheDataToSAP[i].zzprod_month,
@@ -656,7 +658,7 @@
 						// ZZseries: sendTheDataToSAP[i].zzseries,
 						// ZzintAlcQty: initialAllocatedQty,
 						ZcreatedBy: this.UserId,
-						ZzuiFlag: sendTheDataToSAP[i].ZzuiFlag
+						ZzuiFlag: sendTheDataToSAP[i].zzui_flag
 					});
 
 				}
