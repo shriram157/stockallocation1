@@ -1929,7 +1929,7 @@
 										});
 										// allowedtolerance
 
-										if ((item.zzui_flag == "Y") || (Number(item.zzrequest_qty)) < (Number(item.zzsuggest_qty))) {
+										if ((item.zzui_flag == "Y") && (Number(item.zzrequest_qty)) < (Number(item.zzsuggest_qty))) {
 											checkOBJ.checkBoxFlag = true;
 											checkOBJ.checkBoxEnabled = true;
 										} else {
