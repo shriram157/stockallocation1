@@ -260,8 +260,10 @@
 				//objNew.ZzuiFlag 
 				if (oCheck.getParameter("selected") == true) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y";
+					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzuiFlag = "Y";
 				} else {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "N";
+					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzuiFlag = "N";
 				}
 				this.getView().getModel("stockDataModel").updateBindings(true);
 			},
