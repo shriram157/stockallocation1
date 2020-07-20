@@ -889,7 +889,7 @@
 			//Calculating Total for all & Subtotal per model 
 
 			_calculateTotals: function (includeZero) {
-				this.defaultLightBusyDialog.open();
+				// this.defaultLightBusyDialog.open();
 				var that = this;
 				this.flagCheck = false;
 				this.index = 0;
@@ -2421,7 +2421,7 @@
 										callNewModelCount = 1;
 									}
 
-									that.defaultLightBusyDialog.close();
+									// that.defaultLightBusyDialog.close();
 								} else {
 									that.defaultLightBusyDialog.close();
 									// sap.ui.core.BusyIndicator.hide();
