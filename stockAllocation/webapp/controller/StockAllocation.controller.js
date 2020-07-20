@@ -240,7 +240,7 @@
 				this.runninDataLoadScriptflag = false;
 
 				this.defaultLightBusyDialog = new sap.m.BusyDialog();
-				this.defaultLightBusyDialog.open();
+				// this.defaultLightBusyDialog.open();
 				this._loadSalesData2();
 				var that = this;
 				setTimeout(function () {
@@ -458,6 +458,10 @@
 			},
 
 			_onPageNavButtonPress: function (oEvent) {
+				this.getView().byId("stockDataModelTableId").getModel("stockDataModel").setData();
+				this.getView().byId("stockDataModelTableId").getModel("stockDataModel").updateBindings(true);
+				this.getView().getModel("initialStockTotalModel").setData();
+				this.getView().getModel("initialStockTotalModel").updateBindings(true);
 
 				if (newseriesFlag && !btnSavePressed) {
 					var that = this;
