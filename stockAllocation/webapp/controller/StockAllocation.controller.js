@@ -255,6 +255,7 @@
 
 			},
 
+			//START- CR3.0 Dealer Config
 			onCheck: function (oCheck) {
 				// debugger;
 				//objNew.ZzuiFlag 
@@ -298,6 +299,8 @@
 					this._calculateTotals();
 				}
 			},
+
+			//CR2.0 Show All
 			onClickShowAllX: function (evt) {
 				if (!!this.getView().getModel("stockDataModel")) {
 					var oTable = this.getView().byId("stockDataModelTableId");
@@ -883,7 +886,10 @@
 				this._showAllModels();
 			},
 
+			//Calculating Total for all & Subtotal per model 
+
 			_calculateTotals: function (includeZero) {
+				this.defaultLightBusyDialog.open();
 				var that = this;
 				this.flagCheck = false;
 				this.index = 0;
@@ -1128,6 +1134,7 @@
 							current: group_to_values[key]
 						};
 					});
+					//CR2.0 Model Level Sub Total
 					that._dynamicSubTotal(groups, item, that.obj);
 				}
 
@@ -1385,25 +1392,9 @@
 						oInitialTotalStockModel["0"].salesDataTotal = salesDataTotal;
 					}
 				}
-				// }
-				// console.log(that.getView().getModel("stockDataModel"));
-				// console.log("oInitalTotalStock", oInitalTotalStock);
+
 				oInitalTotalStock.updateBindings(true);
-				// if (eventQty) {
-				// 	if (request1 < Number(suggest1.suggested)) {
-				// 		eventQty.getSource()._getInput().removeStyleClass("EqualGreen");
-				// 		eventQty.getSource()._getInput().removeStyleClass("IncrementBlue");
-				// 		eventQty.getSource()._getInput().addStyleClass("DecrementRed");
-				// 	} else if (request1 > Number(suggest1.suggested)) {
-				// 		eventQty.getSource()._getInput().removeStyleClass("EqualGreen");
-				// 		eventQty.getSource()._getInput().removeStyleClass("DecrementRed");
-				// 		eventQty.getSource()._getInput().addStyleClass("IncrementBlue");
-				// 	} else if (request1 == Number(suggest1.suggested)) {
-				// 		eventQty.getSource()._getInput().removeStyleClass("DecrementRed");
-				// 		eventQty.getSource()._getInput().removeStyleClass("IncrementBlue");
-				// 		eventQty.getSource()._getInput().addStyleClass("EqualGreen");
-				// 	}
-				// } else {
+
 				for (var i = 0; i < oModelData2.length; i++) {
 					that.oTable.getItems()[i].getCells()[12]._getInput().setEditable(false);
 					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
@@ -1424,9 +1415,10 @@
 						}
 					}
 				}
-				// }
+				this.defaultLightBusyDialog.close();
 			},
 
+			//CR2.0 Calculating Subtotal on model level
 			_dynamicSubTotal: function (groups, item, obj) {
 				var that = this;
 				// that.count = 0;
@@ -1434,17 +1426,12 @@
 				groups.forEach(function (element) {
 					if (item.model == element.model) {
 						that.index = element.current.length + that.index + that.count;
-						// console.log("index", that.index);
-						// oTable.insertItem(that.oItem, that.index);
 						that.getView().getModel("stockDataModel").getData().splice(that.index, 0, obj);
-						// console.log(that.getView().getModel("stockDataModel").getData());
-						// console.log(oTable.getItems()[that.index].getCells()[11]);
 						that.getView().getModel("stockDataModel").updateBindings(true);
 						oTable.getBinding("items").refresh(true);
 						that.dynamicIndices.push(that.index);
 						that.count = 1;
 
-						// var oModelLocalData = that.getView().getModel("oViewLocalDataModel");
 						// debugger;
 						if (!!oTable.getItems()[that.index]) {
 							oTable.getItems()[that.index].addStyleClass("grayBG");
@@ -1771,6 +1758,7 @@
 
 			},
 
+			//CR60-Fetching Past 6 months Sales data
 			_loadSalesData2: function (oEvent) {
 				// sap.ui.core.BusyIndicator.show();
 				this.runninDataLoadScriptflag = false;
@@ -1832,6 +1820,7 @@
 				this.runninDataLoadScriptflag = false;
 				var that = this;
 				// that.callNewModel = true;
+				//CR3.0 fetching Threshold flag
 				this.thresholdModel = this.getOwnerComponent().getModel("ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV");
 				this.thresholdModel.read("/ZCDS_SUGGST_ORD_QTY_TOL", {
 					urlParameters: {
@@ -1927,7 +1916,7 @@
 											}
 										});
 										// allowedtolerance
-
+										//START- CR3.0 Dealer Config
 										if ((item.zzui_flag == "Y") && (Number(item.zzrequest_qty)) < (Number(item.zzsuggest_qty))) {
 											checkOBJ.checkBoxFlag = true;
 											checkOBJ.checkBoxEnabled = true;
@@ -2021,7 +2010,7 @@
 											reqThreshold: "",
 											allowedtolerance: Number(that.allowedtolerance),
 											salesdata: item.NetSales,
-											zzui_flag: item.zzui_flag,
+											zzui_flag: item.zzui_flag, //START- CR3.0 Dealer Config
 											checkBoxFlag: checkOBJ.checkBoxFlag,
 											checkBoxEnabled: checkOBJ.checkBoxEnabled
 										});
