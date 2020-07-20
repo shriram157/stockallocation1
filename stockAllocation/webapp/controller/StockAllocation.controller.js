@@ -240,7 +240,7 @@
 				this.runninDataLoadScriptflag = false;
 
 				this.defaultLightBusyDialog = new sap.m.BusyDialog();
-				// this.defaultLightBusyDialog.open();
+				this.defaultLightBusyDialog.open();
 				this._loadSalesData2();
 				var that = this;
 				setTimeout(function () {
@@ -352,11 +352,11 @@
 				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
-					currentData.zzui_flag="Y";
+					currentData.zzui_flag = "Y";
 				} else {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
-					currentData.zzui_flag="N";
+					currentData.zzui_flag = "N";
 				}
 
 				if (currentValue > oldS4Value) {
@@ -403,7 +403,7 @@
 					// }
 
 				}
-				
+
 				oEvt.getSource()._getInput().setEditable(false);
 				if (currentValue < Number(currentData.suggested)) {
 					oEvt.getSource()._getInput().removeStyleClass("EqualWhite");
@@ -1403,7 +1403,7 @@
 					that.oTable.getItems()[i].getCells()[12]._getInput().setEditable(false);
 					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
 					if (oModelData2[i].model != "") {
-						
+
 						if (Number(oModelData2[i].requested_Volume) < Number(oModelData2[i].suggested)) {
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualWhite");
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("IncrementBlue");
@@ -1767,7 +1767,7 @@
 			},
 
 			_loadSalesData2: function (oEvent) {
-				sap.ui.core.BusyIndicator.show();
+				// sap.ui.core.BusyIndicator.show();
 				this.runninDataLoadScriptflag = false;
 				var that = this;
 				// that.callNewModel = true;
@@ -1777,9 +1777,9 @@
 							//+ "and zzmoyr eq '" + this.yearModel +"'"
 					},
 					success: function (oData) {
-						sap.ui.core.BusyIndicator.hide();
+						// sap.ui.core.BusyIndicator.hide();
 						if (oData.results.length > 0) {
-							// that.defaultLightBusyDialog.close();
+							that.defaultLightBusyDialog.close();
 							$.each(oData.results, function (i, item) {
 								var query = "(Model='" + item.zzmodel + "',Kunnr='" + that.dealerCode + "',Zzextcol='" + item.zzextcol + "',Zzseries='" +
 									that.series + "',Zzsuffix='" + item.zzsuffix + "')"; //" + item.zzmoyr + "
@@ -1789,8 +1789,8 @@
 									url: uri,
 									type: "GET",
 									success: function (oData) {
-										// that.defaultLightBusyDialog.close();
-										sap.ui.core.BusyIndicator.hide();
+										that.defaultLightBusyDialog.close();
+										// sap.ui.core.BusyIndicator.hide();
 										// if (oData.d.NetSales !== "0") {
 										salesNetData.push({
 											"NetSales": parseInt(oData.d.NetSales),
@@ -1801,28 +1801,29 @@
 											"Zzsuffix": oData.d.Zzsuffix
 												// "Zzmoyr": oData.d.Zzmoyr
 										});
-										
+
 									},
 									error: function (oError) {
-										// that.defaultLightBusyDialog.close();
-										sap.ui.core.BusyIndicator.hide();
+										that.defaultLightBusyDialog.close();
+										// sap.ui.core.BusyIndicator.hide();
 									}
 								});
 							});
 						} else {
-							// that.defaultLightBusyDialog.close();
-							sap.ui.core.BusyIndicator.hide();
+							that.defaultLightBusyDialog.close();
+							// sap.ui.core.BusyIndicator.hide();
 						}
 					}.bind(this),
 					error: function (response) {
-						// this.defaultLightBusyDialog.close();
-						sap.ui.core.BusyIndicator.hide();
+						this.defaultLightBusyDialog.close();
+						// sap.ui.core.BusyIndicator.hide();
 					}
 				});
 			},
 
 			_loadTheData: function (oEvent) {
-				sap.ui.core.BusyIndicator.show();
+				this.defaultLightBusyDialog.open();
+				// sap.ui.core.BusyInd9icator.show();
 				this.runninDataLoadScriptflag = false;
 				var that = this;
 				// that.callNewModel = true;
@@ -1844,8 +1845,7 @@
 
 							success: function (oData) {
 								if (oData.results.length > 0) {
-									// that.defaultLightBusyDialog.close();
-									sap.ui.core.BusyIndicator.hide();
+									// sap.ui.core.BusyIndicator.hide();
 									var oStockAllocationData = [];
 									that.oInitialTotalsForUI = [];
 									var oInitialTotalsForUIBkup = [];
@@ -1859,7 +1859,6 @@
 									var oModelLocalData = that.getView().getModel("oViewLocalDataModel");
 
 									var totalRecordsReceived = oData.results.length;
-
 									if (totalRecordsReceived <= 0) {
 										oModelLocalData.setProperty("/enableForDealer", false);
 										oModelLocalData.setProperty("/setEnableFalse", false);
@@ -2427,20 +2426,22 @@
 										that.newModelData(tempObj2, IntCol2);
 										callNewModelCount = 1;
 									}
+
+									that.defaultLightBusyDialog.close();
 								} else {
-									// that.defaultLightBusyDialog.close();
-									sap.ui.core.BusyIndicator.hide();
+									that.defaultLightBusyDialog.close();
+									// sap.ui.core.BusyIndicator.hide();
 								}
 							}.bind(that),
 							error: function (response) {
-								// that.defaultLightBusyDialog.close();
-								sap.ui.core.BusyIndicator.hide();
+								that.defaultLightBusyDialog.close();
+								// sap.ui.core.BusyIndicator.hide();
 							}
 						});
 					}.bind(that),
 					error: function (response) {
-						// that.defaultLightBusyDialog.close();
-						sap.ui.core.BusyIndicator.hide();
+						that.defaultLightBusyDialog.close();
+						// sap.ui.core.BusyIndicator.hide();
 					}
 				});
 
