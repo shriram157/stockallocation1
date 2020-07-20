@@ -240,7 +240,7 @@
 				this.runninDataLoadScriptflag = false;
 
 				this.defaultLightBusyDialog = new sap.m.BusyDialog();
-				// this.defaultLightBusyDialog.open();
+				this.defaultLightBusyDialog.open();
 				this._loadSalesData2();
 				var that = this;
 				setTimeout(function () {
@@ -702,6 +702,7 @@
 
 				this.afterSAPDataUpdate = true;
 				this.resultsLossofData = false; // the data is saved,  so no message
+				this.defaultLightBusyDialog.open();
 				this._loadSalesData2();
 				var that = this;
 				setTimeout(function () {
