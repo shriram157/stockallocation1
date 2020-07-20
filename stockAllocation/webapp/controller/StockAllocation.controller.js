@@ -19,7 +19,9 @@
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
-				sap.ui.core.BusyIndicator.show();
+				// sap.ui.core.BusyIndicator.show();
+				this.defaultLightBusyDialog = new sap.m.BusyDialog();
+				this.defaultLightBusyDialog.open();
 				var sAppId = "App5bb4c41429720e1dcc397810";
 
 				var oParams = {};
@@ -239,8 +241,6 @@
 				this._getAllTheModelsFortheSeries();
 				this.runninDataLoadScriptflag = false;
 
-				this.defaultLightBusyDialog = new sap.m.BusyDialog();
-				this.defaultLightBusyDialog.open();
 				this._loadSalesData2();
 				var that = this;
 				setTimeout(function () {
@@ -1772,7 +1772,7 @@
 					success: function (oData) {
 						// sap.ui.core.BusyIndicator.hide();
 						if (oData.results.length > 0) {
-							that.defaultLightBusyDialog.close();
+							// that.defaultLightBusyDialog.close();
 							$.each(oData.results, function (i, item) {
 								var query = "(Model='" + item.zzmodel + "',Kunnr='" + that.dealerCode + "',Zzextcol='" + item.zzextcol + "',Zzseries='" +
 									that.series + "',Zzsuffix='" + item.zzsuffix + "')"; //" + item.zzmoyr + "
@@ -1782,7 +1782,7 @@
 									url: uri,
 									type: "GET",
 									success: function (oData) {
-										that.defaultLightBusyDialog.close();
+										// that.defaultLightBusyDialog.close();
 										// sap.ui.core.BusyIndicator.hide();
 										// if (oData.d.NetSales !== "0") {
 										salesNetData.push({
@@ -1815,7 +1815,7 @@
 			},
 
 			_loadTheData: function (oEvent) {
-				this.defaultLightBusyDialog.open();
+				// this.defaultLightBusyDialog.open();
 				// sap.ui.core.BusyInd9icator.show();
 				this.runninDataLoadScriptflag = false;
 				var that = this;
