@@ -263,7 +263,8 @@
 					0) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "Y";
-				} else if (oCheck.getParameter("selected") === false) {
+				} else if (oCheck.getParameter("selected") === false && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
+					0) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "N";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "N";
 				}
@@ -353,16 +354,19 @@
 
 				var requestedDSTotal = 0;
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
+				//HyperCare 3.0
+				if (Number(currentData.suggested == 0)) {
+					currentData.checkBoxEnabled = false;
+					currentData.checkBoxFlag = false;
+					currentData.zzui_flag = "";
+				}
 
+				//HyperCare 3.0
 				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
-				} else if (Number(currentData.requested_Volume) == Number(currentData.suggested)) {
-					currentData.checkBoxEnabled = false;
-					currentData.checkBoxFlag = false;
-					currentData.zzui_flag = "";
-				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested)) {
+				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
 					currentData.zzui_flag = "N";
