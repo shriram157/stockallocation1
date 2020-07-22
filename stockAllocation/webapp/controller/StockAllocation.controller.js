@@ -259,13 +259,15 @@
 			onCheck: function (oCheck) {
 				// debugger;
 				//objNew.ZzuiFlag 
-				if (oCheck.getParameter("selected") == true) {
+				if (oCheck.getParameter("selected") === true && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
+					0) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "Y";
-				} else {
+				} else if (oCheck.getParameter("selected") === false) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "N";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "N";
 				}
+
 				this.getView().getModel("stockDataModel").updateBindings(true);
 			},
 
@@ -356,7 +358,11 @@
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
-				} else {
+				} else if (Number(currentData.requested_Volume) == Number(currentData.suggested)) {
+					currentData.checkBoxEnabled = false;
+					currentData.checkBoxFlag = false;
+					currentData.zzui_flag = "";
+				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
 					currentData.zzui_flag = "N";
@@ -1920,6 +1926,9 @@
 										if ((item.zzui_flag == "Y") && (Number(item.zzrequest_qty)) < (Number(item.zzsuggest_qty))) {
 											checkOBJ.checkBoxFlag = true;
 											checkOBJ.checkBoxEnabled = true;
+										} else if ((item.zzui_flag == "N") && (Number(item.zzrequest_qty)) == (Number(item.zzsuggest_qty))) {
+											checkOBJ.checkBoxFlag = false;
+											checkOBJ.checkBoxEnabled = false;
 										} else {
 											checkOBJ.checkBoxFlag = false;
 											checkOBJ.checkBoxEnabled = false;
