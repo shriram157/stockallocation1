@@ -19,7 +19,9 @@
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 
 			handleRouteMatched: function (oEvent) {
-				sap.ui.core.BusyIndicator.show();
+				// sap.ui.core.BusyIndicator.show();
+				this.defaultLightBusyDialog = new sap.m.BusyDialog();
+				this.defaultLightBusyDialog.open();
 				var sAppId = "App5bb4c41429720e1dcc397810";
 
 				var oParams = {};
@@ -239,8 +241,6 @@
 				this._getAllTheModelsFortheSeries();
 				this.runninDataLoadScriptflag = false;
 
-				this.defaultLightBusyDialog = new sap.m.BusyDialog();
-				this.defaultLightBusyDialog.open();
 				this._loadSalesData2();
 				var that = this;
 				setTimeout(function () {
@@ -255,16 +255,20 @@
 
 			},
 
+			//START- CR3.0 Dealer Config
 			onCheck: function (oCheck) {
 				// debugger;
 				//objNew.ZzuiFlag 
-				if (oCheck.getParameter("selected") == true) {
+				if (oCheck.getParameter("selected") === true && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
+					0) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "Y";
-				} else {
+				} else if (oCheck.getParameter("selected") === false && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
+					0) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "N";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "N";
 				}
+
 				this.getView().getModel("stockDataModel").updateBindings(true);
 			},
 
@@ -298,6 +302,8 @@
 					this._calculateTotals();
 				}
 			},
+
+			//CR2.0 Show All
 			onClickShowAllX: function (evt) {
 				if (!!this.getView().getModel("stockDataModel")) {
 					var oTable = this.getView().byId("stockDataModelTableId");
@@ -348,15 +354,22 @@
 
 				var requestedDSTotal = 0;
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
+				//HyperCare 3.0
+				if (Number(currentData.suggested == 0)) {
+					currentData.checkBoxEnabled = false;
+					currentData.checkBoxFlag = false;
+					currentData.zzui_flag = "";
+				}
 
+				//HyperCare 3.0
 				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
-					currentData.zzui_flag="Y";
-				} else {
+					currentData.zzui_flag = "Y";
+				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
-					currentData.zzui_flag="N";
+					currentData.zzui_flag = "N";
 				}
 
 				if (currentValue > oldS4Value) {
@@ -403,7 +416,7 @@
 					// }
 
 				}
-				
+
 				oEvt.getSource()._getInput().setEditable(false);
 				if (currentValue < Number(currentData.suggested)) {
 					oEvt.getSource()._getInput().removeStyleClass("EqualWhite");
@@ -458,6 +471,10 @@
 			},
 
 			_onPageNavButtonPress: function (oEvent) {
+				this.getView().byId("stockDataModelTableId").getModel("stockDataModel").setData();
+				this.getView().byId("stockDataModelTableId").getModel("stockDataModel").updateBindings(true);
+				this.getView().getModel("initialStockTotalModel").setData();
+				this.getView().getModel("initialStockTotalModel").updateBindings(true);
 
 				if (newseriesFlag && !btnSavePressed) {
 					var that = this;
@@ -698,6 +715,7 @@
 
 				this.afterSAPDataUpdate = true;
 				this.resultsLossofData = false; // the data is saved,  so no message
+				this.defaultLightBusyDialog.open();
 				this._loadSalesData2();
 				var that = this;
 				setTimeout(function () {
@@ -878,7 +896,10 @@
 				this._showAllModels();
 			},
 
+			//Calculating Total for all & Subtotal per model 
+
 			_calculateTotals: function (includeZero) {
+				// this.defaultLightBusyDialog.open();
 				var that = this;
 				this.flagCheck = false;
 				this.index = 0;
@@ -1123,6 +1144,7 @@
 							current: group_to_values[key]
 						};
 					});
+					//CR2.0 Model Level Sub Total
 					that._dynamicSubTotal(groups, item, that.obj);
 				}
 
@@ -1380,30 +1402,14 @@
 						oInitialTotalStockModel["0"].salesDataTotal = salesDataTotal;
 					}
 				}
-				// }
-				// console.log(that.getView().getModel("stockDataModel"));
-				// console.log("oInitalTotalStock", oInitalTotalStock);
+
 				oInitalTotalStock.updateBindings(true);
-				// if (eventQty) {
-				// 	if (request1 < Number(suggest1.suggested)) {
-				// 		eventQty.getSource()._getInput().removeStyleClass("EqualGreen");
-				// 		eventQty.getSource()._getInput().removeStyleClass("IncrementBlue");
-				// 		eventQty.getSource()._getInput().addStyleClass("DecrementRed");
-				// 	} else if (request1 > Number(suggest1.suggested)) {
-				// 		eventQty.getSource()._getInput().removeStyleClass("EqualGreen");
-				// 		eventQty.getSource()._getInput().removeStyleClass("DecrementRed");
-				// 		eventQty.getSource()._getInput().addStyleClass("IncrementBlue");
-				// 	} else if (request1 == Number(suggest1.suggested)) {
-				// 		eventQty.getSource()._getInput().removeStyleClass("DecrementRed");
-				// 		eventQty.getSource()._getInput().removeStyleClass("IncrementBlue");
-				// 		eventQty.getSource()._getInput().addStyleClass("EqualGreen");
-				// 	}
-				// } else {
+
 				for (var i = 0; i < oModelData2.length; i++) {
 					that.oTable.getItems()[i].getCells()[12]._getInput().setEditable(false);
 					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
 					if (oModelData2[i].model != "") {
-						
+
 						if (Number(oModelData2[i].requested_Volume) < Number(oModelData2[i].suggested)) {
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("EqualWhite");
 							that.oTable.getItems()[i].getCells()[12]._getInput().removeStyleClass("IncrementBlue");
@@ -1419,9 +1425,10 @@
 						}
 					}
 				}
-				// }
+				this.defaultLightBusyDialog.close();
 			},
 
+			//CR2.0 Calculating Subtotal on model level
 			_dynamicSubTotal: function (groups, item, obj) {
 				var that = this;
 				// that.count = 0;
@@ -1429,17 +1436,12 @@
 				groups.forEach(function (element) {
 					if (item.model == element.model) {
 						that.index = element.current.length + that.index + that.count;
-						// console.log("index", that.index);
-						// oTable.insertItem(that.oItem, that.index);
 						that.getView().getModel("stockDataModel").getData().splice(that.index, 0, obj);
-						// console.log(that.getView().getModel("stockDataModel").getData());
-						// console.log(oTable.getItems()[that.index].getCells()[11]);
 						that.getView().getModel("stockDataModel").updateBindings(true);
 						oTable.getBinding("items").refresh(true);
 						that.dynamicIndices.push(that.index);
 						that.count = 1;
 
-						// var oModelLocalData = that.getView().getModel("oViewLocalDataModel");
 						// debugger;
 						if (!!oTable.getItems()[that.index]) {
 							oTable.getItems()[that.index].addStyleClass("grayBG");
@@ -1766,6 +1768,7 @@
 
 			},
 
+			//CR60-Fetching Past 6 months Sales data
 			_loadSalesData2: function (oEvent) {
 				// sap.ui.core.BusyIndicator.show();
 				this.runninDataLoadScriptflag = false;
@@ -1777,7 +1780,7 @@
 							//+ "and zzmoyr eq '" + this.yearModel +"'"
 					},
 					success: function (oData) {
-
+						// sap.ui.core.BusyIndicator.hide();
 						if (oData.results.length > 0) {
 							// that.defaultLightBusyDialog.close();
 							$.each(oData.results, function (i, item) {
@@ -1790,6 +1793,7 @@
 									type: "GET",
 									success: function (oData) {
 										// that.defaultLightBusyDialog.close();
+										// sap.ui.core.BusyIndicator.hide();
 										// if (oData.d.NetSales !== "0") {
 										salesNetData.push({
 											"NetSales": parseInt(oData.d.NetSales),
@@ -1800,28 +1804,17 @@
 											"Zzsuffix": oData.d.Zzsuffix
 												// "Zzmoyr": oData.d.Zzmoyr
 										});
-										// } else {
-										// 	salesNetData.push({
-										// 		"NetSales": 0,
-										// 		"Model": oData.d.NetSales,
-										// 		"Kunnr": oData.d.NetSales,
-										// 		"Zzextcol": oData.d.NetSales,
-										// 		"Zzseries": oData.d.NetSales,
-										// 		"Zzsuffix": oData.d.NetSales,
-										// 		"Zzmoyr": oData.d.NetSales
-										// 	});
-										// }
-										// that.counter = 0;
+
 									},
 									error: function (oError) {
 										that.defaultLightBusyDialog.close();
-										sap.ui.core.BusyIndicator.hide();
+										// sap.ui.core.BusyIndicator.hide();
 									}
 								});
 							});
 						} else {
 							that.defaultLightBusyDialog.close();
-							sap.ui.core.BusyIndicator.hide();
+							// sap.ui.core.BusyIndicator.hide();
 						}
 					}.bind(this),
 					error: function (response) {
@@ -1832,9 +1825,12 @@
 			},
 
 			_loadTheData: function (oEvent) {
+				// this.defaultLightBusyDialog.open();
+				// sap.ui.core.BusyInd9icator.show();
 				this.runninDataLoadScriptflag = false;
 				var that = this;
 				// that.callNewModel = true;
+				//CR3.0 fetching Threshold flag
 				this.thresholdModel = this.getOwnerComponent().getModel("ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV");
 				this.thresholdModel.read("/ZCDS_SUGGST_ORD_QTY_TOL", {
 					urlParameters: {
@@ -1853,8 +1849,7 @@
 
 							success: function (oData) {
 								if (oData.results.length > 0) {
-									that.defaultLightBusyDialog.close();
-									sap.ui.core.BusyIndicator.hide();
+									// sap.ui.core.BusyIndicator.hide();
 									var oStockAllocationData = [];
 									that.oInitialTotalsForUI = [];
 									var oInitialTotalsForUIBkup = [];
@@ -1868,7 +1863,6 @@
 									var oModelLocalData = that.getView().getModel("oViewLocalDataModel");
 
 									var totalRecordsReceived = oData.results.length;
-
 									if (totalRecordsReceived <= 0) {
 										oModelLocalData.setProperty("/enableForDealer", false);
 										oModelLocalData.setProperty("/setEnableFalse", false);
@@ -1932,10 +1926,13 @@
 											}
 										});
 										// allowedtolerance
-
+										//START- CR3.0 Dealer Config
 										if ((item.zzui_flag == "Y") && (Number(item.zzrequest_qty)) < (Number(item.zzsuggest_qty))) {
 											checkOBJ.checkBoxFlag = true;
 											checkOBJ.checkBoxEnabled = true;
+										} else if ((item.zzui_flag == "N") && (Number(item.zzrequest_qty)) == (Number(item.zzsuggest_qty))) {
+											checkOBJ.checkBoxFlag = false;
+											checkOBJ.checkBoxEnabled = false;
 										} else {
 											checkOBJ.checkBoxFlag = false;
 											checkOBJ.checkBoxEnabled = false;
@@ -2026,7 +2023,7 @@
 											reqThreshold: "",
 											allowedtolerance: Number(that.allowedtolerance),
 											salesdata: item.NetSales,
-											zzui_flag: item.zzui_flag,
+											zzui_flag: item.zzui_flag, //START- CR3.0 Dealer Config
 											checkBoxFlag: checkOBJ.checkBoxFlag,
 											checkBoxEnabled: checkOBJ.checkBoxEnabled
 										});
@@ -2436,9 +2433,11 @@
 										that.newModelData(tempObj2, IntCol2);
 										callNewModelCount = 1;
 									}
+
+									// that.defaultLightBusyDialog.close();
 								} else {
 									that.defaultLightBusyDialog.close();
-									sap.ui.core.BusyIndicator.hide();
+									// sap.ui.core.BusyIndicator.hide();
 								}
 							}.bind(that),
 							error: function (response) {
