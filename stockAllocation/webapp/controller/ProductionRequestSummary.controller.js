@@ -275,6 +275,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 
+		//CR2.0 Add new series
 		onClickRequestNewSeries: function () {
 			var checkSeriesData = this.getView().getModel("SeriesDataModel").getData().results.length;
 			if (checkSeriesData > 0) {
@@ -325,11 +326,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			// }
 		},
 
+		//CR2.0 Add new series
 		onClickAddNewSeriesDialog: function (oEvt) {
 			this.onClickCloseNewSeriesDialog();
 			this.oRouter.navTo("StockAllocation", {});
 		},
 
+		//CR2.0 Add new series
 		onClickCloseNewSeriesDialog: function (oEvent) {
 			sap.ui.core.Fragment.byId("seriesDialog", "ID_SeriesDesc").setSelectedKey("");
 			sap.ui.core.Fragment.byId("seriesDialog", "ID_modelDesc").setSelectedKey("");
@@ -342,6 +345,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this._seriesRequestDialog.close();
 		},
 
+		//CR2.0 Add new series
 		getAllSeries: function () {
 			var that = this;
 			var oSeriesModel = new sap.ui.model.json.JSONModel();
@@ -349,7 +353,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var oSuggestUpdateModel = this.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
 			///ZC_ALLOCAT_CFG(p_orderable='Y',p_div='"+this.sapDivision+"')/Set", 
 			///node/ZSD_SUGGEST_ORDER_UPDATE_SRV/ZC_ALLOCAT_CFG(p_orderable='Y')/Set
-			oSuggestUpdateModel.read("/ZC_ALLOCAT_CFG(p_orderable='Y',p_div='"+this.sapDivision+"')/Set", {
+			oSuggestUpdateModel.read("/ZC_ALLOCAT_CFG(p_orderable='Y',p_div='" + this.sapDivision + "')/Set", {
 				success: $.proxy(function (data, response) {
 					console.log("seriesData", data);
 					data.results.unshift({
@@ -473,7 +477,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		// All my custom modules - End	-//////////////////////////////////////////////////////////////////////////////////////////////	
 
 		_onTableItemPress: function (oEvent) {
-			if(sap.ui.getCore().getModel("RouteConfig")){
+			if (sap.ui.getCore().getModel("RouteConfig")) {
 				sap.ui.getCore().getModel("RouteConfig").setData();
 			}
 			var oBindingContextPath = oEvent.getParameter("listItem").getBindingContextPath();
@@ -598,7 +602,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 		_onTableItemPress1: function (oEvent) {
-			if(sap.ui.getCore().getModel("RouteConfig")){
+			if (sap.ui.getCore().getModel("RouteConfig")) {
 				sap.ui.getCore().getModel("RouteConfig").setData();
 			}
 			var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
@@ -613,8 +617,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 		_onTableItemPress2: function (oEvent) {
-			
-			if(sap.ui.getCore().getModel("RouteConfig")){
+
+			if (sap.ui.getCore().getModel("RouteConfig")) {
 				sap.ui.getCore().getModel("RouteConfig").setData();
 			}
 			var oBindingContext = oEvent.getParameter("listItem").getBindingContext();
@@ -648,16 +652,35 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 		onInit: function () {
 
 			// initialize  local models and data calls
-
-			this._oViewModel = new sap.ui.model.json.JSONModel({
-				busy: false,
-				delay: 0,
-				visibleForDealer: true,
-				visibleForInternalUser: true,
-				editAllowed: true,
-				enabled: true,
-				visibleSeriesBtn: false
-			});
+			this.userDiv = window.location.search.match(/Division=([^&]*)/i)[1];
+			if (this.userDiv == "10") {
+				this._oViewModel = new sap.ui.model.json.JSONModel({
+					busy: false,
+					delay: 0,
+					visibleForDealer: true,
+					visibleForInternalUser: true,
+					editAllowed: true,
+					enabled: true,
+					visibleSeriesBtn: false,
+					userLanguage: window.location.search.match(/language=([^&]*)/i)[1].toLocaleUpperCase(),
+					sopurlEN: "https://infostream.toyota.ca/tci/myportal/dealers/toyota/sales/Resources/reference%20guide/!ut/p/z1/lZLLUsIwFIZfxQ3Lzjm9WpbYGa0XrEALbTZMGtISLQmUAPL2Rl3hyC2rZOY7Z_5LgEAORNKtqKkWStLGvAsSTBPsRnEcYpKkmY2D5Lk_it58-27swuQQwChEHISP7sN96juY2EAumccjp4fn5sdAgCyZmEERBgHDynYsWjHH8rzSsbrM8y2f2l1e8sAuS_ebZlIv9RwKzcSUyw5qtVeadnBNG77uYMvXatOy32vFWy4Zv6k3YsbPmH29wCw5RP6J6wc4lcfJDUZDYUTeHlMxxAAmW8F3kEnVLkzDoysDjBGezvk0v8Zp-1G_NpupnltCVgryv2kaSryvVqRnKlFS808N-fWdLBdZtgjdvfUxDHdpNW-2L70vNPlLqw!!/?1dmy&urile=wcm%3apath%3a%2Ftci_en%2Ftoyota%2Fsales%2Fresources%2Freference%2Bguide%2Fstock%2Ballocation%2Buser%2Bguide",
+					sopurlFR: "https://infostream.toyota.ca/tci/myportal/dealers/toyota/sales/Resources/reference%20guide/!ut/p/z1/lZJJU8IwFMe_ihw4dt7rajnWzmhdsLIUaC5MGhKIQgIlgHx7o55wZMspmfm9N_8lQGAERNGtnFIjtaJz-y5JNM6xlWZZjHneL1zs5M_tXvoWuncDH4aHAKYxYid-9B_u-6GHuQvkknk8chI8Nz8AAmTJ5ATKOIoYCtdzqGCeEwSV57RYEDohdVu84pFbVf43zZRZmhmUhskxV000eq8NbeKazvm6iTVf603Nfq-C11wxfjPdyAk_Y_b1ArPkEPknrh_gVB4nN1gNpRV5e0xFFyMYbiXfQaF0vbAN964MMEN4OufT_hqvbqftqd1MzcyRSmgY_U3TUvJ9tSKJrUQrwz8NjK7vpCdqWC6KYhH7e-ejG-_6YjbfvogkaTS-ACwF72Q!/?1dmy&urile=wcm%3apath%3a%2Ftci_fr%2Ftoyota%2Fsales%2Fresources%2Freference%2Bguide%2Fstock%2Ballocation%2Buser%2Bguide",
+				});
+			} else if (this.userDiv == "20") {
+				this._oViewModel = new sap.ui.model.json.JSONModel({
+					busy: false,
+					delay: 0,
+					visibleForDealer: true,
+					visibleForInternalUser: true,
+					editAllowed: true,
+					enabled: true,
+					visibleSeriesBtn: false,
+					userLanguage: window.location.search.match(/language=([^&]*)/i)[1].toLocaleUpperCase(),
+					userDiv: window.location.search.match(/Division=([^&]*)/i)[1],
+					sopurlEN: "https://infostream.toyota.ca/tci/myportal/dealers/lexus/sales/Resources/!ut/p/z1/rZLLbsIwEEV_hS5YRuM8McsIqQpFVcojhXiDjGODSx7gOED_vm6QKlEVaKV6Y1s-o7lzr4HAAkhJD3JNtaxKmpt7SoJljPqDKMIojmeJjcbx6Hk6ePH7YejBvAXQlRUiIL-p_wLwYxSgMR6Okr43cVBi36t_BQJkx2QGKV6hTLBeZgkUCMvzfduiPkWW41CGA3vlYsf-pFmpd3oDqWZyKVQX5fzU1F1U05ybTfG6ahQ7HwVXvGS8s25kxg2iK7bt0DyvWGtQp6m5Oj9-H-RCqT0ZuveNIJfID1a0wC2vbzRpNaRGZO-6ChfmB8mPkJSVKkz60z-aGyF4ujen-VHybb8noQmiKjU_aVj8bxJToWBXJEmB3XdrO8HHmdjkh_XDB50LwtI!/dz/d5/L0lHSkovd0RNQUxrQUVnQSEhLzROVkUvZW4!/",
+					sopurlFR: "https://infostream.toyota.ca/tci/myportal/dealers/lexus/sales/Resources/!ut/p/z1/lZJPb4JAEMW_SnvwSGYQhOVITBqsaagoVfZiVlxwW1iQP2q_fVeaNLGpUveyO8lvMu-9HaCwAirZQaSsEYVkmaojaq19dMaeR9D3F6GOM3_6Mh-_jhzXNWHZAXjluAj0P_0_AHnyLJyRyTR0zGCIod7X_wYUaBmLLUTDLSOEmbo2QoaaaWCskcThmjVMDJvhxuYbdqZj2ZTNDqImFmsuB5jxU1sPsGYZV1fF66Kt4u9nwisuY_6QtmLLf2u9EKMHE6PfK71E_nDbAbfivDGk0xApkfZ1FQYsD4IfIZRFlasPnt-Zn4fw3OdTLY143--pq7IuZMNPDazuDnueVFDmYZgT41P7CMhxkeyyQ_r4BfnwTbw!/?1dmy&urile=wcm%3apath%3a%2Ftci_fr%2Flexus%2Fsales%2Fresources%2Freference%2Bguide%2Fstock%2Ballocation%2Buser%2Bguide"
+				});
+			}
 
 			this.getView().setModel(this._oViewModel, "detailView");
 
@@ -779,9 +802,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							if (sLocation_conf == 0) {
 								// if a local user from weide 
 								// -- Guna // TODO: While testing locally for Dealer	 
-								oModelDetailView.setProperty("/BusinessPartnerKey", "2400042130");
-								oModelDetailView.setProperty("/Dealer_No", "2400042130");
-								var tempDealerText = "2400042130" + " - " + "For local testing only";
+								oModelDetailView.setProperty("/BusinessPartnerKey", "2400042120");
+								oModelDetailView.setProperty("/Dealer_No", "2400042120");
+								var tempDealerText = "2400042120" + " - " + "For local testing only";
 								// oModelDetailView.setProperty("/Dealer_Name", item.BusinessPartnerName);
 
 								oModelDetailView.setProperty("/Dealer_Name", tempDealerText);
@@ -1242,7 +1265,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 					var parsedtodayDate = Date.parse(currentDate);
 
-					if (parsedtodayDate < windowEndDateP) {  //&& parsedtodayDate >= windowStartDateP
+					if (parsedtodayDate < windowEndDateP) { //&& parsedtodayDate >= windowStartDateP
 						// in this period we have to show suggestion and Requested.  Turn off the Allocated. 
 						oModel.setProperty("/showAllocatedTab", false);
 					}
@@ -1308,13 +1331,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 				oModel.setProperty("/showAllocatedTab", false);
 
-			} 
+			}
 			// else {
-				// if ((oModelData.parsedtodayDate <= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {	
-				// 			oModel.setProperty("/showAllocatedTab", true);
-				// 					oModel.setProperty("/showSuggestionTab", false);
-				// 					oModel.setProperty("/showRequestedTab", false);
-				// }			
+			// if ((oModelData.parsedtodayDate <= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {	
+			// 			oModel.setProperty("/showAllocatedTab", true);
+			// 					oModel.setProperty("/showSuggestionTab", false);
+			// 					oModel.setProperty("/showRequestedTab", false);
+			// }			
 			// }
 
 			if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "S") {

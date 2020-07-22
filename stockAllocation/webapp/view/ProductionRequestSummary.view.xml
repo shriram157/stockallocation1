@@ -17,12 +17,8 @@
 				</contentLeft>
 				<contentMiddle></contentMiddle>
 				<contentRight>
-					<!--<Button text="EXIT" type="Reject" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false" press="_onButtonPress"/>-->
-					<!--		<Link-->
-					<!--text="Logout"-->
-					<!--target="_blank"-->
-					<!--href="https://infostream.qa.toyota.ca/tci/myportal/dealers/toyota/home/!ut/p/z1/04_Sj9CPykssy0xPLMnMz0vMAfIjo8zi_Q0snT08LAz8DZwtDAwCLTyN3d1CTI0MTIz0w_Wj9KPwKPE3hCowwAEcDfQLsrMDAXFxomk!/dz/d5/L3dDb1ZJQSEhL3dPb0JKTnNBLzRFS2lqaFVNV0hFIS9mVmp6QWIybW9LUHROZHU3cGtuVmJzQzVIQXNja3JWSU5wbVFrUmpja2p1VTRaVnZnLzMxMDgvbG8!/" />-->
-					<!--<Button text="{i18n>Logout}"/>-->
+					<Link text="{i18n>SOP}" target="_blank" href="{=${detailView>/userLanguage}==='EN' ? ${detailView>/sopurlEN}:${detailView>/sopurlFR}}" class="urlStyle"/>
+					<!--<Link text="http://infostream.qa.toyota.ca/tci/myportal/dealers/toyota/sales/Resources/reference%20guide/stock%20allocation%20dealer%20reference%20article/!ut/p/z1/tVPLUgIxEPwVPHBcZ_YBG44LVYJasPLSZS9UCFkIhA2EgOLXG_SgWLw8mFNS1d3Tk5mGFBJIc7oVE2qEyqm070FaHsZYqTUaBOO413exHT82u7Wnklt99uEZUkiXTIxhwIOAhsxlTlYZoRMEHjqEjEInDDzPc8tZxlyyR7PcLM0UBoaJIc-LaNROGVrENZV8XUTN12qj2dc145rnjBcmGzHmFmIUmxeolIp9OiyMuSXpwjeQaiOY5PByaBxrBLFN7v36Xa_kYexCer6vLz6eOBFexz9Vv3VF_fQQcqSDT8A5i2cVWscVIqx2vKqPWCcIDYSHS07tiojZapVGdrIqN_zNQPKvo7UFPd2sNSd28aiZOiLPFCS_BCG5XtC2aJSSI6p_aq-55GxPhORiBIzecBjYkYengB0sQ3f_4TYoeBsSghW3giUsEz_0yB9D9LIV_BX6udILm9HlYkH8nRDOvNN43flyVpLbOR29Z1F08wFCAp7z/?uri=toolbar:close" class="clCustomFont sapUiSmallMargin" press="handlebacksearch"/>-->
 				</contentRight>
 			</Bar>
 		</customHeader>
@@ -40,6 +36,8 @@
 					class="sapUiTinyMargin"/>
 				<ToolbarSpacer/>
 				<Title text="{detailView>/dueDate}" titleStyle="H2" width="auto" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"/>
+				<!--<Link text="SOP" target="_blank"-->
+				<!--	href="http://infostream.qa.toyota.ca/tci/myportal/dealers/toyota/sales/Resources/reference%20guide/stock%20allocation%20dealer%20reference%20article/!ut/p/z1/tVPLUgIxEPwVPHBcZ_YBG44LVYJasPLSZS9UCFkIhA2EgOLXG_SgWLw8mFNS1d3Tk5mGFBJIc7oVE2qEyqm070FaHsZYqTUaBOO413exHT82u7Wnklt99uEZUkiXTIxhwIOAhsxlTlYZoRMEHjqEjEInDDzPc8tZxlyyR7PcLM0UBoaJIc-LaNROGVrENZV8XUTN12qj2dc145rnjBcmGzHmFmIUmxeolIp9OiyMuSXpwjeQaiOY5PByaBxrBLFN7v36Xa_kYexCer6vLz6eOBFexz9Vv3VF_fQQcqSDT8A5i2cVWscVIqx2vKqPWCcIDYSHS07tiojZapVGdrIqN_zNQPKvo7UFPd2sNSd28aiZOiLPFCS_BCG5XtC2aJSSI6p_aq-55GxPhORiBIzecBjYkYengB0sQ3f_4TYoeBsSghW3giUsEz_0yB9D9LIV_BX6udILm9HlYkH8nRDOvNN43flyVpLbOR29Z1F08wFCAp7z/?uri=toolbar:close"/>-->
 			</OverflowToolbar>
 			<MessageStrip id="wrnMessageStrip" visible="false" text="{i18n>warningMessage}" showIcon="true"
 				class="sapUiTinyMarginTop sapUiSmallMarginBottom"></MessageStrip>
@@ -67,9 +65,9 @@
 												<Text text=")" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 													visible="{detailView>/paranthesisVisible}"/>
 												<ToolbarSpacer/>
-												<Button text="{i18n>REQUEST_ADD_SERIES}" type="Accept" iconFirst="true" width="auto" enabled="true"
-													visible="true" iconDensityAware="false" press="onClickRequestNewSeries"/>
-													<!--{detailView>/visibleSeriesBtn}-->
+												<Button text="{i18n>REQUEST_ADD_SERIES}" type="Accept" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"
+													press="onClickRequestNewSeries"/>
+												<!--{detailView>/visibleSeriesBtn}-->
 												<!--<Button id="showAllSeriesBtn" text="{i18n>SHOW_ALL_SERIES}" type="Accept" iconFirst="true" width="auto"-->
 												<!--	enabled="{detailView>/noZeroRecordFound}" visible="true" iconDensityAware="false" press="onClickShowAllSeries"/>-->
 											</content>
