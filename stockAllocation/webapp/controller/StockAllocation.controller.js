@@ -1148,7 +1148,7 @@
 					that._dynamicSubTotal(groups, item, that.obj);
 				}
 
-				for (var i = 1; i < oModelData2.length; i++) {
+				for (var i = 0; i < oModelData2.length; i++) {
 					if (oModelData2[i].model != "") {
 						this.duringPercentage = oModelData2[i].current.includes("%");
 						if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
@@ -1222,7 +1222,7 @@
 						differenceTotal = 0,
 						salesDataTotal = 0;
 
-					for (var i = 1; i < oModelDataOld.length; i++) {
+					for (var i = 0; i < oModelDataOld.length; i++) {
 						if (includeZero == true && oModelDataOld[i].model != "") {
 							//if ( oModelData2[i].suggested < "0" ) {
 							if (oModelDataOld[i].salesdata === undefined) {
