@@ -299,7 +299,7 @@
 						}
 					}
 					this.getView().getModel("stockDataModel").updateBindings(true);
-					this._calculateTotals();
+					// this._calculateTotals();
 				}
 			},
 
