@@ -370,6 +370,10 @@
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
 					currentData.zzui_flag = "N";
+				} else {
+					currentData.checkBoxEnabled = false;
+					currentData.checkBoxFlag = false;
+					currentData.zzui_flag = "";
 				}
 
 				if (currentValue > oldS4Value) {
