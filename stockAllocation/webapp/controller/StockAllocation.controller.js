@@ -299,7 +299,7 @@
 						}
 					}
 					this.getView().getModel("stockDataModel").updateBindings(true);
-					this._calculateTotals();
+					// this._calculateTotals();
 				}
 			},
 
@@ -370,6 +370,10 @@
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
 					currentData.zzui_flag = "N";
+				} else {
+					currentData.checkBoxEnabled = false;
+					currentData.checkBoxFlag = false;
+					currentData.zzui_flag = "";
 				}
 
 				if (currentValue > oldS4Value) {
@@ -395,6 +399,9 @@
 					var oStockModelData = this.getView().getModel("stockDataModel").getData();
 					for (var i = 0; i < oStockModelData.length; i++) {
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
+							//fix for difference column update
+							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume)
+
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
@@ -1148,7 +1155,7 @@
 					that._dynamicSubTotal(groups, item, that.obj);
 				}
 
-				for (var i = 1; i < oModelData2.length; i++) {
+				for (var i = 0; i < oModelData2.length; i++) {
 					if (oModelData2[i].model != "") {
 						this.duringPercentage = oModelData2[i].current.includes("%");
 						if (oModelData2[i].visibleProperty == true && this.duringPercentage == false) {
@@ -1222,7 +1229,7 @@
 						differenceTotal = 0,
 						salesDataTotal = 0;
 
-					for (var i = 1; i < oModelDataOld.length; i++) {
+					for (var i = 0; i < oModelDataOld.length; i++) {
 						if (includeZero == true && oModelDataOld[i].model != "") {
 							//if ( oModelData2[i].suggested < "0" ) {
 							if (oModelDataOld[i].salesdata === undefined) {
