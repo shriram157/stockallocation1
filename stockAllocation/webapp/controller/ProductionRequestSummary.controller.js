@@ -471,7 +471,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var aDataBP = oModelBP.getData();
 
 			// - call this so we get the new DAta everytime the BP Data has been changed. 
-			this.reqcomplete();
+			this.reqc: omplete();
 		},
 
 		// All my custom modules - End	-//////////////////////////////////////////////////////////////////////////////////////////////	
@@ -904,8 +904,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var countForSuggested, countForRequested;
 					var seriesDescription;
 					var that = this;
+					that.data = oData.results;
 					//                var timeForBanner  ;	
 					$.each(oData.results, function (i, item) {
+
+						if (item.total_request_qty == "0" && item.total_suggest_qty == "0") {
+							that.data.splice(i, 1);
+						}
 						// if ((item.zzdlr_ref_no == "") || (item.zzdlr_ref_no == undefined)) {
 						order_Number = "XXXXXX";
 						// }
