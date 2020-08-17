@@ -471,7 +471,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			var aDataBP = oModelBP.getData();
 
 			// - call this so we get the new DAta everytime the BP Data has been changed. 
-			this.reqc: omplete();
+			this.reqcomplete();
 		},
 
 		// All my custom modules - End	-//////////////////////////////////////////////////////////////////////////////////////////////	
