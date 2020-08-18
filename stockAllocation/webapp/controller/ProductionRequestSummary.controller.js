@@ -908,123 +908,123 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					//                var timeForBanner  ;	
 					$.each(oData.results, function (i, item) {
 
-							if (item.total_request_qty == "0" && item.total_suggest_qty == "0") {
-								that.data.splice(i, 1);
+						if (item.total_request_qty == "0" && item.total_suggest_qty == "0") {
+							that.data.splice(i, 1);
+						} else {
+							// if ((item.zzdlr_ref_no == "") || (item.zzdlr_ref_no == undefined)) {
+							order_Number = "XXXXXX";
+							// }
+
+							if (that.sCurrentLocale == 'FR') {
+								seriesDescription = item.zzseries_desc_fr;
 							} else {
-								// if ((item.zzdlr_ref_no == "") || (item.zzdlr_ref_no == undefined)) {
-								order_Number = "XXXXXX";
-								// }
+								seriesDescription = item.zzseries_desc_en;
+							}
 
-								if (that.sCurrentLocale == 'FR') {
-									seriesDescription = item.zzseries_desc_fr;
-								} else {
-									seriesDescription = item.zzseries_desc_en;
-								}
+							// Suggested Data
+							oViewSuggestData.push({
+								seriesDescription: seriesDescription,
+								// series: item.zzmoyr + "-" + item.zzseries_desc_en,
+								series: item.zzmoyr + "-" + seriesDescription, //item.zzseries_desc_en,
+								orderPrefix: item.zzprefix,
+								orderNumber: order_Number, //zzsug_seq_no,
+								suggestedVolume: item.total_suggest_qty, //zzsuggest_qty,
+								dealerCode: item.zzdealer_code,
+								visibleProperty: true,
+								zzseries: item.zzseries,
+								zzallocation_ind: item.zzallocation_ind,
+								zzdel_review: item.zzdel_review,
+								zzprocess_dt: item.zzprocess_dt,
+								zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.
+								modelYear: item.zzmoyr
 
-								// Suggested Data
-								oViewSuggestData.push({
-									seriesDescription: seriesDescription,
-									// series: item.zzmoyr + "-" + item.zzseries_desc_en,
-									series: item.zzmoyr + "-" + seriesDescription, //item.zzseries_desc_en,
-									orderPrefix: item.zzprefix,
-									orderNumber: order_Number, //zzsug_seq_no,
-									suggestedVolume: item.total_suggest_qty, //zzsuggest_qty,
-									dealerCode: item.zzdealer_code,
-									visibleProperty: true,
-									zzseries: item.zzseries,
-									zzallocation_ind: item.zzallocation_ind,
-									zzdel_review: item.zzdel_review,
-									zzprocess_dt: item.zzprocess_dt,
-									zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.
-									modelYear: item.zzmoyr
-
-								});
-
-								if (+item.total_request_qty && +item.total_suggest_qty) {
-									var suggestedVolPercentRequested = ((+item.total_request_qty / +item.total_suggest_qty) * 100);
-									suggestedVolPercentRequested = parseFloat(suggestedVolPercentRequested).toFixed(0);
-									suggestedVolPercentRequested = suggestedVolPercentRequested + "%";
-								} else if (+item.total_request_qty <= 0 && +item.total_suggest_qty > 0) {
-									suggestedVolPercentRequested = 0;
-								} else if (+item.total_request_qty > 0 && +item.total_suggest_qty <= 0) {
-									suggestedVolPercentRequested = "N/A";
-								} else if (+item.total_request_qty == 0 && +item.total_suggest_qty == 0) {
-									suggestedVolPercentRequested = 0;
-								}
-								// suggest MIX requested totals. 
-								if (item.total_request_rec && item.total_suggest_rec) {
-									// var suggestedMixRequested = ((item.total_request_rec / item.total_suggest_rec) * 100);
-									var suggestedMixRequested = ((item.total_suggest_rec / item.total_request_rec) * 100);
-									suggestedMixRequested = parseFloat(suggestedMixRequested).toFixed(0);
-									suggestedMixRequested = suggestedMixRequested + "%";
-								} else if (item.total_request_rec <= 0 && item.total_suggest_rec > 0) {
-									suggestedMixRequested = 0;
-								} else if (item.total_request_rec > 0 && item.total_suggest_rec <= 0) {
-									suggestedMixRequested = "N/A";
-								} else if (item.total_request_rec == 0 && item.total_suggest_rec == 0) {
-									suggestedMixRequested = 0;
-								}
-								// percent request volume allocated. 
-								if (+item.total_allocated_qty && +item.total_request_qty) {
-									var percentRequestVolAllocated = ((+item.total_allocated_qty / +item.total_request_qty) * 100);
-									percentRequestVolAllocated = parseFloat(percentRequestVolAllocated).toFixed(0);
-									percentRequestVolAllocated = percentRequestVolAllocated + "%";
-								} else if (+item.total_allocated_qty <= 0 && +item.total_request_qty > 0) {
-									percentRequestVolAllocated = 0;
-								} else if (+item.total_allocated_qty > 0 && +item.total_request_qty <= 0) {
-									percentRequestVolAllocated = "N/A";
-								} else if (+item.total_allocated_qty == 0 && +item.total_request_qty == 0) {
-									percentRequestVolAllocated = 0;
-								}
-
-								oViewRequestedData.push({
-									seriesDescription: seriesDescription,
-									// series: item.zzmoyr + "-" + item.zzseries_desc_en,
-									series: item.zzmoyr + "-" + seriesDescription,
-									orderPrefix: item.zzprefix, //order_Number,
-									zzseries: item.zzseries,
-									orderNumber: order_Number, // item.zzdlr_ref_no, //zzsug_seq_no,
-									suggestedVolume: item.total_suggest_qty, //zzsuggest_qty,
-									requestedVolume: item.total_request_qty,
-									suggestedVolPercentRequested: suggestedVolPercentRequested, //item.tot_suggest_perc,
-									suggestedMixRequested: suggestedMixRequested, //item.tot_suggest_mix_requested,
-									dealerCode: item.zzdealer_code,
-									dealerReviewCount: item.dealer_review_count,
-									zzdel_review: item.zzdel_review,
-									zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.
-									modelYear: item.zzmoyr,
-									zzprocess_dt: item.zzprocess_dt
-
-								});
-
-								//Allocated Data
-								orderNumber = item.zzprefix + " - " + order_Number;
-
-								oViewAllocatedData.push({
-									seriesDescription: seriesDescription,
-									// series: item.zzmoyr + "-" + item.zzseries_desc_en,
-									series: item.zzmoyr + "-" + seriesDescription,
-									zzseries: item.zzseries,
-									orderPrefix: item.zzprefix,
-									orderNumber: orderNumber, //item.zzdlr_ref_no,
-									suggestedVolume: item.total_suggest_qty,
-									requestedVolume: item.total_request_qty,
-									suggestedVolPercentRequested: suggestedVolPercentRequested, //item.tot_suggest_perc,
-									suggestedMixRequested: suggestedMixRequested, //item.tot_suggest_mix_requested,
-									allocatedVolume: item.total_allocated_qty,
-									percentRequestVolAllocated: percentRequestVolAllocated, //item.perc_request_volum_allocated,
-									pendingAllocation: item.pending_allocation,
-									unfilledAllocation: item.unfilled_allocation,
-									dealerCode: item.zzdealer_code,
-									zzdel_review: item.zzdel_review,
-									zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.Number('123')
-									modelYear: item.zzmoyr,
-									zzprocess_dt: item.zzprocess_dt
-								});
-
-								// console.log("oViewAllocatedData", oViewAllocatedData);
 							});
-					}
+
+							if (+item.total_request_qty && +item.total_suggest_qty) {
+								var suggestedVolPercentRequested = ((+item.total_request_qty / +item.total_suggest_qty) * 100);
+								suggestedVolPercentRequested = parseFloat(suggestedVolPercentRequested).toFixed(0);
+								suggestedVolPercentRequested = suggestedVolPercentRequested + "%";
+							} else if (+item.total_request_qty <= 0 && +item.total_suggest_qty > 0) {
+								suggestedVolPercentRequested = 0;
+							} else if (+item.total_request_qty > 0 && +item.total_suggest_qty <= 0) {
+								suggestedVolPercentRequested = "N/A";
+							} else if (+item.total_request_qty == 0 && +item.total_suggest_qty == 0) {
+								suggestedVolPercentRequested = 0;
+							}
+							// suggest MIX requested totals. 
+							if (item.total_request_rec && item.total_suggest_rec) {
+								// var suggestedMixRequested = ((item.total_request_rec / item.total_suggest_rec) * 100);
+								var suggestedMixRequested = ((item.total_suggest_rec / item.total_request_rec) * 100);
+								suggestedMixRequested = parseFloat(suggestedMixRequested).toFixed(0);
+								suggestedMixRequested = suggestedMixRequested + "%";
+							} else if (item.total_request_rec <= 0 && item.total_suggest_rec > 0) {
+								suggestedMixRequested = 0;
+							} else if (item.total_request_rec > 0 && item.total_suggest_rec <= 0) {
+								suggestedMixRequested = "N/A";
+							} else if (item.total_request_rec == 0 && item.total_suggest_rec == 0) {
+								suggestedMixRequested = 0;
+							}
+							// percent request volume allocated. 
+							if (+item.total_allocated_qty && +item.total_request_qty) {
+								var percentRequestVolAllocated = ((+item.total_allocated_qty / +item.total_request_qty) * 100);
+								percentRequestVolAllocated = parseFloat(percentRequestVolAllocated).toFixed(0);
+								percentRequestVolAllocated = percentRequestVolAllocated + "%";
+							} else if (+item.total_allocated_qty <= 0 && +item.total_request_qty > 0) {
+								percentRequestVolAllocated = 0;
+							} else if (+item.total_allocated_qty > 0 && +item.total_request_qty <= 0) {
+								percentRequestVolAllocated = "N/A";
+							} else if (+item.total_allocated_qty == 0 && +item.total_request_qty == 0) {
+								percentRequestVolAllocated = 0;
+							}
+
+							oViewRequestedData.push({
+								seriesDescription: seriesDescription,
+								// series: item.zzmoyr + "-" + item.zzseries_desc_en,
+								series: item.zzmoyr + "-" + seriesDescription,
+								orderPrefix: item.zzprefix, //order_Number,
+								zzseries: item.zzseries,
+								orderNumber: order_Number, // item.zzdlr_ref_no, //zzsug_seq_no,
+								suggestedVolume: item.total_suggest_qty, //zzsuggest_qty,
+								requestedVolume: item.total_request_qty,
+								suggestedVolPercentRequested: suggestedVolPercentRequested, //item.tot_suggest_perc,
+								suggestedMixRequested: suggestedMixRequested, //item.tot_suggest_mix_requested,
+								dealerCode: item.zzdealer_code,
+								dealerReviewCount: item.dealer_review_count,
+								zzdel_review: item.zzdel_review,
+								zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.
+								modelYear: item.zzmoyr,
+								zzprocess_dt: item.zzprocess_dt
+
+							});
+
+							//Allocated Data
+							orderNumber = item.zzprefix + " - " + order_Number;
+
+							oViewAllocatedData.push({
+								seriesDescription: seriesDescription,
+								// series: item.zzmoyr + "-" + item.zzseries_desc_en,
+								series: item.zzmoyr + "-" + seriesDescription,
+								zzseries: item.zzseries,
+								orderPrefix: item.zzprefix,
+								orderNumber: orderNumber, //item.zzdlr_ref_no,
+								suggestedVolume: item.total_suggest_qty,
+								requestedVolume: item.total_request_qty,
+								suggestedVolPercentRequested: suggestedVolPercentRequested, //item.tot_suggest_perc,
+								suggestedMixRequested: suggestedMixRequested, //item.tot_suggest_mix_requested,
+								allocatedVolume: item.total_allocated_qty,
+								percentRequestVolAllocated: percentRequestVolAllocated, //item.perc_request_volum_allocated,
+								pendingAllocation: item.pending_allocation,
+								unfilledAllocation: item.unfilled_allocation,
+								dealerCode: item.zzdealer_code,
+								zzdel_review: item.zzdel_review,
+								zzzadddata4: Number(item.zzzadddata4), // this field needed to apply the sort logic.Number('123')
+								modelYear: item.zzmoyr,
+								zzprocess_dt: item.zzprocess_dt
+							});
+
+							// console.log("oViewAllocatedData", oViewAllocatedData);
+						}
+					});
 
 					// var fullySorted =  _.chain(list).sortBy('age').sortBy('name').value(); syntax
 					var oViewSuggestData = _.sortBy((_.sortBy(oViewSuggestData, 'zzzadddata4')), 'modelYear');
