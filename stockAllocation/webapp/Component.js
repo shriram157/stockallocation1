@@ -27,9 +27,9 @@ sap.ui.define([
 		init: function () {
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
-             // set the language to the core
-             
-                           this._setTheLanguage();
+			// set the language to the core
+
+			this._setTheLanguage();
 			// Get resource bundle
 			var bundle = this.getModel('i18n').getResourceBundle();
 
@@ -134,6 +134,24 @@ sap.ui.define([
 			});
 			this.setModel(oDataModel, "ZSD_SUGGEST_ORDER_UPDATE_SRV");
 
+			//ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV
+			var mConfig = this.getMetadata().getManifestEntry("/sap.app/dataSources/ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV");
+			if (sLocation_conf == 0) {
+				mConfig.uri = "/Suggest_Order" + mConfig.uri;
+			} else {
+				mConfig.uri = mConfig.uri;
+			}
+			var oDataModel = new ODataModel(mConfig.uri, {
+				useBatch: false,
+				// disableHeadRequestForToken: false,
+				//defaultUpdateMethod: 'PUT',
+				json: true,
+				headers: {
+					"X-Requested-With": "XMLHttpRequest"
+				}
+			});
+			this.setModel(oDataModel, "ZVMS_STOCK_ALLOCATION_SUGG_ORD_SRV");
+
 			// set the dataSource model
 			this.setModel(new sap.ui.model.json.JSONModel({}), "dataSource");
 
@@ -168,8 +186,8 @@ sap.ui.define([
 			var entityNavigations = navigationWithContext[sEntityNameSet];
 			return entityNavigations == null ? null : entityNavigations[targetPageName];
 		},
-		
-					_setTheLanguage: function (oEvent) {
+
+		_setTheLanguage: function (oEvent) {
 
 			// var oI18nModel = new sap.ui.model.resource.ResourceModel({
 			// 	bundleUrl: "i18n/i18n.properties"
@@ -191,7 +209,7 @@ sap.ui.define([
 
 				// });
 				// this.getView().setModel(i18nModel, "i18n");
-						sap.ui.getCore().getConfiguration().setLanguage("fr");
+				sap.ui.getCore().getConfiguration().setLanguage("fr");
 
 			} else {
 				// var i18nModel = new sap.ui.model.resource.ResourceModel({
@@ -199,15 +217,12 @@ sap.ui.define([
 				// 	bundleLocale: ("en")
 
 				// });
-				 sap.ui.getCore().getConfiguration().setLanguage("en");
+				sap.ui.getCore().getConfiguration().setLanguage("en");
 			}
 
 			// var oModeli18n = this.getView().getModel("i18n");
 			// this._oResourceBundle = oModeli18n.getResourceBundle();
-		}	
-		
-		
-		
+		}
 
 	});
 
