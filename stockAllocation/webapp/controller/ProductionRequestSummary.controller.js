@@ -905,12 +905,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var seriesDescription;
 					var that = this;
 					that.data = oData.results;
-					//                var timeForBanner  ;	
-					$.each(oData.results, function (i, item) {
+					var oSuggArr = oData.results;
+					var filteredSugArr;
+					
+					//                var timeForBanner  ;
+					
+					if(oSuggArr.length > 0){
+						var filteredSugArr = oSuggArr.filter(s=> s.total_request_qty != "0" || s.total_suggest_qty != "0");
+						$.each(filteredSugArr, function (i, item) {
 						if (item !== undefined) {
-							if (item.total_request_qty == "0" && item.total_suggest_qty == "0") {
-								that.data.splice(i, 1);
-							} else {
+							// if (item.total_request_qty == "0" && item.total_suggest_qty == "0") {
+							// 	that.data.splice(i, 1);
+							// } else {
 								// if ((item.zzdlr_ref_no == "") || (item.zzdlr_ref_no == undefined)) {
 								order_Number = "XXXXXX";
 								// }
@@ -1023,9 +1029,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 								});
 
 								// console.log("oViewAllocatedData", oViewAllocatedData);
-							}
+							//}
 						}
 					});
+					
+					}
+					
 
 					// var fullySorted =  _.chain(list).sortBy('age').sortBy('name').value(); syntax
 					var oViewSuggestData = _.sortBy((_.sortBy(oViewSuggestData, 'zzzadddata4')), 'modelYear');
