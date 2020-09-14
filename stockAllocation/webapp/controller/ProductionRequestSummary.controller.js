@@ -923,9 +923,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							let found = accumulator.find(elem => elem.zzseries === sname)
 
 							if (found) {
+								found.total_suggest_qty += cur.total_suggest_qty;
 								found.total_request_qty += cur.total_request_qty;
-								found.total_request_qty += cur.total_request_qty;
-								found.total_request_qty += cur.total_request_qty;
+								found.total_allocated_qty += cur.total_allocated_qty;
 
 							} else {
 								accumulator.push(cur)
