@@ -1392,54 +1392,59 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var oCountModel = this.getView().getModel("countViewModel");
 			var oSuggestedModel = this.getView().getModel("suggestedDataModel");
+            var suggestedModelData = oSuggestedModel.getData();
+            var suggestedModelLength = oSuggestedModel.getData().length;
+            
+            
+			// if (oSuggestedModel) {
+				
+			// 	// loop and count the suggested model where qty is greater than 0. 					
+				
 
-			if (oSuggestedModel) {
-				var suggestedModelData = oSuggestedModel.getData();
-				// loop and count the suggested model where qty is greater than 0. 					
-				var suggestedModelLength = oSuggestedModel.getData().length;
+			// 	// 					for (var i = elements.length - 1; i >= 0; i--) {
+			// 	//   if (elements[i] == remove) {
+			// 	//     elements.splice(i, 1);
+			// 	//   }
+			// 	// }
 
-				// 					for (var i = elements.length - 1; i >= 0; i--) {
-				//   if (elements[i] == remove) {
-				//     elements.splice(i, 1);
-				//   }
-				// }
+			// 	for (var i = suggestedModelData.length - 1; i >= 0; i--) {
+			// 		if (suggestedModelData[i].zzdel_review == "Y" && validWindowSuggested == true) {
 
-				for (var i = suggestedModelData.length - 1; i >= 0; i--) {
-					if (suggestedModelData[i].zzdel_review == "Y" && validWindowSuggested == true) {
+			// 			if (suggestedModelData[i].suggestedVolume <= 0) {
+			// 				suggestedModelLength = suggestedModelLength - 1;
+			// 				var volumeZeroRecord = true;
+			// 			} else {
+			// 				var volumeZeroRecord = false;
+			// 			}
 
-						if (suggestedModelData[i].suggestedVolume <= 0) {
-							suggestedModelLength = suggestedModelLength - 1;
-							var volumeZeroRecord = true;
-						} else {
-							var volumeZeroRecord = false;
-						}
+			// 			suggestedModelData.splice(i, 1);
+			// 			if (volumeZeroRecord == false) {
+			// 				suggestedModelLength = suggestedModelLength - 1;
+			// 			}
 
-						suggestedModelData.splice(i, 1);
-						if (volumeZeroRecord == false) {
-							suggestedModelLength = suggestedModelLength - 1;
-						}
+			// 		}
+			// 	}
+			// 	for (var i = 0; i < suggestedModelData.length; i++) {
 
-					}
-				}
-				for (var i = 0; i < suggestedModelData.length; i++) {
+			// 		if (suggestedModelData[i].suggestedVolume <= 0) {
+			// 			suggestedModelLength = suggestedModelLength - 1;
+			// 		}
+			// 	}
 
-					if (suggestedModelData[i].suggestedVolume <= 0) {
-						suggestedModelLength = suggestedModelLength - 1;
-					}
-				}
+			// 	// }
+			// 	oSuggestedModel.updateBindings(true);
 
-				// }
-				oSuggestedModel.updateBindings(true);
+			// 	// check if suggested model has any anydata then only publish the tab suggestedTAb otherwise turn it off. 
+			// 	if (validWindowSuggested == true) {
+			// 		var suggestedModelLengthTemp = oSuggestedModel.getData().length;
+			// 		if (suggestedModelLengthTemp <= 0) {
+			// 			oModel.setProperty("/showSuggestionTab", false);
+			// 		}
+			// 	}
 
-				// check if suggested model has any anydata then only publish the tab suggestedTAb otherwise turn it off. 
-				if (validWindowSuggested == true) {
-					var suggestedModelLengthTemp = oSuggestedModel.getData().length;
-					if (suggestedModelLengthTemp <= 0) {
-						oModel.setProperty("/showSuggestionTab", false);
-					}
-				}
-
-			}
+			// }
+			
+			
 			var oRequestedModel = this.getView().getModel("requestedDataModel");
 			if (oRequestedModel) {
 				var requestedModelData = oRequestedModel.getData(); //.length;
