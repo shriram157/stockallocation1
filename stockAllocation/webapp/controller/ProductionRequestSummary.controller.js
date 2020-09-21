@@ -260,7 +260,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				this.seriesObj.Business_Partner_name = "";
 			}
 			this.seriesObj.Business_Partner_name = this.sSelectedDealerText;
-			this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
+			// this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
+			
+			if(sap.ui.getCore().getModel("suggestedDataModel").getData().length > 0){
+				this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
+			}else{
+				this.seriesObj.processDate = null;
+			}
+			
 			this.seriesObj.Dealer = this.sSelectedDealer;
 			if (!tabClicked) {
 				this.seriesObj.tabClicked = "suggestedTab";
