@@ -265,7 +265,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			if(sap.ui.getCore().getModel("suggestedDataModel").getData().length > 0){
 				this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
 			}else{
-				this.seriesObj.processDate = sap.ui.getCore().getModel("requestedDataModel").getData()[0].zzprocess_dt;
+				this.seriesObj.processDate = this.getView().getModel("requestedDataModel").getData()[0].zzprocess_dt;
 			}
 			
 			this.seriesObj.Dealer = this.sSelectedDealer;
