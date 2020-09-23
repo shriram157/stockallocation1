@@ -9,7 +9,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	return BaseController.extend("suggestOrder.controller.ProductionRequestSummary", {
 		handleRouteMatched: function (oEvent) {
 			// window.location.reload();
-
 			var sAppId = "App5bb4c41429720e1dcc397810";
 
 			var oParams = {};
