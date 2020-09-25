@@ -17,7 +17,6 @@
 			checkOBJ = {};
 
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
-
 			handleRouteMatched: function (oEvent) {
 				// sap.ui.core.BusyIndicator.show();
 				this.defaultLightBusyDialog = new sap.m.BusyDialog();

@@ -9,7 +9,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	return BaseController.extend("suggestOrder.controller.ProductionRequestSummary", {
 		handleRouteMatched: function (oEvent) {
 			// window.location.reload();
-
 			var sAppId = "App5bb4c41429720e1dcc397810";
 
 			var oParams = {};
@@ -260,7 +259,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				this.seriesObj.Business_Partner_name = "";
 			}
 			this.seriesObj.Business_Partner_name = this.sSelectedDealerText;
-			this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
+			// this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
+			
+			if(sap.ui.getCore().getModel("suggestedDataModel").getData().length > 0){
+				this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
+			}else{
+				this.seriesObj.processDate = this.getView().getModel("requestedDataModel").getData()[0].zzprocess_dt;
+			}
+			
 			this.seriesObj.Dealer = this.sSelectedDealer;
 			if (!tabClicked) {
 				this.seriesObj.tabClicked = "suggestedTab";
@@ -1392,11 +1398,14 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var oCountModel = this.getView().getModel("countViewModel");
 			var oSuggestedModel = this.getView().getModel("suggestedDataModel");
-
+            var suggestedModelData = oSuggestedModel.getData();
+            var suggestedModelLength = oSuggestedModel.getData().length;
+            
+            
 			if (oSuggestedModel) {
-				var suggestedModelData = oSuggestedModel.getData();
+				
 				// loop and count the suggested model where qty is greater than 0. 					
-				var suggestedModelLength = oSuggestedModel.getData().length;
+				
 
 				// 					for (var i = elements.length - 1; i >= 0; i--) {
 				//   if (elements[i] == remove) {
@@ -1432,14 +1441,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				oSuggestedModel.updateBindings(true);
 
 				// check if suggested model has any anydata then only publish the tab suggestedTAb otherwise turn it off. 
-				if (validWindowSuggested == true) {
-					var suggestedModelLengthTemp = oSuggestedModel.getData().length;
-					if (suggestedModelLengthTemp <= 0) {
-						oModel.setProperty("/showSuggestionTab", false);
-					}
-				}
+				// if (validWindowSuggested == true) {
+				// 	var suggestedModelLengthTemp = oSuggestedModel.getData().length;
+				// 	if (suggestedModelLengthTemp <= 0) {
+				// 		oModel.setProperty("/showSuggestionTab", false);
+				// 	}
+				// }
 
 			}
+			
+			
 			var oRequestedModel = this.getView().getModel("requestedDataModel");
 			if (oRequestedModel) {
 				var requestedModelData = oRequestedModel.getData(); //.length;
