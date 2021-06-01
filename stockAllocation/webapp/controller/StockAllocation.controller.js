@@ -445,8 +445,7 @@
 			},
 
 			getThreShold: function (_data, _current, _dataModel, _currentThreShold) {
-				if (_data.model == "" && _current.model === _data.modelCodeDescription.replace("--", " ").split(" ")[1] && _data.reqThreshold !=
-					"") {
+				if (_data.model == "" && _current.model === _data.modelCodeDescription.replace("--", " ").split(" ")[1] && _data.reqThreshold !== "") {
 					console.log("currentData", _data.model);
 					localScope.reqThreShold = Number(_data.reqThreshold);
 					localScope.subtotal = _data.requested_Volume;
