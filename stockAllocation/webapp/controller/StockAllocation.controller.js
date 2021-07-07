@@ -348,17 +348,20 @@
 					}
 					localScope.getThreSholdFragment(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
 				}
+				var newValue = 0;
 				if (this.flagThreShold == true) {
 					MessageBox.error("You have crossed the threshold");
-					var newValue = 0;
+					
 					newValue = newValue + +newAddedQty - 1;
 					localScope.reqThreShold = 0;
-					oEvt.getSource()._getIncrementButton().setBlocked(true);
-					oEvt.getSource()._getIncrementButton().addStyleClass("disableBtn");
-					oEvt.getSource().setValue(newValue);
+				
+					
 				} else {
-					oEvt.getSource()._getIncrementButton().setBlocked(false);
-					oEvt.getSource()._getIncrementButton().removeStyleClass("disableBtn");
+					if(!newAddedModel || newAddedModel == "" || newAddedModel == "Please Select"){
+						MessageBox.error("Please select Model");
+					oEvt.getSource().setValue(newValue);	
+					}
+				
 				}
 
 			},
