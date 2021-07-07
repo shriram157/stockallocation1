@@ -23,7 +23,7 @@
 					             />
 						</Select>
 						<Label text="{i18n>REQUEST_VOLUME}" labelFor="reqVolumeId" required="true"/>
-						<StepInput value="1" fieldGroupIds="requiredField" id="reqVolumeId" displayValuePrecision="0" min="0"
+						<StepInput value="0" fieldGroupIds="requiredField" id="reqVolumeId" displayValuePrecision="0" min="0"
 							max="100" width="7.5rem" step="1" largerStep="2" valueState="None" enabled="true" 
 								change="whenUserChangesRequestedDataOnFragment" />
 							 
