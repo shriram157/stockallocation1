@@ -338,30 +338,85 @@
 				tempRequestedTotal = tempRequestedTotal + +newAddedQty;
 
 				var oStockModelData = this.getView().getModel("stockDataModel").getData();
-				for (var i = 0; i < oStockModelData.length; i++) {
-					if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
-						//fix for difference column update
 
-						tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
+				var bool = oStockModelData.find((o, i) => {
+					if (o.model === currentData.model) {
 
-						this.tempModel = oStockModelData[i].model;
+						return true;
 					}
-					localScope.getThreSholdFragment(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
-				}
-				var newValue = 0;
-				if (this.flagThreShold == true) {
-					MessageBox.error("You have crossed the threshold");
-					
-					newValue = newValue + +newAddedQty - 1;
-					localScope.reqThreShold = 0;
-				
-					
+				});
+				if (bool) {
+					for (var i = 0; i < oStockModelData.length; i++) {
+						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
+							//fix for difference column update
+
+							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
+
+							this.tempModel = oStockModelData[i].model;
+						}
+						localScope.getThreSholdFragment(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
+					}
+
+					var newValue = 0;
+					if (this.flagThreShold == true) {
+						MessageBox.error("You have crossed the threshold");
+
+						newValue = newValue + +newAddedQty - 1;
+						localScope.reqThreShold = 0;
+						//	oEvt.getSource()._getIncrementButton().setBlocked(true);
+						//	oEvt.getSource()._getIncrementButton().addStyleClass("disableBtn");
+						oEvt.getSource().setValue(newValue);
+					} else {
+						//	oEvt.getSource()._getIncrementButton().setBlocked(false);
+						//	oEvt.getSource()._getIncrementButton().removeStyleClass("disableBtn");
+						if (!newAddedModel || newAddedModel == "" || newAddedModel == "Please Select") {
+							MessageBox.error("Please select Model");
+							oEvt.getSource().setValue(newValue);
+						}
+					}
 				} else {
-					if(!newAddedModel || newAddedModel == "" || newAddedModel == "Please Select"){
-						MessageBox.error("Please select Model");
-					oEvt.getSource().setValue(newValue);	
-					}
-				
+
+					localScope.thresholdModel.read("/ZCDS_SUGGST_ORD_QTY_TOL", {
+						urlParameters: {
+							"$filter": "zzdealer_code eq'" + this.dealerCode + "' and zzmoyr eq '" + this.yearModel + "' and zzmodel eq '" + currentData.model +
+								"'"
+						},
+
+						//"$filter": "zzdealer_code eq'" + this.dealerCode + "' and zzmoyr eq '" + this.yearModel +"'"	
+						success: function (thresholdData) {
+
+							if (thresholdData.results.length > 0) {
+								localScope.reqThreShold = thresholdData.results[0].allowedtolerance;
+							} else {
+								localScope.reqThreShold = 0;
+							}
+							if (tempRequestedTotal > localScope.reqThreShold) {
+								localScope.flagThreShold = true;
+
+							}
+							var newValue = 0;
+							if (localScope.flagThreShold == true) {
+								MessageBox.error("You have crossed the threshold");
+
+								newValue = newValue + +newAddedQty - 1;
+								localScope.reqThreShold = 0;
+								//	oEvt.getSource()._getIncrementButton().setBlocked(true);
+								//	oEvt.getSource()._getIncrementButton().addStyleClass("disableBtn");
+								sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(newValue);
+							} else {
+								//	oEvt.getSource()._getIncrementButton().setBlocked(false);
+								//	oEvt.getSource()._getIncrementButton().removeStyleClass("disableBtn");
+								if (!newAddedModel || newAddedModel == "" || newAddedModel == "Please Select") {
+									MessageBox.error("Please select Model");
+									sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(newValue);
+								}
+							}
+						},
+						error: function (error) {
+
+						}
+					});
+
 				}
 
 			},
