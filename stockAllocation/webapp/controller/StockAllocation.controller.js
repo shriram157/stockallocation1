@@ -195,8 +195,9 @@
 					var oDateFormat = sap.ui.core.format.DateFormat.getInstance({
 						pattern: "dd MMMM yyyy"
 					});
+//Changes done by Minakshi for INC0194774
 
-					var processDateDisplay = oDateFormat.format(new Date(processDate));
+					var processDateDisplay = oDateFormat.format(new Date(processDate), "UTC");
 					this._oViewLocalData = new sap.ui.model.json.JSONModel({
 						busy: false,
 						delay: 0,
