@@ -27,6 +27,7 @@ sap.ui.define([
 		init: function () {
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+			this.setModel(models.createLocalDataModel(), "LocalDataModel");
 			// set the language to the core
 
 			this._setTheLanguage();
