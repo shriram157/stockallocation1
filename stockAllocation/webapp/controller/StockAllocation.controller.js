@@ -2542,7 +2542,8 @@
 									// }
 									that._calculateTotals();
 									
-									var nmaxallowdNum = that.getView().getModel("initialStockTotalModel").getData()[0].currentCTSTotal + Number(that.allowedtolerance);
+									var nmaxallowdNum = that.getView().getModel("initialStockTotalModel").getData()[0].currentCTSTotal + 
+									Number(that.allowedtolerance);
 									that.getOwnerComponent().getModel("LocalDataModel").setProperty("/maxallowedSize", nmaxallowdNum);
 									//debugger;
 									if (newseriesFlag == true && callNewModelCount === 0) {
