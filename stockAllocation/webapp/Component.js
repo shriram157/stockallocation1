@@ -27,6 +27,7 @@ sap.ui.define([
 		init: function () {
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+		
 			// set the language to the core
 
 			this._setTheLanguage();
@@ -167,6 +168,7 @@ sap.ui.define([
 
 			// create the views based on the url/hash
 			this.getRouter().initialize();
+			this.setModel(models.createLocalDataModel(), "LocalDataModel");
 		},
 
 		createContent: function () {
