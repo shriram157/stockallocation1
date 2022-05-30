@@ -10,10 +10,8 @@ function(StepInput){
 			}
 		},
 		onmousedown: function(evt){
-			// console.log(this.mEventRegistry.change[0].oListener.obj.reqThreshold);
-			// this.setMax(this.mEventRegistry.change[0].oListener.obj.reqThreshold);
-			this._attachChange;
-			
+			 console.log(this.mEventRegistry.change[0].oListener.obj.reqThreshold);
+			 this.setMax(this.mEventRegistry.change[0].oListener.obj.reqThreshold);
 		},
 	
 		renderer :"sap.m.StepInputRenderer"	
