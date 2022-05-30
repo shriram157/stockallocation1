@@ -11,9 +11,7 @@ function(StepInput){
 		},
 		onmousedown: function(evt){
 			console.log(evt);
-		},
-	
-		renderer :"sap.m.InputRenderer"	
+		}
 		
 	});
 	
