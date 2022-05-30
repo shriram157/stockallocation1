@@ -10,8 +10,9 @@ function(StepInput){
 			}
 		},
 		onmousedown: function(evt){
-			console.log(this.mEventRegistry.change[0].oListener.obj.reqThreshold);
-			this.setMax(this.mEventRegistry.change[0].oListener.obj.reqThreshold);
+			// console.log(this.mEventRegistry.change[0].oListener.obj.reqThreshold);
+			// this.setMax(this.mEventRegistry.change[0].oListener.obj.reqThreshold);
+			this._attachChange;
 			
 		},
 	
