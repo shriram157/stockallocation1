@@ -14,11 +14,12 @@ function(StepInput){
 			 //this.setMax(this.mEventRegistry.change[0].oListener.obj.reqThreshold);
 			 //StockAllocation.whenUserChangesRequestedData();
 			 
-			 var oArr = this.getParent().getParent().getModel("stockDataModel").getData();
-			 var nCount = oArr.filter(elm => elm.modelCodeDescription === this.getParent().getCells()[0].getText()).length 
-			 + Number(this.mEventRegistry.change[0].oListener.allowedtolerance);
+			 //var oArr = this.getParent().getParent().getModel("stockDataModel").getData();
+			 //var nCount = oArr.filter(elm => elm.modelCodeDescription === this.getParent().getCells()[0].getText()).length 
+			 //+ Number(this.mEventRegistry.change[0].oListener.allowedtolerance);
 			 
-			 this.setMax(nCount);
+			 //this.setMax(nCount);
+			 return false;
 			 
 		},
 	
