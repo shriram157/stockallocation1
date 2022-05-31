@@ -567,9 +567,9 @@
 								localScope.oTable.getItems()[x].getCells()[12]._getIncrementButton().addStyleClass("disableBtn");
 							}
 						}
-						localScope.currentRequestVolume = (Number(localScope.currentStockVolume) - 1).toString();
-						_current.requested_Volume = _current.requested_Volume - 1;
-						_currentThreShold = _currentThreShold - 1;
+						localScope.currentRequestVolume = (Number(localScope.currentStockVolume)).toString();
+						_current.requested_Volume = _current.requested_Volume ;
+						_currentThreShold = _currentThreShold;
 						localScope.getView().getModel("stockDataModel").updateBindings(true);
 
 					} else {
