@@ -559,7 +559,7 @@
 					localScope.subtotal = _data.requested_Volume;
 					console.log("reqThreShold", localScope.reqThreShold);
 
-					if (_currentThreShold > localScope.reqThreShold) {
+					if (_currentThreShold >= localScope.reqThreShold) {
 						localScope.flagThreShold = true;
 						for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
 							if (localScope.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == _current.model) {
