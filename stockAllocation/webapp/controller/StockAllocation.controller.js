@@ -559,7 +559,7 @@
 					localScope.subtotal = _data.requested_Volume;
 					console.log("reqThreShold", localScope.reqThreShold);
 
-					if (_currentThreShold >= localScope.reqThreShold) {
+					if (_currentThreShold > localScope.reqThreShold) {
 						localScope.flagThreShold = true;
 						for (var x = 0; x <= this.oTable.getItems().length - 1; x++) {
 							if (localScope.oTable.getItems()[x].getCells()[0].getText().split(" ")[0] == _current.model) {
@@ -567,9 +567,9 @@
 								localScope.oTable.getItems()[x].getCells()[12]._getIncrementButton().addStyleClass("disableBtn");
 							}
 						}
-						localScope.currentRequestVolume = (Number(localScope.currentStockVolume)).toString();
-						_current.requested_Volume = _current.requested_Volume ;
-						_currentThreShold = _currentThreShold;
+						localScope.currentRequestVolume = (Number(localScope.currentStockVolume) - 1).toString();
+						_current.requested_Volume = _current.requested_Volume - 1;
+						_currentThreShold = _currentThreShold - 1;
 						localScope.getView().getModel("stockDataModel").updateBindings(true);
 
 					} else {
