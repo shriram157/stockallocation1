@@ -15,14 +15,12 @@
 			salesNetData = [],
 			localScope,
 			checkOBJ = {};
-
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 			handleRouteMatched: function (oEvent) {
 				// sap.ui.core.BusyIndicator.show();
 				this.defaultLightBusyDialog = new sap.m.BusyDialog();
 				this.defaultLightBusyDialog.open();
 				var sAppId = "App5bb4c41429720e1dcc397810";
-
 				var oParams = {};
 				callNewModelCount = 0;
 				this.resultsLossofData = false;
