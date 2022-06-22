@@ -459,25 +459,25 @@
 				var requestedDSTotal = 0;
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 				//HyperCare 3.0
-				if (Number(stockDataModel.suggested == 0)) {
-					stockDataModel.checkBoxEnabled = false;
-					stockDataModel.checkBoxFlag = false;
-					stockDataModel.zzui_flag = "";
+				if (Number(currentData.suggested == 0)) {
+					currentData.checkBoxEnabled = false;
+					currentData.checkBoxFlag = false;
+					currentData.zzui_flag = "";
 				}
 
 				//HyperCare 3.0
-				if (Number(stockDataModel.requested_Volume) < Number(stockDataModel.suggested) && Number(stockDataModel.suggested) > 0) {
-					stockDataModel.checkBoxEnabled = true;
-					stockDataModel.checkBoxFlag = true;
-					stockDataModel.zzui_flag = "Y";
-				} else if (Number(stockDataModel.requested_Volume) > Number(stockDataModel.suggested) && Number(stockDataModel.suggested) != 0) {
-					stockDataModel.checkBoxEnabled = false;
-					stockDataModel.checkBoxFlag = false;
-					stockDataModel.zzui_flag = "N";
+				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && Number(currentData.suggested) > 0) {
+					currentData.checkBoxEnabled = true;
+					currentData.checkBoxFlag = true;
+					currentData.zzui_flag = "Y";
+				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
+					currentData.checkBoxEnabled = false;
+					currentData.checkBoxFlag = false;
+					currentData.zzui_flag = "N";
 				} else {
-					stockDataModel.checkBoxEnabled = false;
-					stockDataModel.checkBoxFlag = false;
-					stockDataModel.zzui_flag = "";
+					currentData.checkBoxEnabled = false;
+					currentData.checkBoxFlag = false;
+					currentData.zzui_flag = "";
 				}
 
 				if (currentValue > oldS4Value) {
