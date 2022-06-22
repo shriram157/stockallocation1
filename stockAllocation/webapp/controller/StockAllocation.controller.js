@@ -267,7 +267,7 @@
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "N";
 				}
 
-				this.getView().getModel("stockDataModel").updateBindings(true).enabled(true);
+				this.getView().getModel("stockDataModel").updateBindings(true);
 			},
 
 			formatBoolean: function (oEvent) {
