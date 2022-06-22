@@ -296,7 +296,7 @@
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>reqThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									class="noheight"/>
-								<CheckBox selected="{stockDataModel>requested_Volume}" select="onCheck" visible="{stockDataModel>requested_Volume}" class="noheight"/>
+								<CheckBox selected="true" select="onCheck" visible="{stockDataModel>requested_Volume}" class="noheight"/>
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>requestedDSSubttlOnly}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
