@@ -258,7 +258,7 @@
 				// debugger;
 				//objNew.ZzuiFlag 
 				if (oCheck.getParameter("selected") === true && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
-					0 ){
+					0 && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested > Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().requested) )){
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "Y";
 				} else if (oCheck.getParameter("selected") === false && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
@@ -267,7 +267,7 @@
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "N";
 				}
 
-				this.getView().getModel("stockDataModel").updateBindings(true).setenabled(false);
+				this.getView().getModel("stockDataModel").updateBindings(true).setenabled(true);
 			},
 
 			formatBoolean: function (oEvent) {
