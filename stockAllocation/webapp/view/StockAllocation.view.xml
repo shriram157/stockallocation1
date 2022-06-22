@@ -296,8 +296,8 @@
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>reqThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									class="noheight"/>
-								<CheckBox text="{i18n>DealerConfig}" selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" enabled="true" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>
-								<Input enabled="{stockDataModel>checkBoxEnabled}"></Input>
+								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" enabled="false" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>
+								<Input enabled="false"></Input>
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>requestedDSSubttlOnly}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
