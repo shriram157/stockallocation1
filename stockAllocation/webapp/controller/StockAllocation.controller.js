@@ -263,7 +263,7 @@
 					0) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "Y";
-				} else if (oCheck.getParameter("selected") === false && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
+				} else (oCheck.getParameter("selected") === false && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
 					0) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "N";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "N";
