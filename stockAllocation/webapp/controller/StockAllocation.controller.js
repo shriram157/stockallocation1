@@ -15,12 +15,14 @@
 			salesNetData = [],
 			localScope,
 			checkOBJ = {};
+
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 			handleRouteMatched: function (oEvent) {
 				// sap.ui.core.BusyIndicator.show();
 				this.defaultLightBusyDialog = new sap.m.BusyDialog();
 				this.defaultLightBusyDialog.open();
 				var sAppId = "App5bb4c41429720e1dcc397810";
+
 				var oParams = {};
 				callNewModelCount = 0;
 				this.resultsLossofData = false;
@@ -258,7 +260,7 @@
 				// debugger;
 				//objNew.ZzuiFlag 
 				if (oCheck.getParameter("selected") === true && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
-					0 ){
+					0) {
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y";
 					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "Y";
 				} else if (oCheck.getParameter("selected") === false && Number(oCheck.getSource().getBindingContext("stockDataModel").getObject().suggested) >
@@ -466,7 +468,7 @@
 				}
 
 				//HyperCare 3.0
-				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && Number(currentData.suggested) > 0) {
+				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";

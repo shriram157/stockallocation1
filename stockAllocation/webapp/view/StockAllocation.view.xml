@@ -1,6 +1,5 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:l="sap.ui.layout"
-	controllerName="suggestOrder.controller.StockAllocation" xmlns:html="http://www.w3.org/1999/xhtml"
-	xmlns:custom="suggestOrder.controls">
+	controllerName="suggestOrder.controller.StockAllocation" xmlns:html="http://www.w3.org/1999/xhtml">
 	<html:style>
 		.setOrangeFont{ color:#E78C07!important;} .pageHeight{height:100%;}
 	</html:style>
@@ -291,12 +290,12 @@
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>suggestedDSSubttlOnly}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<custom:CustomStepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="" width="5.5rem" step="1" largerStep="2"
+								<StepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="100" width="5.5rem" step="1" largerStep="2"
 									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="whenUserChangesRequestedData" visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>reqThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									class="noheight"/>
-								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{suggested>checkBoxEnabled}" class="noheight"/>
+								<CheckBox selected="{path : 'stockDataModel>checkBoxFlag'}" select="onCheck" visible="{stockDataModel>checkBoxEnabled}" class="noheight"/>
 								<Text text="{stockDataModel>difference}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>requestedDSSubttlOnly}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
