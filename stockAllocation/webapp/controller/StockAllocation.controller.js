@@ -469,7 +469,7 @@
 
 				//HyperCare 3.0
 				else if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
-					currentData.checkBoxEnabled = true;
+					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
 				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
