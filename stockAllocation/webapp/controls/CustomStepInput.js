@@ -22,6 +22,10 @@ function(StepInput){
 			 return false;
 			 
 		},
+		
+		onwheel : function(){
+			return false;
+		},
 	
 		renderer :"sap.m.StepInputRenderer"	
 		
