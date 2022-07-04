@@ -26,6 +26,10 @@ function(StepInput){
 		onwheel : function(){
 			return false;
 		},
+		
+		onscroll : function(){
+			return false;
+		},
 	
 		renderer :"sap.m.StepInputRenderer"	
 		
