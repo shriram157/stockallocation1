@@ -468,8 +468,7 @@
 				}
 
 				//HyperCare 3.0
-				if ((Number(currentData.requested_Volume) < Number(currentData.suggested)) && oCheck.getSource().getBindingContext("stockDataModel").getObject().ZzuiFlag = "Y" &&
-					oCheck.getSource().getBindingContext("stockDataModel").getObject().zzui_flag = "Y") {
+				if ((Number(currentData.requested_Volume) < Number(currentData.suggested)) && zzui_flag = "Y {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
