@@ -546,7 +546,7 @@
 				}
 
 				this._calculateTotals();
-				oEvt.getSource().getId().blur();
+			
 
 				// when before click navigates to previous screen the popup might need to be thrown. 
 
