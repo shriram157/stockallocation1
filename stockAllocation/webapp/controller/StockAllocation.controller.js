@@ -1,4 +1,5 @@
-	sap.ui.define(["sap/ui/core/mvc/Controller",
+
+sap.ui.define(["sap/ui/core/mvc/Controller",
 		"sap/m/MessageBox",
 		"./utilities",
 		"sap/ui/core/routing/History",
@@ -15,14 +16,12 @@
 			salesNetData = [],
 			localScope,
 			checkOBJ = {};
-
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 			handleRouteMatched: function (oEvent) {
 				// sap.ui.core.BusyIndicator.show();
 				this.defaultLightBusyDialog = new sap.m.BusyDialog();
 				this.defaultLightBusyDialog.open();
 				var sAppId = "App5bb4c41429720e1dcc397810";
-
 				var oParams = {};
 				callNewModelCount = 0;
 				this.resultsLossofData = false;
@@ -468,8 +467,8 @@
 				}
 
 				//HyperCare 3.0
-				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) { 
-					currentData.checkBoxEnabled = true; 
+				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
+					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
 				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
@@ -546,7 +545,6 @@
 				}
 
 				this._calculateTotals();
-			
 
 				// when before click navigates to previous screen the popup might need to be thrown. 
 
