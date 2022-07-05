@@ -468,18 +468,18 @@
 				}
 
 				//HyperCare 3.0
-				if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) { 
-					currentData.checkBoxEnabled = false; //changes done by Swetha for INC0214976 on 27/06/2022 (currentData.checkBoxEnabled = true)
+				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && currentData.zzui_flag == "Y") { 
+					currentData.checkBoxEnabled = true; //changes done by Swetha for INC0214976 on 27/06/2022 (currentData.checkBoxEnabled = true)
+					currentData.checkBoxFlag = true;
+					currentData.zzui_flag = "Y";
+				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0)) {
+					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
 					currentData.zzui_flag = "N";
-				} else if (Number(currentData.requested_Volume) == Number(currentData.suggested)) {
+				} else {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
 					currentData.zzui_flag = "";
-				} else {
-					currentData.checkBoxEnabled = true;
-					currentData.checkBoxFlag = true;
-					currentData.zzui_flag = "Y";
 				}
 
 				if (currentValue > oldS4Value) {
