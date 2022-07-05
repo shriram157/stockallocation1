@@ -468,7 +468,7 @@
 				}
 
 				//HyperCare 3.0
-				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && currentData.zzui_flag == "Y") { 
+				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) { 
 					currentData.checkBoxEnabled = true; //changes done by Swetha for INC0214976 on 27/06/2022 (currentData.checkBoxEnabled = true)
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
