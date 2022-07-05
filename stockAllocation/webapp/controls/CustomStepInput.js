@@ -23,7 +23,7 @@ function(StepInput){
 			 
 		},
 		
-		onwheel : function(){
+		onmousewheel : function(){
 			return false;
 		},
 		
