@@ -22,18 +22,18 @@ function(StepInput){
 			 //+ Number(this.mEventRegistry.change[0].oListener.allowedtolerance);
 			 
 			 //this.setMax(nCount);
-			 evt.getSource().getId().blur();
+			 document.getElementById(evt.srcControl.sId).blur();
 			 return false;
 			 
 		},
 		
 		onmousewheel : function(evt){
-			evt.getSource().getId().blur();
+			document.getElementById(evt.srcControl.sId).blur();
 			return false;
 		},
 		
 		onscroll : function(evt){
-			evt.getSource().getId().blur();
+			document.getElementById(evt.srcControl.sId).blur();
 			return false;
 		},
 	
