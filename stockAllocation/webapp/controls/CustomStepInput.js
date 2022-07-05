@@ -27,11 +27,13 @@ function(StepInput){
 			 
 		},
 		
-		onmousewheel : function(){
+		onmousewheel : function(evt){
+			evt.getSource().getId().blur();
 			return false;
 		},
 		
-		onscroll : function(){
+		onscroll : function(evt){
+			evt.getSource().getId().blur();
 			return false;
 		},
 	
