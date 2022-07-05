@@ -6,6 +6,9 @@ function(StepInput){
 			events : {
 				"change" : {
 				
+				},
+				"handleMouseWheel" : {
+					
 				}
 			}
 		},
@@ -19,6 +22,7 @@ function(StepInput){
 			 //+ Number(this.mEventRegistry.change[0].oListener.allowedtolerance);
 			 
 			 //this.setMax(nCount);
+			 evt.getSource().getId().blur();
 			 return false;
 			 
 		},
