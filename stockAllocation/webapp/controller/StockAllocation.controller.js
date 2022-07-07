@@ -460,7 +460,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var requestedDSTotal = 0;
 				var oDetailModel = this.getView().getModel("oViewLocalDataModel");
 				//HyperCare 3.0
-				if (Zzui_Flag = "Y" || Zzui_Flag = "N" || Zzui_Flag = "") {
+				if (Zzui_Flag == "Y" || Zzui_Flag == "N" || Zzui_Flag == "") {
 					if (Number(currentData.suggested == 0)) {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
