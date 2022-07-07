@@ -462,10 +462,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				//HyperCare 3.0
 				if (Zzui_Flag == "Y" || Zzui_Flag == "N" || Zzui_Flag == "") {
 					if (Number(currentData.suggested == 0)) {
-					currentData.checkBoxEnabled = false;
-					currentData.checkBoxFlag = false;
-					currentData.zzui_flag = "";	
-				}	}	
+						currentData.checkBoxEnabled = false;
+						currentData.checkBoxFlag = false;
+						currentData.zzui_flag = "";	
+					}	}	
 
 				//HyperCare 3.0
 				else if (Zzui_Flag == "Y") {
