@@ -474,11 +474,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						currentData.zzui_flag = "Y";
 				}	else {
 						currentData.checkBoxEnabled = false;
-				}	else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
+				}	}
+				else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
 					currentData.zzui_flag = "N";
-				}	else {
+				}	
+				else {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
 					currentData.zzui_flag = "";
