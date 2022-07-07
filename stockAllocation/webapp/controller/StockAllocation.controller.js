@@ -467,14 +467,20 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 
 				//HyperCare 3.0
-				else if (Zzui_Flag = "Y" && Number(currentData.requested_Volume) < Number(currentData.suggested)) {
-					currentData.checkBoxEnabled = true;
-					currentData.checkBoxFlag = true;
-					currentData.zzui_flag = "Y";
-				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
-					currentData.checkBoxEnabled = false;
-					currentData.checkBoxFlag = false;
-					currentData.zzui_flag = "N";
+				if (Zzui_Flag = "Y") {
+					if (Number(currentData.requested_Volume) < Number(currentData.suggested) {
+						currentData.checkBoxEnabled = true;
+						currentData.checkBoxFlag = true;
+						currentData.zzui_flag = "Y";
+					}	 else {
+						currentData.checkBoxEnabled = false;
+						currentData.checkBoxFlag = true;
+						currentData.zzui_flag = "Y";
+					}	}
+				else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
+						currentData.checkBoxEnabled = false;
+						currentData.checkBoxFlag = false;
+						currentData.zzui_flag = "N";
 				} else {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
