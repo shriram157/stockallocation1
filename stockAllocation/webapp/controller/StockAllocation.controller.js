@@ -471,7 +471,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					if (Zzui_Flag == "Y") {
 						currentData.checkBoxEnabled = true;
 						currentData.checkBoxFlag = true;
-						currentData.zzui_flag = "Y";
+						//	currentData.zzui_flag = "Y";
 				}	else {
 						currentData.checkBoxEnabled = false;
 				}	}
