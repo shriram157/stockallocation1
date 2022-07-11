@@ -41,10 +41,10 @@ function(StepInput){
 		
 	});
 	
-	CustomStepInput.prototype.onAfterRendering = function (oEvent) {
-		CustomStepInput.prototype.onAfterRendering.apply(this, arguments);
+	// CustomStepInput.prototype.onAfterRendering = function (oEvent) {
+	// 	CustomStepInput.prototype.onAfterRendering.apply(this, arguments);
 			
-	};
+	// };
 	
 	return CustomStepInput;
 });
