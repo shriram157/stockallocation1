@@ -438,6 +438,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				localScope = this;
 				localScope.evt = oEvt;
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
+				
+				var aSuggestedOrd = this.getOwnerComponent().getModel("LocalDataModel").getProperty("/zcdsSuggestOrdRes");
 
 				var currentValue = oEvt.getSource().getProperty("value");
 
@@ -1893,6 +1895,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					success: function (oData) {
 						// sap.ui.core.BusyIndicator.hide();
 						if (oData.results.length > 0) {
+							that.getOwnerComponent().getModel("LocalDataModel").setProperty("/zcdsSuggestOrdRes", oData.results);
 							// that.defaultLightBusyDialog.close();
 							$.each(oData.results, function (i, item) {
 								var query = "(Model='" + item.zzmodel + "',Kunnr='" + that.dealerCode + "',Zzextcol='" + item.zzextcol + "',Zzseries='" +
