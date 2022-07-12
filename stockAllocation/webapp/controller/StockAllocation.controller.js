@@ -440,6 +440,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
 				
 				var aSuggestedOrd = this.getOwnerComponent().getModel("LocalDataModel").getProperty("/zcdsSuggestOrdRes");
+				
+				var szzextcol = oEvt.getSource().getParent().getCells()[2].getText().split("-")[0];
+				
+				var szzui_flag = aSuggestedOrd.filter((item)=> item.zzextcol === szzextcol )[0].zzui_flag;
 
 				var currentValue = oEvt.getSource().getProperty("value");
 
@@ -468,7 +472,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 
 				//HyperCare 3.0
-				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && currentData.zzui_flag != "" && currentData.zzui_flag != "N") {
+				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && szzui_flag == "Y") {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
