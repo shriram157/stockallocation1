@@ -442,8 +442,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var aSuggestedOrd = this.getOwnerComponent().getModel("LocalDataModel").getProperty("/zcdsSuggestOrdRes");
 				
 				var szzextcol = oEvt.getSource().getParent().getCells()[2].getText().split("-")[0];
+				var szzmodel = oEvt.getSource().getParent().getCells()[0].getText().split("-")[0];
+				var szzsuffix = oEvt.getSource().getParent().getCells()[1].getText().split(" ")[0];
 				
-				var szzui_flag = aSuggestedOrd.filter((item)=> item.zzextcol === szzextcol )[0].zzui_flag;
+				var szzui_flag = aSuggestedOrd.filter((item)=> item.zzmodel == szzmodel && item.zzsuffix == szzsuffix  && item.zzextcol === szzextcol  )[0].zzui_flag;
 
 				var currentValue = oEvt.getSource().getProperty("value");
 
