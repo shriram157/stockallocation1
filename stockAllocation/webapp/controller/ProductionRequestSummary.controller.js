@@ -1086,7 +1086,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 							//	visibleProperty
 
-							if (oSuggestedModelData[i].suggestedVolume <= 0) {
+							if (oSuggestedModelData[i].suggestedVolume >= 0) {
 								oSuggestedModelData[i].visibleProperty = false;
 								atleastOneRecordwithZeroExist = true;
 							}
