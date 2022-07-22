@@ -910,14 +910,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var countForSuggested, countForRequested;
 					var seriesDescription;
 					var that = this;
-					var oViewModel = new JSONModel({          //changes by Swetha
-						delay: 0.00000001
-					});										
+					// var oViewModel = new JSONModel({          //changes by Swetha
+					// 	delay: 0.00000001
+					// });										
 					that.data = oData.results;
 					var oSuggArr = oData.results;
 					var filteredSugArr;
 
 					//                var timeForBanner  ;
+					
+					
 
 					if (oSuggArr.length > 0) {
 						var filteredSugArr = oSuggArr.filter(s => s.total_request_qty != "0" || s.total_suggest_qty != "0");
