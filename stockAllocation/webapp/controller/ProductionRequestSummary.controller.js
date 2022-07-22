@@ -912,7 +912,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var that = this;
 					var oViewModel = new JSONModel({          //changes by Swetha
 						busy: false,
-						delay: 0.0000000
+						delay: 0.00000001
 					});										
 					that.data = oData.results;
 					var oSuggArr = oData.results;
