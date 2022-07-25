@@ -914,10 +914,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var oCountModel = new sap.ui.model.json.JSONModel();
 				oCountModel.setData(oViewCountData);
 				this.getView().setModel(oCountModel, "countViewModel");
-
-				oModel.setProperty("/showAllocatedTab", false);
-				oModel.setProperty("/showSuggestionTab", false);
-				oModel.setProperty("/showRequestedTab", false);
+				this.getView().getModel("detailView").setProperty("/showSuggestionTab", false);
+				this.getView().getModel("detailView").setProperty("/showAllocatedTab", false);
+				this.getView().getModel("detailView").setProperty("/showRequestedTab", false);
 
 				return;
 
