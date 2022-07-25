@@ -892,9 +892,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			await this._getWindowDate();
 			console.log(oModelDetailview);
 			var oGetModel = this.getView().getModel("ZCDS_SUGGEST_ORD_SUM_CDS");
-			
-			
-			if (oModelDetailview.parsedtodayDate < oModelDetailview.windowStartDateP) {
+			if (this.getView().getModel("detailView").getData().parsedtodayDate < this.getView().getModel("detailView").getData().windowStartDateP) {
 				// 	// reset all the models to initial State and return, 
 				var oViewSuggestData = [];
 				var oSuggestModel = new sap.ui.model.json.JSONModel();
