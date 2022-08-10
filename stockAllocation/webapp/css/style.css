@@ -126,3 +126,6 @@
     text-decoration: underline;
     font-size: large;
 }
+.sapMInputBaseReadonly .sapMInputBaseIconContainer {
+	height:100%!important;
+}
