@@ -474,7 +474,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 
 				//HyperCare 3.0
-				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && szzui_flag == "Y") {
+				if (Number(currentData.requested_Volume) <= Number(currentData.suggested) && Number(currentData.requested_Volume) > Number(currentData.suggested) && szzui_flag == "Y") {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
