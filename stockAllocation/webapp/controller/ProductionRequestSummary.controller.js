@@ -260,13 +260,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			}
 			this.seriesObj.Business_Partner_name = this.sSelectedDealerText;
 			// this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
-			
-			if(sap.ui.getCore().getModel("suggestedDataModel").getData().length > 0){
+
+			if (sap.ui.getCore().getModel("suggestedDataModel").getData().length > 0) {
 				this.seriesObj.processDate = sap.ui.getCore().getModel("suggestedDataModel").getData()[0].zzprocess_dt;
-			}else{
+			} else {
 				this.seriesObj.processDate = this.getView().getModel("requestedDataModel").getData()[0].zzprocess_dt;
 			}
-			
+
 			this.seriesObj.Dealer = this.sSelectedDealer;
 			if (!tabClicked) {
 				this.seriesObj.tabClicked = "suggestedTab";
@@ -881,15 +881,46 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			this._navigateToHandleRouteMatched();
 		},
 
-		reqcomplete: function () {
+		reqcomplete: async function () {
 
 			if (!this.sSelectedDealer) {
 				var oModelDetailview = this.getView().getModel("detailView");
 				var oDataFromModel = oModelDetailview.getData();
 				this.sSelectedDealer = oDataFromModel.BusinessPartnerKey;
 			}
-
+			
+			await this._getWindowDate();
+			console.log(oModelDetailview);
 			var oGetModel = this.getView().getModel("ZCDS_SUGGEST_ORD_SUM_CDS");
+			if (this.getView().getModel("detailView").getData().parsedtodayDate < this.getView().getModel("detailView").getData().windowStartDateP) {
+				// 	// reset all the models to initial State and return, 
+				var oViewSuggestData = [];
+				var oSuggestModel = new sap.ui.model.json.JSONModel();
+				oSuggestModel.setData(oViewSuggestData);
+				this.getView().setModel(oSuggestModel, "suggestedDataModel");
+				sap.ui.getCore().setModel(oSuggestModel, "suggestedDataModel");
+
+				var oViewRequestedData = [];
+				var oRequestModel = new sap.ui.model.json.JSONModel();
+				oRequestModel.setData(oViewRequestedData);
+				this.getView().setModel(oRequestModel, "requestedDataModel");
+
+				var oViewAllocatedData = [];
+				var oAllocatedModel = new sap.ui.model.json.JSONModel();
+				oAllocatedModel.setData(oViewAllocatedData);
+				this.getView().setModel(oAllocatedModel, "allocatedDataModel");
+
+				var oViewCountData = [];
+				var oCountModel = new sap.ui.model.json.JSONModel();
+				oCountModel.setData(oViewCountData);
+				this.getView().setModel(oCountModel, "countViewModel");
+				this.getView().getModel("detailView").setProperty("/showSuggestionTab", false);
+				this.getView().getModel("detailView").setProperty("/showAllocatedTab", false);
+				this.getView().getModel("detailView").setProperty("/showRequestedTab", false);
+
+				return;
+
+			}else{
 			oGetModel.read("/ZCDS_SUGGEST_ORD_SUM", {
 
 				urlParameters: {
@@ -910,6 +941,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var countForSuggested, countForRequested;
 					var seriesDescription;
 					var that = this;
+					// var oViewModel = new JSONModel({          //changes by Swetha
+					// 	delay: 0.00000001
+					// });										
 					that.data = oData.results;
 					var oSuggArr = oData.results;
 					var filteredSugArr;
@@ -1198,6 +1232,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 
 			});
+			}
 
 		}, // end of req complete
 
@@ -1331,6 +1366,137 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 		},
 
+		_getWindowDate: function (oEvent) {
+			return new Promise((resolve, reject) => {
+				var oGetModelCount = this.getView().getModel("ZCDS_SUGGEST_ORD_COUNT_CDS");
+
+				oGetModelCount.read("/ZCDS_SUGGEST_ORD_COUNT", {
+					urlParameters: {
+						"$filter": "zzdealer_code eq '" + this.sSelectedDealer + "'and zdivision eq '" + this.sapDivision + "'"
+					},
+
+					success: function (oData) {
+
+						etaFromNewSeries = oData.results[0].zzstart_date;
+						etaToNewSeries = oData.results[0].zzend_date;
+
+						var oViewCountData = [];
+						var oModel = this.getView().getModel("detailView");
+						$.each(oData.results, function (i, item) {
+							if (item.totalUnfilledcount == 0) {
+								item.totalUnfilledcount = "0";
+							}
+							oViewCountData.push({
+								suggestedCount: item.suggest_count,
+								requestedCount: item.request_count,
+								allocatedCount: item.allocat_count,
+								totalSuggestCount: item.totalsuggestedCount,
+								totalRequestedCount: item.totalRequestedCount,
+								totalAllocatedCount: item.totalAllocatedCount,
+								totalPendingCount: item.totalPendingCount,
+								totalUnfilledCount: item.totalUnfilledcount
+
+							});
+
+							var windowStartDate = item.zzend_date.substr(0, 8); //item.zzstart_date.substr(0,8);
+							var windowStartYear = windowStartDate.substr(0, 4);
+							var windowStartMonth = windowStartDate.substr(4, 2);
+							var windowStartDay = windowStartDate.substr(6, 2);
+							var windowhour = item.zzend_date.substr(8, 2);
+							var windowMinute = item.zzend_date.substr(10, 2);
+							// var newTempDate = windowStartYear + "/" + windowStartMonth + "/" + windowStartDay + " " + windowhour + ":" + windowMinute;
+
+							var newTempDate = windowStartMonth + "/" + windowStartDay + "/" + windowStartYear + " " + windowhour + ":" +
+								windowMinute;
+
+							var dateForBanner = windowStartMonth + "/" + windowStartDay + "/" + windowStartYear;
+							var timeForBanner = windowhour + ":" + windowMinute;
+
+							var windowEndDate = item.zzstart_date.substr(0, 8); // using start as end and end as start not by mistake //item.zzstart_date.substr(0,8);
+							var windowEndYear = windowEndDate.substr(0, 4);
+							var windowEndMonth = windowEndDate.substr(4, 2);
+							var windowEndDay = windowEndDate.substr(6, 2);
+
+							var windowStarthour = item.zzstart_date.substr(8, 2);
+							var windowStartMinute = item.zzstart_date.substr(10, 2);
+
+							var windowEndDateFormatted = windowEndMonth + "/" + windowEndDay + "/" + windowEndYear + " " + windowStarthour + ":" +
+								windowStartMinute;
+							oModel.setProperty("/dateForBanner", dateForBanner);
+							oModel.setProperty("/timeForBanner", timeForBanner);
+							oModel.setProperty("/startDateofWindow", windowEndDateFormatted);
+							oModel.setProperty("/endDateofTheWindow", dateForBanner);
+							oModel.setProperty("/dateForValidation", newTempDate);
+							oModel.setProperty("/statusFromCalender", item.zzstatus);
+						});
+
+						// count View model			
+						var oCountModel = new sap.ui.model.json.JSONModel();
+						oCountModel.setData(oViewCountData);
+						this.getView().setModel(oCountModel, "countViewModel");
+
+						// date to the ui. 
+						var oModel = this.getView().getModel("detailView");
+
+						var sDateForBanner = oModel.getProperty("/dateForBanner");
+						var sDateForTime = oModel.getProperty("/timeForBanner");
+
+						// Due on in french. 
+						if (this.sCurrentLocale == "FR") {
+							// var WordDueOn = 'Due sur ';
+							var tempDueDate = "Dû le" + sDateForBanner + ' à  ' + sDateForTime + "(HNE)";
+							oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 	
+
+						} else {
+							// var WordDueOn = 'Due on ';
+
+							var tempDueDate = 'Due on ' + sDateForBanner + " at " + sDateForTime + "(EST)";
+							oModel.setProperty("/dueDate", tempDueDate); // the due date for the screen. 
+
+						}
+
+						//  when the current date is between window open date and window close date then enable the suggested and Requested and disable the allocated. 
+						var startDateofTheWindow = oModel.getProperty("/startDateofWindow");
+						var endDateofTheWindow = oModel.getProperty("/endDateofTheWindow");
+
+						var windowStartDateP = Date.parse(startDateofTheWindow);
+
+						var windowEndDateWithTime = oModel.getProperty("/dateForValidation");
+						var windowEndDateP = Date.parse(windowEndDateWithTime);
+
+						var torontoTime = new Date();
+						/*global  moment:true*/
+						var extractTimeZone = moment(torontoTime);
+						//var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
+						var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY HH:mm'); //24 hour format
+
+						var parsedtodayDate = Date.parse(currentDate);
+
+						if (parsedtodayDate < windowEndDateP) { //&& parsedtodayDate >= windowStartDateP
+							// in this period we have to show suggestion and Requested.  Turn off the Allocated. 
+							oModel.setProperty("/showAllocatedTab", false);
+						}
+						oModel.setProperty("/parsedtodayDate", parsedtodayDate);
+						oModel.setProperty("/windowEndDateP", windowEndDateP);
+						oModel.setProperty("/windowStartDateP", windowStartDateP);
+
+						if ((parsedtodayDate >= windowEndDateP)) {
+							oModel.setProperty("/editOrderPrefix", false);
+							oModel.setProperty("/outOfWindowDate", true);
+
+						}
+						//  new change -  within the window date,  lets show only records where the dealer has reviewed. 						
+						resolve(oModel);
+
+					}.bind(this),
+					error: function (response) {
+						sap.ui.core.BusyIndicator.hide();
+					}
+				});
+			});
+
+		},
+
 		_updateTheCount: function (oEvent) {
 			// along with count if the status is A and is out of window end date then do not display the allocated tab. 
 			var oModel = this.getView().getModel("detailView");
@@ -1373,13 +1539,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				oModel.setProperty("/showAllocatedTab", false);
 
 			}
-			// else {
-			// if ((oModelData.parsedtodayDate <= oModelData.windowEndDateP) && oModelData.allocationInidcator == "A") {	
-			// 			oModel.setProperty("/showAllocatedTab", true);
-			// 					oModel.setProperty("/showSuggestionTab", false);
-			// 					oModel.setProperty("/showRequestedTab", false);
-			// }			
-			// }
 
 			if ((oModelData.parsedtodayDate >= oModelData.windowEndDateP) && oModelData.allocationInidcator == "S") {
 				oModel.setProperty("/showSuggestionTab", false);
@@ -1398,14 +1557,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 
 			var oCountModel = this.getView().getModel("countViewModel");
 			var oSuggestedModel = this.getView().getModel("suggestedDataModel");
-            var suggestedModelData = oSuggestedModel.getData();
-            var suggestedModelLength = oSuggestedModel.getData().length;
-            
-            
+			var suggestedModelData = oSuggestedModel.getData();
+			var suggestedModelLength = oSuggestedModel.getData().length;
+
 			if (oSuggestedModel) {
-				
+
 				// loop and count the suggested model where qty is greater than 0. 					
-				
 
 				// 					for (var i = elements.length - 1; i >= 0; i--) {
 				//   if (elements[i] == remove) {
@@ -1449,8 +1606,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				// }
 
 			}
-			
-			
+
 			var oRequestedModel = this.getView().getModel("requestedDataModel");
 			if (oRequestedModel) {
 				var requestedModelData = oRequestedModel.getData(); //.length;

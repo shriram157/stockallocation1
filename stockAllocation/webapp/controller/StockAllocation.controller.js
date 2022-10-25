@@ -1,4 +1,4 @@
-	sap.ui.define(["sap/ui/core/mvc/Controller",
+sap.ui.define(["sap/ui/core/mvc/Controller",
 		"sap/m/MessageBox",
 		"./utilities",
 		"sap/ui/core/routing/History",
@@ -15,14 +15,12 @@
 			salesNetData = [],
 			localScope,
 			checkOBJ = {};
-
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 			handleRouteMatched: function (oEvent) {
 				// sap.ui.core.BusyIndicator.show();
 				this.defaultLightBusyDialog = new sap.m.BusyDialog();
 				this.defaultLightBusyDialog.open();
 				var sAppId = "App5bb4c41429720e1dcc397810";
-
 				var oParams = {};
 				callNewModelCount = 0;
 				this.resultsLossofData = false;
@@ -440,6 +438,14 @@
 				localScope = this;
 				localScope.evt = oEvt;
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
+				
+				var aSuggestedOrd = this.getOwnerComponent().getModel("LocalDataModel").getProperty("/zcdsSuggestOrdRes");
+				
+				var szzextcol = oEvt.getSource().getParent().getCells()[2].getText().split("-")[0];
+				var szzmodel = oEvt.getSource().getParent().getCells()[0].getText().split("-")[0];
+				var szzsuffix = oEvt.getSource().getParent().getCells()[1].getText().split(" ")[0];
+				
+				var szzui_flag = aSuggestedOrd.filter((item)=> item.zzmodel == szzmodel.trim() && item.zzsuffix == szzsuffix.trim()  && item.zzextcol == szzextcol.trim()  )[0].zzui_flag;
 
 				var currentValue = oEvt.getSource().getProperty("value");
 
@@ -464,10 +470,10 @@
 				if (Number(currentData.suggested == 0)) {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
-					currentData.zzui_flag = "";
+					currentData.zzui_flag
 				}
 
-				//HyperCare 3.0
+				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)//changes reverted back to prod data - Number(currentData.requested_Volume) < Number(currentData.suggested) && szzui_flag == "Y"
 				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
@@ -1895,6 +1901,7 @@
 					success: function (oData) {
 						// sap.ui.core.BusyIndicator.hide();
 						if (oData.results.length > 0) {
+							that.getOwnerComponent().getModel("LocalDataModel").setProperty("/zcdsSuggestOrdRes", oData.results);
 							// that.defaultLightBusyDialog.close();
 							$.each(oData.results, function (i, item) {
 								var query = "(Model='" + item.zzmodel + "',Kunnr='" + that.dealerCode + "',Zzextcol='" + item.zzextcol + "',Zzseries='" +
