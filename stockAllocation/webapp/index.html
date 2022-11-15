@@ -31,6 +31,17 @@
 						appWidthLimited : false
 				}).placeAt("content");
 			});
+						var pressTimer;
+
+$("custom:CustomStepInput").mouseup(function(){
+  clearTimeout(pressTimer);
+  // Clear timeout
+  return false;
+}).mousedown(function(){
+  // Set timeout
+  pressTimer = window.setTimeout(function() {console.log("inside the timer function");},1000);
+  return false; 
+});
 		</script>
 	</head>
 
