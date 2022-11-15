@@ -36,6 +36,19 @@
 				}).placeAt("content");
 			});
 		</script>-->
+		<Script>
+					var pressTimer;
+
+$("suggestOrder.controls.CustomStepInput").mouseup(function(){
+  clearTimeout(pressTimer);
+  // Clear timeout
+  return false;
+}).mousedown(function(){
+  // Set timeout
+  pressTimer = window.setTimeout(function() {console.log("inside the timer function");},1000);
+  return false; 
+});
+			</Script>
 	</head>
 
 	<body class="sapUiBody suggestOrder" id="content">
