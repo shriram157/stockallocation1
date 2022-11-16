@@ -22,6 +22,7 @@ function(StepInput){
 			 //+ Number(this.mEventRegistry.change[0].oListener.allowedtolerance);
 			 
 			 //this.setMax(nCount);
+			 document.getElementById(evt.srcControl.sId).focus();
 			 document.getElementById(evt.srcControl.sId).blur();
 			 return false;
 			 
