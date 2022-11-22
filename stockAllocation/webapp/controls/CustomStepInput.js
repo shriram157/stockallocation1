@@ -24,14 +24,16 @@ function(StepInput){
 			 //this.setMax(nCount);
 			// document.getElementById(evt.srcControl.sId).focus();
 			 //document.getElementById(evt.srcControl.sId).blur();
+			 console.log("Element:"+evt.srcControl.sId);
 			  document.getElementById(evt.srcControl.sId).focus();
-			  Console.log("Focus!!!! :");
-			 
+			  console.log("Focus!!!! :");
+			 console.log("Element:"+evt.srcControl.sId);
 			 document.getElementById(evt.srcControl.sId).blur();
-			 Console.log("blur@@@@@@ :");
-			 
+			 console.log("blur@@@@@@ :");
+			 console.log("Element:"+evt.srcControl.sId);
 			 document.getElementById(evt.srcControl.sId).style.pointerEvents = "none";
-			 Console.log("PointerEvents%%%%%% :");
+			 console.log("PointerEvents%%%%%% :");
+			 console.log("Element:"+evt.srcControl.sId);
 			 return false;
 			 
 		},
