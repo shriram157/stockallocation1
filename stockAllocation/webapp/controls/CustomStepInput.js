@@ -31,9 +31,9 @@ function(StepInput){
 			 document.getElementById(evt.srcControl.sId).blur();
 			 console.log("blur@@@@@@ :");
 			 console.log("Element:"+evt.srcControl.sId);
-			 document.getElementById(evt.srcControl.sId).style.pointerEvents = "none";
-			 console.log("PointerEvents%%%%%% :");
-			 console.log("Element:"+evt.srcControl.sId);
+			//  document.getElementById(evt.srcControl.sId).style.pointerEvents = "none";
+			//  console.log("PointerEvents%%%%%% :");
+			//  console.log("Element:"+evt.srcControl.sId);
 			 return false;
 			 
 		},
