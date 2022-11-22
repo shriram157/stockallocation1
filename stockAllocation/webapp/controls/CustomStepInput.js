@@ -22,8 +22,16 @@ function(StepInput){
 			 //+ Number(this.mEventRegistry.change[0].oListener.allowedtolerance);
 			 
 			 //this.setMax(nCount);
-			 document.getElementById(evt.srcControl.sId).focus();
+			// document.getElementById(evt.srcControl.sId).focus();
+			 //document.getElementById(evt.srcControl.sId).blur();
+			  document.getElementById(evt.srcControl.sId).focus();
+			  Console.log("Focus!!!! :");
+			 
 			 document.getElementById(evt.srcControl.sId).blur();
+			 Console.log("blur@@@@@@ :");
+			 
+			 document.getElementById(evt.srcControl.sId).style.pointerEvents = "none";
+			 Console.log("PointerEvents%%%%%% :");
 			 return false;
 			 
 		},
