@@ -28,9 +28,10 @@ function(StepInput){
 			  document.getElementById(evt.srcControl.sId).focus();
 			  console.log("Focus!!!! :");
 			 console.log("Element:"+evt.srcControl.sId);
-			 document.getElementById(evt.srcControl.sId).blur(function() {
-  alert( "Lose focus from Field1" );
-});
+			 document.getElementById(evt.srcControl.sId).onblur();
+// 			 document.getElementById(evt.srcControl.sId).blur(function() {
+//   alert( "Lose focus from Field1" );
+// });
 			 console.log("blur@@@@@@ :");
 			 console.log("Element:"+evt.srcControl.sId);
 			//  document.getElementById(evt.srcControl.sId).style.pointerEvents = "none";
