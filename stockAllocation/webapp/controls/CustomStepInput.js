@@ -24,11 +24,11 @@ function(StepInput){
 			 //this.setMax(nCount);
 			// document.getElementById(evt.srcControl.sId).focus();
 			 //document.getElementById(evt.srcControl.sId).blur();
-			 console.log("Element:"+evt.srcControl.sId);
-			  document.getElementById(evt.srcControl.sId).focus();
-			  console.log("Focus!!!! :");
-			 console.log("Element:"+evt.srcControl.sId);
-			 document.getElementById(evt.srcControl.sId).blur();
+			//  console.log("Element:"+evt.srcControl.sId);
+			//   document.getElementById(evt.srcControl.sId).focus();
+			//   console.log("Focus!!!! :");
+			//  console.log("Element:"+evt.srcControl.sId);
+			//  document.getElementById(evt.srcControl.sId).blur();
 // 			 document.getElementById(evt.srcControl.sId).blur(function() {
 //   alert( "Lose focus from Field1" );
 // });
