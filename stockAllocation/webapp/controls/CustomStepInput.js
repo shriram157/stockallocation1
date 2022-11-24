@@ -32,23 +32,23 @@ function(StepInput){
 // 			 document.getElementById(evt.srcControl.sId).blur(function() {
 //   alert( "Lose focus from Field1" );
 // });
-			 console.log("blur@@@@@@ :");
-			 console.log("Element:"+evt.srcControl.sId);
+			//  console.log("blur@@@@@@ :");
+			//  console.log("Element:"+evt.srcControl.sId);
 			//  document.getElementById(evt.srcControl.sId).style.pointerEvents = "none";
 			//  console.log("PointerEvents%%%%%% :");
 			//  console.log("Element:"+evt.srcControl.sId);
-			 return false;
+			//  return false;
 			 
 		},
 		
 		onmousewheel : function(evt){
-			document.getElementById(evt.srcControl.sId).blur();
-			return false;
+			// document.getElementById(evt.srcControl.sId).blur();
+			// return false;
 		},
 		
 		onscroll : function(evt){
-			document.getElementById(evt.srcControl.sId).blur();
-			return false;
+			// document.getElementById(evt.srcControl.sId).blur();
+			// return false;
 		},
 	
 		renderer :"sap.m.StepInputRenderer"	
