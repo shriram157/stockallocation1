@@ -57,6 +57,8 @@ function(StepInput){
 	
 	CustomStepInput.prototype.onAfterRendering = function (oEvent) {
 		CustomStepInput.prototype.onAfterRendering.apply(this, arguments);
+		 document.getElementById(evt.srcControl.sId).blur();
+		 return false;
 			
 	};
 	
