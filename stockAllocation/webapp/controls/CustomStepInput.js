@@ -55,8 +55,8 @@ function(StepInput){
 		
 	});
 	
-	CustomStepInput.prototype.onAfterRendering = function (oEvent) {
-		CustomStepInput.prototype.onAfterRendering.apply(this, arguments);
+	sap.m.StepInput.prototype.onAfterRendering = function (oEvent) {
+		sap.m.StepInput.prototype.onAfterRendering.apply(this, arguments);
 		 document.getElementById(oEvent.srcControl.sId).blur();
 		 return false;
 			
