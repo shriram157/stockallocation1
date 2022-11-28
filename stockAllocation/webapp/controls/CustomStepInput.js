@@ -23,7 +23,7 @@ function(StepInput){
 			 
 			 //this.setMax(nCount);
 			// document.getElementById(evt.srcControl.sId).focus();
-			 //document.getElementById(evt.srcControl.sId).blur();
+			 document.getElementById(evt.srcControl.sId).blur();
 			//  console.log("Element:"+evt.srcControl.sId);
 			//   document.getElementById(evt.srcControl.sId).focus();
 			//   console.log("Focus!!!! :");
@@ -37,7 +37,7 @@ function(StepInput){
 			//  document.getElementById(evt.srcControl.sId).style.pointerEvents = "none";
 			//  console.log("PointerEvents%%%%%% :");
 			//  console.log("Element:"+evt.srcControl.sId);
-			//  return false;
+			  return false;
 			 
 		},
 		
@@ -54,13 +54,15 @@ function(StepInput){
 		renderer :"sap.m.StepInputRenderer"	
 		
 	});
+
+	//Commenting the below codes
 	
-	sap.m.StepInput.prototype.onAfterRendering = function (oEvent) {
-		sap.m.StepInput.prototype.onAfterRendering.apply(this, arguments);
-		 document.getElementById(oEvent.srcControl.sId).blur();
-		 return false;
+	// sap.m.StepInput.prototype.onAfterRendering = function (oEvent) {
+	// 	sap.m.StepInput.prototype.onAfterRendering.apply(this, arguments);
+	// 	 document.getElementById(oEvent.srcControl.sId).blur();
+	// 	 return false;
 			
-	};
+	// };
 	
 	return CustomStepInput;
 });
