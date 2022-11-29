@@ -1,6 +1,5 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns="sap.m" xmlns:l="sap.ui.layout"
-	controllerName="suggestOrder.controller.StockAllocation" xmlns:html="http://www.w3.org/1999/xhtml"
-	xmlns:custom="suggestOrder.controls">
+	controllerName="suggestOrder.controller.StockAllocation" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:custom="suggestOrder.controls">
 	<html:style>
 		.setOrangeFont{ color:#E78C07!important;} .pageHeight{height:100%;}
 	</html:style>
@@ -25,7 +24,8 @@
 					<Title text="{oViewLocalDataModel>/BusinessPartnerName}" titleStyle="H2" textAlign="Left" visible="true" wrapping="false"
 						class="sapUiTinyMargin" level="H2"></Title>
 					<!--<Text text="{ path: '/date', type: 'sap.ui.model.type.Date', formatOptions: { style: 'medium' } }"/> {i18n>ProcessDateTxt}:-->
-					<Title	text=" {i18n>ProcessDataTxt}: {oViewLocalDataModel>/processDateDisplay}" titleStyle="H6" textAlign="End" visible="true" wrapping="false" class="sapUiTinyMargin"></Title>
+					<Title text=" {i18n>ProcessDataTxt}: {oViewLocalDataModel>/processDateDisplay}" titleStyle="H6" textAlign="End" visible="true"
+						wrapping="false" class="sapUiTinyMargin"></Title>
 				</contentLeft>
 				<contentRight width="50%" class="styleHeader2Right">
 					<Title text="{oViewLocalDataModel>/series}" titleStyle="H2" textAlign="End" visible="true" wrapping="true" class="sapUiTinyMargin"
@@ -55,6 +55,8 @@
 								<ToolbarSpacer/>
 								<Button text="{i18n>ResetSearch}" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/setResetEnabled}" visible="true"
 									iconDensityAware="false" press="resetSearch"/>
+								<custom:CustomStepInput value="" displayValuePrecision="0" min="0" max="" width="5.5rem" step="1" largerStep="2" visible="false"
+									class="noheight"/>
 								<SearchField id="searchVehicleList" liveChange="onLiveChange" showSearchButton="true" placeholder="{i18n>Search}">
 									<layoutData>
 										<OverflowToolbarLayoutData minWidth="200px" maxWidth="300px" shrinkable="true"/>
@@ -291,8 +293,8 @@
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>suggestedDSSubttlOnly}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									visible="{stockDataModel>visibleProperty}" class="noheight"/>
-								<custom:CustomStepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="" width="5.5rem" step="1" largerStep="2"
-									valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
+								<custom:CustomStepInput value="{stockDataModel>requested_Volume}" displayValuePrecision="0" min="0" max="" width="5.5rem" step="1"
+									largerStep="2" valueState="None" enabled="{oViewLocalDataModel>/enableForDealer}" editable="{oViewLocalDataModel>/enableForDealer}"
 									change="" visible="{stockDataModel>visibleProperty}" class="noheight"/>
 								<Text text="{stockDataModel>reqThreshold}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
 									class="noheight"/>
@@ -321,5 +323,3 @@
 		<customHeader/>
 	</Page>
 </mvc:View>
-
-
