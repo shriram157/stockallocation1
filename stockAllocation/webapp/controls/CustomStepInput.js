@@ -28,8 +28,8 @@ sap.ui.define(['sap/m/StepInput'],
 				//   document.getElementById(evt.srcControl.sId).focus();
 				//   console.log("Focus!!!! :");
 				//  console.log("Element:"+evt.srcControl.sId);
-				//  document.getElementById(evt.srcControl.sId).blur();
-				// 			 document.getElementById(evt.srcControl.sId).blur(function() {
+			  document.getElementById(evt.srcControl.sId).blur();
+			//				 document.getElementById(evt.srcControl.sId).blur(function() {
 				//   alert( "Lose focus from Field1" );
 				// });
 				//  console.log("blur@@@@@@ :");
@@ -37,7 +37,7 @@ sap.ui.define(['sap/m/StepInput'],
 				//  document.getElementById(evt.srcControl.sId).style.pointerEvents = "none";
 				//  console.log("PointerEvents%%%%%% :");
 				//  console.log("Element:"+evt.srcControl.sId);
-			//	return false;
+				return false;
 
 			},
 
