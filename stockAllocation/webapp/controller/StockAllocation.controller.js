@@ -470,7 +470,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				if (Number(currentData.suggested == 0)) {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
-					currentData.zzui_flag
+					currentData.zzui_flag = "";
 				}
 
 				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)(added szzui_flag == "Y" for incident INC0214976 on 4/11/2022)
