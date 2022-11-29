@@ -57,12 +57,13 @@ sap.ui.define(['sap/m/StepInput'],
 
 		//Commenting the below codes
 
-		sap.m.StepInput.prototype.onAfterRendering = function (oEvent) {
+		CustomStepInput.prototype.onAfterRendering = function (oEvent) {
 			console.log("Arguments:" + arguments);
 			if (sap.m.StepInput.prototype.onAfterRendering) {
 				sap.m.StepInput.prototype.onAfterRendering.apply(this);
 				//sap.m.StepInput.prototype.onAfterRendering.apply(this, arguments);
-			//	document.getElementById(oEvent.srcControl.sId).blur();
+				document.getElementById(oEvent.srcControl.sId).blur();
+				return false;
 			}
 
 		};
