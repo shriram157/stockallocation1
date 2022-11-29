@@ -37,7 +37,7 @@ sap.ui.define(['sap/m/StepInput'],
 				//  document.getElementById(evt.srcControl.sId).style.pointerEvents = "none";
 				//  console.log("PointerEvents%%%%%% :");
 				//  console.log("Element:"+evt.srcControl.sId);
-				return false;
+			//	return false;
 
 			},
 
@@ -57,11 +57,12 @@ sap.ui.define(['sap/m/StepInput'],
 
 		//Commenting the below codes
 
-		CustomStepInput.prototype.onAfterRendering = function (oEvent) {
+		sap.m.StepInput.prototype.onAfterRendering = function (oEvent) {
 			console.log("Arguments:" + arguments);
 			if (sap.m.StepInput.prototype.onAfterRendering) {
-				sap.m.StepInput.prototype.onAfterRendering.apply(this, arguments);
-				document.getElementById(oEvent.srcControl.sId).blur();
+				sap.m.StepInput.prototype.onAfterRendering.apply(this);
+				//sap.m.StepInput.prototype.onAfterRendering.apply(this, arguments);
+			//	document.getElementById(oEvent.srcControl.sId).blur();
 			}
 
 		};
