@@ -50,7 +50,7 @@ sap.ui.define(['sap/m/StepInput'],
 				// document.getElementById(evt.srcControl.sId).blur();
 				// return false;
 			},
-			_spinValues = function(bIncrementButton) {
+			_spinValues : function(bIncrementButton) {
 			// var that = this;
 			// if (this._btndown) {
 			// 	this._spinTimeoutId = setTimeout(function () {
