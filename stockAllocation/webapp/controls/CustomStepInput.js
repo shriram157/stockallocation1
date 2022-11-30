@@ -50,6 +50,29 @@ sap.ui.define(['sap/m/StepInput'],
 				// document.getElementById(evt.srcControl.sId).blur();
 				// return false;
 			},
+			_spinValues = function(bIncrementButton) {
+			// var that = this;
+			// if (this._btndown) {
+			// 	this._spinTimeoutId = setTimeout(function () {
+			// 		if (that._btndown) {
+			// 			that._bSpinStarted = true;
+			// 			////////////////// just the code for setting a value, not firing an event
+			// 			var oNewValue = that._calculateNewValue(1, bIncrementButton);
+
+			// 			that.setValue(oNewValue.value);
+			// 			that._verifyValue();
+
+			// 			if (!that._getIncrementButton().getEnabled() || !that._getDecrementButton().getEnabled()) {
+			// 				_resetSpinValues.call(that);
+			// 				// fire change event when the buttons get disabled since then no mouseup event is fired
+			// 				that.fireChange({value: that.getValue()});
+			// 			}
+
+			// 			that._spinValues(bIncrementButton);
+			// 		}
+			// 	}, that._calcWaitTimeout());
+			// }
+		},
 
 			renderer: "sap.m.StepInputRenderer"
 
