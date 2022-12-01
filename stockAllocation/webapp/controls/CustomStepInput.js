@@ -159,7 +159,7 @@ sap.ui.define(['sap/m/StepInput'],
 			// 	this._applyValue(this._getMin());
 			// }
 			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
-		}
+		},
 
 			renderer: "sap.m.StepInputRenderer"
 
