@@ -134,6 +134,32 @@ sap.ui.define(['sap/m/StepInput'],
 			// }
 			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
 		},
+	onsappageup : function (oEvent) {
+			// this._applyValue(this._calculateNewValue(this.getLargerStep(), true).displayValue);
+			// this._verifyValue();
+			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
+			// // prevent document scrolling when page up key is pressed
+			// oEvent.preventDefault();
+		},
+		onsappagedown : function (oEvent) {
+			// this._applyValue(this._calculateNewValue(this.getLargerStep(), false).displayValue);
+			// this._verifyValue();
+			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
+			// // prevent document scrolling when page down key is pressed
+			// oEvent.preventDefault();
+		},
+		onsappageupmodifiers : function (oEvent) {
+			// if (this._isNumericLike(this._getMax()) && !(oEvent.ctrlKey || oEvent.metaKey || oEvent.altKey) && oEvent.shiftKey) {
+			// 	this._applyValue(this._getMax());
+			// }
+			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
+		},
+		onsappagedownmodifiers : function (oEvent) {
+			// if (this._isNumericLike(this._getMin()) && !(oEvent.ctrlKey || oEvent.metaKey || oEvent.altKey) && oEvent.shiftKey) {
+			// 	this._applyValue(this._getMin());
+			// }
+			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
+		}
 
 			renderer: "sap.m.StepInputRenderer"
 
