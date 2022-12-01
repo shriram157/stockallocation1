@@ -42,12 +42,12 @@ sap.ui.define(['sap/m/StepInput'],
 			},
 
 			onmousewheel: function (evt) {
-				// document.getElementById(evt.srcControl.sId).blur();
+				 document.getElementById(evt.srcControl.sId).blur();
 				// return false;
 			},
 
 			onscroll: function (evt) {
-				// document.getElementById(evt.srcControl.sId).blur();
+				 document.getElementById(evt.srcControl.sId).blur();
 				// return false;
 			},
 			_spinValues : function(bIncrementButton) {
