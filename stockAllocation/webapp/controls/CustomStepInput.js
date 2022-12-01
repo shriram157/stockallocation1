@@ -73,6 +73,67 @@ sap.ui.define(['sap/m/StepInput'],
 			// 	}, that._calcWaitTimeout());
 			// }
 		},
+	      _onmousewheel : function (oEvent) {
+			// var bIsFocused = this.getDomRef().contains(document.activeElement);
+			// if (bIsFocused) {
+			// 	oEvent.preventDefault();
+			// 	var oOriginalEvent = oEvent.originalEvent,
+			// 		bDirectionPositive = oOriginalEvent.detail ? (-oOriginalEvent.detail > 0) : (oOriginalEvent.wheelDelta > 0);
+
+			// 	this._applyValue(this._calculateNewValue(1, bDirectionPositive).displayValue);
+			// 	this._verifyValue();
+			// }
+		},
+		onkeydown : function (oEvent) {
+			// var bVerifyValue = false;
+
+			// this._bPaste = (oEvent.ctrlKey || oEvent.metaKey) && (oEvent.which === KeyCodes.V);
+
+			// if (oEvent.which === KeyCodes.ARROW_UP && !oEvent.altKey && oEvent.shiftKey &&
+			// 	(oEvent.ctrlKey || oEvent.metaKey)) { //ctrl+shift+up
+			// 	this._applyValue(this._getMax());
+			// 	bVerifyValue = true;
+			// }
+			// if (oEvent.which === KeyCodes.ARROW_DOWN && !oEvent.altKey && oEvent.shiftKey &&
+			// 	(oEvent.ctrlKey || oEvent.metaKey)) { //ctrl+shift+down
+			// 	this._applyValue(this._getMin());
+			// 	bVerifyValue = true;
+			// }
+			// if (oEvent.which === KeyCodes.ARROW_UP && !(oEvent.ctrlKey || oEvent.metaKey || oEvent.altKey) && oEvent.shiftKey) { //shift+up
+			// 	oEvent.preventDefault(); //preventing to be added both the minimum step (1) and the larger step
+			// 	this._applyValue(this._calculateNewValue(this.getLargerStep(), true).displayValue);
+			// 	bVerifyValue = true;
+			// }
+			// if (oEvent.which === KeyCodes.ARROW_DOWN && !(oEvent.ctrlKey || oEvent.metaKey || oEvent.altKey) && oEvent.shiftKey) { //shift+down
+			// 	oEvent.preventDefault(); //preventing to be subtracted  both the minimum step (1) and the larger step
+			// 	this._applyValue(this._calculateNewValue(this.getLargerStep(), false).displayValue);
+			// 	bVerifyValue = true;
+			// }
+			// if (oEvent.which === KeyCodes.ARROW_UP && (oEvent.ctrlKey || oEvent.metaKey)) { // ctrl + up
+			// 	oEvent.preventDefault();
+			// 	this._applyValue(this._calculateNewValue(1, true).displayValue);
+			// 	bVerifyValue = true;
+			// }
+			// if (oEvent.which === KeyCodes.ARROW_DOWN && (oEvent.ctrlKey || oEvent.metaKey)) { // ctrl + down
+			// 	oEvent.preventDefault();
+			// 	this._applyValue(this._calculateNewValue(1, false).displayValue);
+			// 	bVerifyValue = true;
+			// }
+			// if (oEvent.which === KeyCodes.ARROW_UP && oEvent.altKey) { // alt + up
+			// 	oEvent.preventDefault();
+			// 	this._applyValue(this._calculateNewValue(1, true).displayValue);
+			// 	bVerifyValue = true;
+			// }
+			// if (oEvent.which === KeyCodes.ARROW_DOWN && oEvent.altKey) { // alt + down
+			// 	oEvent.preventDefault();
+			// 	this._applyValue(this._calculateNewValue(1, false).displayValue);
+			// 	bVerifyValue = true;
+			// }
+			// if (bVerifyValue) {
+			// 	this._verifyValue();
+			// }
+			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
+		},
 
 			renderer: "sap.m.StepInputRenderer"
 
