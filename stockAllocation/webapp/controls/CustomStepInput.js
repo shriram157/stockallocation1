@@ -160,6 +160,24 @@ sap.ui.define(['sap/m/StepInput'],
 			// }
 			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
 		},
+		onsapup : function (oEvent) {
+			// oEvent.preventDefault(); //prevents the value to increase by one (Chrome and Firefox default behavior)
+			// this._applyValue(this._calculateNewValue(1, true).displayValue);
+			// this._verifyValue();
+			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
+			// oEvent.setMarked();
+		},
+		onsapdown : function (oEvent) {
+			// oEvent.preventDefault(); //prevents the value to decrease by one (Chrome and Firefox default behavior)
+			// this._applyValue(this._calculateNewValue(1, false).displayValue);
+			// this._verifyValue();
+			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
+			// oEvent.setMarked();
+		},
+		_liveChange = function () {
+			// this._verifyValue();
+			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
+		},
 
 			renderer: "sap.m.StepInputRenderer"
 
