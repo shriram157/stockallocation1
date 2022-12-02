@@ -174,7 +174,7 @@ sap.ui.define(['sap/m/StepInput'],
 			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
 			// oEvent.setMarked();
 		},
-		_liveChange = function () {
+		_liveChange : function () {
 			// this._verifyValue();
 			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
 		},
