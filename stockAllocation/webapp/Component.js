@@ -158,6 +158,8 @@ sap.ui.define([
 			// set application model
 			var oApplicationModel = new sap.ui.model.json.JSONModel({});
 			this.setModel(oApplicationModel, "applicationModel");
+			this.setModel(models.createLocalDataModel(), "LocalDataModel");
+			
 
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);

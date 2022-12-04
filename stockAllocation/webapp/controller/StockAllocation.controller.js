@@ -1,4 +1,4 @@
-	sap.ui.define(["sap/ui/core/mvc/Controller",
+sap.ui.define(["sap/ui/core/mvc/Controller",
 		"sap/m/MessageBox",
 		"./utilities",
 		"sap/ui/core/routing/History",
@@ -15,14 +15,12 @@
 			salesNetData = [],
 			localScope,
 			checkOBJ = {};
-
 		return BaseController.extend("suggestOrder.controller.StockAllocation", {
 			handleRouteMatched: function (oEvent) {
 				// sap.ui.core.BusyIndicator.show();
 				this.defaultLightBusyDialog = new sap.m.BusyDialog();
 				this.defaultLightBusyDialog.open();
 				var sAppId = "App5bb4c41429720e1dcc397810";
-
 				var oParams = {};
 				callNewModelCount = 0;
 				this.resultsLossofData = false;
@@ -195,8 +193,9 @@
 					var oDateFormat = sap.ui.core.format.DateFormat.getInstance({
 						pattern: "dd MMMM yyyy"
 					});
+//Changes done by Minakshi for INC0194774
 
-					var processDateDisplay = oDateFormat.format(new Date(processDate));
+					var processDateDisplay = oDateFormat.format(new Date(processDate), "UTC");
 					this._oViewLocalData = new sap.ui.model.json.JSONModel({
 						busy: false,
 						delay: 0,
@@ -327,12 +326,126 @@
 					this._calculateTotals();
 				}
 			},
+			whenUserChangesRequestedDataOnFragment: function (oEvt) {
+				localScope = this;
+				this.flagThreShold = false;
+				var newAddedQty = oEvt.getSource().getValue();
+				var newAddedModel = sap.ui.core.Fragment.byId("modelDialog", "ID_modelDesc").getSelectedItem().getKey();
+				var currentData = {};
+				currentData.model = newAddedModel;
+				var tempRequestedTotal = 0;
+				tempRequestedTotal = tempRequestedTotal + +newAddedQty;
+
+				var oStockModelData = this.getView().getModel("stockDataModel").getData();
+
+				var bool = oStockModelData.find((o, i) => {
+					if (o.model === currentData.model) {
+
+						return true;
+					}
+				});
+				if (bool) {
+					for (var i = 0; i < oStockModelData.length; i++) {
+						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
+							//fix for difference column update
+
+							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
+
+							this.tempModel = oStockModelData[i].model;
+						}
+						localScope.getThreSholdFragment(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
+					}
+
+					var newValue = 0;
+					if (this.flagThreShold == true) {
+						MessageBox.error("You have crossed the threshold");
+
+						newValue = newValue + +newAddedQty - 1;
+						localScope.reqThreShold = 0;
+						//	oEvt.getSource()._getIncrementButton().setBlocked(true);
+						//	oEvt.getSource()._getIncrementButton().addStyleClass("disableBtn");
+						oEvt.getSource().setValue(newValue);
+					} else {
+						//	oEvt.getSource()._getIncrementButton().setBlocked(false);
+						//	oEvt.getSource()._getIncrementButton().removeStyleClass("disableBtn");
+						if (!newAddedModel || newAddedModel == "" || newAddedModel == "Please Select") {
+							MessageBox.error("Please select Model");
+							oEvt.getSource().setValue(newValue);
+						}
+					}
+				} else {
+
+					localScope.thresholdModel.read("/ZCDS_SUGGST_ORD_QTY_TOL", {
+						urlParameters: {
+							"$filter": "zzdealer_code eq'" + this.dealerCode + "' and zzmoyr eq '" + this.yearModel + "' and zzmodel eq '" + currentData.model +
+								"'"
+						},
+
+						//"$filter": "zzdealer_code eq'" + this.dealerCode + "' and zzmoyr eq '" + this.yearModel +"'"	
+						success: function (thresholdData) {
+
+							if (thresholdData.results.length > 0) {
+								localScope.reqThreShold = thresholdData.results[0].allowedtolerance;
+							} else {
+								localScope.reqThreShold = 0;
+							}
+							if (tempRequestedTotal > localScope.reqThreShold) {
+								localScope.flagThreShold = true;
+
+							}
+							var newValue = 0;
+							if (localScope.flagThreShold == true) {
+								MessageBox.error("You have crossed the threshold");
+
+								newValue = newValue + +newAddedQty - 1;
+								localScope.reqThreShold = 0;
+								//	oEvt.getSource()._getIncrementButton().setBlocked(true);
+								//	oEvt.getSource()._getIncrementButton().addStyleClass("disableBtn");
+								sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(newValue);
+							} else {
+								//	oEvt.getSource()._getIncrementButton().setBlocked(false);
+								//	oEvt.getSource()._getIncrementButton().removeStyleClass("disableBtn");
+								if (!newAddedModel || newAddedModel == "" || newAddedModel == "Please Select") {
+									MessageBox.error("Please select Model");
+									sap.ui.core.Fragment.byId("modelDialog", "reqVolumeId").setValue(newValue);
+								}
+							}
+						},
+						error: function (error) {
+
+						}
+					});
+
+				}
+
+			},
+			getThreSholdFragment: function (_data, _current, _dataModel, _currentThreShold) {
+				if (_data.model == "" && _current.model === _data.modelCodeDescription.replace("--", " ").split(" ")[1] && _data.reqThreshold !==
+					"") {
+					//			console.log("currentData", _data.model);
+					localScope.reqThreShold = Number(_data.reqThreshold);
+					//			console.log("reqThreShold", localScope.reqThreShold);
+
+					if (_currentThreShold > localScope.reqThreShold) {
+						localScope.flagThreShold = true;
+
+					}
+				}
+			},
 
 			whenUserChangesRequestedData: function (oEvt) {
 				this.flagThreShold = false;
 				localScope = this;
 				localScope.evt = oEvt;
 				var oTotalModelData = this.getView().getModel("initialStockTotalModel"); //.getData();
+				
+				var aSuggestedOrd = this.getOwnerComponent().getModel("LocalDataModel").getProperty("/zcdsSuggestOrdRes");
+				
+				var szzextcol = oEvt.getSource().getParent().getCells()[2].getText().split("-")[0];
+				var szzmodel = oEvt.getSource().getParent().getCells()[0].getText().split("-")[0];
+				var szzsuffix = oEvt.getSource().getParent().getCells()[1].getText().split(" ")[0];
+				
+				var szzui_flag = aSuggestedOrd.filter((item)=> item.zzmodel == szzmodel.trim() && item.zzsuffix == szzsuffix.trim()  && item.zzextcol == szzextcol.trim()  )[0].zzui_flag;
 
 				var currentValue = oEvt.getSource().getProperty("value");
 
@@ -357,10 +470,10 @@
 				if (Number(currentData.suggested == 0)) {
 					currentData.checkBoxEnabled = false;
 					currentData.checkBoxFlag = false;
-					currentData.zzui_flag = "";
+					currentData.zzui_flag
 				}
 
-				//HyperCare 3.0
+				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)//changes reverted back to prod data - Number(currentData.requested_Volume) < Number(currentData.suggested) && szzui_flag == "Y"
 				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
@@ -399,7 +512,7 @@
 					for (var i = 0; i < oStockModelData.length; i++) {
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							//fix for difference column update
-							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume)
+							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
 
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
@@ -445,7 +558,7 @@
 			},
 
 			getThreShold: function (_data, _current, _dataModel, _currentThreShold) {
-				if (_data.model == "" && _current.model === _data.modelCodeDescription.replace("--", " ").split(" ")[1] && _data.reqThreshold !=
+				if (_data.model == "" && _current.model === _data.modelCodeDescription.replace("--", " ").split(" ")[1] && _data.reqThreshold !==
 					"") {
 					console.log("currentData", _data.model);
 					localScope.reqThreShold = Number(_data.reqThreshold);
@@ -1788,6 +1901,7 @@
 					success: function (oData) {
 						// sap.ui.core.BusyIndicator.hide();
 						if (oData.results.length > 0) {
+							that.getOwnerComponent().getModel("LocalDataModel").setProperty("/zcdsSuggestOrdRes", oData.results);
 							// that.defaultLightBusyDialog.close();
 							$.each(oData.results, function (i, item) {
 								var query = "(Model='" + item.zzmodel + "',Kunnr='" + that.dealerCode + "',Zzextcol='" + item.zzextcol + "',Zzseries='" +
