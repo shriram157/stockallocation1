@@ -184,7 +184,7 @@ sap.ui.define(['sap/m/StepInput'],
 		});
 
 		//Commenting the below codes
-
+		//changes by Shriram for INC0214976 for step input
 		CustomStepInput.prototype.onAfterRendering = function (oEvent) {
 		
 			if (sap.m.StepInput.prototype.onAfterRendering) {
