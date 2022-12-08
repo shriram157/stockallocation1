@@ -473,8 +473,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					currentData.zzui_flag = "";
 				}
 
-				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)(added szzui_flag == "Y" for incident INC0214976 on 4/11/2022)
-				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && szzui_flag == "Y") {
+				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)(Number(currentData.requested_Volume) < Number(currentData.suggested) && emoved for incident INC0214976 on 4/11/2022)
+				if (szzui_flag == "Y") {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
