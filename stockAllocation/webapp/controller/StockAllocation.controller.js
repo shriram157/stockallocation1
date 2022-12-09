@@ -474,7 +474,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 
 				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)(  incident INC0214976 on 4/11/2022)
-				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && szzui_flag == "Y") {
+				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && oEvt.getSource().getBindingContext("stockDataModel").getObject().zzui_flag == "Y") {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
 					currentData.zzui_flag = "Y";
