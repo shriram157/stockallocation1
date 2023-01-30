@@ -473,7 +473,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					currentData.zzui_flag = "";
 				}
                 var sZzui_flag =aSuggestedOrd.filter((item)=> item.zzsug_seq_no ==oEvt.getSource().getBindingContext("stockDataModel").getObject().zzsug_seq_no)[0].zzui_flag;
-				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)( incident INC0214976 on 4/11/2022)
+				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)(  incident INC0214976 on 4/11/2022)
 				if (Number(currentData.requested_Volume) < Number(currentData.suggested) && sZzui_flag=='Y') {
 					currentData.checkBoxEnabled = true;
 					currentData.checkBoxFlag = true;
