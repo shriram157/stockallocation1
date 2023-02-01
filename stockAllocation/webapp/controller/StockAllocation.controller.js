@@ -445,7 +445,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var szzmodel = oEvt.getSource().getParent().getCells()[0].getText().split("-")[0];
 				var szzsuffix = oEvt.getSource().getParent().getCells()[1].getText().split(" ")[0];
 				
-				var szzui_flag = aSuggestedOrd.filter((item)=> item.zzmodel == szzmodel.trim() && item.zzsuffix == szzsuffix.trim()  && item.zzextcol == szzextcol.trim()  )[0].zzui_flag;
+				//var szzui_flag = aSuggestedOrd.filter((item)=> item.zzmodel == szzmodel.trim() && item.zzsuffix == szzsuffix.trim()  && item.zzextcol == szzextcol.trim()  )[0].zzui_flag;
 
 				var currentValue = oEvt.getSource().getProperty("value");
 
@@ -472,7 +472,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					currentData.checkBoxFlag = false;
 					currentData.zzui_flag = "";
 				}
-                //var sZzui_flag =aSuggestedOrd.filter((item)=> item.zzsug_seq_no ==oEvt.getSource().getBindingContext("stockDataModel").getObject().zzsug_seq_no)[0].zzui_flag;
+                var szzui_flag =aSuggestedOrd.filter((item)=> item.zzsug_seq_no ==oEvt.getSource().getBindingContext("stockDataModel").getObject().zzsug_seq_no)[0].zzui_flag;
 				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)(  incident INC0214976 on 4/11/2022)
 				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
 					currentData.checkBoxEnabled = true;
