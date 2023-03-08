@@ -52,3 +52,5 @@ function(StepInput){
 			}
 
 		};
+		return CustomStepInput;
+	});
