@@ -41,10 +41,14 @@ function(StepInput){
 		
 	});
 	
-	CustomStepInput.prototype.onAfterRendering = function (oEvent) {
-		CustomStepInput.prototype.onAfterRendering.apply(this, arguments);
-			
-	};
-	
-	return CustomStepInput;
-});
+//changes by Shriram for INC0214976 for step input
+		CustomStepInput.prototype.onAfterRendering = function (oEvent) {
+		
+			if (sap.m.StepInput.prototype.onAfterRendering) {
+				sap.m.StepInput.prototype.onAfterRendering.apply(this);
+				//sap.m.StepInput.prototype.onAfterRendering.apply(this, arguments);
+				document.getElementById(oEvent.srcControl.sId).blur();
+				return false;
+			}
+
+		};
