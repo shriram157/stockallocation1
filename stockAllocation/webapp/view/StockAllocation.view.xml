@@ -55,6 +55,7 @@
 								<ToolbarSpacer/>
 								<Button text="{i18n>ResetSearch}" iconFirst="true" width="auto" enabled="{oViewLocalDataModel>/setResetEnabled}" visible="true"
 									iconDensityAware="false" press="resetSearch"/>
+									
 								<SearchField id="searchVehicleList" liveChange="onLiveChange" showSearchButton="true" placeholder="{i18n>Search}">
 									<layoutData>
 										<OverflowToolbarLayoutData minWidth="200px" maxWidth="300px" shrinkable="true"/>
