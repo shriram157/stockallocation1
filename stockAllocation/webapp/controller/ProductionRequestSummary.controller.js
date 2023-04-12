@@ -1339,7 +1339,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					//var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
 					var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY HH:mm'); //24 hour format
 
-					var parsedtodayDate = Date.parse(currentDate);
+					var parsedtodayDate = Date.parse(currentDate)+ (3.6e+6);           //changes for INC0230044
 
 					if (parsedtodayDate < windowEndDateP) { //&& parsedtodayDate >= windowStartDateP
 						// in this period we have to show suggestion and Requested.  Turn off the Allocated. 
