@@ -53,7 +53,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			if (sLocation_conf == 0) {
 				this.sPrefix = "/Suggest_Order";
 			} else {
-				//Cloud Deployment
+				// Cloud Deployment
 				this.sPrefix = "";
 			}
 			this.nodeJsUrl = this.sPrefix + "/node";
