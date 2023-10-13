@@ -738,26 +738,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 				this.getView().getModel("stockDataModel").updateBindings(true);
 				//changes by swetha for testing
-				var currentData = oEvt.getSource().getBindingContext("stockDataModel").getObject();
-				if (Number(currentData.suggested == 0)) {
-					currentData.checkBoxEnabled = false;
-					currentData.checkBoxFlag = false;
-					currentData.zzui_flag="";
+				for (var i=0; i<=oModelData2.lenght;i++){
+				if (Number(that.data.suggested == 0)) {
+					that.data.zzui_flag="";
 				}
 
 				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)//changes reverted back to prod data - Number(currentData.requested_Volume) < Number(currentData.suggested) && szzui_flag == "Y"
-				if (Number(currentData.requested_Volume) < Number(currentData.suggested)) {
-					currentData.checkBoxEnabled = true;
-					currentData.checkBoxFlag = true;
-					currentData.zzui_flag = "Y";
-				} else if (Number(currentData.requested_Volume) > Number(currentData.suggested) && Number(currentData.suggested) != 0) {
-					currentData.checkBoxEnabled = false;
-					currentData.checkBoxFlag = false;
-					currentData.zzui_flag = "N";
+				if (Number(that.data.requested_Volume) < Number(that.data.suggested)) {
+					that.data.zzui_flag = "Y";
+				} else if (Number(that.data.requested_Volume) > Number(that.data.suggested) && Number(that.data.suggested) != 0) {
+					that.data.zzui_flag = "N";
 				} else {
-					currentData.checkBoxEnabled = false;
-					currentData.checkBoxFlag = false;
-					currentData.zzui_flag = "";
+					that.data.zzui_flag = "";
+				}
 				}
 				//changes by swetha for test.
 				this.SaveButtonClicked = true;
