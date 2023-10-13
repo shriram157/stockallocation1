@@ -737,22 +737,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
 				}
 				this.getView().getModel("stockDataModel").updateBindings(true);
-				//changes by swetha for testing
-				for (var i=0; i<oModelData2.length;i++){
-				if (Number(that.data[i].suggested == 0)) {
-					that.data[i].zzui_flag="";
-				}
-
-				//HyperCare 3.0		(changes by Swetha for the Task0175595 on 25/10/22)//changes reverted back to prod data - Number(currentData.requested_Volume) < Number(currentData.suggested) && szzui_flag == "Y"
-				if (Number(that.data[i].requested_Volume) < Number(that.data[i].suggested)) {
-					that.data[i].zzui_flag = "Y";
-				} else if (Number(that.data[i].requested_Volume) > Number(that.data[i].suggested) && Number(that.data[i].suggested) != 0) {
-					that.data[i].zzui_flag = "N";
-				} else {
-					that.data[i].zzui_flag = "";
-				}
-				}
-				//changes by swetha for test.
+				
 				this.SaveButtonClicked = true;
 				var oSuggestUpdateModel = that.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
 
