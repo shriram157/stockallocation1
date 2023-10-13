@@ -738,7 +738,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				}
 				this.getView().getModel("stockDataModel").updateBindings(true);
 				//changes by swetha for testing
-				for (var i=0; i<=oModelData2.length;i++){
+				for (var i=0; i<oModelData2.length;i++){
 				if (Number(that.data[i].suggested == 0)) {
 					that.data[i].zzui_flag="";
 				}
