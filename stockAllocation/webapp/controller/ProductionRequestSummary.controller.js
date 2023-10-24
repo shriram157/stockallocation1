@@ -8,7 +8,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 	var suggestedCount, requestedCount, allocatedCount, tabClicked, etaFromNewSeries, etaToNewSeries, backupModelData, RouteObj = {};
 	return BaseController.extend("suggestOrder.controller.ProductionRequestSummary", {
 		handleRouteMatched: function (oEvent) {
-			//window.location.reload();
+			// window.location.reload();
 			var sAppId = "App5bb4c41429720e1dcc397810";
 
 			var oParams = {};
@@ -53,7 +53,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			if (sLocation_conf == 0) {
 				this.sPrefix = "/Suggest_Order";
 			} else {
-				//Cloud Deployment
+				// Cloud Deployment
 				this.sPrefix = "";
 			}
 			this.nodeJsUrl = this.sPrefix + "/node";

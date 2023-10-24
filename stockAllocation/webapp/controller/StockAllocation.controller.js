@@ -737,7 +737,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					}
 				}
 				this.getView().getModel("stockDataModel").updateBindings(true);
-
+				
 				this.SaveButtonClicked = true;
 				var oSuggestUpdateModel = that.getOwnerComponent().getModel("ZSD_SUGGEST_ORDER_UPDATE_SRV");
 
