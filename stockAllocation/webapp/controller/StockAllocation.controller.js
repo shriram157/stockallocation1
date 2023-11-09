@@ -518,15 +518,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
 							this.tempModel = oStockModelData[i].model;
-							
 						}
 						localScope.getThreShold(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
-					}
-					if (this.flagThreShold == true) {
+						if (this.flagThreShold == true) {
 						MessageBox.error("You have crossed the threshold");
 						localScope.reqThreShold = 0;
-						oStockModelData[i].difference = this.getView().getModel("stockDataModel").getData()[i].difference + 1 ; //changes by swetha for INC0243998 on 9th Nov, 2023.
+						oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume)+1;  //changes by swetha for INC0243998 on 9th Nov, 2023.
 					}
+					}
+					
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.oData["0"].requestedDSTotal = requestedDSTotal;
 					var updationRequestedVolume = oTotalModelData.getProperty("/");
