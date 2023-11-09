@@ -518,6 +518,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
 							this.tempModel = oStockModelData[i].model;
+							oStockModelData[i].difference = (Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume))-1 ; //changes by swetha for INC0243998 on 9th Nov, 2023.
 						}
 						localScope.getThreShold(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
 					}
