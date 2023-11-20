@@ -525,9 +525,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					if (this.flagThreShold == true) {
 						MessageBox.error("You have crossed the threshold");
 						localScope.reqThreShold = 0;
-					//	oStockModelData[i].difference = (Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume))+1;  //changes by swetha for INC0243998 on 9th Nov, 2023.
+					//		oStockModelData[i].difference = (Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume))+1;  //changes by swetha for INC0243998 on 9th Nov, 2023.
 					}
-					
+					//changes by Swetha for INC0243998
+					for (var i = 0; i < oStockModelData.length; i++) {
+						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
+							//fix for difference column update
+							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
+						}
+					}
+					//changes by Swetha for INC0243998
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.oData["0"].requestedDSTotal = requestedDSTotal;
 					var updationRequestedVolume = oTotalModelData.getProperty("/");
