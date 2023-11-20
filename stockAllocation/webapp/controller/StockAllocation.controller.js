@@ -529,6 +529,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						for (var i = 0; i < oStockModelData.length; i++) {
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							//fix for difference column update
+							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
 						}
 					}
