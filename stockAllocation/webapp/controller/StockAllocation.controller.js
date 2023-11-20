@@ -513,24 +513,23 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							//fix for difference column update
 							
-
+					    	oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
-							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
 							this.tempModel = oStockModelData[i].model;
 						}
 						localScope.getThreShold(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
 						
 					}
 					if (this.flagThreShold == true) {
-						tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 						MessageBox.error("You have crossed the threshold");
 						localScope.reqThreShold = 0;
 							//changes by Swetha for INC0243998
 						for (var i = 0; i < oStockModelData.length; i++) {
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							//fix for difference column update
+							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
 						}
 					}
