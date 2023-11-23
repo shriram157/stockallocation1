@@ -1309,6 +1309,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
 					if (oModelData2[i].model != "") {
 						requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
+						oModelData2[i].difference = +oModelData2[i].difference + +differenceTotal;     //changes by swetha for INC0243998
 					}
 				}
 				oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
