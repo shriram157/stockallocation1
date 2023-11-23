@@ -526,13 +526,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						MessageBox.error("You have crossed the threshold");
 						localScope.reqThreShold = 0;
 				//			//changes by Swetha for INC0243998
-				//		for (var i = 0; i < oStockModelData.length; i++) {
-				//		if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
+						for (var i = 0; i < oStockModelData.length; i++) {
+						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							//fix for difference column update
-				//			tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
-				//			oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
-				//		}
-				//	}
+							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
+							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
+						}
+					}
 						//changes by Swetha for INC0243998
 					//		oStockModelData[i].difference = (Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume))+1;  //changes by swetha for INC0243998 on 9th Nov, 2023.
 					}
@@ -1309,7 +1309,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
 					if (oModelData2[i].model != "") {
 						requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
-					//	oModelData2[i].difference = +oModelData2[i].difference + +differenceTotal;     //changes by swetha for INC0243998
+						differenceTotal = +oModelData2[i].difference + +differenceTotal;     //changes by swetha for INC0243998
 					}
 				}
 				oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
