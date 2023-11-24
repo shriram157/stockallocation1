@@ -513,11 +513,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							//fix for difference column update
 							
-					    //	oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
+					    	oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
-							this.tempModel = oStockModelData[i].model;
+							this.tempModel =oStockModelData[i].model; 
 						}
 						localScope.getThreShold(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
 						
@@ -529,7 +529,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						for (var i = 0; i < oStockModelData.length; i++) {
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							//fix for difference column update
-							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
+							//tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
 						}
 					}
