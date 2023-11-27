@@ -525,16 +525,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					if (this.flagThreShold == true) {
 						MessageBox.error("You have crossed the threshold");
 						localScope.reqThreShold = 0;
-				//			//changes by Swetha for INC0243998
-						for (var i = 0; i < oStockModelData.length; i++) {
-						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
-							//fix for difference column update
-							//tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
-							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
-						}
-					}
-						//changes by Swetha for INC0243998
-					//		oStockModelData[i].difference = (Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume))+1;  //changes by swetha for INC0243998 on 9th Nov, 2023.
 					}
 					oTotalModelData.oData["0"].requestedVolumeTotal = tempRequestedTotal;
 					oTotalModelData.oData["0"].requestedDSTotal = requestedDSTotal;
@@ -741,11 +731,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var oStockDataModel = this.getView().getModel("stockDataModel").getData();
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				that.oTable = this.getView().byId("stockDataModelTableId");
-			//	changes by swetha for INC0243998 on 27th Nov, 2023   Start
-				for (var i=0;i<oStockDataModel.length;i++) {
-					oStockDataModel[i].difference = oStockDataModel[i].suggested - oStockDataModel[i].requested_Volume;	
-				}
-			//	changes by swetha for INC0243998 on 27th Nov, 2023   End
 				that.data = oModelData2;
 				if (!!this.dynamicIndices && this.dynamicIndices.length > 0) {
 					for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
@@ -1320,7 +1305,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					oModelData2[i].requested_Volume = oModelData2[i].requested_Volume.toString();
 					if (oModelData2[i].model != "") {
 						requestedVolumeTotal = +oModelData2[i].requested_Volume + +requestedVolumeTotal;
-					//	differenceTotal = +oModelData2[i].difference + +differenceTotal;     //changes by swetha for INC0243998
 					}
 				}
 				oInitialTotalStockModel["0"].suggestedTotal = suggestedTotal;
