@@ -526,13 +526,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						MessageBox.error("You have crossed the threshold");
 						localScope.reqThreShold = 0;
 				//			//changes by Swetha for INC0243998
-				//		for (var i = 0; i < oStockModelData.length; i++) {
-				//		if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
+						for (var i = 0; i < oStockModelData.length; i++) {
+						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							//fix for difference column update
 							//tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
-				//			oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
-				//		}
-				//	}
+							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
+						}
+					}
 						//changes by Swetha for INC0243998
 					//		oStockModelData[i].difference = (Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume))+1;  //changes by swetha for INC0243998 on 9th Nov, 2023.
 					}
@@ -740,11 +740,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var that = this;
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				that.oTable = this.getView().byId("stockDataModelTableId");
+				oModelData2[i].difference = Number(oModelData2[i].suggested) - Number(oModelData2[i].requested_Volume);
 				that.data = oModelData2;
 				if (!!this.dynamicIndices && this.dynamicIndices.length > 0) {
 					for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
 						// console.log("index", i);
 						oModelData2.splice(this.dynamicIndices[i], 1);
+						oModelData2[i].difference = Number(oModelData2[i].suggested) - Number(oModelData2[i].requested_Volume);
 					}
 				}
 				this.getView().getModel("stockDataModel").updateBindings(true);
