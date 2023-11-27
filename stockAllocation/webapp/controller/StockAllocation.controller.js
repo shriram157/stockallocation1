@@ -738,11 +738,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			_onButtonPressSave1: function (oEvent) {
 
 				var that = this;
+				var oStockDataModel = this.getView().getModel("stockDataModel").getData();
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				that.oTable = this.getView().byId("stockDataModelTableId");
 			//	changes by swetha for INC0243998 on 27th Nov, 2023   Start
-				for (var i=0;i<oModelData2.length;i++) {
-					oModelData2[i].difference = oModelData2[i].suggested - oModelData2[i].requested_Volume;	
+				for (var i=0;i<oStockDataModel.length;i++) {
+					oStockDataModel[i].difference = oStockDataModel[i].suggested - oStockDataModel[i].requested_Volume;	
 				}
 			//	changes by swetha for INC0243998 on 27th Nov, 2023   End
 				that.data = oModelData2;
@@ -1040,6 +1041,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				this.index = 0;
 				this.count = 0;
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
+				//changes by swetha on 27th Nov, 2023 for INC0243998 Start
+				for (var i=0;i<oModelData2.length;i++) {
+					oModelData2[i].difference = oModelData2[i].suggested - oModelData2[i].requested_Volume;
+				}
+				//changes by swetha on 27th Nov, 2023 for INC0243998 Start
 				that.oTable = this.getView().byId("stockDataModelTableId");
 
 				for (var k = 0; k < oModelData2.length; k++) {
