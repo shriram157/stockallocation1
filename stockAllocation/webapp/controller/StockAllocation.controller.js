@@ -740,13 +740,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				var that = this;
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				that.oTable = this.getView().byId("stockDataModelTableId");
-				oModelData2[i].difference = Number(oModelData2[i].suggested) - Number(oModelData2[i].requested_Volume);
+			//	changes by swetha for INC0243998 on 27th Nov, 2023   Start
+				for (var i=0;i<oModelData2.length;i++) {
+					oModelData2[i].difference = oModelData2[i].suggested - oModelData2[i].requested_Volume;	
+				}
+			//	changes by swetha for INC0243998 on 27th Nov, 2023   End
 				that.data = oModelData2;
 				if (!!this.dynamicIndices && this.dynamicIndices.length > 0) {
 					for (var i = this.dynamicIndices.length - 1; i >= 0; i--) {
 						// console.log("index", i);
 						oModelData2.splice(this.dynamicIndices[i], 1);
-						oModelData2[i].difference = Number(oModelData2[i].suggested) - Number(oModelData2[i].requested_Volume);
 					}
 				}
 				this.getView().getModel("stockDataModel").updateBindings(true);
