@@ -43,44 +43,44 @@ sap.ui.define(['sap/m/StepInput'],
 
 			onmousewheel: function (evt) {
 				 document.getElementById(evt.srcControl.sId).blur();
-				 return false;
+				 //return false;                                                     
 			},
 
 			onscroll: function (evt) {
 				 document.getElementById(evt.srcControl.sId).blur();
-				 return false;
+				 //return false;
 			},
-		//	_spinValues : function(bIncrementButton) {               //commented changes of INC0239161
+			_spinValues : function(bIncrementButton) {               
 		
-	//	},
-	   //   _onmousewheel : function (oEvent) {
+		},
+	        _onmousewheel : function (oEvent) {
 		
-	//	},
-	//	onkeydown : function (oEvent) {
+		},
+		onkeydown : function (oEvent) {
 		
-	//	},
-//	onsappageup : function (oEvent) {
+		},
+	onsappageup : function (oEvent) {
 		
-	//	},
-	//	onsappagedown : function (oEvent) {
+		},
+		onsappagedown : function (oEvent) {
 		
-	//	},
-	//	onsappageupmodifiers : function (oEvent) {
+		},
+		onsappageupmodifiers : function (oEvent) {
 		
-	//	},
-	//	onsappagedownmodifiers : function (oEvent) {
+		},
+		onsappagedownmodifiers : function (oEvent) {
 		
-	//	},
-	//	onsapup : function (oEvent) {
+		},
+		onsapup : function (oEvent) {
 		
-	//	},
-	//	onsapdown : function (oEvent) {
+		},
+		onsapdown : function (oEvent) {
 		
-	//	},
-	//	_liveChange : function () {
+		},
+		_liveChange : function () {
 			// this._verifyValue();
 			// this._disableButtons(this._getInput().getValue(), this._getMax(), this._getMin());
-	//	},
+		},
 
 			renderer: "sap.m.StepInputRenderer"
 

@@ -512,14 +512,15 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					for (var i = 0; i < oStockModelData.length; i++) {
 						if (oStockModelData[i].model != "" && oStockModelData[i].model == currentData.model) {
 							//fix for difference column update
-							oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
-
+							
+					    	oStockModelData[i].difference = Number(oStockModelData[i].suggested) - Number(oStockModelData[i].requested_Volume);
 							this.currentStockVolume = oStockModelData[i].requested_Volume;
 							tempRequestedTotal = tempRequestedTotal + +oStockModelData[i].requested_Volume;
 							requestedDSTotal = requestedDSTotal + +oStockModelData[i].requested_Ds;
-							this.tempModel = oStockModelData[i].model;
+							this.tempModel =oStockModelData[i].model; 
 						}
 						localScope.getThreShold(oStockModelData[i], currentData, this.tempModel, tempRequestedTotal);
+						
 					}
 					if (this.flagThreShold == true) {
 						MessageBox.error("You have crossed the threshold");
@@ -727,6 +728,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 			_onButtonPressSave1: function (oEvent) {
 
 				var that = this;
+				var oStockDataModel = this.getView().getModel("stockDataModel").getData();
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
 				that.oTable = this.getView().byId("stockDataModelTableId");
 				that.data = oModelData2;
@@ -1024,6 +1026,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 				this.index = 0;
 				this.count = 0;
 				var oModelData2 = this.getView().getModel("stockDataModel").getData();
+				//changes by swetha on 27th Nov, 2023 for INC0243998 Start
+				for (var i=0;i<oModelData2.length;i++) {
+					oModelData2[i].difference = oModelData2[i].suggested - oModelData2[i].requested_Volume;
+				}
+				//changes by swetha on 27th Nov, 2023 for INC0243998 Start
 				that.oTable = this.getView().byId("stockDataModelTableId");
 
 				for (var k = 0; k < oModelData2.length; k++) {
