@@ -1333,13 +1333,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 					var windowEndDateWithTime = oModel.getProperty("/dateForValidation");
 					var windowEndDateP = Date.parse(windowEndDateWithTime);
 
-					var torontoTime = new Date();
-					/*global  moment:true*/
+					var torontoTime = new Date().toUTCString();              //changes by Swetha for INC0245585 on 21st Dec, 2023
+					/*global  moment:true*/ 
 					var extractTimeZone = moment(torontoTime);
 					//var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
 					var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY HH:mm'); //24 hour format
 
-					var parsedtodayDate = Date.parse(currentDate)+ (3.6e+6);           //changes for INC0230044
+					var parsedtodayDate = Date.parse(currentDate);           //changes for INC0230044   //changes by Swetha for INC0245585 on 21st Dec, 2023 removed 3.6e+6
 
 					if (parsedtodayDate < windowEndDateP) { //&& parsedtodayDate >= windowStartDateP
 						// in this period we have to show suggestion and Requested.  Turn off the Allocated. 
@@ -1464,13 +1464,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller",
 						var windowEndDateWithTime = oModel.getProperty("/dateForValidation");
 						var windowEndDateP = Date.parse(windowEndDateWithTime);
 
-						var torontoTime = new Date();
+						var torontoTime = new Date().toUTCString();//changes by Swetha for INC0245585 on 21st Dec, 2023 removed 3.6e+6
 						/*global  moment:true*/
 						var extractTimeZone = moment(torontoTime);
 						//var currentDate = extractTimeZone.tz('America/New_York').format('YYYY/MM/DD hh:mm');
 						var currentDate = extractTimeZone.tz('America/New_York').format('MM/DD/YYYY HH:mm'); //24 hour format
 
-						var parsedtodayDate = Date.parse(currentDate)+(3.6e+6);     //changes for INC0230044
+						var parsedtodayDate = Date.parse(currentDate);     //changes for INC0230044   //changes by Swetha for INC0245585 on 21st Dec, 2023 removed 3.6e+6
 
 						if (parsedtodayDate < windowEndDateP) { //&& parsedtodayDate >= windowStartDateP
 							// in this period we have to show suggestion and Requested.  Turn off the Allocated. 
